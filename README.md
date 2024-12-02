@@ -5,7 +5,7 @@ folder structure in the docs.
 
 ## Run the website
 
-### Live link: [Xpecto '25](https://create.t3.gg)
+### Live link: [Xpecto '25](https://xpecto-25.vercel.app/)
 
 ### Local Development:
 
