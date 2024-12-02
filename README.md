@@ -34,3 +34,9 @@ pnpm dev
 - Name your commits meaningfully.
 - Submit a pull request after you've done your changes.
 - Format your code properly.
+- We probably won't need to use the `start-database.sh` file given here, so it's best not to bother about that.
+- The `DATABASE_URL` environment variable is commented out for now, but we will need to use that later. Take a took
+  at the `env.js` file to learn about how the environment variables are validated here.
+- Backend guys are encouraged to learn a bit about tRPC and how it can be used to make the backend simpler, as we've
+  used it here.
+- Frontend people, y'all got tons of different libraries to learn about now, so best to get started! 
