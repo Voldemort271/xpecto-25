@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+	@apply overscroll-none
+}
+
+body {
+	@apply font-normal text-base overflow-x-hidden
+}
+
+@layer base {
+  :root {
+
+		--radius: 0.5rem}}
