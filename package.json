@@ -21,7 +21,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/client": "^5.14.0",
+    "@clerk/nextjs": "^6.8.0",
+    "@prisma/client": "^5.22.0",
     "@react-three/drei": "^9.119.0",
     "@react-three/fiber": "^8.17.10",
     "@t3-oss/env-nextjs": "^0.10.1",

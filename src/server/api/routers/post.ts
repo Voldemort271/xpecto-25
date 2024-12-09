@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
+
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
@@ -28,4 +29,27 @@ export const postRouter = createTRPCRouter({
 
     return post ?? null;
   }),
+
+  createUser: publicProcedure
+    .input(z.object({ name: z.string().min(1), email: z.string().email(), clerkId: z.string()}))
+    .mutation(async ({ ctx, input })=> {
+      const existingUser = await ctx.db.user.findUnique({
+        where: { clerkId: input.clerkId },
+      });
+
+      if (!existingUser) {
+        return ctx.db.user.create({
+          data: {
+            name: input.name,
+            email: input.email,
+            clerkId: input.clerkId,
+          },
+        });
+      }
+      else {
+        return existingUser;
+      }
+      
+    }),
+  
 });
