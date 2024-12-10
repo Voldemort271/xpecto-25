@@ -36,6 +36,7 @@ export const postRouter = createTRPCRouter({
       const existingUser = await ctx.db.user.findUnique({
         where: { clerkId: input.clerkId },
       });
+      console.log(existingUser)
 
       if (!existingUser) {
         return ctx.db.user.create({
