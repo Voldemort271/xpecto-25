@@ -5,7 +5,7 @@ const MainHome = () => {
   return (
     <>
         <div className="flex flex-col items-center">
-          <div>Home</div>
+          <div>yay yay yay signed in</div>
           <UserButton />
         </div>
     </>

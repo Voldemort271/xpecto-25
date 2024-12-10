@@ -6,11 +6,11 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import BgPic from "@/../public/background.jpg";
 import MainHome from "@/app/_components/MainHome";
+import {sleep} from "@/lib/utils";
 
 const Home = () => {
   const [hasAnimated, setHasAnimated] = React.useState(false);
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+  
 
   return (
     <>
