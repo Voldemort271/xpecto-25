@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
     directUrl = env("DIRECT_URL")
 }
 
@@ -20,13 +20,134 @@ model Post {
     @@index([name])
 }
 
+// We can use the prize money field to detect an organiser register
 model User {
-    id        String      @id @default(cuid())
-    clerkId   String      @unique
-    email     String      @unique
-    name      String
-    createdAt DateTime    @default(now())
-    updatedAt DateTime    @updatedAt
+    id           String @id @default(cuid())
+    clerkId      String @unique
+    email        String @unique
+    name         String
+    college_name String @default("Individual")
+
+    teamLeader Team[]    @relation("teamLeader")
+    events     Event[]
+    pronites   Pronite[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@index([clerkId])
+}
+
+model Team {
+    id          String @id @default(cuid())
+    prize_money Int    @default(0)
+
+    leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
+    leaderId String
+
+    organisations Organization[] @relation("orgMembers")
+    competitions  Competitor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Organization {
+    id String @id @default(cuid())
+
+    group   Team   @relation("orgMembers", fields: [groupId], references: [id])
+    groupId String
+
+    events       Event[]
+    competitions Competition[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Competition {
+    id            String @id @default(cuid())
+    prizepool     Int    @default(0)
+    max_team_size Int    @default(5)
+    min_team_size Int    @default(1)
+
+    competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
+    competitionDetailsId String       @unique
+
+    teams      Competitor[]
+    organizers Organization[]
+    sponsors   Sponsor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+// Needed a custom Pivot here
+model Competitor {
+    teamId        String
+    competitionId String
+    ranking       Int?
+    submissions   String // Contains link to location of submission
+
+    team        Team        @relation(fields: [teamId], references: [id])
+    competition Competition @relation(fields: [competitionId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@id([teamId, competitionId])
+}
+
+model Event {
+    id   String @id @default(cuid())
+    type String
+
+    eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
+    eventDetailsId String       @unique
+
+    hosters      Organization[]
+    participants User[]
+    sponsors     Sponsor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Sponsor {
+    id   String @id @default(cuid())
+    name String
+    logo String
+
+    events       Event[]
+    competitions Competition[]
+}
+
+model EventDetails {
+    id          String   @id @default(cuid())
+    begin_time  DateTime
+    end_time    DateTime
+    name        String
+    description String
+    venue       String
+
+    event       Event?
+    pronite     Pronite?
+    competition Competition?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Pronite {
+    id           String @id @default(cuid())
+    max_capacity Int    @default(1000)
+    ticket_price Int    @default(0)
+
+    proniteDetails   EventDetails @relation(fields: [proniteDetailsId], references: [id])
+    proniteDetailsId String       @unique
+
+    regUsers User[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
