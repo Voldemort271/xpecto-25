@@ -25,6 +25,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     name: "",
     email: "",
     clerkId: "",
+    college_name: "Individual",
     createdAt: new Date(),
     updatedAt: new Date(),
     id: "",
