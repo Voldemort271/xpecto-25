@@ -29,6 +29,7 @@ model User {
     college_name String @default("Individual")
 
     teamLeader Team[]    @relation("teamLeader")
+    teams      Team[]
     events     Event[]
     pronites   Pronite[]
 
@@ -45,6 +46,7 @@ model Team {
     leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
     leaderId String
 
+    teammates User[]
     organisations Organization[] @relation("orgMembers")
     competitions  Competitor[]
 
