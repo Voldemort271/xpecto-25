@@ -6,7 +6,7 @@ interface Props {
 }
 
 const MarqueeContainer = ({ text }: Props) => {
-  const text2 = text.concat(text).concat(text).join(" | ");
+  const text2 = text.concat(text).join(" | ");
   return (
     <>
       <div className={styles.marquee}>

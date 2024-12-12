@@ -8,6 +8,12 @@
 	}
 }
 
+@media (max-width: 360px) {
+	.navContainer {
+		grid-template-columns: auto auto;
+	}
+}
+
 @media (min-width: 768px) {
 	.navContainer {
 		grid-template-columns: 280px auto 250px;
