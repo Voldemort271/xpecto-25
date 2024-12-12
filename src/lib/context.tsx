@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 import { useUser } from "@clerk/nextjs";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import type { User } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
 
@@ -23,7 +23,7 @@ export const SharedContext = createContext<SharedContextProps | undefined>(
 
 const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   const url = usePathname();
-  const router = useRouter();
+  // const router = useRouter();
 
   const [currentUser, setCurrentUser] = useState<User>({
     name: "",
@@ -40,9 +40,10 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!isLoaded) return; // Wait until the user data is loaded
-      if (!clerkUser) {
-        router.push("/sign-in");
+      if (!isLoaded || !clerkUser) {
+         return; // Wait until the user data is loaded
+      // if (!clerkUser) {
+      //   router.push("/sign-in");
       } else {
         const userData = {
           clerkId: clerkUser.id,
@@ -72,7 +73,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     fetchUserData().catch((error) =>
       console.error("Error in fetchUserData:", error),
     );
-  }, [clerkUser, isLoaded, router, url]);
+  }, [clerkUser, isLoaded, url]);
 
   useEffect(() => {
     console.log("currentUser", clerkUser);
