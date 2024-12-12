@@ -1,10 +1,14 @@
 "use client";
 
-import { createContext, useState, useEffect, useRef } from "react";
-import type { ReactNode } from "react";
+import React, {
+  createContext,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { User } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
 
@@ -21,7 +25,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   const url = usePathname();
   const router = useRouter();
 
-  const [CurrentUser, setCurrentUser] = useState<User>({
+  const [currentUser, setCurrentUser] = useState<User>({
     name: "",
     email: "",
     clerkId: "",
@@ -34,9 +38,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   const createUserMutation = api.post.createUser.useMutation();
   const createUserMutationRef = useRef(createUserMutation); // Use a ref to store the mutation function
 
-  
   useEffect(() => {
-    
     const fetchUserData = async () => {
       if (!isLoaded) return; // Wait until the user data is loaded
       if (!clerkUser) {
@@ -73,11 +75,13 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   }, [clerkUser, isLoaded, router, url]);
 
   useEffect(() => {
-    console.log("currentUser", CurrentUser);
-  }, [CurrentUser]);
+    console.log("currentUser", clerkUser);
+  }, [clerkUser, currentUser]);
 
   return (
-    <SharedContext.Provider value={{ CurrentUser, setCurrentUser }}>
+    <SharedContext.Provider
+      value={{ CurrentUser: currentUser, setCurrentUser }}
+    >
       {children}
     </SharedContext.Provider>
   );
