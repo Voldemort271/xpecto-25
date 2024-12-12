@@ -23,22 +23,25 @@ const DystopianNav = () => {
           indian institute of technology, mandi
         </div>
       </div>
-      <div className="h-full border-x-2 border-amber-50"></div>
+      <div className="h-full border-l-2 border-amber-50"></div>
       <div className={styles.logoContainer}>
-        <div className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900">
-          {CurrentUser?.id !== "" ? (
+        {CurrentUser?.id !== "" ? (
+          <div className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900">
             <UserButton />
-          ) : (
-            <>
-              <Link href={"/sign-in"}>
-                <div className="text-4xl font-medium uppercase">Login</div>
-              </Link>
+          </div>
+        ) : (
+          <Link
+            href={"/sign-in"}
+            className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900"
+          >
+            <div className="flex w-full flex-col items-center justify-center">
+              <div className="text-4xl font-medium uppercase">Login</div>
               <div className="text-base font-normal uppercase">
                 to be cool i guess
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );
