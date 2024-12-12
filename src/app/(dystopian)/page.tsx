@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/styles/home.module.css";
+import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
 
 const Home = () => {
   return (
@@ -19,18 +19,9 @@ const Home = () => {
       <div
         className={`absolute bottom-0 left-0 flex h-20 w-full flex-row items-center border-t-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase`}
       >
-        <div className={styles.marquee}>
-          <span>
-            the biggest fest of the himalayas | 32 to 56 march 2025 | the
-            biggest fest of the himalayas | 32 to 56 march 2025 | &nbsp;
-          </span>
-        </div>
-        <div className={`${styles.marquee} ${styles.marquee2}`}>
-          <span>
-            the biggest fest of the himalayas | 32 to 56 march 2025 | the
-            biggest fest of the himalayas | 32 to 56 march 2025 | &nbsp;
-          </span>
-        </div>
+        <MarqueeContainer
+          text={["the biggest fest of the himalayas", "32 to 56 march 2025"]}
+        />
       </div>
     </div>
   );
