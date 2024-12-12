@@ -17,7 +17,7 @@ const Home = () => {
         </div>
       </div>
       <div
-        className={`absolute bottom-0 left-0 flex h-20 w-full flex-row items-center border-t-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase`}
+        className={`absolute bottom-0 left-0 flex h-20 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase`}
       >
         <MarqueeContainer
           text={["the biggest fest of the himalayas", "32 to 56 march 2025"]}

@@ -11,7 +11,7 @@ export default function RootLayout({
     <div
       className={`relative h-screen w-screen border-2 border-amber-50 bg-neutral-900 text-amber-50 ${handjet.className} tracking-widest`}
     >
-      <div className="fixed left-0 top-0 z-50 w-full">
+      <div className="fixed left-0 top-0 z-50 w-screen">
         <DystopianNav />
       </div>
       {children}
