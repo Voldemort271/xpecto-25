@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useContext } from "react";
 import styles from "./navbar.module.css";
@@ -29,13 +29,15 @@ const DystopianNav = () => {
           {CurrentUser?.id !== "" ? (
             <UserButton />
           ) : (
-            <Link href={"/sign-in"}>
-              <div className="text-4xl font-medium uppercase">Login</div>
-            </Link>
+            <>
+              <Link href={"/sign-in"}>
+                <div className="text-4xl font-medium uppercase">Login</div>
+              </Link>
+              <div className="text-base font-normal uppercase">
+                to be cool i guess
+              </div>
+            </>
           )}
-          <div className="text-base font-normal uppercase">
-            to be cool i guess
-          </div>
         </div>
       </div>
     </div>
