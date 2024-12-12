@@ -5,7 +5,6 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
-import SharedContextProvider from "@/lib/context";
 
 export const metadata: Metadata = {
   title: "Xpecto '25 | IIT Mandi",
@@ -21,7 +20,7 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <TRPCReactProvider>
-            <SharedContextProvider>{children}</SharedContextProvider>
+            {children}
           </TRPCReactProvider>
         </ClerkProvider>
       </body>
