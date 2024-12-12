@@ -1,0 +1,12 @@
+.navContainer {
+	@apply grid h-40 w-full grid-flow-dense grid-cols-3 gap-0 border-2 border-amber-50 bg-neutral-900;
+	grid-template-columns: 280px auto 250px;
+}
+
+.brandContainer {
+	@apply flex h-full flex-col items-start justify-center bg-neutral-900 p-5;
+}
+
+.logoContainer {
+	@apply h-full grid grid-rows-2 gap-0 p-0
+}

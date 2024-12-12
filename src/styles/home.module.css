@@ -1,58 +1,26 @@
-.gifbg {
-	position: fixed;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 100;
-	opacity: 0.3;
-	mix-blend-mode: difference;
-}
-
-.gifbg::before {
-	content: "";
-	z-index: 999;
+.marquee {
+	margin: 0 auto;
+	white-space: nowrap;
+	overflow: hidden;
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url('../../public/img.png');
-	animation: 100ms linear infinite noise;
 }
 
-@keyframes noise {
+.marquee span {
+	display: inline-block;
+	padding-left: 100%;
+	animation: marquee 20s linear infinite;
+	animation-delay: -10s;
+}
+
+.marquee2 span {
+	animation-delay: 0s;
+}
+
+@keyframes marquee {
 	0% {
-		background-position: 0 0;
-	}
-	10% {
-		background-position: -5% -10%;
-	}
-	20% {
-		background-position: -15% -5%;
-	}
-	30% {
-		background-position: 5% -25%;
-	}
-	40% {
-		background-position: 20% 25%;
-	}
-	50% {
-		background-position: -25% 10%;
-	}
-	60% {
-		background-position: 15% 5%;
-	}
-	70% {
-		background-position: 0 15%;
-	}
-	80% {
-		background-position: 25% 35%;
-	}
-	90% {
-		background-position: -10% 10%;
+		transform: translate(0, 0);
 	}
 	100% {
-		background-position: 0 0;
+		transform: translate(-100%, 0);
 	}
 }

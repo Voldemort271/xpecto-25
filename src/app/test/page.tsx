@@ -1,15 +1,13 @@
 "use client";
 
 import React from "react";
-import styles from "@/styles/home.module.css";
 import { motion } from "motion/react";
 import Image from "next/image";
-import BgPic from "@/../public/background.jpg";
+import BgPic from "../../../public/background.jpg";
 
 const Home = () => {
   return (
     <>
-      <div className={`${styles.gifbg}`}></div>
       <div className="relative flex h-screen w-screen flex-col items-center justify-center gap-12 bg-[#242424]">
         <Image
           src={BgPic}

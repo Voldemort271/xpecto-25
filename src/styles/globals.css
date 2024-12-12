@@ -7,10 +7,75 @@ html {
 }
 
 body {
-	@apply font-normal text-base overflow-x-hidden
+	@apply font-normal text-base overflow-x-hidden antialiased;
+	font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 @layer base {
-  :root {
+	:root {
+		--radius: 0.5rem
+	}
+}
 
-		--radius: 0.5rem}}
+.staticBg {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	opacity: 0.3;
+	mix-blend-mode: difference;
+	pointer-events: none;
+}
+
+.staticBg::before {
+	content: "";
+	z-index: 9999;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('../../public/img.png');
+	animation: 100ms linear infinite noise;
+}
+
+@keyframes noise {
+	0% {
+		background-position: 0 0;
+	}
+	10% {
+		background-position: -5% -10%;
+	}
+	20% {
+		background-position: -15% -5%;
+	}
+	30% {
+		background-position: 5% -25%;
+	}
+	40% {
+		background-position: 20% 25%;
+	}
+	50% {
+		background-position: -25% 10%;
+	}
+	60% {
+		background-position: 15% 5%;
+	}
+	70% {
+		background-position: 0 15%;
+	}
+	80% {
+		background-position: 25% 35%;
+	}
+	90% {
+		background-position: -10% 10%;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
