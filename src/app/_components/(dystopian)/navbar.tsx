@@ -7,6 +7,7 @@ import { UserButton } from "@clerk/nextjs";
 import NavMobile from "@/app/_components/(dystopian)/nav-mobile";
 import { navElements, useCurrentUser } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
@@ -21,23 +22,25 @@ const DystopianNav = () => {
         <div className="text-4xl font-medium uppercase md:text-5xl">
           xpecto &apos;25
         </div>
-        <div className="text-sm font-normal uppercase leading-5 md:text-base">
+        <div className="text-sm font-normal uppercase leading-5 lg:text-base">
           indian institute of technology, mandi
         </div>
       </div>
-      <div className="hidden h-full justify-evenly border-l-2 border-amber-50 md:flex">
+      <div className="hidden h-full w-full grid-cols-4 grid-rows-2 lg:grid">
         {navElements.map((item, index) => (
           <div
             key={index}
-            className={`flex w-full items-center justify-center border-r-2 border-amber-50 text-2xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50 text-neutral-900" : ""}`}
+            className={`relative flex w-full items-center justify-center overflow-clip border border-amber-50 ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50 text-neutral-900" : ""}`}
           >
-            <Link href={`/${item !== "Home" ? item.toLowerCase() : ""}`}>
-              {item}
-            </Link>
+            <div className="absolute left-0 top-1/2 h-full w-full cursor-pointer flex-col items-center justify-center text-4xl font-normal uppercase">
+              <MarqueeContainer
+                href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
+                text={[item, item, item]}
+              />
+            </div>
           </div>
         ))}
-      </div>
-      <div className={styles.logoContainer}>
+
         {CurrentUser?.id !== "" ? (
           <Link
             href={"/sign-in"}
@@ -71,7 +74,7 @@ const DystopianNav = () => {
         )}
       </div>
       <div
-        className="flex h-full cursor-pointer flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 md:hidden"
+        className="flex h-full cursor-pointer flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 lg:hidden"
         onClick={() => setToggle(!toggle)}
       >
         {toggle ? (
