@@ -9,7 +9,7 @@ interface Props {
 }
 
 const MarqueeContainer = ({ text, href, onclick }: Props) => {
-  const text2 = text.concat(text).join(" | ");
+  const text2 = text.concat(text).join(" | ").concat(" | ");
   return href ? (
     <Link className="flex items-center" href={href} onClick={onclick}>
       <div className={styles.marquee}>
