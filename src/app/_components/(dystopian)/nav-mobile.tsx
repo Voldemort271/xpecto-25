@@ -37,7 +37,7 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
             >
               <MarqueeContainer
                 href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
-                text={[item, item, item]}
+                text={[item, item, item, item, item]}
               />
             </motion.div>
           ))}
@@ -58,7 +58,7 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
               initial={{ left: -100, opacity: 0 }}
               animate={{ left: 0, opacity: 1 }}
               transition={{ delay: 1 }}
-              className="absolute left-0 top-96 flex h-20 w-full cursor-pointer flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
+              className="absolute left-0 top-96 flex h-16 w-full cursor-pointer flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-4xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
             >
               <MarqueeContainer
                 href="/sign-out"

@@ -29,19 +29,33 @@ const DystopianNav = () => {
         {navElements.map((item, index) => (
           <div
             key={index}
-            className={`flex w-full items-center justify-center border-2 text-2xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50 text-neutral-900" : ""}`}
+            className={`flex w-full items-center justify-center border-r-2 border-amber-50 text-2xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50 text-neutral-900" : ""}`}
           >
-            <Link href={`/${item !== "Home" ? item.toLowerCase() : ""}`}>{item}</Link>
+            <Link href={`/${item !== "Home" ? item.toLowerCase() : ""}`}>
+              {item}
+            </Link>
           </div>
         ))}
       </div>
       <div className={styles.logoContainer}>
         {CurrentUser?.id !== "" ? (
-          <div className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900">
-            <div className="scale-150">
-              <UserButton />
+          <Link
+            href={"/sign-in"}
+            className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900"
+          >
+            <div className="flex w-full flex-col items-center justify-center">
+              <div className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900">
+                <UserButton />
+              </div>
+              <div className="w-full truncate text-4xl font-medium uppercase">
+                {/*{CurrentUser?.name ?? "User"}*/}
+              </div>
+
+              <div className="text-base font-normal uppercase">
+                welcome back
+              </div>
             </div>
-          </div>
+          </Link>
         ) : (
           <Link
             href={"/sign-in"}
