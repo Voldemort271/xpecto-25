@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import styles from "./navbar.module.css";
-import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
 import NavMobile from "@/app/_components/(dystopian)/nav-mobile";
 import { navElements, useCurrentUser } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -26,7 +24,42 @@ const DystopianNav = () => {
           indian institute of technology, mandi
         </div>
       </div>
-      <div className="hidden h-full w-full grid-cols-4 grid-rows-2 lg:grid">
+      <div className="hidden h-full w-full grid-cols-6 grid-rows-2 bg-neutral-900 lg:grid">
+        {CurrentUser?.id !== "" ? (
+          <div
+            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50`}
+          >
+            {/*<UserButton />*/}
+            <div className="pointer-events-none absolute left-0 top-1/2 h-full w-full cursor-pointer flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
+              <MarqueeContainer
+                href={`/sign-out`}
+                text={[
+                  "welcome back",
+                  CurrentUser?.name ?? "user",
+                  "welcome back",
+                  CurrentUser?.name ?? "user",
+                ]}
+              />
+            </div>
+          </div>
+        ) : (
+          <div
+            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50`}
+          >
+            <div className="absolute left-0 top-1/2 h-full w-full cursor-pointer flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
+              <MarqueeContainer
+                href={`/sign-in`}
+                text={[
+                  "login to be cool",
+                  "cool stuff i promise",
+                  "please trust me",
+                  "login to xperience xpecto",
+                ]}
+              />
+            </div>
+          </div>
+        )}
+
         {navElements.map((item, index) => (
           <div
             key={index}
@@ -40,38 +73,6 @@ const DystopianNav = () => {
             </div>
           </div>
         ))}
-
-        {CurrentUser?.id !== "" ? (
-          <Link
-            href={"/sign-in"}
-            className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900"
-          >
-            <div className="flex w-full flex-col items-center justify-center">
-              <div className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900">
-                <UserButton />
-              </div>
-              <div className="w-full truncate text-4xl font-medium uppercase">
-                {/*{CurrentUser?.name ?? "User"}*/}
-              </div>
-
-              <div className="text-base font-normal uppercase">
-                welcome back
-              </div>
-            </div>
-          </Link>
-        ) : (
-          <Link
-            href={"/sign-in"}
-            className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900"
-          >
-            <div className="flex w-full flex-col items-center justify-center">
-              <div className="text-4xl font-medium uppercase">Login</div>
-              <div className="text-base font-normal uppercase">
-                to be cool i guess
-              </div>
-            </div>
-          </Link>
-        )}
       </div>
       <div
         className="flex h-full cursor-pointer flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 lg:hidden"
