@@ -18,23 +18,30 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
     <AnimatePresence>
       {toggler && (
         <motion.div
-          className="fixed top-32 z-50 block w-screen border-x-2 border-amber-50 bg-neutral-900 md:hidden"
+          className="fixed top-32 z-50 block h-[calc(100vh-210px)] w-screen border-x-2 border-amber-50 backdrop-blur-2xl md:hidden"
           initial={{ left: -100, opacity: 0 }}
           animate={{ left: 0, opacity: 1 }}
           exit={{ left: 100, opacity: 0 }}
         >
           {navElements.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={item === "Home" ? {opacity: 0} : { left: -100, opacity: 0 }}
-            animate={item === "Home" ? {opacity: 1} : { left: 0, opacity: 1 }}
-            transition={{ delay: index * 0.5 }}
-            style={{top: `${index * 20 * 0.25}rem`}}
-            className={`absolute left-0 flex h-20 w-full cursor-pointer flex-row items-center border-b-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase transition-all hover:bg-amber-50 hover:text-neutral-900`}
-          >
-            <MarqueeContainer href={`/${item !== "Home" ? item.toLowerCase() : ""}`} text={[item, item, item]} />
-          </motion.div>
-        ))}
+            <motion.div
+              key={index}
+              initial={
+                item === "Home" ? { opacity: 0 } : { left: -100, opacity: 0 }
+              }
+              animate={
+                item === "Home" ? { opacity: 1 } : { left: 0, opacity: 1 }
+              }
+              transition={{ delay: index * (Math.random() / 2) }}
+              style={{ top: `${index * 20 * 0.25}rem` }}
+              className={`absolute left-0 flex h-20 w-full cursor-pointer flex-row items-center border-b-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase transition-all hover:bg-amber-50 hover:text-neutral-900`}
+            >
+              <MarqueeContainer
+                href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
+                text={[item, item, item]}
+              />
+            </motion.div>
+          ))}
           {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -76,17 +83,22 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
             <MarqueeContainer text={["sponsors", "sponsors", "sponsors"]} />
           </motion.div> */}
           {CurrentUser?.id === "" ? (
-          <motion.div
-            initial={{ left: -100, opacity: 0 }}
-            animate={{ left: 0, opacity: 1 }}
-            transition={{ delay: 3.5 }}
-            className="absolute left-0 top-[480px] flex h-20 w-full cursor-pointer flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
-          >
-            <MarqueeContainer href="/sign-in"
-              text={["login to be cool", "i promise cool stuff"]}
-            />
-          </motion.div>) : (<div className="absolute flex top-[560px] scale-[300%] w-full h-full items-center justify-center"><UserButton /></div>)
-}
+            <motion.div
+              initial={{ left: -100, opacity: 0 }}
+              animate={{ left: 0, opacity: 1 }}
+              transition={{ delay: 2 }}
+              className="absolute left-0 top-[480px] flex h-20 w-full cursor-pointer flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
+            >
+              <MarqueeContainer
+                href="/sign-in"
+                text={["login to be cool", "i promise cool stuff"]}
+              />
+            </motion.div>
+          ) : (
+            <div className="absolute top-[560px] flex h-full w-full scale-[300%] items-center justify-center">
+              <UserButton />
+            </div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
