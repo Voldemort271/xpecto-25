@@ -1,22 +1,19 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styles from "./navbar.module.css";
 import Link from "next/link";
-import { SharedContext } from "@/lib/context";
 import { UserButton } from "@clerk/nextjs";
 import NavMobile from "@/app/_components/(dystopian)/nav-mobile";
+import { navElements, useCurrentUser } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
+  const path = usePathname();
+  const firstPathItem = path.split("/")[1];
 
-  const context = useContext(SharedContext);
-  if (!context) {
-    throw new Error(
-      "SharedContext must be used within a SharedContextProvider in home page",
-    );
-  }
-  const { CurrentUser } = context;
+  const { CurrentUser } = useCurrentUser();
 
   return (
     <div className={styles.navContainer}>
@@ -28,11 +25,22 @@ const DystopianNav = () => {
           indian institute of technology, mandi
         </div>
       </div>
-      <div className="hidden h-full border-l-2 border-amber-50 md:block"></div>
+      <div className="hidden h-full justify-evenly border-l-2 border-amber-50 md:flex">
+        {navElements.map((item, index) => (
+          <div
+            key={index}
+            className={`flex w-full items-center justify-center border-2 text-2xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50 text-neutral-900" : ""}`}
+          >
+            <Link href={`/${item !== "Home" ? item.toLowerCase() : ""}`}>{item}</Link>
+          </div>
+        ))}
+      </div>
       <div className={styles.logoContainer}>
         {CurrentUser?.id !== "" ? (
           <div className="flex w-full flex-col items-center justify-center bg-amber-50 text-neutral-900">
-            <UserButton />
+            <div className="scale-150">
+              <UserButton />
+            </div>
           </div>
         ) : (
           <Link
@@ -79,7 +87,7 @@ const DystopianNav = () => {
           </svg>
         )}
       </div>
-      <NavMobile toggler={toggle} />
+      <NavMobile toggler={toggle} setToggler={setToggle} />
     </div>
   );
 };
