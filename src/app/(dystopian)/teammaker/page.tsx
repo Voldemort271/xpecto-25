@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { api } from "@/trpc/react";
 
 const TeammakerPage = () => {
-  const users = api.post.getUsers.useSuspenseQuery()[0];
+  // const users = api.post.getUsers.useSuspenseQuery()[0];
 
   const [teamMems, setTeamMems] = useState<string[]>([]);
 
@@ -24,16 +23,16 @@ const TeammakerPage = () => {
           flexDirection: "column",
         }}
       >
-        {users.map((user, i) => (
-          <button
-            onClick={() => {
-              setTeamMems([...teamMems, user.name]);
-            }}
-            key={i}
-          >
-            {user.name}
-          </button>
-        ))}
+        {/*{users.map((user, i) => (*/}
+        {/*  <button*/}
+        {/*    onClick={() => {*/}
+        {/*      setTeamMems([...teamMems, user.name]);*/}
+        {/*    }}*/}
+        {/*    key={i}*/}
+        {/*  >*/}
+        {/*    {user.name}*/}
+        {/*  </button>*/}
+        {/*))}*/}
         <button
           onClick={() => {
             return;
