@@ -61,17 +61,17 @@ export const postRouter = createTRPCRouter({
     return users;
   }),
 
-  createTeam: publicProcedure
-    .input(z.array(z.string()))
-    .mutation(async ({ ctx, input }) => {
-      console.log("********************************************");
-      console.log(input);
-      console.log("Inko team me daalna");
-
-      await ctx.db.team.create({
-        data: {
-          leaderId: input[0]!,
-        },
-      });
-    }),
+  // createTeam: publicProcedure
+  //   .input(z.array(z.string()))
+  //   .mutation(async ({ ctx, input }) => {
+  //     console.log("********************************************");
+  //     console.log(input);
+  //     console.log("Inko team me daalna");
+  //
+  //     await ctx.db.team.create({
+  //       data: {
+  //         leaderId: input[0]!,
+  //       },
+  //     });
+  //   }),
 });
