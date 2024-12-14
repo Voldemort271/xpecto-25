@@ -30,12 +30,18 @@ export const postRouter = createTRPCRouter({
   }),
 
   createUser: publicProcedure
-    .input(z.object({ name: z.string().min(1), email: z.string().email(), clerkId: z.string()}))
-    .mutation(async ({ ctx, input })=> {
+    .input(
+      z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        clerkId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
       const existingUser = await ctx.db.user.findUnique({
         where: { clerkId: input.clerkId },
       });
-      console.log(existingUser)
+      console.log(existingUser);
 
       if (!existingUser) {
         return ctx.db.user.create({
@@ -45,30 +51,27 @@ export const postRouter = createTRPCRouter({
             clerkId: input.clerkId,
           },
         });
-      }
-      else {
+      } else {
         return existingUser;
       }
-      
     }),
 
-    getUsers: publicProcedure.query(async({ ctx })=>{
-        const users = await ctx.db.user.findMany();
-        return users;
-    }),
+  getUsers: publicProcedure.query(async ({ ctx }) => {
+    const users = await ctx.db.user.findMany();
+    return users;
+  }),
 
-    createTeam: publicProcedure
+  createTeam: publicProcedure
     .input(z.array(z.string()))
-    .mutation(({ ctx, input })=>{
-      console.log('********************************************');
+    .mutation(async ({ ctx, input }) => {
+      console.log("********************************************");
       console.log(input);
-      console.log('Inko team me daalna')
+      console.log("Inko team me daalna");
 
-      ctx.db.team.create({
-        data:{
-          leaderId:input[0]!
-        }
-      })
-    })
-  
+      await ctx.db.team.create({
+        data: {
+          leaderId: input[0]!,
+        },
+      });
+    }),
 });
