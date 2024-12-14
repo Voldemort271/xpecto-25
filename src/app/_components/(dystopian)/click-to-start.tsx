@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "motion/react";
+import { CursorContext } from "@/context/cursor-context";
 
 const ClickToStart = () => {
+  const { setIsHovered } = useContext(CursorContext);
+
   return (
     <div className="relative mt-5 w-full">
       <motion.div
-        className="w-full cursor-none px-12 py-5 text-xl font-light"
+        className="w-full px-12 py-5 text-xl font-light"
         initial={{ opacity: 1 }}
         variants={{
           blink: {
@@ -16,6 +19,8 @@ const ClickToStart = () => {
         }}
         animate="blink"
         transition={{ duration: 1, repeat: Infinity }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onClick={() => {
           // Add your click handler here
         }}

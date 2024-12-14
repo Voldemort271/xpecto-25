@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 
-const SidebarContext = createContext<{
+export const CursorContext = createContext<{
   isHovered: boolean;
   setIsHovered: Dispatch<SetStateAction<boolean>>;
 }>({
@@ -21,10 +21,10 @@ export const CursorProvider = ({ children }: { children: ReactNode }) => {
   const [hover, setHover] = useState(false);
 
   return (
-    <SidebarContext.Provider
+    <CursorContext.Provider
       value={{ isHovered: hover, setIsHovered: setHover }}
     >
       {children}
-    </SidebarContext.Provider>
+    </CursorContext.Provider>
   );
 };
