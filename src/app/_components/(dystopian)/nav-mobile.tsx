@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
 import { navElements, useCurrentUser } from "@/lib/utils";
 
+// TODO: Hide cursor on mobile view
+
 interface Props {
   toggler: boolean;
 }
