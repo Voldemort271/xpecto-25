@@ -6,6 +6,7 @@ import NavMobile from "@/app/_components/(dystopian)/nav-mobile";
 import { navElements, useCurrentUser } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
+import Link from "next/link";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
@@ -27,7 +28,7 @@ const DystopianNav = () => {
       <div className="hidden h-full w-full grid-cols-6 grid-rows-2 bg-neutral-900 lg:grid">
         {CurrentUser?.id !== "" ? (
           <div
-            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50`}
+            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50/[0.7]`}
           >
             {/*<UserButton />*/}
             <div className="pointer-events-none absolute left-0 top-1/2 h-full w-full cursor-pointer flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
@@ -44,7 +45,7 @@ const DystopianNav = () => {
           </div>
         ) : (
           <div
-            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50`}
+            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50/[0.7]`}
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-pointer flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
@@ -61,17 +62,13 @@ const DystopianNav = () => {
         )}
 
         {navElements.map((item, index) => (
-          <div
+          <Link
             key={index}
-            className={`relative flex w-full items-center justify-center overflow-clip border border-amber-50 ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50 text-neutral-900" : ""}`}
+            href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
+            className={`relative flex w-full items-center justify-center overflow-clip border border-amber-50 text-4xl font-normal uppercase ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50/[0.7] text-neutral-900" : ""}`}
           >
-            <div className="absolute left-0 top-1/2 h-full w-full cursor-pointer flex-col items-center justify-center text-4xl font-normal uppercase">
-              <MarqueeContainer
-                href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
-                text={[item, item, item]}
-              />
-            </div>
-          </div>
+            {item}
+          </Link>
         ))}
       </div>
       <div
