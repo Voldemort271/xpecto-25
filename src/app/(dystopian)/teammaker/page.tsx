@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { api } from "@/trpc/react";
 
 const TeammakerPage = () => {
@@ -8,8 +8,8 @@ const TeammakerPage = () => {
 
   const [teamMems, setTeamMems] = useState<string[]>([]);
 
-  const createTeamMutation = api.post.createTeam.useMutation();
-  const createTeamMutationRef = useRef(createTeamMutation);
+  // const createTeamMutation = api.post.createTeam.useMutation();
+  // const createTeamMutationRef = useRef(createTeamMutation);
 
   return (
     <>
@@ -36,7 +36,8 @@ const TeammakerPage = () => {
         ))}
         <button
           onClick={() => {
-            createTeamMutationRef.current.mutate(teamMems);
+            return;
+            // createTeamMutationRef.current.mutate(teamMems);
           }}
         >
           Create Team
