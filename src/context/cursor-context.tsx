@@ -13,6 +13,7 @@ const SidebarContext = createContext<{
   setIsHovered: Dispatch<SetStateAction<boolean>>;
 }>({
   isHovered: true,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setIsHovered: () => {},
 });
 
