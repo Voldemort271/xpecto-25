@@ -7,10 +7,9 @@ import { navElements, useCurrentUser } from "@/lib/utils";
 
 interface Props {
   toggler: boolean;
-  setToggler: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NavMobile = ({ toggler, setToggler }: Props) => {
+const NavMobile = ({ toggler }: Props) => {
   const { CurrentUser } = useCurrentUser();
 
   return (

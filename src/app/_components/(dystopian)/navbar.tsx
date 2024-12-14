@@ -102,7 +102,7 @@ const DystopianNav = () => {
           </svg>
         )}
       </div>
-      <NavMobile toggler={toggle} setToggler={setToggle} />
+      <NavMobile toggler={toggle}/>
     </div>
   );
 };
