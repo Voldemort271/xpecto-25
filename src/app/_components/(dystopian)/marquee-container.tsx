@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./marquee.module.css";
+import styles from "../../../styles/marquee.module.css";
 import Link from "next/link";
 
 interface Props {
