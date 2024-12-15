@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "../../../styles/marquee.module.css";
 import Link from "next/link";
+import { CursorContext } from "@/context/cursor-context";
 
 interface Props {
   text: string[];
@@ -9,9 +10,17 @@ interface Props {
 }
 
 const MarqueeContainer = ({ text, href, onclick }: Props) => {
+  const { isHovered, setIsHovered } = useContext(CursorContext);
   const text2 = text.concat(text).join(" | ").concat(" | ");
+
   return href ? (
-    <Link className="flex items-center" href={href} onClick={onclick}>
+    <Link
+      className="flex cursor-none items-center"
+      href={href}
+      onClick={onclick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className={styles.marquee}>
         <span>{text2}&nbsp;</span>
       </div>

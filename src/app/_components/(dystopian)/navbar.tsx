@@ -81,6 +81,8 @@ const DystopianNav = () => {
       <div
         className="flex h-full cursor-none flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 lg:hidden"
         onClick={() => setToggle(!toggle)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {toggle ? (
           <svg
