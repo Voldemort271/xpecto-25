@@ -7,7 +7,7 @@ import { CursorContext } from "@/context/cursor-context";
 const ClickToStart = () => {
   const { setIsHovered } = useContext(CursorContext);
   const scrollHeight =
-    typeof window !== "undefined" ? window.innerHeight - 208 : 1000;
+    typeof window !== "undefined" ? window.innerHeight - 130 : 1000;
 
   return (
     <div className="relative mt-5 w-full">
@@ -26,7 +26,7 @@ const ClickToStart = () => {
         onClick={() => {
           setTimeout(() => {
             window.scrollBy({ top: scrollHeight, behavior: "smooth" });
-          }, 1000);
+          }, 250);
         }}
       >
         click to start
