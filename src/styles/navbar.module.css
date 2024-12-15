@@ -21,7 +21,7 @@
 }
 
 .brandContainer {
-	@apply flex h-full flex-col items-start justify-center bg-neutral-900 p-5 border-2 border-amber-50;
+	@apply flex h-full flex-col items-start justify-center bg-neutral-900 p-5 border-2 border-amber-50 z-10;
 }
 
 .logoContainer {

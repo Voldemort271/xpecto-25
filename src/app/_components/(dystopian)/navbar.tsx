@@ -104,11 +104,14 @@ const DystopianNav = () => {
           </motion.div>
         ))}
       </div>
-      <div
+      <motion.div
         className="flex h-full cursor-none flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 lg:hidden"
         onClick={() => setToggle(!toggle)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        initial={{ translateX: -1024 }}
+        animate={{ translateX: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
       >
         {toggle ? (
           <svg
@@ -136,7 +139,7 @@ const DystopianNav = () => {
             <path d="M23 3V5H22V6H2V5H1V3H2V2H22V3H23Z" fill="#171717" />
           </svg>
         )}
-      </div>
+      </motion.div>
       <NavMobile toggler={toggle} />
     </motion.div>
   );
