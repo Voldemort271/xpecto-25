@@ -16,7 +16,7 @@ const NavMobile = ({ toggler }: Props) => {
     <AnimatePresence>
       {toggler && (
         <motion.div
-          className="fixed top-32 -z-10 block h-[calc(100vh-210px)] w-screen border-x-2 border-amber-50 backdrop-blur-2xl lg:hidden"
+          className="fixed top-32 -z-10 block h-[calc(100vh-192px)] w-screen border-x-2 border-amber-50 backdrop-blur-2xl lg:hidden"
           initial={{ left: -100, opacity: 0 }}
           animate={{ left: 0, opacity: 1 }}
           exit={{ left: 100, opacity: 0 }}
