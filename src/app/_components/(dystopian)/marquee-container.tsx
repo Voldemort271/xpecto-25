@@ -9,9 +9,10 @@ interface Props {
   text: string[];
   href?: string;
   onclick?: () => void;
+  delay?: number;
 }
 
-const MarqueeContainer = ({ text, href, onclick }: Props) => {
+const MarqueeContainer = ({ text, href, onclick, delay }: Props) => {
   const { isHovered, setIsHovered } = useContext(CursorContext);
   const text2 = text.concat(text).join(" | ").concat(" | ");
 
@@ -23,20 +24,40 @@ const MarqueeContainer = ({ text, href, onclick }: Props) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={styles.marquee}>
-        <span>{text2}&nbsp;</span>
+      <div
+        className={styles.marquee}
+        style={{ animationDelay: `${delay ? delay : 0}s` }}
+      >
+        <span style={{ animationDelay: `${delay ? delay - 10 : -10}s` }}>
+          {text2}&nbsp;
+        </span>
       </div>
-      <div className={`${styles.marquee} ${styles.marquee2}`}>
-        <span>{text2}&nbsp;</span>
+      <div
+        className={`${styles.marquee} ${styles.marquee2}`}
+        style={{ animationDelay: `${delay ? delay : 0}s` }}
+      >
+        <span style={{ animationDelay: `${delay ? delay : 0}s` }}>
+          {text2}&nbsp;
+        </span>
       </div>
     </Link>
   ) : (
     <>
-      <div className={styles.marquee}>
-        <span>{text2}&nbsp;</span>
+      <div
+        className={styles.marquee}
+        style={{ animationDelay: `${delay ? delay : 0}s` }}
+      >
+        <span style={{ animationDelay: `${delay ? delay - 10 : -10}s` }}>
+          {text2}&nbsp;
+        </span>
       </div>
-      <div className={`${styles.marquee} ${styles.marquee2}`}>
-        <span>{text2}&nbsp;</span>
+      <div
+        className={`${styles.marquee} ${styles.marquee2}`}
+        style={{ animationDelay: `${delay ? delay : 0}s` }}
+      >
+        <span style={{ animationDelay: `${delay ? delay : 0}s` }}>
+          {text2}&nbsp;
+        </span>
       </div>
     </>
   );

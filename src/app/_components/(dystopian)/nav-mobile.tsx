@@ -37,6 +37,7 @@ const NavMobile = ({ toggler }: Props) => {
               <MarqueeContainer
                 href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
                 text={[item, item, item, item, item, item]}
+                delay={index * 0.1}
               />
             </motion.div>
           ))}
@@ -50,6 +51,7 @@ const NavMobile = ({ toggler }: Props) => {
               <MarqueeContainer
                 href="/sign-in"
                 text={["login to be cool", "i promise cool stuff"]}
+                delay={1}
               />
             </motion.div>
           ) : (
@@ -66,6 +68,7 @@ const NavMobile = ({ toggler }: Props) => {
                   CurrentUser?.name ?? "User",
                   "hope you have fun",
                 ]}
+                delay={1}
               />
               {/*<UserButton />*/}
             </motion.div>

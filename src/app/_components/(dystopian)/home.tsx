@@ -3,6 +3,9 @@
 import React from "react";
 import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
 import ClickToStart from "@/app/_components/(dystopian)/click-to-start";
+import { motion } from "motion/react";
+
+// TODO: Shift bottom marquee animation when landing animation is ready
 
 const HomeScreen = () => {
   return (
@@ -22,13 +25,24 @@ const HomeScreen = () => {
           <ClickToStart />
         </div>
       </div>
-      <div
+      <motion.div
         className={`absolute bottom-0 left-0 flex h-20 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase`}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <MarqueeContainer
-          text={["the biggest fest of the himalayas", "32 to 56 march 2025"]}
-        />
-      </div>
+        <motion.span
+          className="flex h-full w-full flex-col items-center justify-center"
+          initial={{ translateY: -50, opacity: 0 }}
+          animate={{ translateY: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
+          <MarqueeContainer
+            text={["the biggest fest of the himalayas", "32 to 56 march 2025"]}
+            delay={0.25}
+          />
+        </motion.span>
+      </motion.div>
     </div>
   );
 };
