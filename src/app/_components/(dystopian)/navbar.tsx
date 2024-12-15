@@ -34,8 +34,8 @@ const DystopianNav = () => {
         animate={{ translateY: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0, ease: "linear" }}
       >
-        <div className="text-5xl font-medium uppercase">xpecto &apos;25</div>
-        <div className="text-sm font-normal uppercase leading-5 lg:text-base">
+        <div className="text-4xl font-medium uppercase">xpecto &apos;25</div>
+        <div className="text-sm font-normal uppercase leading-5">
           indian institute of technology, mandi
         </div>
       </motion.div>
@@ -88,7 +88,7 @@ const DystopianNav = () => {
         {navElements.map((item, index) => (
           <motion.div
             key={index}
-            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-4xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-[#8B8981] text-neutral-900" : "bg-neutral-900"}`}
+            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-3xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-[#8B8981] text-neutral-900" : "bg-neutral-900"}`}
             initial={{ translateY: -100, opacity: 0 }}
             animate={{ translateY: 0, opacity: 1 }}
             transition={{

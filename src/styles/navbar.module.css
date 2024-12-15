@@ -1,5 +1,5 @@
 .navContainer {
-	@apply grid h-32 lg:h-40 z-50 w-full grid-flow-dense grid-cols-2 gap-0;
+	@apply grid h-32 z-50 w-full grid-flow-dense grid-cols-2 gap-0;
 }
 
 @media (max-width: 768px) {
