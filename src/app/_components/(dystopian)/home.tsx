@@ -38,7 +38,12 @@ const HomeScreen = () => {
           transition={{ duration: 0.5, delay: 1 }}
         >
           <MarqueeContainer
-            text={["the biggest fest of the himalayas", "32 to 56 march 2025"]}
+            text={[
+              "the biggest fest of the himalayas",
+              "32 to 56 march 2025",
+              "the biggest fest of the himalayas",
+              "32 to 56 march 2025",
+            ]}
             delay={0.25}
           />
         </motion.span>
