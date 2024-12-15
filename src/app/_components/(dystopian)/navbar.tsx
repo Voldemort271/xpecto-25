@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
+import { motion } from "motion/react";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
@@ -19,21 +20,34 @@ const DystopianNav = () => {
   const { isHovered, setIsHovered } = useContext(CursorContext);
 
   return (
-    <div className={styles.navContainer}>
-      <div className={styles.brandContainer}>
+    <motion.div
+      className={styles.navContainer}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <motion.div
+        className={styles.brandContainer}
+        initial={{ translateY: -100, opacity: 0 }}
+        animate={{ translateY: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0, ease: "linear" }}
+      >
         <div className="text-5xl font-medium uppercase">xpecto &apos;25</div>
         <div className="text-sm font-normal uppercase leading-5 lg:text-base">
           indian institute of technology, mandi
         </div>
-      </div>
+      </motion.div>
       <div
-        className="hidden h-full w-full grid-cols-6 grid-rows-2 bg-neutral-900 lg:grid"
+        className="hidden h-full w-full grid-cols-6 grid-rows-2 lg:grid"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {CurrentUser?.id !== "" ? (
-          <div
-            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50/[0.7]`}
+          <motion.div
+            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-[#8B8981]`}
+            initial={{ translateY: -100 }}
+            animate={{ translateY: 0 }}
+            transition={{ duration: 0.5, delay: 0.25, ease: "linear" }}
           >
             {/*<UserButton />*/}
             <div className="pointer-events-none absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
@@ -47,10 +61,13 @@ const DystopianNav = () => {
                 ]}
               />
             </div>
-          </div>
+          </motion.div>
         ) : (
-          <div
-            className={`relative col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-amber-50/[0.7]`}
+          <motion.div
+            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-[#8B8981]`}
+            initial={{ translateY: -100 }}
+            animate={{ translateY: 0 }}
+            transition={{ duration: 0.5, delay: 0.25, ease: "linear" }}
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
@@ -63,17 +80,28 @@ const DystopianNav = () => {
                 ]}
               />
             </div>
-          </div>
+          </motion.div>
         )}
 
         {navElements.map((item, index) => (
-          <Link
+          <motion.div
             key={index}
-            href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
-            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-4xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50/[0.7] text-neutral-900" : ""}`}
+            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-4xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-[#8B8981] text-neutral-900" : "bg-neutral-900"}`}
+            initial={{ translateY: -100, opacity: 0 }}
+            animate={{ translateY: 0, opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.5 + index * 0.125,
+              ease: "linear",
+            }}
           >
-            {item}
-          </Link>
+            <Link
+              href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
+              className="flex h-full w-full cursor-none items-center justify-center"
+            >
+              {item}
+            </Link>
+          </motion.div>
         ))}
       </div>
       <div
@@ -110,7 +138,7 @@ const DystopianNav = () => {
         )}
       </div>
       <NavMobile toggler={toggle} />
-    </div>
+    </motion.div>
   );
 };
 
