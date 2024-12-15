@@ -26,7 +26,7 @@ const HomeScreen = () => {
         </div>
       </div>
       <motion.div
-        className={`absolute bottom-0 left-0 flex h-20 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-neutral-900 text-6xl font-normal uppercase`}
+        className={`absolute bottom-0 left-0 flex h-16 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase`}
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
