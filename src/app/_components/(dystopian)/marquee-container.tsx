@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useContext } from "react";
-import styles from "../../../styles/marquee.module.css";
+import styles from "@/styles/marquee.module.css";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 

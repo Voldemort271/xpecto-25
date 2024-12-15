@@ -21,9 +21,7 @@ const DystopianNav = () => {
   return (
     <div className={styles.navContainer}>
       <div className={styles.brandContainer}>
-        <div className="text-4xl font-medium uppercase md:text-5xl">
-          xpecto &apos;25
-        </div>
+        <div className="text-5xl font-medium uppercase">xpecto &apos;25</div>
         <div className="text-sm font-normal uppercase leading-5 lg:text-base">
           indian institute of technology, mandi
         </div>
@@ -72,7 +70,7 @@ const DystopianNav = () => {
           <Link
             key={index}
             href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
-            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-amber-50 text-4xl font-normal uppercase ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50/[0.7] text-neutral-900" : ""}`}
+            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-4xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-amber-50/[0.7] text-neutral-900" : ""}`}
           >
             {item}
           </Link>
