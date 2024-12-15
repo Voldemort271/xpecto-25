@@ -4,12 +4,19 @@ import React from "react";
 import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
 import ClickToStart from "@/app/_components/(dystopian)/click-to-start";
 import { motion } from "motion/react";
+import Image from "next/image";
+import BgImage from "@/../public/transparent-bg.png";
 
 // TODO: Shift bottom marquee animation when landing animation is ready
 
 const HomeScreen = () => {
   return (
-    <div className="relative h-[calc(100vh-2px)] w-full bg-[url(/transparent-bg.png)] bg-cover bg-center bg-no-repeat">
+    <div className="relative z-0 h-[calc(100vh-2px)] w-full bg-neutral-900">
+      <Image
+        src={BgImage}
+        alt={"transparent bg"}
+        className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom"
+      />
       <div className="h-40"></div>
       <div className="flex h-[calc(100vh-240px)] w-full flex-col items-center justify-center uppercase text-amber-50">
         <div className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold">
