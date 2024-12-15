@@ -6,8 +6,8 @@ import { CursorContext } from "@/context/cursor-context";
 
 const ClickToStart = () => {
   const { setIsHovered } = useContext(CursorContext);
-
-  const scrollHeight = window.innerHeight - 208;
+  const scrollHeight =
+    typeof window !== "undefined" ? window.innerHeight - 208 : 1000;
 
   return (
     <div className="relative mt-5 w-full">
