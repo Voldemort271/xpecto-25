@@ -42,20 +42,20 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const time = setTimeout(() => {
-        const res = api.post.getCollNameFromEmail.useQuery(
-          clerkUser!.primaryEmailAddress!.emailAddress,
-        );
-        if (typeof res == "string") {
-          setCollName(res);
-        }
-      }, 500);
 
       if (!isLoaded || !clerkUser) {
         return; // Wait until the user data is loaded
         // if (!clerkUser) {
         //   router.push("/sign-in");
       } else {
+        const time = setTimeout(() => {
+          const res = api.post.getCollNameFromEmail.useQuery(
+            clerkUser.primaryEmailAddress!.emailAddress,
+          );
+          if (typeof res == "string") {
+            setCollName(res);
+          }
+        }, 500);
         const userData = {
           clerkId: clerkUser.id,
           name: clerkUser.fullName!,
@@ -79,15 +79,15 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
             },
           });
         }
+        return () => clearTimeout(time);
       }
 
-      return () => clearTimeout(time);
     };
 
     fetchUserData().catch((error) =>
       console.error("Error in fetchUserData:", error),
     );
-  }, [clerkUser, isLoaded, url]);
+  }, [clerkUser, isLoaded, url, collName]);
 
   useEffect(() => {
     console.log("currentUser", clerkUser);
