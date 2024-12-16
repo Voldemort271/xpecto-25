@@ -35,7 +35,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     id: "",
   });
   const { user: clerkUser, isLoaded } = useUser();
-  const createUserMutation = api.post.createUser.useMutation();
+  const createUserMutation = api.user.createUser.useMutation();
   const createUserMutationRef = useRef(createUserMutation); // Use a ref to store the mutation function
 
   useEffect(() => {

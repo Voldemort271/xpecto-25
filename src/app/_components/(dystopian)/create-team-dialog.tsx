@@ -48,7 +48,7 @@ const CreateTeamDialog = () => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const { data: searchResults } = api.post.searchUsers.useQuery({
+  const { data: searchResults } = api.user.searchUsers.useQuery({
     query: debouncedQuery,
     invitees: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
   });
@@ -60,12 +60,12 @@ const CreateTeamDialog = () => {
     setInvitees(invitees.filter((u) => u.id !== userId));
   };
 
-  const createTeamMutation = api.post.createTeam.useMutation();
+  const createTeamMutation = api.team.createTeam.useMutation();
 
-  const {data: foundTeamName} = api.post.findTeamByName.useQuery({
+  const {data: foundTeamName} = api.team.findTeamByName.useQuery({
     name: teamName,
   });
-  const {data: foundTeamUsers} = api.post.findTeamByUsers.useQuery({
+  const {data: foundTeamUsers} = api.team.findTeamByUsers.useQuery({
     users: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
     type: selectedType,
     });
@@ -188,11 +188,9 @@ const CreateTeamDialog = () => {
           </div>
         </div>
         <DialogFooter>
-          <DialogClose asChild>
           <Button type="submit" onClick={handleSubmit} disabled={!selectedType || teamName === ""}>
             Send Invitations
           </Button>
-          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
