@@ -9,7 +9,7 @@ import IntroPic from "public/intro.png";
 import Hehe from "public/meme.png";
 import { Share_Tech } from "next/font/google";
 
-const sharetech = Share_Tech({ weight: "400" });
+const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const IntroScreen = () => {
   return (
