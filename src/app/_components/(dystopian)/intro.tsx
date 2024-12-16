@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import styles from "@/styles/intro.module.css";
 import Image from "next/image";
 import IntroPic from "public/intro.png";
+import Hehe from "public/meme.png";
 import { Share_Tech } from "next/font/google";
 
 const sharetech = Share_Tech({ weight: "400" });
@@ -20,12 +21,12 @@ const IntroScreen = () => {
           className="absolute left-[2px] top-[2px] z-10 flex h-[calc(100%-4px)] w-[calc(100%-4px)] object-cover object-bottom"
         />
         <div className="absolute left-[2px] top-[2px] z-10 flex h-[calc(100%-4px)] w-[calc(100%-4px)] items-end justify-start p-5 md:p-5">
-          <div className="w-full max-w-screen-md">
+          <div className="w-full max-w-screen-sm xl:max-w-screen-md">
             <div className="text-6xl font-semibold uppercase">
               what is xpecto
             </div>
             <div
-              className={`${sharetech.className} mt-2.5 text-lg tracking-tight`}
+              className={`${sharetech.className} mt-2.5 text-base tracking-tight sm:text-lg`}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               ut lacus ac tortor eleifend scelerisque non sed ante. Interdum et
@@ -41,6 +42,11 @@ const IntroScreen = () => {
             </div>
           </div>
         </div>
+        <Image
+          src={Hehe}
+          alt={"hehe"}
+          className="absolute bottom-[2px] right-[2px] z-10 hidden h-64 w-64 object-cover lg:block"
+        />
       </div>
       <motion.div
         className={`absolute bottom-0 left-0 flex h-16 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-amber-50 text-4xl font-normal uppercase text-neutral-900`}
