@@ -51,10 +51,9 @@ const DystopianNav = () => {
             animate={{ translateY: 0 }}
             transition={{ duration: 0.5, delay: 0.25, ease: "linear" }}
           >
-            {/*<UserButton />*/}
             <div className="pointer-events-none absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
-                href={`/sign-out`}
+                href={`/profile`}
                 text={[
                   "welcome back",
                   CurrentUser?.name ?? "user",

@@ -28,30 +28,44 @@ model User {
     name         String
     college_name String @default("Individual")
 
-    teamLeader Team[]    @relation("teamLeader")
+    teamLeader Team[]        @relation("teamLeader")
     teams      Team[]
+    invites    InviteToken[]
     events     Event[]
     pronites   Pronite[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    @@index([clerkId])
 }
 
 model Team {
     id          String @id @default(cuid())
+    name        String @unique @default("")
     prize_money Int    @default(0)
+    type        String @default("Competitor")
 
     leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
     leaderId String
 
-    teammates User[]
+    team_members     User[]
+    invitations   InviteToken[]
     organisations Organization[] @relation("orgMembers")
     competitions  Competitor[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model InviteToken {
+    token     String   @id
+    teamId    String
+    userId    String
+    createdAt DateTime @default(now())
+
+    team Team @relation(fields: [teamId], references: [id])
+    user User @relation(fields: [userId], references: [id])
+
+    @@unique([teamId, userId])
 }
 
 model Organization {

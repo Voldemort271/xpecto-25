@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { useContext } from "react";
 import { SharedContext } from "./context";
 
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -28,3 +29,6 @@ export const navElements = [
   "About",
   "Sponsors",
 ];
+
+export const profileSidebarElements = ["Profile", "Teams", "Settings", "Logout"];
+
