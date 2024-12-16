@@ -2,7 +2,7 @@
 
 import React, { useContext } from "react";
 import { motion } from "motion/react";
-import { CursorContext } from "@/context/cursor-context"; // TODO: Extend timeout once landing outro animation is ready
+import { CursorContext } from "@/context/cursor-context";
 
 // TODO: Extend timeout once landing outro animation is ready
 
