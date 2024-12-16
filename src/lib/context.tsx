@@ -87,7 +87,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     fetchUserData().catch((error) =>
       console.error("Error in fetchUserData:", error),
     );
-  }, [clerkUser, isLoaded, url]);
+  }, [clerkUser, collName, isLoaded, url]);
 
   useEffect(() => {
     console.log("currentUser", clerkUser);

@@ -313,15 +313,15 @@ export const postRouter = createTRPCRouter({
         .toString()
         .split("\n");
 
-      let domains: string[] = [];
+      const domains: string[] = [];
 
       for (const line of csv) {
         const vals: string[] = line.split(",");
         const link: string = vals[vals.length - 3]!; //third last element of each row which is the url
 
-        let domain: string = "";
+        let domain = "";
 
-        for (const s of link!) {
+        for (const s of link) {
           if (s == '"') {
             continue;
           }
@@ -331,7 +331,7 @@ export const postRouter = createTRPCRouter({
             domain = "";
           }
         }
-        if (domain.indexOf("/") != -1) {
+        if (domain.includes("/")) {
           domain = domain.slice(0, domain.indexOf("/"));
         }
         if (domain != "") {
@@ -341,7 +341,7 @@ export const postRouter = createTRPCRouter({
 
       const n: number = input.indexOf("@") + 1;
       const domain: string = input.slice(n, input.length);
-      if (domains.indexOf(domain) == -1) {
+      if (!domains.includes(domain)) {
         return "Individual";
       }
       return domain.split(".")[0];

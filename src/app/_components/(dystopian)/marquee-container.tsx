@@ -13,7 +13,7 @@ interface Props {
 }
 
 const MarqueeContainer = ({ text, href, onclick, delay }: Props) => {
-  const { isHovered, setIsHovered } = useContext(CursorContext);
+  const { setIsHovered } = useContext(CursorContext);
   const text2 = text.concat(text).join(" | ").concat(" | ");
 
   return href ? (

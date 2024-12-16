@@ -11,7 +11,7 @@ const DystopianCursor = () => {
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  const { isHovered, setIsHovered } = useContext(CursorContext);
+  const { isHovered } = useContext(CursorContext);
 
   // setIsHovered(true);
 
