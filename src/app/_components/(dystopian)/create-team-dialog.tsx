@@ -62,10 +62,10 @@ const CreateTeamDialog = () => {
 
   const createTeamMutation = api.post.createTeam.useMutation();
 
-  const foundTeamName = api.post.findTeamByName.useQuery({
+  const {data: foundTeamName} = api.post.findTeamByName.useQuery({
     name: teamName,
   });
-  const foundTeamUsers = api.post.findTeamByUsers.useQuery({
+  const {data: foundTeamUsers} = api.post.findTeamByUsers.useQuery({
     users: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
     type: selectedType,
     });
@@ -76,8 +76,7 @@ const CreateTeamDialog = () => {
       alert("User not logged in.");
       return;
     }
-    // Add a func to check if a team with same name or users exists or not, otherwise send a prompt
-    // Add a func that when a team tries to enter a competition, it checks if a team-member is already in a competition or not
+
     if (foundTeamName){
       console.log(foundTeamName);
       alert("Team with the same name already exists");

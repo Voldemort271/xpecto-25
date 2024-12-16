@@ -1,11 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-// import { EmailTemplate } from "../../../components/email-template";
-// import { Resend } from "resend";
 import crypto from "crypto";
-
-// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const postRouter = createTRPCRouter({
   create: publicProcedure
@@ -70,12 +66,11 @@ export const postRouter = createTRPCRouter({
             },
           },
         },
-      })
+      });
       return userTeams ? userTeams.teams : [];
-      
     }),
 
-    getUserInvites: publicProcedure
+  getUserInvites: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ ctx, input }) => {
       const userInvites = await ctx.db.user.findUnique({
@@ -90,13 +85,8 @@ export const postRouter = createTRPCRouter({
             },
           },
         },
-      })
-      if(userInvites){
-      return userInvites.invites;
-      }
-      else{
-        return [];
-      }
+      });
+      return userInvites ? userInvites.invites : [];
     }),
 
   searchUsers: publicProcedure
@@ -170,7 +160,7 @@ export const postRouter = createTRPCRouter({
         },
       });
       if (
-          (team ? team.team_members.length : 0) +
+        (team ? team.team_members.length : 0) +
           (team ? team?.invitations.length : 0) !==
         users.length
       ) {
@@ -191,14 +181,13 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { leaderId, invitees, name, type } = input;
 
-
       const team = await ctx.db.team.create({
         data: {
           leaderId: leaderId,
           name: name,
           type: type,
           team_members: {
-            connect: [{id: leaderId}],
+            connect: [{ id: leaderId }],
           },
           invitations: {
             create: [...invitees].map((invitee) => ({
@@ -216,36 +205,6 @@ export const postRouter = createTRPCRouter({
           },
         },
       });
-
-      // await Promise.all(
-      //   team.invitations.map(async (invitee) => {
-      //     try {
-      //       const { data, error } = await resend.emails.send({
-      //         from: "Acme <onboarding@resend.dev>",
-      //         to: invitee.user.email,
-      //         subject: `Team Invitation from team ${name} for Xpecto-25`,
-      //         react: EmailTemplate({
-      //           firstName: invitee.user.name?.split(" ")[0] ?? "Guest",
-      //           teamName: name,
-      //           collegeName: invitee.user.college_name ?? "Individual",
-      //           inviteLink: "/invite/" + invitee.token,
-      //         }),
-      //       });
-
-      //       if (error) {
-      //         throw new Error(error.message);
-      //       }
-
-      //       return data;
-      //     } catch (error) {
-      //       if (error instanceof Error) {
-      //         throw new Error(error.message);
-      //       } else {
-      //         throw new Error("An unknown error occurred");
-      //       }
-      //     }
-      //   }),
-      // );
 
       return team;
     }),
@@ -278,6 +237,68 @@ export const postRouter = createTRPCRouter({
           team_members: true,
         },
       });
+
+      return team;
+    }),
+
+  deleteTeamInvite: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { token } = input;
+
+      const res = await ctx.db.inviteToken.delete({
+        where: { token: token },
+      });
+
+      return res;
+    }),
+
+  deleteUserFromTeam: publicProcedure
+    .input(
+      z.object({
+        teamId: z.string(),
+        userId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { teamId, userId } = input;
+
+      // Disconnect the user from team_members
+      const team = await ctx.db.team.update({
+        where: { id: teamId },
+        data: {
+          team_members: {
+            disconnect: { id: userId },
+          },
+        },
+        include: {
+          leader: true,
+          team_members: true,
+        },
+      });
+
+      // If the user was the leader, update the leaderId
+      if (team.leaderId === userId) {
+        if (team.team_members.length > 0) {
+          // Set the leaderId to the first person in team_members
+          await ctx.db.team.update({
+            where: { id: teamId },
+            data: {
+              leaderId: team.team_members[0]!.id,
+            },
+          });
+        } else {
+          // If there are no team_members left, delete the team
+          await ctx.db.team.delete({
+            where: { id: teamId },
+          });
+          return { message: "Team deleted as there are no members left" };
+        }
+      }
 
       return team;
     }),
