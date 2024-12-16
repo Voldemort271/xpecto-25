@@ -3,6 +3,8 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import crypto from "crypto";
 
+import fs from "fs";
+
 export const postRouter = createTRPCRouter({
   create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
@@ -301,5 +303,47 @@ export const postRouter = createTRPCRouter({
       }
 
       return team;
+    }),
+
+  getCollNameFromEmail: publicProcedure
+    .input(z.string())
+    .query(({ ctx, input }) => {
+      const csv: string[] = fs
+        .readFileSync("../../../../public/allUnivs.csv")
+        .toString()
+        .split("\n");
+
+      let domains: string[] = [];
+
+      for (const line of csv) {
+        const vals: string[] = line.split(",");
+        const link: string = vals[vals.length - 3]!; //third last element of each row which is the url
+
+        let domain: string = "";
+
+        for (const s of link!) {
+          if (s == '"') {
+            continue;
+          }
+          domain += s;
+          domain = domain.trim();
+          if (domain == "http://" || domain == "https://" || domain == "www.") {
+            domain = "";
+          }
+        }
+        if (domain.indexOf("/") != -1) {
+          domain = domain.slice(0, domain.indexOf("/"));
+        }
+        if (domain != "") {
+          domains.push(domain);
+        }
+      }
+
+      const n: number = input.indexOf("@") + 1;
+      const domain: string = input.slice(n, input.length);
+      if (domains.indexOf(domain) == -1) {
+        return "Individual";
+      }
+      return domain.split(".")[0];
     }),
 });
