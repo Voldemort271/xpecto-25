@@ -29,7 +29,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     name: "",
     email: "",
     clerkId: "",
-    college_name: "Individual",
+    college_name: "",
     createdAt: new Date(),
     updatedAt: new Date(),
     id: "",
@@ -38,17 +38,29 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   const createUserMutation = api.user.createUser.useMutation();
   const createUserMutationRef = useRef(createUserMutation); // Use a ref to store the mutation function
 
+  const [collName, setCollName] = useState("");
+
   useEffect(() => {
     const fetchUserData = async () => {
+      const time = setTimeout(() => {
+        const res = api.post.getCollNameFromEmail.useQuery(
+          clerkUser!.primaryEmailAddress!.emailAddress,
+        );
+        if (typeof res == "string") {
+          setCollName(res);
+        }
+      }, 500);
+
       if (!isLoaded || !clerkUser) {
-         return; // Wait until the user data is loaded
-      // if (!clerkUser) {
-      //   router.push("/sign-in");
+        return; // Wait until the user data is loaded
+        // if (!clerkUser) {
+        //   router.push("/sign-in");
       } else {
         const userData = {
           clerkId: clerkUser.id,
           name: clerkUser.fullName!,
           email: clerkUser.primaryEmailAddress!.emailAddress,
+          college_name: collName,
         };
         if (!userData.name || !userData.email || !userData.clerkId) {
           console.error("Missing user data:", userData);
@@ -68,6 +80,8 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
           });
         }
       }
+
+      return () => clearTimeout(time);
     };
 
     fetchUserData().catch((error) =>
