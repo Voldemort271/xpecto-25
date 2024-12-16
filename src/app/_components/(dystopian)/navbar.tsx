@@ -51,7 +51,7 @@ const DystopianNav = () => {
             animate={{ translateY: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            <div className="pointer-events-none absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
+            <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
                 href={`/profile`}
                 text={[
@@ -135,9 +135,27 @@ const DystopianNav = () => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M22 11H23V13H22V14H2V13H1V11H2V10H22V11Z" fill="#171717" />
-            <path d="M22 19H23V21H22V22H2V21H1V19H2V18H22V19Z" fill="#171717" />
-            <path d="M23 3V5H22V6H2V5H1V3H2V2H22V3H23Z" fill="#171717" />
+            <motion.path
+              d="M22 11H23V13H22V14H2V13H1V11H2V10H22V11Z"
+              fill="#171717"
+              initial={{ opacity: 0, pathLength: 0 }}
+              whileInView={{ opacity: 1, pathLength: 1 }}
+              transition={{ duration: 2 }}
+            />
+            <motion.path
+              d="M22 19H23V21H22V22H2V21H1V19H2V18H22V19Z"
+              fill="#171717"
+              initial={{ opacity: 0, pathLength: 0 }}
+              whileInView={{ opacity: 1, pathLength: 1 }}
+              transition={{ duration: 2 }}
+            />
+            <motion.path
+              d="M23 3V5H22V6H2V5H1V3H2V2H22V3H23Z"
+              fill="#171717"
+              initial={{ opacity: 0, pathLength: 0 }}
+              whileInView={{ opacity: 1, pathLength: 1 }}
+              transition={{ duration: 2 }}
+            />
           </svg>
         )}
       </motion.div>

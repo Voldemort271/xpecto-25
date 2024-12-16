@@ -15,7 +15,7 @@
 }
 
 .introBorder {
-	@apply relative h-full w-full bg-red-400;
+	@apply relative h-full w-full bg-neutral-900;
 	background: conic-gradient(from var(--r), #8B8981 0%, #fffbeb 20%, #8B8981 40%);
 	animation: rotating 3s linear infinite;
 }
