@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 
 const IntroScreen = () => {
   return (
-    <div className="relative h-[calc(100vh-130px)] w-screen bg-neutral-900 lg:h-[calc(100vh-160px)]">
+    <div className="relative h-[calc(100vh-128px)] w-screen bg-neutral-900">
       intro
       <motion.div
         className={`absolute bottom-0 left-0 flex h-16 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-amber-50 text-4xl font-normal uppercase text-neutral-900`}

@@ -19,7 +19,7 @@ const DystopianNav = () => {
 
   const { CurrentUser } = useCurrentUser();
 
-  const { isHovered, setIsHovered } = useContext(CursorContext);
+  const { setIsHovered } = useContext(CursorContext);
 
   return (
     <motion.div

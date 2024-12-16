@@ -2,12 +2,14 @@
 
 import React, { useContext } from "react";
 import { motion } from "motion/react";
-import { CursorContext } from "@/context/cursor-context";
+import { CursorContext } from "@/context/cursor-context"; // TODO: Extend timeout once landing outro animation is ready
+
+// TODO: Extend timeout once landing outro animation is ready
 
 const ClickToStart = () => {
   const { setIsHovered } = useContext(CursorContext);
   const scrollHeight =
-    typeof window !== "undefined" ? window.innerHeight - 130 : 1000;
+    typeof window !== "undefined" ? window.innerHeight - 128 : 1000;
 
   return (
     <div className="relative mt-5 w-full">
