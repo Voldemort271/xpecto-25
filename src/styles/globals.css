@@ -14,6 +14,33 @@ body {
 	text-rendering: optimizeLegibility;
 }
 
+#logo path {
+  stroke: #ffffec;
+  fill: none;
+  transition: fill 2s ease-in-out;
+}
+
+@keyframes line-anim {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fill-anim {
+    0% {
+        fill: none; /* Transparent */
+    }
+    100% {
+        fill: #ffffec; /* Target color */
+    }
+}
+
+#logo {
+  fill: transparent;
+  animation: fill-animation 4s ease forwards 8s;
+}
+
+
 @layer base {
 	:root {
 		--radius: 0.5rem
