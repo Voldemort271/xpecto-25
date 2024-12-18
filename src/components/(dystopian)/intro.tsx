@@ -14,7 +14,12 @@ const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 const IntroScreen = () => {
   return (
     <div className="relative flex h-full w-screen items-center justify-center bg-neutral-900 p-5 pb-20 sm:h-[calc(100vh-128px)] md:p-12 md:pb-32">
-      <div className={styles.introBorder}>
+      <motion.div
+        className={styles.introBorder}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.25 }}
+      >
         <Image
           src={IntroPic}
           alt={"Intro picture"}
@@ -47,7 +52,7 @@ const IntroScreen = () => {
           alt={"hehe"}
           className="absolute bottom-[2px] right-[2px] z-10 hidden h-64 w-64 object-cover lg:block"
         />
-      </div>
+      </motion.div>
       <motion.div
         className={`absolute bottom-0 left-0 flex h-16 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-amber-50 text-4xl font-normal uppercase text-neutral-900`}
         initial={{ opacity: 0, y: 100 }}
