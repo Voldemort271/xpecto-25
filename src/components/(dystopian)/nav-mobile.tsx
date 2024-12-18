@@ -7,9 +7,10 @@ import { navElements, useCurrentUser } from "@/lib/utils";
 
 interface Props {
   toggler: boolean;
+  setToggler: (value: boolean) => void;
 }
 
-const NavMobile = ({ toggler }: Props) => {
+const NavMobile = ({ toggler, setToggler }: Props) => {
   const { CurrentUser } = useCurrentUser();
 
   return (
@@ -24,6 +25,7 @@ const NavMobile = ({ toggler }: Props) => {
           {navElements.map((item, index) => (
             <motion.div
               key={index}
+              onClick={() => setToggler(false)}
               initial={
                 item === "Home" ? { opacity: 0 } : { left: -100, opacity: 0 }
               }
@@ -44,6 +46,7 @@ const NavMobile = ({ toggler }: Props) => {
           {CurrentUser?.id === "" ? (
             <motion.div
               initial={{ left: -100, opacity: 0 }}
+              onClick={() => setToggler(false)}
               animate={{ left: 0, opacity: 1 }}
               transition={{ delay: 2 }}
               className="absolute left-0 top-96 flex h-20 w-full cursor-none flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
@@ -58,6 +61,7 @@ const NavMobile = ({ toggler }: Props) => {
             <motion.div
               initial={{ left: -100, opacity: 0 }}
               animate={{ left: 0, opacity: 1 }}
+              onClick={() => setToggler(false)}
               transition={{ delay: 1 }}
               className="absolute left-0 top-96 flex h-16 w-full cursor-none flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-4xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
             >

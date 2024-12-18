@@ -159,7 +159,7 @@ const DystopianNav = () => {
           </svg>
         )}
       </motion.div>
-      <NavMobile toggler={toggle} />
+      <NavMobile toggler={toggle} setToggler={setToggle} />
     </motion.div>
   );
 };
