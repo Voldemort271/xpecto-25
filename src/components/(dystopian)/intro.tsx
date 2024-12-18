@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
+import MarqueeContainer from "@/components/(dystopian)/marquee-container";
 import { motion } from "motion/react";
 import styles from "@/styles/intro.module.css";
 import Image from "next/image";
-import IntroPic from "public/intro.png";
-import Hehe from "public/meme.png";
+import IntroPic from "../../../public/intro.png";
+import Hehe from "../../../public/meme.png";
 import { Share_Tech } from "next/font/google";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });

@@ -3,11 +3,11 @@
 // TODO: Shift nav animations by some time offset once header animation is ready
 
 import React, { useContext, useState } from "react";
-import styles from "../../../styles/navbar.module.css";
-import NavMobile from "@/app/_components/(dystopian)/nav-mobile";
+import styles from "../../styles/navbar.module.css";
+import NavMobile from "@/components/(dystopian)/nav-mobile";
 import { navElements, useCurrentUser } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
+import MarqueeContainer from "@/components/(dystopian)/marquee-container";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";

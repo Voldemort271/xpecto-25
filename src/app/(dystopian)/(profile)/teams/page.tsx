@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { api } from "@/trpc/react"; // Import the api object
 import { useCurrentUser } from "@/lib/utils";
-import CreateTeamDialog from "@/app/_components/(dystopian)/create-team-dialog";
+import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
 import { Button } from "@/components/ui/button"; // Import the Button component
 
 const Page = () => {
@@ -126,7 +126,7 @@ const Page = () => {
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-4 p-2">
-      <div className="text-2xl underline">Current Teams : </div>
+      <div className="text-2xl underline">Current Teams :</div>
       <div className="flex w-full flex-col gap-2">
         {myTeams?.map((team) => (
           <div key={team.id} className="flex items-center justify-evenly">
@@ -140,7 +140,7 @@ const Page = () => {
           </div>
         ))}
       </div>
-      <div className="text-2xl underline">Invitations : </div>
+      <div className="text-2xl underline">Invitations :</div>
       <div className="flex w-full flex-col items-start gap-2">
         {myInvites?.map((invitee) => (
           <div

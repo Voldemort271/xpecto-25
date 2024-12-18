@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
-import ClickToStart from "@/app/_components/(dystopian)/click-to-start";
+import MarqueeContainer from "@/components/(dystopian)/marquee-container";
+import ClickToStart from "@/components/(dystopian)/click-to-start";
 import { motion } from "motion/react";
 import Image from "next/image";
-import BgImage from "public/transparent-bg.png";
+import BgImage from "../../../public/transparent-bg.png";
 
 // TODO: Shift bottom marquee animation when landing animation is ready
 

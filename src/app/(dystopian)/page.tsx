@@ -1,6 +1,6 @@
 import React from "react";
-import HomeScreen from "@/app/_components/(dystopian)/home";
-import IntroScreen from "@/app/_components/(dystopian)/intro";
+import HomeScreen from "@/components/(dystopian)/home";
+import IntroScreen from "@/components/(dystopian)/intro";
 
 const Home = () => {
   return (

@@ -1,8 +1,8 @@
 import React from "react";
-import DystopianNav from "@/app/_components/(dystopian)/navbar";
+import DystopianNav from "@/components/(dystopian)/navbar";
 import { Handjet } from "next/font/google";
 import { CursorProvider } from "@/context/cursor-context";
-import DystopianCursor from "@/app/_components/(dystopian)/cursor";
+import DystopianCursor from "@/components/(dystopian)/cursor";
 
 const handjet = Handjet({ subsets: ["latin"] });
 

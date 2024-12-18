@@ -2,7 +2,7 @@
 
 import React from "react";
 import { AnimatePresence, motion } from "motion/react";
-import MarqueeContainer from "@/app/_components/(dystopian)/marquee-container";
+import MarqueeContainer from "@/components/(dystopian)/marquee-container";
 import { navElements, useCurrentUser } from "@/lib/utils";
 
 interface Props {
