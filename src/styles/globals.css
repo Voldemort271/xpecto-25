@@ -79,3 +79,15 @@ body {
 		background-position: 0 0;
 	}
 }
+
+@media (pointer: none) {
+	.custom-cursor {
+		display: none;
+	}
+}
+
+@media (pointer: coarse) {
+	.custom-cursor {
+		display: none;
+	}
+}

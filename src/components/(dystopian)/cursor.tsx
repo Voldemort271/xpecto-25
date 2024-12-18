@@ -26,7 +26,7 @@ const DystopianCursor = () => {
 
   return (
     <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-50 h-8 w-8 rounded-full bg-amber-50 text-neutral-900 mix-blend-difference"
+      className="custom-cursor pointer-events-none fixed z-50 h-8 w-8 rounded-full bg-amber-50 text-neutral-900 mix-blend-difference"
       style={{
         x: cursorXSpring,
         y: cursorYSpring,
