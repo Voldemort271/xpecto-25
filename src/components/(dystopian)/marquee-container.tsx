@@ -28,7 +28,7 @@ const MarqueeContainer = ({ text, href, onclick, delay }: Props) => {
         className={styles.marquee}
         style={{ animationDelay: `${delay ? delay : 0}s` }}
       >
-        <span style={{ animationDelay: `${delay ? delay - 10 : -10}s` }}>
+        <span style={{ animationDelay: `${delay ? delay - 25 : -25}s` }}>
           {text2}&nbsp;
         </span>
       </div>
@@ -47,7 +47,7 @@ const MarqueeContainer = ({ text, href, onclick, delay }: Props) => {
         className={styles.marquee}
         style={{ animationDelay: `${delay ? delay : 0}s` }}
       >
-        <span style={{ animationDelay: `${delay ? delay - 10 : -10}s` }}>
+        <span style={{ animationDelay: `${delay ? delay - 25 : -25}s` }}>
           {text2}&nbsp;
         </span>
       </div>

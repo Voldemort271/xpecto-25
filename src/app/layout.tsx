@@ -20,12 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <div className="staticBg"></div>
         <ClerkProvider>
           <TRPCReactProvider>
             <SharedContextProvider>{children}</SharedContextProvider>
           </TRPCReactProvider>
         </ClerkProvider>
+        <div className="staticBg"></div>
       </body>
     </html>
   );
