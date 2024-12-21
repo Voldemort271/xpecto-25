@@ -9,8 +9,9 @@ import React, {
 } from "react";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import type { User } from "@prisma/client";
+import type { User,Competition } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
+
 
 interface SharedContextProps {
   CurrentUser?: User;
@@ -37,6 +38,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
 
   const createUserMutation = api.user.createUser.useMutation();
   const createUserMutationRef = useRef(createUserMutation); // Use a ref to store the mutation function
+  
 
   useEffect(() => {
     const fetchUserData = async () => {

@@ -9,38 +9,32 @@ import Link from 'next/link'
 import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-grid';
 const Page = () => {
 
-  const { data: competitions } = api.competition.getCompetitions.useQuery();
+  const { data: pronites } = api.pronite.getPronite.useQuery();
   
   useEffect(() => {
-    if (competitions) {
-      console.log('competition',competitions)
+    if (pronites) {
+      console.log('pronite',pronites)
     }
-  }, [competitions]);
+  }, [pronites]);
 
 return(<>
-<div className="all">All competitions</div>
+<div className="all">All pronites</div>
 
 <div className="div-center mt-6" >
-        <Grid scrollable="none" data={competitions} style={{width:'30%'}}>
+        <Grid scrollable="none" data={pronites} style={{width:'20%'}}>
           <GridToolbar>
-            <Link href="/competitions/create"><button className="btn">Create Competition</button></Link>
+            <Link href="/pronite/create"><button className="btn">Create Pronite</button></Link>
           </GridToolbar>
             <Column
-                field="competitionDetails.name"
+                field="proniteDetails.name"
                 title="Name"
                 width="150px"
             />
             <Column
-                field="competitionDetails.begin_time"
+                field="proniteDetails.begin_time"
                 title="Begin Date"
-                format="{0:dd/MM/yyyy}"
+                format="{0:dd/MM/yyyy hh:mm}"
                 width="150px"
-            />
-            <Column
-                field="competitionDetails.end_time"
-                title="End Date"
-                width="150px"
-               format="{0:dd/MM/yyyy}"
             />
         </Grid>
 

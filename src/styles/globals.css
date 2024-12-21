@@ -91,3 +91,52 @@ body {
 		display: none;
 	}
 }
+
+.left-col
+{
+	width:10rem;
+	display: flex;
+    align-items: center;
+}
+.btn{
+	display: flex;
+    flex-direction: column-reverse;
+    border: solid;
+    align-items: center;
+    padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+.btn:hover
+{
+	background-color: #f0ecdc;
+	color:black;
+}
+.all {
+    display: flex
+;
+    justify-content: center;
+    font-size: 3rem;
+    margin-top: 1rem;
+}
+.align
+{
+	display:flex;
+}
+
+.div-center
+{
+	display: flex;
+	justify-content:center;
+}
+.field-text
+{
+	color: black;
+	margin:0.75rem;
+	width:40rem;
+}
+.field
+{
+	color: black;
+	margin:0.75rem;
+	
+}
