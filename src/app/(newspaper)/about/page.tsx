@@ -1,41 +1,37 @@
 import React from "react";
-import { Jacquard_24 } from "next/font/google";
-import { IM_Fell_Double_Pica } from "next/font/google";
+import {
+  IM_Fell_Double_Pica,
+  IM_Fell_Double_Pica_SC,
+  Jacquard_24,
+} from "next/font/google";
 import collegeImg from "public/iit-mandi-img.png";
 import roadImg from "public/road-img.png";
-import design from "public/Design.svg";
-import design2 from "public/Design2.svg";
 import Image from "next/image";
 
 const jacquard = Jacquard_24({ weight: "400", subsets: ["latin"] });
 const imfell = IM_Fell_Double_Pica({ weight: "400", subsets: ["latin"] });
+const imfellsc = IM_Fell_Double_Pica_SC({ weight: "400", subsets: ["latin"] });
 
 const page = () => {
   return (
-    <div className="mx-[15px] md:mx-[35px] lg:ml-[50px] lg:mr-[42px] xl:grid xl:grid-cols-2 md:gap-6 text-[#242424]">
-      <div className="left">
+    <div className="mx-4 py-4 text-neutral-900 md:mx-9 md:gap-6 lg:ml-12 lg:mr-10 xl:grid xl:grid-cols-2">
+      <div>
         <div className={`${jacquard.className} relative py-1 text-center`}>
-          <Image src={design} alt={"Design SVG"} className="w-screen" />
-          <p className={`absolute inset-0 top-0 mt-[1px] md:mt-1 lg:mt-2 text-[18px] leading-7 md:text-3xl text-[#E8D4A9]`}>
+          <div className="bg-neutral-900/[0.9] px-5 py-1 text-xl leading-7 tracking-wide text-amber-100/[0.9] shadow-md shadow-neutral-900/[0.3] sm:mb-5 sm:py-2.5 sm:text-2xl xl:mb-0">
             Something fancy your way comes - Auditorium at 6pm
-          </p>
+          </div>
         </div>
-        <div className={`${imfell.className}my-2 md:my-3 lg:my-4 text-center`}>
-          <span className="text-5xl md:text-6xl lg:text-7xl">IIT M</span>
-          <span className="text-3xl md:text-4xl lg:text-5xl">
-            ANDI ORGANISES WEEK-LONG FEST, ATTRACTS THOUSANDS
+        <div className={`${imfell.className}my-2 text-center md:my-3 lg:my-4`}>
+          <span
+            className={`text-4xl md:text-5xl lg:text-7xl ${imfellsc.className}`}
+          >
+            IIT Mandi organises week-long fest, attracts thousands
           </span>
         </div>
-        <div className="firstPara flex">
-          <div className="hidden md:block h-[200px] min-w-[200px] items-center border-[2px] border-black">
-            <p
-              className={`${jacquard.className} translate-y-20 -rotate-45 text-[40px] font-bold`}
-            >
-              Place Ad here
-            </p>
-          </div>
+        <div className="flex items-stretch gap-2.5">
+          <div className="hidden min-w-52 items-center border-2 border-neutral-900 md:block"></div>
           <div>
-            <p className="md:mx-3 text-lg md:text-xl text-justify">
+            <p className="text-justify text-base sm:text-lg md:mx-3 md:text-xl">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
               vehicula lectus est, eget laoreet velit viverra vitae. Phasellus
               ornare lobortis massa, malesuada gravida sem venenatis ut. Aenean
@@ -48,8 +44,8 @@ const page = () => {
             </p>
           </div>
         </div>
-        <div className="hidden md:block secondPara">
-          <p className="my-3 text-xl text-justify">
+        <div className="hidden md:block">
+          <p className="my-3 text-justify text-xl">
             Nulla nisi odio, accumsan eget eleifend et, hendrerit nec odio.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
             vehicula lectus est, eget laoreet velit viverra vitae. Phasellus
@@ -72,16 +68,14 @@ const page = () => {
           </p>
         </div>
       </div>
-      <div className="right md:flex-col">
-        <div className="">
-          <Image
-            src={collegeImg}
-            alt={"College Image"}
-            className="size-56 md:h-[25rem] w-screen border-[3px] border-black"
-          />
-        </div>
+      <div className="md:flex-col">
+        <Image
+          src={collegeImg}
+          alt={"College Image"}
+          className="size-56 w-full border-[3px] border-black object-cover md:h-[25rem]"
+        />
         <div className="mt-3 flex flex-col-reverse md:flex-row">
-          <p className="w-full text-lg md:text-xl text-justify mr-4">
+          <p className="mr-4 w-full text-justify text-lg md:text-xl">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
             vehicula lectus est, eget laoreet velit viverra vitae. Phasellus
             ornare lobortis massa, malesuada gravida sem venenatis ut. Aenean
@@ -97,28 +91,24 @@ const page = () => {
             blandit semper est non mattis.{" "}
           </p>
 
-            <div className="w-4/5 flex-col items-center mx-auto">
-
-              <div className={`${jacquard.className} relative mb-2 text-center`}>
-                <Image src={design2} alt={"Design SVG"} className="w-screen" />
-                <p
-                  className={`absolute inset-0 top-[2px] text-4xl text-[#E8D4A9]`}
-                >
-                  Upcoming Program
-                </p>
+          <div className="mx-auto w-4/5 flex-col items-center">
+            <div className={`${jacquard.className} relative mb-2 text-center`}>
+              <div className="bg-neutral-900/[0.9] px-5 py-1 text-xl leading-7 tracking-wide text-amber-100/[0.9] shadow-md shadow-neutral-900/[0.3] sm:mb-5 sm:py-2.5 sm:text-2xl xl:mb-0">
+                Upcoming Program
               </div>
-              <Image
-                src={roadImg}
-                alt={"Road Image"}
-                className="w-full border-[1px] border-black"
-              />
-              <p className="text-lg md:text-xl italic leading-[21px] text-justify mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                vehicula lectus est, eget laoreet velit viverra vitae. Phasellus
-                ornare lobortis massa, malesuada gravida sem venenatis ut. Aenean
-                blandit semper est non mattis.
-              </p>
             </div>
+            <Image
+              src={roadImg}
+              alt={"Road Image"}
+              className="w-full border-[1px] border-black"
+            />
+            <p className="mt-2 text-justify text-lg italic leading-[21px] md:text-xl">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+              vehicula lectus est, eget laoreet velit viverra vitae. Phasellus
+              ornare lobortis massa, malesuada gravida sem venenatis ut. Aenean
+              blandit semper est non mattis.
+            </p>
+          </div>
         </div>
       </div>
     </div>
