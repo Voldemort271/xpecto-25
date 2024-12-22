@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <CursorProvider>
       <div
-        className={`relative h-full min-h-screen w-screen border-2 border-neutral-900 ${imfell.className}`}
+        className={`relative min-h-screen w-screen ${imfell.className}`}
       >
         <Image
           src={NewspaperBg}
@@ -21,6 +21,7 @@ export default function RootLayout({
           className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-full w-screen object-cover"
         />
         <NewspaperNavbar />
+        <div className="md:hidden h-[2px] bg-neutral-900 mx-4 mb-4"></div>
         {children}
       </div>
     </CursorProvider>
