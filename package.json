@@ -11,8 +11,8 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "dev": "next dev --turbo",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
-    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format:check": "prettier --check \"*/.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format:write": "prettier --write \"*/.{ts,tsx,js,jsx,mdx}\" --cache",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -56,6 +56,7 @@
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.171.0",
+    "uuidv4": "^6.2.13",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -65,6 +66,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.170.0",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "eslint": "^8.57.0",

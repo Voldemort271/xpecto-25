@@ -19,3 +19,11 @@ export type ProniteType=
     end_time:null;
     venue: string;
 }
+
+export type MultiEntitySchemaType=
+{
+   name : string,
+   type : string,
+   displayName : string
+  
+}
