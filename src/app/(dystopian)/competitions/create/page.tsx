@@ -84,6 +84,25 @@ const Page = () => {
 
 
  const [selectedTab, setSelectedTab]=React.useState(1);
+  
+
+ ]
+
+ const problemStatementData=[
+  {name:'problem-1',description:'problem-1 statement'},
+  {name:'problem-2',description:'problem-2 statement'},
+  {id:999999,name:'',description:''}
+ ]
+
+ const rulesData=[
+  {name:'rule-1'},
+  {name:'rule-2'},
+  {id:999999,name:''}
+ ]
+
+
+
+ const [selectedTab, setSelectedTab]=React.useState(1);
  
   return (
     <>
