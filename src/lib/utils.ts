@@ -22,7 +22,7 @@ export function useCurrentUser() {
 
 export const navElements = [
   "Home",
-  "Events",
+  "Pronites",
   "Competitions",
   "Workshops",
   "About",
