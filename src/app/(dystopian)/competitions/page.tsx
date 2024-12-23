@@ -20,9 +20,7 @@ const Page = () => {
 
 return(<>
 <div className="all">All competitions</div>
-    <div style={{ marginTop: 200, marginLeft: 50 }}>
-      <h1>Competitions Page</h1>
-      <br /><br />
+    <div>
       {
         competitions?.map((value, i)=>{
           return(

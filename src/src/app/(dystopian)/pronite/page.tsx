@@ -7,8 +7,9 @@ import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
 import { Button } from "@/components/ui/button"; // Import the Button component
 import Link from 'next/link'
 import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-grid';
+import { useRouter } from 'next/navigation';
 const Page = () => {
-
+  const router = useRouter()
   const { data: pronites } = api.pronite.getPronite.useQuery();
   
   useEffect(() => {
@@ -23,7 +24,7 @@ return(<>
 <div className="div-center mt-6" >
         <Grid scrollable="none" data={pronites} style={{width:'20%'}}>
           <GridToolbar>
-            <Link href="/pronite/create"><button className="btn">Create Pronite</button></Link>
+            <button className="btn" onClick={()=>{router.push("/pronite/create")}}>Create Pronite</button>
           </GridToolbar>
             <Column
                 field="proniteDetails.name"

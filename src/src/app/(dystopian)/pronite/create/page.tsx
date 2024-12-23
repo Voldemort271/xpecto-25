@@ -7,9 +7,11 @@ import { useCurrentUser } from "@/lib/utils";
 import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
 import { Button } from "@/components/ui/button"; // Import the Button component
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 const Page = () => {
 
 
+  const router = useRouter()
   const createPronite = api.pronite.createPronite.useMutation();
 
   const handleChange=(key:string, value:string|Date|number)=>
@@ -32,7 +34,7 @@ const Page = () => {
         {
           onSuccess: (e) => {
             //alert('Data Saved..')
-            window.location.href="/pronite";
+            router.push('/pronite')
 
           },
         },

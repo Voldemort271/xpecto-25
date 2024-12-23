@@ -15,7 +15,9 @@ export const competitionRouter = createTRPCRouter({
         name:z.string(),
         description:z.string(),
         venue:z.string(),
-
+        levels:z.string(),
+        rules:z.string(),
+        problem_statement:z.string()
       }),
     )
     .mutation(async ({ ctx, input })=> {
@@ -42,6 +44,10 @@ export const competitionRouter = createTRPCRouter({
             sponsors: undefined,
             teams: undefined,
             updatedAt: new Date(), 
+            levels:input.levels,
+            problem_statement:input.problem_statement,
+            rules:input.rules
+
           },
         });
         

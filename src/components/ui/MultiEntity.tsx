@@ -9,7 +9,7 @@ import { v4 as uuid } from "uuid";
 
 
 
-const MultiEntity: React.FC<{ entityData: any, schema:any}> = ({ entityData,schema }) => {
+const MultiEntity: React.FC<{ entityData: any, schema:any, setEntityData:(data:any)=>void}> = ({ entityData,schema,setEntityData }) => {
  
   const [editRowId,setEditRowId]=React.useState('');
   const [data,setData]=React.useState(entityData);
@@ -26,13 +26,16 @@ const MultiEntity: React.FC<{ entityData: any, schema:any}> = ({ entityData,sche
       }  
       data.push({id:999999});
       setData(data);
+      setEntityData(data);
       setEditRowId(newRow.id);
    }
    else if(name=='delete')
    {
       if(window.confirm("Are you sure, you want to delete record?"))
       {
-        setData(data.filter((d:any)=>d.id!=id));
+        const d=data.filter((d:any)=>d.id!=id);
+        setData(d);
+        setEntityData(d);
       }
    }
   } 

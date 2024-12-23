@@ -10,7 +10,7 @@ export type CompetitionType=
     venue: string;
     levels: string;
     rules: string;
-    problem_statements:string;
+    problem_statement:string;
 }
 export type ProniteType=
 {

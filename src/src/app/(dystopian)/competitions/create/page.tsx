@@ -8,12 +8,13 @@ import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
 import { Button } from "@/components/ui/button"; // Import the Button component
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
+import { useRouter } from 'next/navigation'
 
 
 
 
 const Page = () => {
-
+  const router= useRouter();
 
   const createCompetition = api.competition.createCompetition.useMutation();
 
@@ -29,16 +30,19 @@ const Page = () => {
           max_team_size: form.max_team_size,
           min_team_size: form.min_team_size,
           prizepool: form.prizepool,
-          begin_time:form.begin_time,
-          end_time:form.end_time,
-          venue:form.venue,
-          description:form.description,
-          name:form.name,
+          begin_time: form.begin_time,
+          end_time: form.end_time,
+          venue: form.venue,
+          description: form.description,
+          name: form.name,
+          levels: "",
+          rules: "",
+          problem_statement: ""
         },
         {
           onSuccess: (e) => {
             //alert('Data Saved..')
-            window.location.href="/competitions";
+            router.push("/competitions")
 
           },
         },
@@ -223,12 +227,11 @@ const Page = () => {
           />
         </div>
         </div>
-       
         <div className="flex flex-row">
         <button className="btn" onClick={() =>
                   saveCompetition(form)
                 } style={{marginLeft:"10.5rem",marginTop:"1rem"}}>Create</button>
-        <button className="btn" style={{marginLeft:"1rem",marginTop:"1rem"}} onClick={()=>{window.location.href="/competitions"}}>Cancel</button>
+        <button className="btn" style={{marginLeft:"1rem",marginTop:"1rem"}} onClick={()=>{router.push("/competitions")}}>Cancel</button>
         </div>
       </div>}
     </>
