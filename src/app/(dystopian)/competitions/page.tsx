@@ -10,7 +10,7 @@ import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-g
 const Page = () => {
 
   const { data: competitions } = api.competition.getCompetitions.useQuery();
-    const competitions = api.eventReg.getAllCompetitions.useQuery().data;
+    // const competitions = api.eventReg.getAllCompetitions.useQuery().data;
   
   useEffect(() => {
     if (competitions) {

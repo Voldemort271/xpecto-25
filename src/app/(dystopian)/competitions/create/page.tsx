@@ -6,8 +6,8 @@ import {CompetitionType, MultiEntitySchemaType} from "../../../types"
 import { competitionLevelSchema, useCurrentUser, problemStatementSchema,ruleSchema } from "@/lib/utils";
 import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
 import { Button } from "@/components/ui/button"; // Import the Button component
-import Links from "../../../../components/ui/Links";
-import MultiEntity from "../../../../components/ui/MultiEntity";
+import Links from "../../../../components/Links";
+import MultiEntity from "../../../../components/MultiEntity";
 
 
 
