@@ -1,43 +1,172 @@
-// schema.prisma
-
-datasource db {
-  provider = "postgresql" // or your database provider
-  url      = env("DATABASE_URL")
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([name])
+}
+
+// We can use the prize money field to detect an organiser register
 model User {
-  id        String  @id @default(cuid())
-  email     String  @unique
-  name      String
-  events    Event[] // One-to-many relationship to events
-  tokens    Token[] // One-to-many relationship to approval tokens
+    id           String @id @default(cuid())
+    clerkId      String @unique
+    email        String @unique
+    name         String
+    college_name String @default("Individual")
+
+    teamLeader Team[]        @relation("teamLeader")
+    teams      Team[]
+    invites    InviteToken[]
+    events     Event[]
+    pronites   Pronite[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Team {
+    id          String @id @default(cuid())
+    name        String @unique @default("")
+    prize_money Int    @default(0)
+    type        String @default("Competitor")
+
+    leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
+    leaderId String
+
+    team_members  User[]
+    invitations   InviteToken[]
+    organisations Organization[] @relation("orgMembers")
+    competitions  Competitor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model InviteToken {
+    token     String   @id
+    teamId    String
+    userId    String
+    createdAt DateTime @default(now())
+
+    team Team @relation(fields: [teamId], references: [id])
+    user User @relation(fields: [userId], references: [id])
+
+    @@unique([teamId, userId])
+}
+
+model Organization {
+    id String @id @default(cuid())
+
+    group   Team   @relation("orgMembers", fields: [groupId], references: [id])
+    groupId String
+
+    events       Event[]
+    competitions Competition[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Competition {
+    id                String @id @default(cuid())
+    prizepool         Int    @default(0)
+    max_team_size     Int    @default(5)
+    min_team_size     Int    @default(1)
+    levels            String
+    rules             String
+    problem_statement String
+
+    competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
+    competitionDetailsId String       @unique
+
+    teams      Competitor[]
+    organizers Organization[]
+    sponsors   Sponsor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+// Needed a custom Pivot here
+model Competitor {
+    teamId        String
+    competitionId String
+    ranking       Int?
+    submissions   String // Contains link to location of submission
+
+    team        Team        @relation(fields: [teamId], references: [id])
+    competition Competition @relation(fields: [competitionId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@id([teamId, competitionId])
 }
 
 model Event {
-  id          String    @id @default(cuid())
-  name        String
-  description String
-  createdBy   String
-  isApproved  Boolean   @default(false)
-  userId      String
-  user        User      @relation(fields: [userId], references: [id])
+    id   String @id @default(cuid())
+    type String
+
+    eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
+    eventDetailsId String       @unique
+
+    hosters      Organization[]
+    participants User[]
+    sponsors     Sponsor[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
-model Token {
-  id      String @id @default(cuid())
-  token   String @unique
-  eventId String
-  event   Event  @relation(fields: [eventId], references: [id])
-  expiresAt DateTime @default(dbgenerated("CURRENT_TIMESTAMP + INTERVAL '1 hour'"))
+model Sponsor {
+    id   String @id @default(cuid())
+    name String
+    logo String
+
+    events       Event[]
+    competitions Competition[]
 }
 
-model Approval {
-  id      String  @id @default(cuid())
-  eventId String
-  status  Boolean @default(false) // false = pending, true = approved/rejected
-  event   Event   @relation(fields: [eventId], references: [id])
+model EventDetails {
+    id          String   @id @default(cuid())
+    begin_time  DateTime
+    end_time    DateTime
+    name        String
+    description String
+    venue       String
+
+    event       Event?
+    pronite     Pronite?
+    competition Competition?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Pronite {
+    id           String @id @default(cuid())
+    max_capacity Int    @default(1000)
+    ticket_price Int    @default(0)
+
+    proniteDetails   EventDetails @relation(fields: [proniteDetailsId], references: [id])
+    proniteDetailsId String       @unique
+
+    regUsers User[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
