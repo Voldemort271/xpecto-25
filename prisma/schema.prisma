@@ -47,7 +47,7 @@ model Team {
     leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
     leaderId String
 
-    team_members     User[]
+    team_members  User[]
     invitations   InviteToken[]
     organisations Organization[] @relation("orgMembers")
     competitions  Competitor[]
@@ -82,10 +82,13 @@ model Organization {
 }
 
 model Competition {
-    id            String @id @default(cuid())
-    prizepool     Int    @default(0)
-    max_team_size Int    @default(5)
-    min_team_size Int    @default(1)
+    id                String @id @default(cuid())
+    prizepool         Int    @default(0)
+    max_team_size     Int    @default(5)
+    min_team_size     Int    @default(1)
+    levels            String
+    rules             String
+    problem_statement String
 
     competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
     competitionDetailsId String       @unique
