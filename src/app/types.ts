@@ -8,6 +8,9 @@ export type CompetitionType=
     begin_time: Date;
     end_time:Date;
     venue: string;
+    levels: string;
+    rules: string;
+    problem_statements:string;
 }
 export type ProniteType=
 {

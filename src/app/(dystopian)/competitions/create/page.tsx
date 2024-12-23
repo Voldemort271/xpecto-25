@@ -58,7 +58,10 @@ const Page = () => {
   max_team_size:0,
   min_team_size:0,
   prizepool:0,
-  venue:""
+  venue:"",
+  levels:"",
+  problem_statements: "",
+  rules:""
  });
 
  const competitionLevelData=[
@@ -66,7 +69,6 @@ const Page = () => {
   {name:'Round-2',description:'Round-2 is logical', venue:'college room-2',timeline:'10/02/2025'},
   {name:'Round-3',description:'Round-3 is final round', venue:'Other place',timeline:'10/03/2025'},
   {id:999999,name:'',description:'', venue:'',timeline:''}
-
  ]
 
  const problemStatementData=[
@@ -80,27 +82,6 @@ const Page = () => {
   {name:'rule-2'},
   {id:999999,name:''}
  ]
-
-
-
- const [selectedTab, setSelectedTab]=React.useState(1);
-  
-
- ]
-
- const problemStatementData=[
-  {name:'problem-1',description:'problem-1 statement'},
-  {name:'problem-2',description:'problem-2 statement'},
-  {id:999999,name:'',description:''}
- ]
-
- const rulesData=[
-  {name:'rule-1'},
-  {name:'rule-2'},
-  {id:999999,name:''}
- ]
-
-
 
  const [selectedTab, setSelectedTab]=React.useState(1);
  
@@ -243,13 +224,16 @@ const Page = () => {
         </div>
         </div>
        
-        <div className="flex flex-row">
-        <button className="btn" onClick={() =>
-                  saveCompetition(form)
-                } style={{marginLeft:"10.5rem",marginTop:"1rem"}}>Create</button>
-        <button className="btn" style={{marginLeft:"1rem",marginTop:"1rem"}} onClick={()=>{window.location.href="/competitions"}}>Cancel</button>
-        </div>
+        
+        
       </div>}
+      <div className="flex flex-row">
+      <button className="btn" onClick={() =>
+                  saveCompetition(form)
+                } style={{marginLeft:"10.5rem",marginTop:"1rem"}}>Save</button>
+      <button className="btn" style={{marginLeft:"1rem",marginTop:"1rem"}} onClick={()=>{window.location.href="/competitions"}}>Cancel</button>
+        </div>
+
     </>
   );
 };
