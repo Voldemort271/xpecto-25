@@ -8,6 +8,8 @@ const Page = () => {
   const events = api.eventReg.getAllEvents.useQuery().data;
   
   return (
+    <div>
+      Events
     <div style={{ marginTop: 200, marginLeft: 50 }}>
       <h1>Events Page</h1>
       <br /><br />

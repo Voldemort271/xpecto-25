@@ -1,13 +1,25 @@
 "use client";
-
-import React from "react";
-import { api } from "@/trpc/react";
-import Link from "next/link";
-
+import React, { useEffect } from "react";
+import { api } from "@/trpc/react"; // Import the api object
+import {CompetitionType} from "../../types"
+import { useCurrentUser } from "@/lib/utils";
+import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
+import { Button } from "@/components/ui/button"; // Import the Button component
+import Link from 'next/link'
+import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-grid';
 const Page = () => {
-  const competitions = api.eventReg.getAllCompetitions.useQuery().data;
+
+  const { data: competitions } = api.competition.getCompetitions.useQuery();
+    const competitions = api.eventReg.getAllCompetitions.useQuery().data;
   
-  return (
+  useEffect(() => {
+    if (competitions) {
+      console.log('competition',competitions)
+    }
+  }, [competitions]);
+
+return(<>
+<div className="all">All competitions</div>
     <div style={{ marginTop: 200, marginLeft: 50 }}>
       <h1>Competitions Page</h1>
       <br /><br />
@@ -21,7 +33,33 @@ const Page = () => {
         })
       }
     </div>
-  );
-};
 
+<div className="div-center mt-6" >
+        <Grid scrollable="none" data={competitions} style={{width:'30%'}}>
+          <GridToolbar>
+            <Link href="/competitions/create"><button className="btn">Create Competition</button></Link>
+          </GridToolbar>
+            <Column
+                field="competitionDetails.name"
+                title="Name"
+                width="150px"
+            />
+            <Column
+                field="competitionDetails.begin_time"
+                title="Begin Date"
+                format="{0:dd/MM/yyyy}"
+                width="150px"
+            />
+            <Column
+                field="competitionDetails.end_time"
+                title="End Date"
+                width="150px"
+               format="{0:dd/MM/yyyy}"
+            />
+        </Grid>
+
+</div>
+</>)
+
+};
 export default Page;
