@@ -1,0 +1,30 @@
+.introBorder::after {
+	content: "";
+	display: block;
+	position: absolute;
+	background: #171717;
+	inset: 2px;
+	z-index: 1;
+	transition: opacity .3s ease;
+}
+
+@property --r {
+	syntax: '<angle>';
+	inherits: false;
+	initial-value: 0deg;
+}
+
+.introBorder {
+	@apply relative h-full w-full bg-neutral-900;
+	background: conic-gradient(from var(--r), #242424 0%, #fffbeb 20%, #242424 40%);
+	animation: rotating 3s linear infinite;
+}
+
+@keyframes rotating {
+	0% {
+		--r: 0deg;
+	}
+	100% {
+		--r: 360deg;
+	}
+}

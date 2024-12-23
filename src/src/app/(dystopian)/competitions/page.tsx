@@ -10,7 +10,6 @@ import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-g
 const Page = () => {
 
   const { data: competitions } = api.competition.getCompetitions.useQuery();
-    const competitions = api.eventReg.getAllCompetitions.useQuery().data;
   
   useEffect(() => {
     if (competitions) {
@@ -20,19 +19,6 @@ const Page = () => {
 
 return(<>
 <div className="all">All competitions</div>
-    <div style={{ marginTop: 200, marginLeft: 50 }}>
-      <h1>Competitions Page</h1>
-      <br /><br />
-      {
-        competitions?.map((value, i)=>{
-          return(
-            <div key={i}>
-              <Link href={"/competitions/"+value.competitionDetails.name} >{value.competitionDetails.name}</Link>
-            </div>
-          )
-        })
-      }
-    </div>
 
 <div className="div-center mt-6" >
         <Grid scrollable="none" data={competitions} style={{width:'30%'}}>
@@ -63,3 +49,4 @@ return(<>
 
 };
 export default Page;
+

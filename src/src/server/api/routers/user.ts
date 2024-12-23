@@ -20,7 +20,7 @@ export const userRouter = createTRPCRouter({
 
       if (!existingUser) {
         const csv: string = fs.readFileSync("public/allUnivs.csv").toString();
-
+        
         return ctx.db.user.create({
           data: {
             name: input.name,
@@ -132,19 +132,5 @@ export const userRouter = createTRPCRouter({
       }
 
       return team;
-    }),
-
-  getUserByEmail: publicProcedure
-    .input(z.object({ email: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const user = await ctx.db.user.findFirst({
-        where: {
-          email: input.email,
-        },
-        include: {
-          pronites: true,
-        },
-      });
-      return user;
     }),
 });

@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import type { User } from "@prisma/client";
+import type { User,Competition } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
 
 
@@ -87,6 +87,5 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     </SharedContext.Provider>
   );
 };
-
 
 export default SharedContextProvider;
