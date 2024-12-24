@@ -22,7 +22,7 @@ export function useCurrentUser() {
 
 export const navElements = [
   "Home",
-  "Events",
+  "Pronites",
   "Competitions",
   "Workshops",
   "About",
@@ -69,3 +69,30 @@ export function getCollFromEmail(email: string, csv: string): string {
   }
   return "Individual";
 }
+
+
+export const competitionLevelSchema=
+[
+    {name :'add', type:'icon',displayName:'',width:'2rem' },
+    {name :'name', type:'string',displayName:'Name',width:'16rem' },
+    {name :'description', type:'string',displayName:'Description',width:'30rem' },
+    {name :'timeline', type:'date',displayName:'Timeline',width:'10rem' },
+    {name :'venue', type:'string',displayName:'Venue',width:'16rem' },
+    {name :'delete', type:'icon',displayName:'',width:'2rem' },
+]; 
+ 
+
+export const problemStatementSchema=
+[
+    {name :'add', type:'icon',displayName:'',width:'2rem' },
+    {name :'name', type:'string',displayName:'Name',width:'16rem' },
+    {name :'description', type:'string',displayName:'Description',width:'30rem' },
+    {name :'delete', type:'icon',displayName:'',width:'2rem' },
+]; 
+ 
+export const ruleSchema=
+[
+    {name :'add', type:'icon',displayName:'',width:'2rem' },
+    {name :'name', type:'string',displayName:'Name',width:'16rem' },
+    {name :'delete', type:'icon',displayName:'',width:'2rem' },
+]; 

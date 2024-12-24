@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { api } from "@/trpc/react";
@@ -28,4 +27,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page

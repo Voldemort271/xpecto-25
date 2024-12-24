@@ -1,25 +1,56 @@
 "use client";
-
-import React from "react";
-import { api } from "@/trpc/react";
+import React, { useEffect } from "react";
+import { api } from "@/trpc/react"; // Import the api object
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  Grid,
+  GridColumn as Column,
+  GridToolbar,
+} from "@progress/kendo-react-grid";
 
 const Page = () => {
-  const pronites = api.eventReg.getAllPronites.useQuery().data;
-  
+  const router = useRouter();
+  const { data: pronites } = api.pronite.getPronite.useQuery();
+
+  useEffect(() => {
+    if (pronites) {
+      console.log("pronite", pronites);
+    }
+  }, [pronites]);
+
   return (
-    <div style={{ marginTop: 200, marginLeft: 50 }}>
-      <h1>Pronites Page</h1>
-      <br /><br />
-      {
-        pronites?.map((value, i)=>{
-          return(
-            <div key={i}>
-              <Link href={"/pronites/"+value.proniteDetails.name} >{value.proniteDetails.name}</Link>
-            </div>
-          )
-        })
-      }
+    <div>
+      {pronites?.map((value, i) => {
+        return (
+          <div key={i}>
+            <Link href={"/pronites/" + value.proniteDetails.name}>
+              {value.proniteDetails.name}
+            </Link>
+          </div>
+        );
+      })}
+      <div className="all">All pronites</div>
+
+      <div className="div-center mt-6">
+        <Grid scrollable="none" data={pronites} style={{ width: "20%" }}>
+          <GridToolbar>
+            <button
+              onClick={() => router.push("/pronites/create")}
+              className="btn"
+            >
+              Create Pronite
+            </button>
+          </GridToolbar>
+          <Column field="proniteDetails.name" title="Name" width="150px" />
+          <Column
+            field="proniteDetails.begin_time"
+            title="Begin Date"
+            format="{0:dd/MM/yyyy hh:mm}"
+            width="150px"
+          />
+        </Grid>
+      </div>
     </div>
   );
 };

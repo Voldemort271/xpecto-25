@@ -8,6 +8,9 @@ export type CompetitionType=
     begin_time: Date;
     end_time:Date;
     venue: string;
+    levels: string;
+    rules: string;
+    problem_statement:string;
 }
 export type ProniteType=
 {
@@ -18,4 +21,12 @@ export type ProniteType=
     begin_time: Date;
     end_time:null;
     venue: string;
+}
+
+export type MultiEntitySchemaType=
+{
+   name : string,
+   type : string,
+   displayName : string
+  
 }
