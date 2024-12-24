@@ -1,15 +1,15 @@
 
 import React from "react";
-import { api } from "@/trpc/react";
-import Link from "next/link";
+// import { api } from "@/trpc/react";
+// import Link from "next/link";
 
 const Page = () => {
-  const events = api.eventReg.getAllEvents.useQuery().data;
+  // const events = api.eventReg.getAllEvents.useQuery().data;
 
   return (
     <div>
       Events
-      <div style={{ marginTop: 200, marginLeft: 50 }}>
+      {/* <div style={{ marginTop: 200, marginLeft: 50 }}>
         <h1>Events Page</h1>
         <br />
         <br />
@@ -22,9 +22,9 @@ const Page = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default page
+export default Page

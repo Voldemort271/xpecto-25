@@ -145,15 +145,15 @@ export const eventRegRouter = createTRPCRouter({
       }
     }),
 
-  // Event Functions :
-  getAllEvents: publicProcedure.query(async ({ ctx }) => {
-    const events = await ctx.db.event.findMany({
-      include: {
-        eventDetails: true,
-      },
-    });
-    return events;
-  }),
+  // // Event Functions :
+  // getAllEvents: publicProcedure.query(async ({ ctx }) => {
+  //   const events = await ctx.db.event.findMany({
+  //     include: {
+  //       eventDetails: true,
+  //     },
+  //   });
+  //   return events;
+  // }),
 
   getEventByName: publicProcedure
     .input(z.object({ name: z.string() }))
