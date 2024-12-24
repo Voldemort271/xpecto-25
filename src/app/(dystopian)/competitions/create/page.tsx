@@ -148,31 +148,6 @@ const Page = () => {
       )}
 
       {selectedTab == 1 && (
-        <div className="flex flex-col" style={{ padding: "1rem" }}>
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="font-semibold">Name</label>
-            </div>
-            <div>
-              <input
-                type="text"
-                className="field-text"
-                value={form.name}
-                placeholder="Name"
-                onChange={(e) => handleChange("name", e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {selectedTab == 4 && (
-        <div style={{ padding: "1rem" }}>
-          <MultiEntity setEntityData={() => {return}} entityData={rulesData} schema={ruleSchema}></MultiEntity>
-        </div>
-      )}
-
-      {selectedTab == 1 && (
         <div>
           <div className="flex flex-col" style={{ padding: "1rem" }}>
             <div className="flex flex-row">
@@ -188,7 +163,10 @@ const Page = () => {
                 />
               </div>
             </div>
-            <div>
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="font-semibold">Description</label>
+              </div>
               <textarea
                 rows={3}
                 className="field-text"
@@ -197,7 +175,7 @@ const Page = () => {
                 onChange={(e) => handleChange("description", e.target.value)}
               />
             </div>
-          </div>
+          
           <div className="flex flex-row">
             <div className="left-col">
               <label className="font-semibold">Venue</label>
@@ -293,6 +271,7 @@ const Page = () => {
             </div>
           </div>
         </div>
+        </div>
       )}
       <div className="flex flex-row">
         <button
@@ -312,6 +291,7 @@ const Page = () => {
           Cancel
         </button>
       </div>
+      
     </>
   );
 };
