@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { api } from "@/trpc/react"; // Import the api object
 import {CompetitionType, MultiEntitySchemaType} from "../../../types"
 import { competitionLevelSchema, useCurrentUser, problemStatementSchema,ruleSchema } from "@/lib/utils";
@@ -12,20 +12,14 @@ import { Button } from "@/components/ui/button"; // Import the Button component
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
 
-
-
-
 const Page = () => {
-
-
   const createCompetition = api.competition.createCompetition.useMutation();
 
-  const handleChange=(key:string, value:string|Date|number)=>
-  {
-    setForm((initState)=>({...initState,[key]:value}));
-  }
+  const handleChange = (key: string, value: string | Date | number) => {
+    setForm((initState) => ({ ...initState, [key]: value }));
+  };
 
-  const saveCompetition = (form:  CompetitionType) => {
+  const saveCompetition = (form: CompetitionType) => {
     try {
       const levels=levelData.filter(l=>l.id!=999999);
       const rules=rulesData.filter(r=>r.id!=999999);
@@ -48,12 +42,11 @@ const Page = () => {
         {
           onSuccess: (e) => {
             //alert('Data Saved..')
-            window.location.href="/competitions";
-
+            window.location.href = "/competitions";
           },
         },
       );
-    }   catch (e) {
+    } catch (e) {
       console.error(e);
       alert("Failed to accept the invitation. Please try again.");
     }
@@ -130,12 +123,28 @@ const Page = () => {
             onChange={(e)=>handleChange('name',e.target.value)}
           />
         </div>
+      )}
+
+      {selectedTab == 4 && (
+        <div style={{ padding: "1rem" }}>
+          <MultiEntity entityData={rulesData} schema={ruleSchema}></MultiEntity>
         </div>
-         <div className="flex flex-row">    
-        <div className="left-col">
-          <label className="font-semibold left">
-            Description
-          </label>
+      )}
+
+      {selectedTab == 1 && (
+        <div className="flex flex-col" style={{ padding: "1rem" }}>
+          <div className="flex flex-row">
+            <div className="left-col">
+              <label className="font-semibold">Name</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                className="field-text"
+                placeholder="Name"
+                onChange={(e) => handleChange("name", e.target.value)}
+              />
+            </div>
           </div>
           <div>
           <textarea
