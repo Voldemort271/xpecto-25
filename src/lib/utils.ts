@@ -22,10 +22,10 @@ export function useCurrentUser() {
 
 export const navElements = [
   "Home",
-  "Pronites",
   "Competitions",
   "Workshops",
-  "About",
+  "Expos",
+  "Pronites",
   "Sponsors",
 ];
 
@@ -95,4 +95,14 @@ export const ruleSchema=
     {name :'add', type:'icon',displayName:'',width:'2rem' },
     {name :'name', type:'string',displayName:'Name',width:'16rem' },
     {name :'delete', type:'icon',displayName:'',width:'2rem' },
+]; 
+
+export const planSchema=
+[
+  {name :'add', type:'icon',displayName:'',width:'2rem' },
+  {name :'name', type:'string',displayName:'Name',width:'16rem' },
+  {name :'description', type:'string',displayName:'Description',width:'16rem' },
+  {name :'price', type:'string',displayName:'Price',width:'16rem' },
+  {name :'labelling', type:'string',displayName:'Label',width:'16rem' },  
+  {name :'delete', type:'icon',displayName:'',width:'2rem' },
 ]; 

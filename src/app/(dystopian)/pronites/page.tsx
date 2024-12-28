@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import { api } from "@/trpc/react"; // Import the api object
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Grid,
@@ -21,15 +20,6 @@ const Page = () => {
 
   return (
     <div>
-      {pronites?.map((value, i) => {
-        return (
-          <div key={i}>
-            <Link href={"/pronites/" + value.proniteDetails.name}>
-              {value.proniteDetails.name}
-            </Link>
-          </div>
-        );
-      })}
       <div className="all">All pronites</div>
 
       <div className="div-center mt-6">

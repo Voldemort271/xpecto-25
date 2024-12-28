@@ -5,15 +5,13 @@
 
 import React from "react";
 import { api } from "@/trpc/react"; // Import the api object
-import { CompetitionType, MultiEntitySchemaType } from "../../../types";
+import type { CompetitionType } from "../../../types";
 import {
   competitionLevelSchema,
-  useCurrentUser,
   problemStatementSchema,
   ruleSchema,
+  planSchema,
 } from "@/lib/utils";
-import CreateTeamDialog from "@/components/(dystopian)/create-team-dialog";
-import { Button } from "@/components/ui/button"; // Import the Button component
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
 
@@ -26,11 +24,13 @@ const Page = () => {
 
   const saveCompetition = (form: CompetitionType) => {
     try {
-      const levels = levelData.filter((l) => l.id != 999999);
-      const rules = rulesData.filter((r) => r.id != 999999);
+      const levels = levelData.filter((l) => l.id != "999999");
+      const rules = rulesData.filter((r) => r.id != "999999");
       const problemStatement = problemStatementData.filter(
-        (p) => p.id != 999999,
+        (p) => p.id != "999999",
       );
+      const plans = planData.filter((p) => p.id != "999999");
+
 
       createCompetition.mutate(
         {
@@ -45,9 +45,10 @@ const Page = () => {
           levels: JSON.stringify(levels),
           rules: JSON.stringify(rules),
           problem_statement: JSON.stringify(problemStatement),
+          regPlans: plans,
         },
         {
-          onSuccess: (e) => {
+          onSuccess: () => {
             //alert('Data Saved..')
             window.location.href = "/competitions";
           },
@@ -71,33 +72,21 @@ const Page = () => {
     levels: "",
     problem_statement: "",
     rules: "",
+    regPlans: [],
   });
 
-  const competitionLevelData = [
-    // {name:'Round-1',description:'Round-1 is very important', venue:'college room-1',timeline:'10/01/2025'},
-    // {name:'Round-2',description:'Round-2 is logical', venue:'college room-2',timeline:'10/02/2025'},
-    // {name:'Round-3',description:'Round-3 is final round', venue:'Other place',timeline:'10/03/2025'},
-    { id: 999999, name: "", description: "", venue: "", timeline: "" },
-  ];
-
-  const competitionProblemStatementData = [
-    // {name:'problem-1',description:'problem-1 statement'},
-    // {name:'problem-2',description:'problem-2 statement'},
-    { id: 999999, name: "", description: "" },
-  ];
-
-  const competitionRulesData = [
-    // {name:'rule-1'},
-    // {name:'rule-2'},
-    { id: 999999, name: "" },
-  ];
-
   const [selectedTab, setSelectedTab] = React.useState(1);
-  const [levelData, setLevelData] = React.useState(competitionLevelData);
-  const [problemStatementData, setProblemStatementData] = React.useState(
-    competitionProblemStatementData,
-  );
-  const [rulesData, setRulesData] = React.useState(competitionRulesData);
+
+  const [levelData, setLevelData] = React.useState([
+    { id: "999999", name: "", description: "", venue: "", timeline: "" },
+  ]);
+  const [problemStatementData, setProblemStatementData] = React.useState([
+    { id: "999999", name: "", description: "" },
+  ]);
+  const [rulesData, setRulesData] = React.useState([{ id: "999999", name: "" }]);
+  const [planData, setPlanData] = React.useState([
+    { id: "999999", name: "", description: "", price: "", labelling: "" },
+  ]);
 
   return (
     <>
@@ -107,6 +96,7 @@ const Page = () => {
           { id: 2, text: "Levels" },
           { id: 3, text: "Problem Statement" },
           { id: 4, text: "Rules" },
+          { id: 5, text: "Reg Plans" },
         ]}
         setTab={(id: number) => setSelectedTab(id)}
       ></Links>
@@ -147,6 +137,18 @@ const Page = () => {
         </div>
       )}
 
+      {selectedTab == 5 && (
+        <div style={{ padding: "1rem" }}>
+          <MultiEntity
+            entityData={planData}
+            schema={planSchema}
+            setEntityData={(data: any) => {
+              setPlanData(data);
+            }}
+          ></MultiEntity>
+        </div>
+      )}
+
       {selectedTab == 1 && (
         <div>
           <div className="flex flex-col" style={{ padding: "1rem" }}>
@@ -175,102 +177,102 @@ const Page = () => {
                 onChange={(e) => handleChange("description", e.target.value)}
               />
             </div>
-          
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="font-semibold">Venue</label>
+
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="font-semibold">Venue</label>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  onChange={(e) => handleChange("venue", e.target.value)}
+                  value={form.venue}
+                  className="field-text"
+                  placeholder="Venue"
+                />
+              </div>
             </div>
-            <div>
-              <input
-                type="text"
-                onChange={(e) => handleChange("venue", e.target.value)}
-                value={form.venue}
-                className="field-text"
-                placeholder="Venue"
-              />
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="font-semibold">Begin Date</label>
+              </div>
+              <div>
+                <input
+                  type="date"
+                  // value={form.begin_time.toLocaleDateString()}
+                  onChange={(e) =>
+                    handleChange("begin_time", new Date(e.target.value))
+                  }
+                  className="field"
+                />
+              </div>
+            </div>
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="font-semibold">End Date</label>
+              </div>
+              <div>
+                <input
+                  type="date"
+                  // value={form.end_time.toLocaleDateString()}
+                  onChange={(e) =>
+                    handleChange("end_time", new Date(e.target.value))
+                  }
+                  className="field"
+                />
+              </div>
+            </div>
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="font-semibold">Min Team Size</label>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  id="minTeamSize"
+                  value={form.min_team_size}
+                  onChange={(e) =>
+                    handleChange("min_team_size", Number(e.target.value))
+                  }
+                  className="field"
+                  placeholder="minimum"
+                />
+              </div>
+            </div>
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="font-semibold">Max Team Size</label>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  onChange={(e) =>
+                    handleChange("max_team_size", Number(e.target.value))
+                  }
+                  className="field"
+                  value={form.max_team_size}
+                  placeholder="maximum"
+                />
+              </div>
+            </div>
+            <div className="flex flex-row">
+              <div className="left-col">
+                <label className="left font-semibold">Prizepool</label>
+              </div>
+              <div>
+                <input
+                  onChange={(e) =>
+                    handleChange("prizepool", Number(e.target.value))
+                  }
+                  type="text"
+                  id="prizePool"
+                  className="field"
+                  value={form.prizepool}
+                  placeholder="Prizepool"
+                />
+              </div>
             </div>
           </div>
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="font-semibold">Begin Date</label>
-            </div>
-            <div>
-              <input
-                type="date"
-                // value={form.begin_time.toLocaleDateString()}
-                onChange={(e) =>
-                  handleChange("begin_time", new Date(e.target.value))
-                }
-                className="field"
-              />
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="font-semibold">End Date</label>
-            </div>
-            <div>
-              <input
-                type="date"
-                // value={form.end_time.toLocaleDateString()}
-                onChange={(e) =>
-                  handleChange("end_time", new Date(e.target.value))
-                }
-                className="field"
-              />
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="font-semibold">Min Team Size</label>
-            </div>
-            <div>
-              <input
-                type="text"
-                id="minTeamSize"
-                value={form.min_team_size}
-                onChange={(e) =>
-                  handleChange("min_team_size", Number(e.target.value))
-                }
-                className="field"
-                placeholder="minimum"
-              />
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="font-semibold">Max Team Size</label>
-            </div>
-            <div>
-              <input
-                type="text"
-                onChange={(e) =>
-                  handleChange("max_team_size", Number(e.target.value))
-                }
-                className="field"
-                value={form.max_team_size}
-                placeholder="maximum"
-              />
-            </div>
-          </div>
-          <div className="flex flex-row">
-            <div className="left-col">
-              <label className="left font-semibold">Prizepool</label>
-            </div>
-            <div>
-              <input
-                onChange={(e) =>
-                  handleChange("prizepool", Number(e.target.value))
-                }
-                type="text"
-                id="prizePool"
-                className="field"
-                value={form.prizepool}
-                placeholder="Prizepool"
-              />
-            </div>
-          </div>
-        </div>
         </div>
       )}
       <div className="flex flex-row">
@@ -291,7 +293,6 @@ const Page = () => {
           Cancel
         </button>
       </div>
-      
     </>
   );
 };

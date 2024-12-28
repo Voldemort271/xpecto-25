@@ -1,43 +1,31 @@
+import React, { useEffect, useState } from "react";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
+  DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import { api } from "@/trpc/react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "../../ui/button";
 import type { User } from "@prisma/client";
+import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
+import type { TeamWithFullDetails } from "@/app/types";
 
-const CreateTeamDialog = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails | null | undefined, compId: string}) => {
+    const { CurrentUser } = useCurrentUser();
+    const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [invitees, setInvitees] = useState<User[]>([]);
-  const [selectedType, setSelectedType] = useState<string>("competitor");
-  const [teamName, setTeamName] = useState("");
-
-  const {CurrentUser} = useCurrentUser();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -47,10 +35,22 @@ const CreateTeamDialog = () => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const { data: searchResults } = api.user.searchUsers.useQuery({
-    query: debouncedQuery,
-    invitees: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
-  });
+  const { data: searchResults } = api.user.searchCompUsers.useQuery(
+    {
+      query: debouncedQuery,
+      invitees: CurrentUser
+        ? [
+            ...invitees.map((user) => user.id),
+            CurrentUser.id,
+            ...(regTeam?.team_members?.map((user) => user.id) ?? []),
+          ]
+        : [],
+      competitionId: compId,
+    },
+    {
+      enabled: !!CurrentUser && !(compId==="") && debouncedQuery !== "",
+    },
+  );
 
   const addUserToInvitees = (user: User) => {
     setInvitees([...invitees, user]);
@@ -59,15 +59,7 @@ const CreateTeamDialog = () => {
     setInvitees(invitees.filter((u) => u.id !== userId));
   };
 
-  const createTeamMutation = api.team.createTeam.useMutation();
-
-  const {data: foundTeamName} = api.team.findTeamByName.useQuery({
-    name: teamName,
-  });
-  const {data: foundTeamUsers} = api.team.findTeamByUsers.useQuery({
-    users: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
-    type: selectedType,
-    });
+  const sendTeamInvitesMutation = api.team.sendTeamInvites.useMutation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,61 +68,33 @@ const CreateTeamDialog = () => {
       return;
     }
 
-    if (foundTeamName){
-      console.log(foundTeamName);
-      alert("Team with the same name already exists");
-      return
-    }
-    if (foundTeamUsers){
-      console.log(foundTeamUsers);
-      alert("A team with the same set of Users already exists. Modify it");
-      return
-    }
-    
-    createTeamMutation.mutate({
-      leaderId: CurrentUser.id,
-      invitees: invitees.map((user) => user.id),
-      name: teamName,
-      type: selectedType,
-    });
+    sendTeamInvitesMutation.mutate(
+      {
+        teamId: regTeam?.id ?? "",
+        invitees: invitees.map((user) => user.id),
+      },
+      {
+        onSuccess: () => {
+          alert("Invitations Sent Successfully");
+          window.location.reload();
+        },
+        onError: () => {
+          alert("Failed to send invitations. Please try again.");
+        },
+      },
+    );
   };
-
   return (
     <Dialog>
-      <DialogTrigger>
-        <div className="border-2 p-2 text-2xl">Create your team</div>
+      <DialogTrigger asChild>
+        <Button className="bg-green-500 hover:bg-green-200">
+          Invite Peeps
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Create a Team</DialogTitle>
-          <DialogDescription>
-            Send invitations to team members and start competing
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent>
+        <DialogTitle>Invite More</DialogTitle>
+        <DialogDescription>Send invitations to team members</DialogDescription>
         <div className="grid gap-2 py-4">
-          <div className="flex flex-col items-start gap-4">
-            <div className="flex items-center gap-4">
-            <Label htmlFor="name" className="text-right"> Name </Label>
-            <Input id="name" onChange={(e) => setTeamName(e.target.value)} placeholder="Enter team name" />
-            </div>
-            <div className="flex items-center gap-6">
-            <Label htmlFor="name" className="text-right">
-              Type
-            </Label>
-            <Select onValueChange={(value) => setSelectedType(value)} defaultValue="competitor">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Team Type</SelectLabel>
-                  <SelectItem value="organization">Organization</SelectItem>
-                  <SelectItem value="competitor">Competitor</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            </div>
-          </div>
           {invitees.length > 0 && (
             <div className="flex flex-col">
               <div className="p-2 font-extrabold">Invitees</div>
@@ -187,13 +151,17 @@ const CreateTeamDialog = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit} disabled={!selectedType || teamName === ""}>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={invitees.length === 0}
+          >
             Send Invitations
           </Button>
-        </DialogFooter>
+        </DialogFooter>{" "}
       </DialogContent>
     </Dialog>
   );
 };
 
-export default CreateTeamDialog;
+export default InviteTeammatesDialog;

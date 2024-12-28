@@ -1,4 +1,4 @@
-import {  z } from "zod";
+import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 export const competitionRouter = createTRPCRouter({
   createCompetition: publicProcedure
@@ -6,66 +6,88 @@ export const competitionRouter = createTRPCRouter({
       z.object({
         max_team_size: z.number(),
         min_team_size: z.number(),
-        organizers: z.any(),
-        prizepool: z.number() || 1000,
-        sponsors: z.any() || null,
-        teams: z.any() || null,
-        begin_time: z.date() ,
-        end_time:z.date() ,
-        name:z.string(),
-        description:z.string(),
-        venue:z.string(),
-        levels:z.string(),
-        rules:z.string(),
-        problem_statement:z.string()
+        prizepool: z.number(),
+        begin_time: z.date(),
+        end_time: z.date(),
+        name: z.string(),
+        description: z.string(),
+        venue: z.string(),
+        levels: z.string(),
+        rules: z.string(),
+        problem_statement: z.string(),
+        regPlans: z
+          .object({
+            id: z.string(),
+            name: z.string(),
+            description: z.string(),
+            price: z.string(),
+            labelling: z.string(),
+          })
+          .array(),
       }),
     )
-    .mutation(async ({ ctx, input })=> {
-        
-        const eventDetails=await ctx.db.eventDetails.create({
-          data:
-          {
-            begin_time:new Date(input.begin_time),
-            end_time:input.end_time,
-            name:input.name,
-            description:input.description,
-            venue:input.venue,
-          }
-
-        });
-        return ctx.db.competition.create({
-          data: {
-            competitionDetailsId:eventDetails.id,
-            max_team_size: input.max_team_size,
-            min_team_size: input.min_team_size,
-            createdAt: new Date(),
-            organizers:  undefined, 
-            prizepool: input.prizepool,
-            sponsors: undefined,
-            teams: undefined,
-            updatedAt: new Date(), 
-            levels:input.levels,
-            problem_statement:input.problem_statement,
-            rules:input.rules
-
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.competition.create({
+        data: {
+          competitionDetails: {
+            create: {
+              begin_time: new Date(input.begin_time),
+              end_time: input.end_time,
+              name: input.name,
+              description: input.description,
+              venue: input.venue,
+              regPlans: {
+                createMany: {
+                  data: input.regPlans.map((regPlan) => ({
+                    name: regPlan.name,
+                    description: regPlan.description,
+                    price: parseInt(regPlan.price),
+                    labelling: regPlan.labelling,
+                  })),
+                },
+              },
+            },
           },
-        });
-        
-      }),
-  
-
-    
-
-   getCompetitions: publicProcedure
-   
-    .query(async ({ ctx }) => {
-      const competitions = await ctx.db.competition.findMany({
-      
-      
-       include:{ competitionDetails:true}
+          max_team_size: input.max_team_size,
+          min_team_size: input.min_team_size,
+          createdAt: new Date(),
+          prizepool: input.prizepool,
+          teams: undefined,
+          updatedAt: new Date(),
+          levels: input.levels,
+          problem_statement: input.problem_statement,
+          rules: input.rules,
+        },
       });
-      return competitions;
-      
-    })
-  })
- 
+    }),
+
+  getCompetitions: publicProcedure.query(async ({ ctx }) => {
+    const competitions = await ctx.db.competition.findMany({
+      include: {
+        competitionDetails: {
+          include: { regPlans: true },
+        },
+      },
+    });
+    return competitions;
+  }),
+
+  getCompByName: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const competition = await ctx.db.competition.findFirst({
+        where: {
+          competitionDetails: {
+            name: input.name,
+          },
+        },
+        include: {
+          competitionDetails: {
+            include: { regPlans: true },
+          },
+        },
+      });
+      console.log(input.name);
+      return competition ?? null;
+    }),
+});

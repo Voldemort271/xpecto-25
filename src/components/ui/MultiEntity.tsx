@@ -18,11 +18,11 @@ const MultiEntity: React.FC<{
 
   function iconClick(name: any, id: any) {
     if (name == "add") {
-      const newRow = data.find((d: any) => d.id == 999999);
+      const newRow = data.find((d: any) => d.id == "999999");
       if (newRow) {
         newRow.id = uuid();
       }
-      data.push({ id: 999999 });
+      data.push({ id: "999999" });
       setData(data);
       setEntityData(data);
       setEditRowId(newRow.id);

@@ -21,6 +21,10 @@ export const userRouter = createTRPCRouter({
       if (!existingUser) {
         const csv: string = fs.readFileSync("public/allUnivs.csv").toString();
 
+        //TODO: Add registration to all competitions if college is IIT Mandi. Similarly, when a competition is added, add its reg to all IIT Mandi users.
+        //TODO: The above can also be achieved by making registration directly go to handleSuccess in the register dialog content if the CurrentUser college name is IITMD
+        //TODO: Do any one of the above
+
         return ctx.db.user.create({
           data: {
             name: input.name,
@@ -53,30 +57,38 @@ export const userRouter = createTRPCRouter({
       return userTeams ? userTeams.teams : [];
     }),
 
-  getUserInvites: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const userInvites = await ctx.db.user.findUnique({
-        where: {
-          id: input.userId,
-        },
-        select: {
-          invites: {
-            include: {
-              team: true,
-              user: true,
-            },
-          },
-        },
-      });
-      return userInvites ? userInvites.invites : [];
-    }),
-
   searchUsers: publicProcedure
     .input(z.object({ query: z.string(), invitees: z.string().array() }))
     .query(async ({ ctx, input }) => {
       const users = await ctx.db.user.findMany({
         where: {
+          email: {
+            contains: input.query,
+          },
+          id: {
+            notIn: input.invitees,
+          },
+        },
+      });
+      return users;
+    }),
+
+  searchCompUsers: publicProcedure
+    .input(
+      z.object({
+        query: z.string(),
+        invitees: z.string().array(),
+        competitionId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const users = await ctx.db.user.findMany({
+        where: {
+          teams: {
+            none: {
+              competitionId: input.competitionId,
+            },
+          },
           email: {
             contains: input.query,
           },
@@ -123,6 +135,15 @@ export const userRouter = createTRPCRouter({
             },
           });
         } else {
+          // Should delete all sent invitations
+          await ctx.db.team.update({
+            where: { id: teamId },
+            data: {
+              invitations: {
+                deleteMany: {},
+              },
+            },
+          });
           // If there are no team_members left, delete the team
           await ctx.db.team.delete({
             where: { id: teamId },
@@ -140,9 +161,6 @@ export const userRouter = createTRPCRouter({
       const user = await ctx.db.user.findFirst({
         where: {
           email: input.email,
-        },
-        include: {
-          pronites: true,
         },
       });
       return user;

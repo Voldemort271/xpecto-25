@@ -29,10 +29,10 @@ model User {
     college_name String @default("Individual")
 
     teamLeader Team[]        @relation("teamLeader")
-    teams      Team[]
     invites    InviteToken[]
-    events     Event[]
-    pronites   Pronite[]
+
+    teams     Team[]
+    regEvents Registration[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -40,20 +40,24 @@ model User {
 
 model Team {
     id          String @id @default(cuid())
-    name        String @unique @default("")
+    name        String
     prize_money Int    @default(0)
-    type        String @default("Competitor")
+    ranking     Int?
+    submissions String // Contains link to location of submission
 
     leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
     leaderId String
 
-    team_members  User[]
-    invitations   InviteToken[]
-    organisations Organization[] @relation("orgMembers")
-    competitions  Competitor[]
+    competition   Competition @relation(fields: [competitionId], references: [id])
+    competitionId String
+
+    team_members User[]
+    invitations  InviteToken[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@unique([name, competitionId])
 }
 
 model InviteToken {
@@ -68,19 +72,6 @@ model InviteToken {
     @@unique([teamId, userId])
 }
 
-model Organization {
-    id String @id @default(cuid())
-
-    group   Team   @relation("orgMembers", fields: [groupId], references: [id])
-    groupId String
-
-    events       Event[]
-    competitions Competition[]
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 model Competition {
     id                String @id @default(cuid())
     prizepool         Int    @default(0)
@@ -93,40 +84,7 @@ model Competition {
     competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
     competitionDetailsId String       @unique
 
-    teams      Competitor[]
-    organizers Organization[]
-    sponsors   Sponsor[]
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-// Needed a custom Pivot here
-model Competitor {
-    teamId        String
-    competitionId String
-    ranking       Int?
-    submissions   String // Contains link to location of submission
-
-    team        Team        @relation(fields: [teamId], references: [id])
-    competition Competition @relation(fields: [competitionId], references: [id])
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@id([teamId, competitionId])
-}
-
-model Event {
-    id   String @id @default(cuid())
-    type String
-
-    eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
-    eventDetailsId String       @unique
-
-    hosters      Organization[]
-    participants User[]
-    sponsors     Sponsor[]
+    teams Team[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -137,8 +95,7 @@ model Sponsor {
     name String
     logo String
 
-    events       Event[]
-    competitions Competition[]
+    events EventDetails[] // Using this we can get to know what type of event is sposored by the sponsor
 }
 
 model EventDetails {
@@ -149,9 +106,67 @@ model EventDetails {
     description String
     venue       String
 
-    event       Event?
     pronite     Pronite?
     competition Competition?
+    expos       Expos?
+    workshops   Workshops?
+
+    sponsors      Sponsor[]
+    regPlans      RegistrationLevel[]
+    registrations Registration[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Registration {
+    id        String   @id @default(cuid())
+    userId    String
+    planId    String
+    eventId   String
+    paymentId String
+    createdAt DateTime @default(now())
+
+    user  User              @relation(fields: [userId], references: [id])
+    plan  RegistrationLevel @relation(fields: [planId], references: [id])
+    event EventDetails      @relation(fields: [eventId], references: [id])
+
+    @@unique([userId, eventId]) // I had to take eventId here to make sure one user can only register in an event once
+}
+
+model RegistrationLevel {
+    id          String @id @default(cuid())
+    name        String @default("")
+    description String @default("")
+    price       Int    @default(0)
+    labelling   String @default("basic") // Basically to show if the container will be star marked or can have another marking. This can be used to dynamically assign it
+
+    eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
+    eventDetailsId String
+
+    Registrations Registration[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Expos {
+    id   String @id @default(cuid())
+    name String
+
+    exposDetails   EventDetails @relation(fields: [exposDetailsId], references: [id])
+    exposDetailsId String       @unique
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Workshops {
+    id   String @id @default(cuid())
+    name String
+
+    workshopDetails   EventDetails @relation(fields: [workshopDetailsId], references: [id])
+    workshopDetailsId String       @unique
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -164,8 +179,6 @@ model Pronite {
 
     proniteDetails   EventDetails @relation(fields: [proniteDetailsId], references: [id])
     proniteDetailsId String       @unique
-
-    regUsers User[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
