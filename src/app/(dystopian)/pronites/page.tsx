@@ -1,48 +1,42 @@
 "use client";
 import React, { useEffect } from "react";
 import { api } from "@/trpc/react"; // Import the api object
-import { useRouter } from "next/navigation";
-import {
-  Grid,
-  GridColumn as Column,
-  GridToolbar,
-} from "@progress/kendo-react-grid";
+import Link from "next/link";
+
 
 const Page = () => {
-  const router = useRouter();
-  const { data: pronites } = api.pronite.getPronite.useQuery();
+  const { data: competitions } = api.competition.getCompetitions.useQuery();
 
   useEffect(() => {
-    if (pronites) {
-      console.log("pronite", pronites);
+    if (competitions) {
+      console.log("competition", competitions);
     }
-  }, [pronites]);
+  }, [competitions]);
+
 
   return (
-    <div>
-      <div className="all">All pronites</div>
-
-      <div className="div-center mt-6">
-        <Grid scrollable="none" data={pronites} style={{ width: "20%" }}>
-          <GridToolbar>
-            <button
-              onClick={() => router.push("/pronites/create")}
-              className="btn"
-            >
-              Create Pronite
-            </button>
-          </GridToolbar>
-          <Column field="proniteDetails.name" title="Name" width="150px" />
-          <Column
-            field="proniteDetails.begin_time"
-            title="Begin Date"
-            format="{0:dd/MM/yyyy hh:mm}"
-            width="150px"
-          />
-        </Grid>
+    <>
+    {/* //TODO: Add a searchbar for competitions */}
+      <div className="flex flex-col justify-center items-center gap-5">
+        {competitions?.map((comp) => {
+          return (
+            <Link href={`/competitions/${comp.competitionDetails.name}`} key={comp.id} className="flex gap-2 items-center border-2 p-2 rounded-lg bg-amber-50 text-neutral-900">
+              <div
+                style={{ backgroundImage: `url(/event_covers/competitions/${comp.competitionDetails.name.replace(' ', '%20')}.jpeg), url(logo.enc)` }}
+                className="flex h-28 w-28 items-center justify-center bg-cover bg-no-repeat rounded-full"
+              >
+              </div>
+              <div className="bg-amber-50 w-1 h-28"></div>
+              <div>
+              <div className="font-bold text-lg">{comp.competitionDetails.name}</div>
+              <div>{comp.competitionDetails.begin_time.toString()}</div>
+              <div>{comp.competitionDetails.description.slice(0, 51) + (comp.competitionDetails.description.length > 50 ? "....." : "")}</div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
-    </div>
+    </>
   );
 };
-
 export default Page;
