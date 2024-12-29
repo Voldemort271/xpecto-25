@@ -3,64 +3,64 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import crypto from "crypto";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
+// const razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID!,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET!,
+// });
 
 export const eventRouter = createTRPCRouter({
-  createOrder: publicProcedure
-    .input(
-      z.object({
-        amount: z.number(), // Amount in INR
-        currency: z.string().default("INR"),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      const { amount, currency } = input;
+  // createOrder: publicProcedure
+  //   .input(
+  //     z.object({
+  //       amount: z.number(), // Amount in INR
+  //       currency: z.string().default("INR"),
+  //     }),
+  //   )
+  //   .mutation(async ({ input }) => {
+  //     const { amount, currency } = input;
 
-      if (amount === 0) {
-        throw new Error("Amount cannot be zero.");
-      }
+  //     if (amount === 0) {
+  //       throw new Error("Amount cannot be zero.");
+  //     }
 
-      try {
-        const order = await razorpay.orders.create({
-          amount: amount * 100, // Convert to paise
-          currency,
-        });
+  //     try {
+  //       const order = await razorpay.orders.create({
+  //         amount: amount * 100, // Convert to paise
+  //         currency,
+  //       });
 
-        return { orderId: order.id };
-      } catch (error) {
-        console.error("Error creating Razorpay order:", error);
-        throw new Error("Failed to create payment order.");
-      }
-    }),
+  //       return { orderId: order.id };
+  //     } catch (error) {
+  //       console.error("Error creating Razorpay order:", error);
+  //       throw new Error("Failed to create payment order.");
+  //     }
+  //   }),
 
-  verifyPayment: publicProcedure
-    .input(
-      z.object({
-        razorpayPaymentId: z.string(),
-        razorpayOrderId: z.string(),
-        razorpaySignature: z.string(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = input;
+  // verifyPayment: publicProcedure
+  //   .input(
+  //     z.object({
+  //       razorpayPaymentId: z.string(),
+  //       razorpayOrderId: z.string(),
+  //       razorpaySignature: z.string(),
+  //     }),
+  //   )
+  //   .mutation(async ({ input }) => {
+  //     const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = input;
 
-      const body = `${razorpayOrderId}|${razorpayPaymentId}`;
-      const expectedSignature = crypto
-        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
-        .update(body)
-        .digest("hex");
+  //     const body = `${razorpayOrderId}|${razorpayPaymentId}`;
+  //     const expectedSignature = crypto
+  //       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+  //       .update(body)
+  //       .digest("hex");
 
-      if (expectedSignature === razorpaySignature) {
-        // Payment is valid
-        return { success: true };
-      } else {
-        // Invalid signature
-        return { success: false };
-      }
-    }),
+  //     if (expectedSignature === razorpaySignature) {
+  //       // Payment is valid
+  //       return { success: true };
+  //     } else {
+  //       // Invalid signature
+  //       return { success: false };
+  //     }
+  //   }),
 
   addUserToEvent: publicProcedure
     .input(
