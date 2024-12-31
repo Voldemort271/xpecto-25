@@ -1,17 +1,20 @@
 "use client";
 
-import React from "react";
-import MarqueeContainer from "@/components/(dystopian)/marquee-container";
+import React, { useContext } from "react";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { motion } from "motion/react";
 import styles from "@/styles/intro.module.css";
 import Image from "next/image";
-import IntroPic from "../../../public/intro.png";
-import Hehe from "../../../public/meme.png";
+import IntroPic from "../../../../public/intro.png";
+import Hehe from "../../../../public/meme.png";
 import { Share_Tech } from "next/font/google";
+import { CursorContext } from "@/context/cursor-context";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const IntroScreen = () => {
+  const { isHovered, setIsHovered } = useContext(CursorContext);
+
   return (
     <div className="relative flex h-full w-screen items-center justify-center bg-neutral-900 p-5 pb-20 sm:h-[calc(100vh-128px)] md:p-12 md:pb-32">
       <motion.div
@@ -59,11 +62,14 @@ const IntroScreen = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.span
-          className="flex h-full w-full flex-col items-center justify-center"
+        <motion.a
+          className="flex h-full w-full cursor-none flex-col items-center justify-center"
           initial={{ translateY: -50, opacity: 0 }}
           whileInView={{ translateY: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.125 }}
+          href={"/about"}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <MarqueeContainer
             text={[
@@ -74,7 +80,7 @@ const IntroScreen = () => {
             ]}
             delay={1}
           />
-        </motion.span>
+        </motion.a>
       </motion.div>
     </div>
   );

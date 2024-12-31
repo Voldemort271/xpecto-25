@@ -1,7 +1,7 @@
 "use client";
 
-import CompetitionDetailsBox from "@/components/(dystopian)/(competition)/competition-details-box";
-import CompTeamBox from "@/components/(dystopian)/(competition)/competition-team-box";
+import CompetitionDetailsBox from "@/components/(dystopian)/(competitions)/competition-details-box";
+import CompTeamBox from "@/components/(dystopian)/(competitions)/competition-team-box";
 
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";

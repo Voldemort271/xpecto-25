@@ -1,15 +1,15 @@
 import React from "react";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
-  DialogTitle,
   DialogFooter,
-} from "../ui/dialog";
+  DialogTitle,
+  DialogTrigger,
+} from "../../ui/dialog";
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
-// import Razorpay from "razorpay";
 
+// import Razorpay from "razorpay";
 
 interface RegisterDialogProps {
   trigger: React.ReactNode;
@@ -28,7 +28,13 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const {data: plan} = api.event.checkUserRegisteration.useQuery({ userId: CurrentUser?.id ?? "", eventId: eventId, }, { enabled: !!CurrentUser && !!eventId, });
+  const { data: plan } = api.event.checkUserRegisteration.useQuery(
+    {
+      userId: CurrentUser?.id ?? "",
+      eventId: eventId,
+    },
+    { enabled: !!CurrentUser && !!eventId },
+  );
 
   // const createOrder = api.event.createOrder.useMutation();
   // const verifyPayment = api.event.verifyPayment.useMutation();
@@ -39,22 +45,26 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       paymentId = "free";
     }
     if (CurrentUser) {
-      userAddToEvent.mutate({
-        paymentId: paymentId,
-        userId: CurrentUser.id,
-        regPlanId: regPlanId,
-        eventId: eventId,
-      }, {
-        onSuccess: () => {
-          alert("Registration successful!");
-          window.location.reload();
+      userAddToEvent.mutate(
+        {
+          paymentId: paymentId,
+          userId: CurrentUser.id,
+          regPlanId: regPlanId,
+          eventId: eventId,
         },
-        onError: () => {
-          alert("Either you are registering again for the same event or an error occurred while registering you for the event. Your payment was successful. Please contact the organizer if it you have made two payments.");
+        {
+          onSuccess: () => {
+            alert("Registration successful!");
+            window.location.reload();
+          },
+          onError: () => {
+            alert(
+              "Either you are registering again for the same event or an error occurred while registering you for the event. Your payment was successful. Please contact the organizer if it you have made two payments.",
+            );
+          },
         },
-      });
+      );
     }
-
   };
 
   const handlePay = async () => {
@@ -119,23 +129,24 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
   };
 
   return (
-    CurrentUser &&
-    <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="p-6">
-        <DialogTitle>Event Registration</DialogTitle>
-        <div className="mb-4">{content}</div>
-        <div className="text-lg font-bold">Price: ${price}</div>
-        <DialogFooter>
-          <button
-            onClick={handlePay}
-            className="rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
-          >
-            Confirm Registration
-          </button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    CurrentUser && (
+      <Dialog>
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
+        <DialogContent className="p-6">
+          <DialogTitle>Event Registration</DialogTitle>
+          <div className="mb-4">{content}</div>
+          <div className="text-lg font-bold">Price: ${price}</div>
+          <DialogFooter>
+            <button
+              onClick={handlePay}
+              className="rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
+            >
+              Confirm Registration
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )
   );
 };
 

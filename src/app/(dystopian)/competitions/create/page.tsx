@@ -8,9 +8,9 @@ import { api } from "@/trpc/react"; // Import the api object
 import type { CompetitionType } from "../../../types";
 import {
   competitionLevelSchema,
+  planSchema,
   problemStatementSchema,
   ruleSchema,
-  planSchema,
 } from "@/lib/utils";
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
@@ -30,7 +30,6 @@ const Page = () => {
         (p) => p.id != "999999",
       );
       const plans = planData.filter((p) => p.id != "999999");
-
 
       createCompetition.mutate(
         {
@@ -83,7 +82,9 @@ const Page = () => {
   const [problemStatementData, setProblemStatementData] = React.useState([
     { id: "999999", name: "", description: "" },
   ]);
-  const [rulesData, setRulesData] = React.useState([{ id: "999999", name: "" }]);
+  const [rulesData, setRulesData] = React.useState([
+    { id: "999999", name: "" },
+  ]);
   const [planData, setPlanData] = React.useState([
     { id: "999999", name: "", description: "", price: "", labelling: "" },
   ]);

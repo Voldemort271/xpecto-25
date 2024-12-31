@@ -1,6 +1,6 @@
 "use client";
 
-import RegisterDialog from "@/components/(dystopian)/registration-dialog";
+import RegisterDialog from "@/components/(dystopian)/common/registration-dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCurrentUser } from "@/lib/utils";
@@ -21,7 +21,7 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
     },
     {
       enabled: !!CurrentUser && !!comp,
-    }
+    },
   );
 
   const [regPrice, setRegPrice] = useState(
@@ -32,7 +32,6 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
   );
   const regStatus = plan ? true : false;
 
-  
   const date = comp?.competitionDetails.begin_time.getDate();
   const month = comp
     ? comp.competitionDetails.begin_time.getMonth() + 1

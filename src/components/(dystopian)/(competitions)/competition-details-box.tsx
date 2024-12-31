@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CreateTeamDialog from "./create-team-dialog";
-import RegisterDialog from "../registration-dialog";
+import RegisterDialog from "../common/registration-dialog";
 import { useCurrentUser } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Label } from "../../ui/label";
