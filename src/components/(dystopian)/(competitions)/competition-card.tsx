@@ -1,39 +1,37 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import BgImage from "public/transparent-bg.png";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import { type StaticImport } from "next/dist/shared/lib/get-img-props";
+import { CursorContext } from "@/context/cursor-context";
+import Link from "next/link";
 
-const CompCard = () => {
-  const [mouseOn, setMouseOn] = useState(false);
+interface Props {
+  title: string;
+  details: string;
+  img?: string | StaticImport;
+  animationDelay?: number;
+}
+
+const CompCard = (props: Props) => {
+  const { setIsHovered } = useContext(CursorContext);
 
   return (
-    <div
-      className="relative z-0 min-h-96 w-full overflow-clip border border-amber-50"
-      onMouseEnter={() => setMouseOn(true)}
-      onMouseLeave={() => setMouseOn(false)}
-    >
+    <div className="relative z-0 min-h-96 w-full overflow-clip border border-amber-50">
       <Image
-        src={BgImage}
-        alt={"transparent bg"}
+        src={props.img ?? BgImage}
+        alt={props.title || "Untitled"}
         width={768}
         height={576}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom"
       />
-      <motion.div
-        className="absolute bottom-16 left-0 w-full border-t-2 border-amber-50 bg-neutral-900/[0.5] p-2.5 text-2xl font-medium uppercase"
-        animate={
-          mouseOn
-            ? { opacity: 1, translateY: 0 }
-            : { opacity: 0, translateY: 100 }
-        }
-        transition={{ duration: 0.5, ease: "circOut" }}
-      >
-        Hello, world
-      </motion.div>
-      <div
+      <Link
+        href={`/competitions/${props.title}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         className={`absolute bottom-0 left-0 flex h-16 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-neutral-900/[0.7] text-4xl font-normal uppercase text-amber-50`}
       >
         <motion.span
@@ -44,16 +42,20 @@ const CompCard = () => {
         >
           <MarqueeContainer
             text={[
-              "you have reached the end",
-              "that's all we have for now",
-              "you have reached the end",
-              "that's all we have for now",
+              props.title || "loading",
+              props.details || "loading",
+              props.title || "loading",
+              props.details || "loading",
             ]}
             delay={1}
           />
         </motion.span>
-      </div>
-      <div className="absolute bottom-0 right-0 flex h-16 w-full max-w-36 flex-col items-center justify-center border-l-2 border-t-2 border-amber-50 bg-amber-50 text-3xl uppercase text-neutral-900">
+      </Link>
+      <div
+        className="absolute bottom-0 right-0 flex h-16 w-full max-w-36 flex-col items-center justify-center border-l-2 border-t-2 border-amber-50 bg-amber-50 text-3xl uppercase text-neutral-900"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         register
       </div>
     </div>
