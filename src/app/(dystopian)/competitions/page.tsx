@@ -19,11 +19,7 @@ const Page = () => {
     <>
       {/* //TODO: Add a searchbar for competitions */}
       <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {Array(6)
-          .fill(0)
-          .map((el, i) => (
-            <CompCard key={i} />
-          ))}
+        {competitions?.map((el, i) => <CompCard key={i} />)}
       </div>
       <div className="flex flex-col items-center justify-center gap-5">
         {competitions?.map((comp) => {

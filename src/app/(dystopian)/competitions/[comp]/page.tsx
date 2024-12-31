@@ -33,7 +33,7 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
     },
   );
 
-  const regStatus = plan ? true : false;
+  const regStatus = !!plan;
 
   return (
     <>
