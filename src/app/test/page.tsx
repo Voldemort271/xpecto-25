@@ -3,18 +3,12 @@
 import React from "react";
 import { motion } from "motion/react";
 
-
 const Home = () => {
   return (
-    <>
-        {/* <Image
-          src={BgPic}
-          alt={"Background"}
-          className="absolute bottom-0 left-0 right-0 top-0 h-screen w-screen rounded-xl border-2 border-[#d6d3d1] opacity-20"
-        /> */}
         <svg
           id = "logo" width="734" height="151" 
           viewBox="0 0 734 151" 
+
           // fill="none" 
           xmlns="http://www.w3.org/2000/svg" 
           // className="w-full max-w-[90%] md:max-w-[734px] h-auto"
@@ -111,7 +105,7 @@ const Home = () => {
             />
           </motion.g>
         </svg>
-    </>
+
   );
 };
 
