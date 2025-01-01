@@ -5,7 +5,9 @@ import CompTeamBox from "@/components/(dystopian)/(competitions)/competition-tea
 
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
-import { use } from "react";
+import React, { use } from "react";
+import { motion } from "motion/react";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 
 const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
   const { CurrentUser } = useCurrentUser();
@@ -38,7 +40,7 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
   return (
     <>
       {comp && (
-        <div className="container mx-auto flex gap-2 p-6">
+        <div className="flex w-screen justify-center">
           <CompetitionDetailsBox
             comp={comp}
             regStatus={regStatus}
@@ -47,6 +49,30 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
           {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />}
         </div>
       )}
+
+      <motion.div
+        className={`flex h-16 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50`}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.span
+          className="flex h-full w-full cursor-none flex-col items-center justify-center"
+          initial={{ translateY: -50, opacity: 0 }}
+          whileInView={{ translateY: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.125 }}
+        >
+          <MarqueeContainer
+            text={[
+              "you have reached the end",
+              "that's all we have for now",
+              "you have reached the end",
+              "that's all we have for now",
+            ]}
+            delay={1}
+          />
+        </motion.span>
+      </motion.div>
     </>
   );
 };

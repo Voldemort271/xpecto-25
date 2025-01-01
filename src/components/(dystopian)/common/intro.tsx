@@ -13,7 +13,7 @@ import { CursorContext } from "@/context/cursor-context";
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const IntroScreen = () => {
-  const { isHovered, setIsHovered } = useContext(CursorContext);
+  const { setIsHovered } = useContext(CursorContext);
 
   return (
     <div className="relative flex h-full w-screen items-center justify-center bg-neutral-900 p-5 pb-20 sm:h-[calc(100vh-128px)] md:p-12 md:pb-32">

@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import {
   Popover,
@@ -20,13 +20,15 @@ import {
 } from "@/components/ui/popover";
 import type { User } from "@prisma/client";
 import { useCurrentUser } from "@/lib/utils";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import { CursorContext } from "@/context/cursor-context";
 
 const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [invitees, setInvitees] = useState<User[]>([]);
   const [teamName, setTeamName] = useState("");
-  const {CurrentUser} = useCurrentUser();
+  const { CurrentUser } = useCurrentUser();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,7 +40,9 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
 
   const { data: searchResults } = api.user.searchCompUsers.useQuery({
     query: debouncedQuery,
-    invitees: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
+    invitees: CurrentUser
+      ? [...invitees.map((user) => user.id), CurrentUser.id]
+      : [],
     competitionId: competitionId,
   });
 
@@ -51,14 +55,16 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
 
   const createTeamMutation = api.team.createTeam.useMutation();
 
-  const {data: foundTeamName} = api.team.findTeamByNameComp.useQuery({
+  const { data: foundTeamName } = api.team.findTeamByNameComp.useQuery({
     name: teamName,
     competitionId: competitionId,
   });
-  const {data: foundTeamUsers} = api.team.findTeamByUsers.useQuery({
-    users: CurrentUser ? [...invitees.map((user) => user.id), CurrentUser.id] : [],
+  const { data: foundTeamUsers } = api.team.findTeamByUsers.useQuery({
+    users: CurrentUser
+      ? [...invitees.map((user) => user.id), CurrentUser.id]
+      : [],
     competitionId: competitionId,
-    });
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,37 +73,62 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       return;
     }
 
-    if (foundTeamName){
+    if (foundTeamName) {
       console.log(foundTeamName);
       alert("Team with the same name already exists");
-      return
+      return;
     }
-    if (foundTeamUsers){
+    if (foundTeamUsers) {
       console.log(foundTeamUsers);
       alert("A team with the same set of Users already exists. Modify it");
-      return
+      return;
     }
-    
-    createTeamMutation.mutate({
-      leaderId: CurrentUser.id,
-      invitees: invitees.map((user) => user.id),
-      name: teamName,
-      compeitionId: competitionId,
-    }, {
-      onSuccess: () => {
-        alert("Invitations Sent Successfully");
-        window.location.reload();
+
+    createTeamMutation.mutate(
+      {
+        leaderId: CurrentUser.id,
+        invitees: invitees.map((user) => user.id),
+        name: teamName,
+        compeitionId: competitionId,
       },
-      onError: () => {
-        alert("Failed to send invitations. Please try again.");
-      }
-    });
+      {
+        onSuccess: () => {
+          alert("Invitations Sent Successfully");
+          window.location.reload();
+        },
+        onError: () => {
+          alert("Failed to send invitations. Please try again.");
+        },
+      },
+    );
   };
+
+  const { setIsHovered } = useContext(CursorContext);
 
   return (
     <Dialog>
       <DialogTrigger>
-        <div className="w-full rounded-lg bg-green-500 p-2 text-white hover:bg-green-600">Create your team</div>
+        <button
+          className="w-full cursor-none overflow-clip"
+          disabled={CurrentUser?.email === ""}
+          onMouseEnter={() => {
+            if (CurrentUser?.email !== "") setIsHovered(true);
+          }}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div
+            className={`absolute bottom-[-2px] flex h-12 w-full items-center overflow-clip border-y-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
+          >
+            <MarqueeContainer
+              text={[
+                "Create your team",
+                "Create your team",
+                "Create your team",
+                "Create your team",
+              ]}
+            />
+          </div>
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -109,8 +140,15 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
         <div className="grid gap-2 py-4">
           <div className="flex flex-col items-start gap-4">
             <div className="flex items-center gap-4">
-            <Label htmlFor="name" className="text-right"> Name </Label>
-            <Input id="name" onChange={(e) => setTeamName(e.target.value)} placeholder="Enter team name" />
+              <Label htmlFor="name" className="text-right">
+                {" "}
+                Name{" "}
+              </Label>
+              <Input
+                id="name"
+                onChange={(e) => setTeamName(e.target.value)}
+                placeholder="Enter team name"
+              />
             </div>
             {/* //TODO: Idk, maybe something can go here ig */}
           </div>
@@ -170,7 +208,11 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit} disabled={teamName === ""}>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={teamName === ""}
+          >
             Send Invitations
           </Button>
         </DialogFooter>
