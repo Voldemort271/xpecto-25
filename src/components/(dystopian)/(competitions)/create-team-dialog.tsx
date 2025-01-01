@@ -108,27 +108,23 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   return (
     <Dialog>
       <DialogTrigger>
-        <button
-          className="w-full cursor-none overflow-clip"
-          disabled={CurrentUser?.email === ""}
+        <div
+          className={`absolute bottom-[-2px] flex h-12 w-full cursor-none items-center overflow-clip border-y-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
           onMouseEnter={() => {
             if (CurrentUser?.email !== "") setIsHovered(true);
           }}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div
-            className={`absolute bottom-[-2px] flex h-12 w-full items-center overflow-clip border-y-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
-          >
-            <MarqueeContainer
-              text={[
-                "Create your team",
-                "Create your team",
-                "Create your team",
-                "Create your team",
-              ]}
-            />
-          </div>
-        </button>
+          <MarqueeContainer
+            text={[
+              "Create your team",
+              "Create your team",
+              "Create your team",
+              "Create your team",
+            ]}
+            delay={-1}
+          />
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

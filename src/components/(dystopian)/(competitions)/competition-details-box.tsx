@@ -121,24 +121,29 @@ const CompetitionDetailsBox = ({
                         return (
                           <div
                             key={reg.id}
-                            className="mb-2 flex items-center gap-2"
+                            className="mb-2 flex items-center gap-2 px-5"
                           >
                             <RadioGroupItem
+                              className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
                               value={reg.price.toString() + " " + reg.id}
                               key={reg.id}
                             />
                             <Label
                               htmlFor={reg.id}
-                              className="flex w-full flex-col rounded-lg border-2 p-2"
+                              className="flex w-full flex-col p-2"
                             >
-                              <div>
-                                {reg.name} - ₹{reg.price}
+                              <div className="flex items-center gap-2">
+                                <div className="text-xl font-normal uppercase">
+                                  {reg.name} - ₹{reg.price}
+                                </div>
+                                <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
+                                  {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
+                                  {reg.labelling}
+                                </div>
                               </div>
-                              <div className="text-sm font-bold text-gray-600">
-                                {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
-                                {reg.labelling}
-                              </div>
-                              <div className="text-sm text-gray-600">
+                              <div
+                                className={`${sharetech.className} mt-1 text-base tracking-tight`}
+                              >
                                 {reg.description}
                               </div>
                             </Label>
