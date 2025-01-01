@@ -24,20 +24,6 @@ const CompetitionDetailsBox = ({
     setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
   }, [comp]);
 
-  const date = comp?.competitionDetails.begin_time.getDate();
-  const month = comp
-    ? comp.competitionDetails.begin_time.getMonth() + 1
-    : undefined; // Months are 0-indexed
-  const year = comp?.competitionDetails.begin_time.getFullYear();
-  const time = comp?.competitionDetails.begin_time.toLocaleTimeString();
-
-  const dateEnd = comp?.competitionDetails.end_time.getDate();
-  const monthEnd = comp
-    ? comp.competitionDetails.end_time.getMonth() + 1
-    : undefined; // Months are 0-indexed
-  const yearEnd = comp?.competitionDetails.end_time.getFullYear();
-  const timeEnd = comp?.competitionDetails.end_time.toLocaleTimeString();
-
   //TODO: Add more comp details on the page. I have just added the basic ones
 
   return (
@@ -60,10 +46,12 @@ const CompetitionDetailsBox = ({
             <strong>Venue:</strong> {comp.competitionDetails.venue}
           </p>
           <p>
-            <strong>Starts at:</strong> {date}/{month}/{year} {time}
+            <strong>Starts at:</strong>{" "}
+            {comp.competitionDetails.begin_time.toLocaleString()}
           </p>
           <p>
-            <strong>Ends at:</strong> {dateEnd}/{monthEnd}/{yearEnd} {timeEnd}
+            <strong>Ends at:</strong>{" "}
+            {comp.competitionDetails.end_time.toLocaleString()}
           </p>
         </div>
         <div className="mt-6">

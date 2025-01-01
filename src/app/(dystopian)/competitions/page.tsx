@@ -4,6 +4,7 @@ import { api } from "@/trpc/react";
 import CompCard from "@/components/(dystopian)/(competitions)/competition-card";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import SectionHeader from "@/components/(dystopian)/common/section-header";
 
 const Page = () => {
   const { data: competitions, isLoading } =
@@ -18,11 +19,12 @@ const Page = () => {
   return (
     <>
       {/* //TODO: Add a searchbar for competitions */}
+      <SectionHeader title="competitions">prove your mettle</SectionHeader>
       <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {isLoading &&
           Array(6)
             .fill(0)
-            .map((el, i) => <CompCard key={i} title={""} details={""} />)}
+            .map((_el, i) => <CompCard key={i} title={""} details={""} />)}
 
         {competitions?.map((el, i) => (
           <CompCard
@@ -34,7 +36,7 @@ const Page = () => {
         ))}
       </div>
       <motion.div
-        className={`flex h-16 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-amber-50/[0.5] text-4xl font-normal uppercase text-neutral-900`}
+        className={`flex h-16 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50`}
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
