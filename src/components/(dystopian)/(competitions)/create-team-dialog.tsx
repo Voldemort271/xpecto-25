@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -10,7 +9,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import React, { useContext, useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import {
@@ -22,6 +20,10 @@ import type { User } from "@prisma/client";
 import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { CursorContext } from "@/context/cursor-context";
+import { Handjet, Share_Tech } from "next/font/google";
+
+const handjet = Handjet({ subsets: ["latin"] });
+const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -126,14 +128,22 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className={`max-w-[800px] border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 ${handjet.className} tracking-widest`}
+      >
         <DialogHeader>
-          <DialogTitle>Create a Team</DialogTitle>
-          <DialogDescription>
-            Send invitations to team members and start competing
-          </DialogDescription>
+          <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
+            <MarqueeContainer
+              text={[
+                "Create your team",
+                "Send invitations to team members",
+                "Create your team",
+                "Send invitations to team members",
+              ]}
+            />
+          </DialogTitle>
         </DialogHeader>
-        <div className="grid gap-2 py-4">
+        <div className="p-5">
           <div className="flex flex-col items-start gap-4">
             <div className="flex items-center gap-4">
               <Label htmlFor="name" className="text-right">
@@ -204,13 +214,14 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
           </div>
         </div>
         <DialogFooter>
-          <Button
+          <button
             type="submit"
             onClick={handleSubmit}
             disabled={teamName === ""}
+            className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
           >
-            Send Invitations
-          </Button>
+            Send invitations
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

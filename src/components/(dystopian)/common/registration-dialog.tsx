@@ -143,9 +143,9 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
           <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
             <MarqueeContainer
               text={[
-                "Create your team",
-                "Create your team",
-                "Create your team",
+                "register for event",
+                "register for event",
+                "register for event",
               ]}
             />
           </DialogTitle>

@@ -39,8 +39,8 @@ const CompCard = (props: Props) => {
         >
           <MarqueeContainer
             text={
-              props.details
-                ? [props.details, props.details]
+              props.title
+                ? [props.title, props.title, props.title]
                 : ["loading", "loading", "loading"]
             }
             delay={1}
@@ -49,33 +49,12 @@ const CompCard = (props: Props) => {
       </div>
       <Link
         href={`/competitions/${props.title}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className={`absolute left-0 top-0 flex h-16 w-full flex-row items-center overflow-hidden border-b-2 border-amber-50 bg-neutral-900/[0.7] text-4xl font-normal uppercase text-amber-50`}
-      >
-        <motion.span
-          className="flex h-full w-full cursor-none flex-col items-center justify-center"
-          initial={{ translateY: -50, opacity: 0 }}
-          whileInView={{ translateY: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: Math.random() }}
-        >
-          <MarqueeContainer
-            text={
-              props.title
-                ? [props.title, props.title]
-                : ["Loading", "Loading", "Loading"]
-            }
-            delay={1}
-          />
-        </motion.span>
-      </Link>
-      <div
-        className="absolute bottom-0 right-0 flex h-16 w-full max-w-36 flex-col items-center justify-center border-l-2 border-t-2 border-amber-50 bg-amber-50 text-3xl uppercase text-neutral-900"
+        className="absolute bottom-0 right-0 flex h-16 w-full max-w-36 cursor-none flex-col items-center justify-center border-l-2 border-t-2 border-amber-50 bg-amber-50 text-3xl uppercase text-neutral-900"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         register
-      </div>
+      </Link>
     </div>
   );
 };
