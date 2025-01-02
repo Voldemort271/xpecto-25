@@ -18,9 +18,9 @@ const CompTeamBox = ({
   const { CurrentUser } = useCurrentUser();
 
   return (
-    <div className="relative flex h-full w-full flex-col overflow-y-scroll border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
+    <div className="relative flex h-full w-full flex-col overflow-x-clip overflow-y-scroll border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
       <motion.div
-        className={`flex h-12 w-full flex-row items-center overflow-hidden border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
+        className={`flex h-12 w-full flex-row items-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
       >
         <MarqueeContainer
           text={[
