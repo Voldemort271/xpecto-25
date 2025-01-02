@@ -150,7 +150,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
             />
           </DialogTitle>
           <div className="my-4">{content}</div>
-          <div className="flex items-stretch justify-between">
+          <div className="flex flex-col items-stretch justify-between sm:flex-row">
             <div className={`px-5 py-2 text-xl font-normal uppercase`}>
               Total charges: Rs <span className="text-4xl">{price}</span>
             </div>

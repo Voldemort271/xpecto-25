@@ -31,6 +31,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   const [invitees, setInvitees] = useState<User[]>([]);
   const [teamName, setTeamName] = useState("");
   const { CurrentUser } = useCurrentUser();
+  const { setIsHovered } = useContext(CursorContext);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -105,8 +106,6 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
     );
   };
 
-  const { setIsHovered } = useContext(CursorContext);
-
   return (
     <Dialog>
       <DialogTrigger>
@@ -145,12 +144,12 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
         </DialogHeader>
         <div className="p-5">
           <div className="flex flex-col items-start gap-4">
-            <div className="flex items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                {" "}
-                Name{" "}
+            <div className="flex w-full items-center gap-5">
+              <Label htmlFor="name" className="text-2xl font-normal uppercase">
+                Name
               </Label>
               <Input
+                className={`rounded-none border-2 border-amber-50 text-lg text-amber-50 ${sharetech.className} tracking-tight`}
                 id="name"
                 onChange={(e) => setTeamName(e.target.value)}
                 placeholder="Enter team name"
@@ -159,12 +158,14 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
             {/* //TODO: Idk, maybe something can go here ig */}
           </div>
           {invitees.length > 0 && (
-            <div className="flex flex-col">
-              <div className="p-2 font-extrabold">Invitees</div>
+            <div className="flex flex-row flex-wrap gap-5">
+              <div className="-mb-5 w-full pb-2 pt-5 text-2xl font-normal uppercase">
+                Invitees
+              </div>
               {invitees.map((user) => {
                 return (
                   <div
-                    className="flex w-80 flex-col border-b-2 border-t-2 p-2"
+                    className={`flex w-80 flex-wrap bg-amber-50/[0.3] px-5 py-2 ${sharetech.className} cursor-pointer text-lg tracking-tight`}
                     key={user.id}
                     onClick={() => deleteUserFromInvitees(user.id)}
                   >
@@ -175,8 +176,11 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
               })}
             </div>
           )}
-          <div className="mt-8 flex flex-col items-start gap-4">
-            <Label htmlFor="username" className="text-right">
+          <div className="mt-5 flex flex-col gap-2">
+            <Label
+              htmlFor="username"
+              className="text-2xl font-normal uppercase"
+            >
               Enter user emails to send invitations
             </Label>
             <Popover
@@ -191,17 +195,17 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search for users through email"
-                    className="w-full border-2"
+                    className={`rounded-none border-2 border-amber-50 text-lg text-amber-50 ${sharetech.className} tracking-tight`}
                   />
                 </div>
               </PopoverTrigger>
               <PopoverContent
                 onOpenAutoFocus={(e) => e.preventDefault()}
-                className="w-full"
+                className={`${sharetech.className} w-full rounded-none border-2 border-amber-50/[0.5] bg-neutral-900 text-lg tracking-tight text-amber-50`}
               >
                 {searchResults?.map((user) => (
                   <div
-                    className="flex w-80 flex-col border-b-2 border-t-2 p-2"
+                    className="flex w-full min-w-80 cursor-pointer flex-col border-y-2 border-amber-50/[0.5] p-2"
                     key={user.id}
                     onClick={() => addUserToInvitees(user)}
                   >
