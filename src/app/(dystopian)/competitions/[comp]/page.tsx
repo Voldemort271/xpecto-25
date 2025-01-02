@@ -40,7 +40,7 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
   return (
     <>
       {comp && (
-        <div className="flex w-screen justify-center">
+        <div className="flex w-screen flex-col items-center justify-center gap-12 p-12 xl:flex-row">
           <CompetitionDetailsBox
             comp={comp}
             regStatus={regStatus}

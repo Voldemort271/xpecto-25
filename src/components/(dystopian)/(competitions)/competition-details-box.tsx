@@ -37,7 +37,7 @@ const CompetitionDetailsBox = ({
   //TODO: Add more comp details on the page. I have just added the basic ones
 
   return (
-    <div className="relative m-12 flex h-full max-w-screen-lg flex-col border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
+    <div className="relative flex h-full max-w-screen-lg flex-col overflow-y-scroll overscroll-none border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
       <div className="flex h-full w-full flex-col lg:flex-row">
         <Image
           src={`/event_covers/competitions/${comp.competitionDetails.name.replace(" ", "%20")}.jpeg`}
@@ -86,7 +86,7 @@ const CompetitionDetailsBox = ({
                     onMouseLeave={() => setIsHovered(false)}
                   >
                     <div
-                      className={`absolute bottom-[-2px] flex h-12 w-full items-center overflow-clip border-y-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
+                      className={`absolute bottom-0 flex h-12 w-full items-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
                     >
                       <MarqueeContainer
                         text={[

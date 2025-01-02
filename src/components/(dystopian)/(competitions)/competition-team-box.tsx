@@ -5,6 +5,8 @@ import type { CompetitionWithDetails, TeamWithFullDetails } from "@/app/types";
 import InviteTeammatesDialog from "./invite-teammates-dialog";
 import TeammateBox from "./teammate-box";
 import InvitationBox from "./team-invitations-box";
+import { motion } from "motion/react";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 
 const CompTeamBox = ({
   regTeam,
@@ -16,13 +18,30 @@ const CompTeamBox = ({
   const { CurrentUser } = useCurrentUser();
 
   return (
-    <div className="w-[60%] rounded-lg bg-amber-50 p-6 text-neutral-900 shadow-md">
+    <div className="relative flex h-full w-full flex-col overflow-y-scroll border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
+      <motion.div
+        className={`flex h-12 w-full flex-row items-center overflow-hidden border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
+      >
+        <MarqueeContainer
+          text={[
+            "your invitations",
+            "your teams",
+            "your invitations",
+            "your teams",
+          ]}
+        />
+      </motion.div>
       {regTeam ? (
         <div className="flex h-full flex-col justify-between">
           <TeammateBox regTeam={regTeam} />
           <div className="flex justify-around">
             <LeaveTeamDialog regTeam={regTeam} />
-            {CurrentUser?.id === regTeam.leaderId && <InviteTeammatesDialog regTeam={regTeam} compId={comp?.id ?? ""} />}
+            {CurrentUser?.id === regTeam.leaderId && (
+              <InviteTeammatesDialog
+                regTeam={regTeam}
+                compId={comp?.id ?? ""}
+              />
+            )}
           </div>
         </div>
       ) : (
