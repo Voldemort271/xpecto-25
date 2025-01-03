@@ -19,33 +19,44 @@ const CompTeamBox = ({
 
   return (
     <div className="relative flex h-full w-full flex-col overflow-x-clip overflow-y-scroll border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
-      <motion.div
-        className={`flex h-12 w-full flex-row items-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
-      >
-        <MarqueeContainer
-          text={[
-            "your invitations",
-            "your teams",
-            "your invitations",
-            "your teams",
-          ]}
-        />
-      </motion.div>
       {regTeam ? (
-        <div className="flex h-full flex-col justify-between">
-          <TeammateBox regTeam={regTeam} />
-          <div className="flex justify-around">
-            <LeaveTeamDialog regTeam={regTeam} />
-            {CurrentUser?.id === regTeam.leaderId && (
-              <InviteTeammatesDialog
-                regTeam={regTeam}
-                compId={comp?.id ?? ""}
-              />
-            )}
+        <>
+          <motion.div
+            className={`flex h-12 w-full flex-row items-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
+          >
+            <MarqueeContainer
+              text={["your team", regTeam.name, "your team", regTeam.name]}
+            />
+          </motion.div>
+          <div className="flex h-full flex-col">
+            <TeammateBox regTeam={regTeam} />
+            <div className="flex justify-end gap-5 p-5 pt-0">
+              <LeaveTeamDialog regTeam={regTeam} />
+              {CurrentUser?.id === regTeam.leaderId && (
+                <InviteTeammatesDialog
+                  regTeam={regTeam}
+                  compId={comp?.id ?? ""}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        </>
       ) : (
-        <InvitationBox compId={comp?.id ?? ""} />
+        <>
+          <motion.div
+            className={`flex h-12 w-full flex-row items-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
+          >
+            <MarqueeContainer
+              text={[
+                "your invitations",
+                "your invitations",
+                "your invitations",
+                "your invitations",
+              ]}
+            />
+          </motion.div>
+          <InvitationBox compId={comp?.id ?? ""} />
+        </>
       )}
     </div>
   );

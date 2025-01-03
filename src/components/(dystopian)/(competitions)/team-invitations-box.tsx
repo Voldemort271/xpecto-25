@@ -3,96 +3,95 @@ import { api } from "@/trpc/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
 
-const InvitationBox = ({compId} : {compId: string}) => {
-    const { CurrentUser } = useCurrentUser();
-    const { data: userInvites } = api.invite.getUserInvites.useQuery(
+const InvitationBox = ({ compId }: { compId: string }) => {
+  const { CurrentUser } = useCurrentUser();
+  const { data: userInvites } = api.invite.getUserInvites.useQuery(
+    {
+      userId: CurrentUser?.id ?? "",
+      comptitionId: compId,
+    },
+    {
+      enabled: !!CurrentUser && !(compId === ""),
+    },
+  );
+
+  // States for dynamic data
+  const [myInvites, setMyInvites] = useState<typeof userInvites>([]);
+
+  // Update states whenever data is fetched since useQuery works automatically for refetching
+  useEffect(() => {
+    if (userInvites) {
+      setMyInvites(userInvites);
+    }
+  }, [userInvites]);
+
+  const acceptInviteMutation = api.invite.acceptTeamInvite.useMutation();
+  const handleAcceptInvite = ({
+    teamId,
+    token,
+  }: {
+    teamId: string;
+    token: string;
+  }) => {
+    if (!CurrentUser) {
+      return;
+    }
+    try {
+      acceptInviteMutation.mutate(
         {
-          userId: CurrentUser?.id ?? "",
-          comptitionId: compId,
+          userId: CurrentUser.id,
+          teamId: teamId,
+          token: token,
         },
         {
-          enabled: !!CurrentUser && !(compId===""),
+          onSuccess: (e) => {
+            if (myInvites && e) {
+              setMyInvites(
+                myInvites.filter((invite) => invite.token !== token),
+              );
+            } else {
+              if (!e) {
+                alert("Team has been deleted.");
+              }
+              setMyInvites([]);
+            }
+          },
         },
       );
-    
-      // States for dynamic data
-      const [myInvites, setMyInvites] = useState<typeof userInvites>([]);
-    
-      // Update states whenever data is fetched since useQuery works automatically for refetching
-      useEffect(() => {
-        if (userInvites) {
-          setMyInvites(userInvites);
-        }
-      }, [userInvites]);
-    
-      const acceptInviteMutation = api.invite.acceptTeamInvite.useMutation();
-      const handleAcceptInvite = ({
-        teamId,
-        token,
-      }: {
-        teamId: string;
-        token: string;
-      }) => {
-        if (!CurrentUser) {
-          return;
-        }
-        try {
-          acceptInviteMutation.mutate(
-            {
-              userId: CurrentUser.id,
-              teamId: teamId,
-              token: token,
-            },
-            {
-              onSuccess: (e) => {
-                if (myInvites && e) {
-                  setMyInvites(
-                    myInvites.filter((invite) => invite.token !== token),
-                  );
-                } else {
-                  if (!e) {
-                    alert("Team has been deleted.");
-                  }
-                  setMyInvites([]);
-                }
-              },
-            },
-          );
-        } catch (e) {
-          console.error(e);
-          alert("Failed to accept the invitation. Please try again.");
-        }
-      };
-    
-      const rejectInviteMutation = api.invite.deleteTeamInvite.useMutation();
-      const handleRejectInvite = ({ token }: { token: string }) => {
-        if (!CurrentUser) {
-          return;
-        }
-        try {
-          rejectInviteMutation.mutate(
-            { token: token },
-            {
-              onSuccess: () => {
-                if (myInvites) {
-                  setMyInvites(
-                    myInvites.filter((invite) => invite.token !== token),
-                  );
-                } else {
-                  setMyInvites([]);
-                }
-              },
-            },
-          );
-        } catch (e) {
-          console.error(e);
-          alert("Failed to reject the invitation. Please try again.");
-        }
-      };
-    
+    } catch (e) {
+      console.error(e);
+      alert("Failed to accept the invitation. Please try again.");
+    }
+  };
+
+  const rejectInviteMutation = api.invite.deleteTeamInvite.useMutation();
+  const handleRejectInvite = ({ token }: { token: string }) => {
+    if (!CurrentUser) {
+      return;
+    }
+    try {
+      rejectInviteMutation.mutate(
+        { token: token },
+        {
+          onSuccess: () => {
+            if (myInvites) {
+              setMyInvites(
+                myInvites.filter((invite) => invite.token !== token),
+              );
+            } else {
+              setMyInvites([]);
+            }
+          },
+        },
+      );
+    } catch (e) {
+      console.error(e);
+      alert("Failed to reject the invitation. Please try again.");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 text-lg font-bold">
-      <div>Your Invitations</div>
       {myInvites?.map((invitee) => (
         <div
           className="flex w-full items-center justify-evenly"
