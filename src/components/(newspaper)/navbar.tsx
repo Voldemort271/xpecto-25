@@ -35,23 +35,23 @@ const NewspaperNavbar = () => {
           Home
         </Link>
         |
-        <Link href={"/"} className="text-3xl">
+        <Link href={"/competitions"} className="text-3xl">
           Competitions
         </Link>
         |
-        <Link href={"/"} className="text-3xl">
+        <Link href={"/workshops"} className="text-3xl">
           Workshops
         </Link>
         |
-        <Link href={"/"} className="text-3xl">
+        <Link href={"/expos"} className="text-3xl">
           Expos
         </Link>
         |
-        <Link href={"/"} className="text-3xl">
+        <Link href={"/pronites"} className="text-3xl">
           Pronites
         </Link>
         |
-        <Link href={"/"} className="text-3xl">
+        <Link href={"/sponsors"} className="text-3xl">
           Sponsors
         </Link>
       </div>
