@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,11 @@ import { Button } from "../../ui/button";
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import type { TeamWithFullDetails } from "@/app/types";
+import { CursorContext } from "@/context/cursor-context";
 
-const LeaveTeamDialog = ({regTeam} : {regTeam: TeamWithFullDetails}) => {
+const LeaveTeamDialog = ({ regTeam }: { regTeam: TeamWithFullDetails }) => {
+  const { setIsHovered } = useContext(CursorContext);
+
   const { CurrentUser } = useCurrentUser();
   const removeUserFromTeamMutation = api.user.deleteUserFromTeam.useMutation();
   const handleUserTeamDelete = ({ teamId }: { teamId: string }) => {
@@ -38,9 +41,13 @@ const LeaveTeamDialog = ({regTeam} : {regTeam: TeamWithFullDetails}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-red-500 hover:bg-red-200">
-          Want out of team?
-        </Button>
+        <button
+          className="cursor-none bg-red-500 px-5 py-2 text-2xl font-normal uppercase"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          leave team
+        </button>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Leave Team</DialogTitle>

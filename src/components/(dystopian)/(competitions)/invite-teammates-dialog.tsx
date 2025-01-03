@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogTrigger,
-  DialogTitle,
   DialogFooter,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,15 +14,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "../../ui/button";
 import type { User } from "@prisma/client";
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import type { TeamWithFullDetails } from "@/app/types";
+import { CursorContext } from "@/context/cursor-context";
+import { Handjet, Share_Tech } from "next/font/google";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 
-const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails | null | undefined, compId: string}) => {
-    const { CurrentUser } = useCurrentUser();
-    const [searchQuery, setSearchQuery] = useState("");
+const handjet = Handjet({ subsets: ["latin"] });
+const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
+
+const InviteTeammatesDialog = ({
+  regTeam,
+  compId,
+}: {
+  regTeam: TeamWithFullDetails | null | undefined;
+  compId: string;
+}) => {
+  const { CurrentUser } = useCurrentUser();
+  const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [invitees, setInvitees] = useState<User[]>([]);
 
@@ -48,7 +58,7 @@ const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails
       competitionId: compId,
     },
     {
-      enabled: !!CurrentUser && !(compId==="") && debouncedQuery !== "",
+      enabled: !!CurrentUser && !(compId === "") && debouncedQuery !== "",
     },
   );
 
@@ -84,24 +94,42 @@ const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails
       },
     );
   };
+
+  const { setIsHovered } = useContext(CursorContext);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-green-500 hover:bg-green-200">
-          Invite Peeps
-        </Button>
+        <button
+          className="cursor-none bg-green-500 px-5 py-2 text-2xl font-normal uppercase"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          invite members
+        </button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogTitle>Invite More</DialogTitle>
-        <DialogDescription>Send invitations to team members</DialogDescription>
-        <div className="grid gap-2 py-4">
+      <DialogContent
+        className={`max-w-[800px] border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 ${handjet.className} tracking-widest`}
+      >
+        <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
+          <MarqueeContainer
+            text={[
+              "invite more members",
+              "invite more members",
+              "invite more members",
+            ]}
+          />
+        </DialogTitle>
+        <div className="p-5 pt-0">
           {invitees.length > 0 && (
-            <div className="flex flex-col">
-              <div className="p-2 font-extrabold">Invitees</div>
+            <div className="flex flex-row flex-wrap gap-5">
+              <div className="-mb-5 w-full pb-2 text-2xl font-normal uppercase">
+                Invitees
+              </div>
               {invitees.map((user) => {
                 return (
                   <div
-                    className="flex w-80 flex-col border-b-2 border-t-2 p-2"
+                    className={`flex w-80 flex-wrap bg-amber-50/[0.3] px-5 py-2 ${sharetech.className} cursor-pointer text-lg tracking-tight`}
                     key={user.id}
                     onClick={() => deleteUserFromInvitees(user.id)}
                   >
@@ -112,8 +140,11 @@ const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails
               })}
             </div>
           )}
-          <div className="mt-8 flex flex-col items-start gap-4">
-            <Label htmlFor="username" className="text-right">
+          <div className="mt-5 flex flex-col gap-2">
+            <Label
+              htmlFor="username"
+              className="text-2xl font-normal uppercase"
+            >
               Enter user emails to send invitations
             </Label>
             <Popover
@@ -128,17 +159,17 @@ const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search for users through email"
-                    className="w-full border-2"
+                    className={`rounded-none border-2 border-amber-50 text-lg text-amber-50 ${sharetech.className} tracking-tight`}
                   />
                 </div>
               </PopoverTrigger>
               <PopoverContent
                 onOpenAutoFocus={(e) => e.preventDefault()}
-                className="w-full"
+                className={`${sharetech.className} w-full rounded-none border-2 border-amber-50/[0.5] bg-neutral-900 text-lg tracking-tight text-amber-50`}
               >
                 {searchResults?.map((user) => (
                   <div
-                    className="flex w-80 flex-col border-b-2 border-t-2 p-2"
+                    className="flex w-full min-w-80 cursor-pointer flex-col border-y-2 border-amber-50/[0.5] p-2"
                     key={user.id}
                     onClick={() => addUserToInvitees(user)}
                   >
@@ -151,14 +182,15 @@ const InviteTeammatesDialog = ({regTeam, compId} : {regTeam: TeamWithFullDetails
           </div>
         </div>
         <DialogFooter>
-          <Button
+          <button
             type="submit"
             onClick={handleSubmit}
             disabled={invitees.length === 0}
+            className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
           >
-            Send Invitations
-          </Button>
-        </DialogFooter>{" "}
+            Send invitations
+          </button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -25,12 +25,19 @@ const CompTeamBox = ({
             className={`flex h-12 w-full flex-row items-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-2xl font-normal uppercase text-amber-50`}
           >
             <MarqueeContainer
-              text={["your team", regTeam.name, "your team", regTeam.name]}
+              text={[
+                "your team",
+                regTeam.name,
+                "your team",
+                regTeam.name,
+                "your team",
+                regTeam.name,
+              ]}
             />
           </motion.div>
           <div className="flex h-full flex-col">
             <TeammateBox regTeam={regTeam} />
-            <div className="flex justify-end gap-5 p-5 pt-0">
+            <div className="flex flex-col justify-end gap-5 p-5 pt-0 sm:flex-row">
               <LeaveTeamDialog regTeam={regTeam} />
               {CurrentUser?.id === regTeam.leaderId && (
                 <InviteTeammatesDialog
