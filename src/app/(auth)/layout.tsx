@@ -6,9 +6,10 @@ import SigninPic from "public/signin.jpg";
 const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <div className="relative z-0 min-h-screen w-screen bg-neutral-900">
-      <div className="absolute left-0 top-0 z-50 w-screen">
+      <div className="absolute left-0 top-0 z-10 w-screen">
         <AuthNavbar />
       </div>
+      <div className="h-28 w-full"></div>
       <Image
         src={SigninPic}
         alt={"Sign in background"}

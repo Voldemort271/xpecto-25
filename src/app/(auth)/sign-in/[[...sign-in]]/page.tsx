@@ -18,7 +18,7 @@ const SigninPage = () => {
   };
 
   return (
-    <main className="flex h-screen w-full flex-col items-center justify-center gap-10">
+    <main className="flex w-full flex-col items-center justify-center gap-10">
       <SignIn />
       <button onClick={() => signInWith("oauth_google")}>
         Sign in with Google

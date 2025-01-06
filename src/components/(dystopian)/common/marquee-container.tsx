@@ -10,15 +10,16 @@ interface Props {
   href?: string;
   onclick?: () => void;
   delay?: number;
+  cursor?: true;
 }
 
-const MarqueeContainer = ({ text, href, onclick, delay }: Props) => {
+const MarqueeContainer = ({ text, href, onclick, delay, cursor }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
   const text2 = text.concat(text).join(" | ").concat(" | ");
 
   return href ? (
     <Link
-      className="flex cursor-none items-center"
+      className={`flex items-center ${cursor ? "cursor-pointer" : "cursor-none"}`}
       href={href}
       onClick={onclick}
       onMouseEnter={() => setIsHovered(true)}
