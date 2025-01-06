@@ -15,7 +15,7 @@ const AuthNavbar = () => {
   return (
     <div className={`flex w-screen ${handjet.className} tracking-widest`}>
       <Link
-        className="z-10 flex h-28 flex-col items-start justify-center border-2 border-amber-50 bg-neutral-900 px-5 text-amber-50"
+        className="z-10 flex h-28 flex-col items-start justify-center border-b-2 border-r-2 border-amber-50 bg-neutral-900 px-5 text-amber-50"
         href="/"
       >
         <div className="text-4xl font-medium uppercase">Xpecto &apos;25</div>
@@ -23,7 +23,7 @@ const AuthNavbar = () => {
           indian institute of technology, mandi
         </div>
       </Link>
-      <div className="flex h-14 w-full flex-col justify-center border-2 border-l-0 bg-amber-50 text-3xl font-normal uppercase text-neutral-900">
+      <div className="flex h-14 w-full flex-col justify-center bg-amber-50 text-3xl font-normal uppercase text-neutral-900">
         <MarqueeContainer
           cursor
           text={

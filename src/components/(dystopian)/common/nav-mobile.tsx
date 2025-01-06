@@ -49,7 +49,7 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
               onClick={() => setToggler(false)}
               animate={{ left: 0, opacity: 1 }}
               transition={{ delay: 2 }}
-              className="absolute left-0 top-96 flex h-20 w-full cursor-none flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
+              className="absolute left-0 top-96 flex h-16 w-full cursor-none flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
             >
               <MarqueeContainer
                 href="/sign-in"
