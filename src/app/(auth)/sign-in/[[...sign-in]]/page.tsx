@@ -4,6 +4,8 @@ import { SignIn, useSignIn } from "@clerk/nextjs";
 import React from "react";
 import type { OAuthStrategy } from "@clerk/types";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import GoogleLogo from "@/components/(auth)/google";
+import GithubLogo from "@/components/(auth)/github";
 
 const SigninPage = () => {
   const { signIn } = useSignIn();
@@ -33,14 +35,16 @@ const SigninPage = () => {
       <div className="grid w-full grid-cols-2 gap-5 p-5">
         <button
           onClick={() => signInWith("oauth_google")}
-          className="w-full bg-amber-50/[0.7] px-5 py-2 text-2xl uppercase transition-all hover:bg-amber-50"
+          className="flex w-full items-center justify-center gap-2.5 bg-amber-50/[0.7] px-5 py-2 text-2xl uppercase transition-all hover:bg-amber-50"
         >
+          <GoogleLogo color={"#171717"} width={24} height={24} />
           Sign in with Google
         </button>
         <button
           onClick={() => signInWith("oauth_github")}
-          className="w-full bg-amber-50/[0.7] px-5 py-2 text-2xl uppercase transition-all hover:bg-amber-50"
+          className="flex w-full items-center justify-center gap-2.5 bg-amber-50/[0.7] px-5 py-2 text-2xl uppercase transition-all hover:bg-amber-50"
         >
+          <GithubLogo color={"#171717"} width={24} height={24} />
           Sign in with GitHub
         </button>
       </div>
