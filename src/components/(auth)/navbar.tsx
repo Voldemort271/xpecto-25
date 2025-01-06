@@ -18,7 +18,9 @@ const AuthNavbar = () => {
         className="z-10 flex h-28 flex-col items-start justify-center border-b-2 border-r-2 border-amber-50 bg-neutral-900 px-5 text-amber-50"
         href="/"
       >
-        <div className="text-4xl font-medium uppercase">Xpecto &apos;25</div>
+        <div className="text-3xl font-medium uppercase sm:text-4xl">
+          Xpecto &apos;25
+        </div>
         <div className="text-sm font-light uppercase leading-5">
           indian institute of technology, mandi
         </div>
