@@ -5,14 +5,14 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const proName = use(params).pro.replaceAll("%20", " ");
-  const { data: pro } = api.pronite.getProniteByName.useQuery({
-    name: proName,
+  const proSlug = use(params).pro;
+  const { data: pro } = api.pronite.getProniteBySlug.useQuery({
+    slug: proSlug,
   });
   const { data: plan } = api.event.checkUserRegisteration.useQuery(
     {
@@ -27,6 +27,12 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
   const [regPrice, setRegPrice] = useState(
     pro?.proniteDetails.regPlans[0]?.price ?? 0,
   );
+
+  useEffect(() => {
+      setRegPrice(pro?.proniteDetails.regPlans[0]?.price ?? 0);
+      setRegPlanId(pro?.proniteDetails.regPlans[0]?.id ?? "");
+    }, [pro]);
+
   const [regPlanId, setRegPlanId] = useState(
     pro?.proniteDetails.regPlans[0]?.id ?? "",
   );
@@ -55,7 +61,7 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
             <div className="flex flex-col items-center">
               <div
                 style={{
-                  backgroundImage: `url(/event_covers/pronites/${pro.proniteDetails.name.replace(" ", "%20")}.jpeg), url(logo.enc)`,
+                  backgroundImage: `url(/event_covers/pronites/${pro.proniteDetails.slug}.jpeg), url(logo.enc)`,
                 }}
                 className="mb-4 h-40 w-40 rounded-full bg-cover bg-no-repeat"
               ></div>
@@ -79,9 +85,7 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
               </div>
               <div className="mt-6">
                 {regStatus ? (
-                  <button className="w-full rounded-lg bg-green-500 p-2 text-white hover:bg-green-600">
-                    Create a team
-                  </button>
+                  <></>
                 ) : (
                   <RegisterDialog
                     trigger={

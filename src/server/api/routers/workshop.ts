@@ -35,7 +35,6 @@ export const workshopRouter = createTRPCRouter({
             // ticket_price: input.ticket_price,
             createdAt: new Date(), 
             updatedAt: new Date(), 
-            name:input.name
           },
         });
         
@@ -56,13 +55,13 @@ export const workshopRouter = createTRPCRouter({
       
     }),
 
-    getWorkshopByName: publicProcedure
-    .input(z.object({ name: z.string() }))
+    getWorkshopBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
       const workshop = await ctx.db.workshops.findFirst({
         where: {
           workshopDetails: {
-            name: input.name,
+            slug: input.slug,
           },
         },
         include: {
@@ -71,7 +70,7 @@ export const workshopRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.name);
+      console.log(input.slug);
       return workshop ?? null;
     }),
   })

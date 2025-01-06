@@ -5,20 +5,20 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const expoName = use(params).expo.replaceAll("%20", " ");
-  const { data: expo } = api.expo.getExpoByName.useQuery({
-    name: expoName,
+  const expoSlug = use(params).expo;
+  const { data: expo } = api.expo.getExpoBySlug.useQuery({
+    slug: expoSlug,
   });
   const { data: plan } = api.event.checkUserRegisteration.useQuery(
     {
       userId: CurrentUser?.id ?? "",
       eventId: expo?.exposDetailsId ?? "",
-    },  
+    },
     {
       enabled: !!CurrentUser && !!expo,
     },
@@ -30,19 +30,21 @@ const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
   const [regPlanId, setRegPlanId] = useState(
     expo?.exposDetails.regPlans[0]?.id ?? "",
   );
+
+  useEffect(() => {
+      setRegPrice(expo?.exposDetails.regPlans[0]?.price ?? 0);
+      setRegPlanId(expo?.exposDetails.regPlans[0]?.id ?? "");
+    }, [expo]);
+
   const regStatus = plan ? true : false;
 
   const date = expo?.exposDetails.begin_time.getDate();
-  const month = expo
-    ? expo.exposDetails.begin_time.getMonth() + 1
-    : undefined; // Months are 0-indexed
+  const month = expo ? expo.exposDetails.begin_time.getMonth() + 1 : undefined; // Months are 0-indexed
   const year = expo?.exposDetails.begin_time.getFullYear();
   const time = expo?.exposDetails.begin_time.toLocaleTimeString();
 
   const dateEnd = expo?.exposDetails.end_time.getDate();
-  const monthEnd = expo
-    ? expo.exposDetails.end_time.getMonth() + 1
-    : undefined; // Months are 0-indexed
+  const monthEnd = expo ? expo.exposDetails.end_time.getMonth() + 1 : undefined; // Months are 0-indexed
   const yearEnd = expo?.exposDetails.end_time.getFullYear();
   const timeEnd = expo?.exposDetails.end_time.toLocaleTimeString();
 
@@ -55,7 +57,7 @@ const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
             <div className="flex flex-col items-center">
               <div
                 style={{
-                  backgroundImage: `url(/event_covers/expos/${expo.exposDetails.name.replace(" ", "%20")}.jpeg), url(logo.enc)`,
+                  backgroundImage: `url(/event_covers/expos/${expo.exposDetails.slug}.jpeg), url(logo.enc)`,
                 }}
                 className="mb-4 h-40 w-40 rounded-full bg-cover bg-no-repeat"
               ></div>
@@ -79,9 +81,7 @@ const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
               </div>
               <div className="mt-6">
                 {regStatus ? (
-                  <button className="w-full rounded-lg bg-green-500 p-2 text-white hover:bg-green-600">
-                    Create a team
-                  </button>
+                  <></>
                 ) : (
                   <RegisterDialog
                     trigger={

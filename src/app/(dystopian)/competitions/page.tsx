@@ -29,8 +29,8 @@ const Page = () => {
         {competitions?.map((el, i) => (
           <CompCard
             key={i}
-            img={`/event_covers/competitions/${el.competitionDetails.name.replace(" ", "%20")}.jpeg`}
-            title={el.competitionDetails.name}
+            img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}
+            title={el.competitionDetails.slug}
             details={el.competitionDetails.begin_time.toLocaleString()}
           />
         ))}

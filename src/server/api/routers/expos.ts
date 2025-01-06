@@ -35,7 +35,6 @@ export const expoRouter = createTRPCRouter({
             // ticket_price: input.ticket_price,
             createdAt: new Date(), 
             updatedAt: new Date(), 
-            name:input.name
           },
         });
         
@@ -56,13 +55,13 @@ export const expoRouter = createTRPCRouter({
       
     }),
 
-  getExpoByName: publicProcedure
-  .input(z.object({ name: z.string() }))
+  getExpoBySlug: publicProcedure
+  .input(z.object({ slug: z.string() }))
   .query(async ({ ctx, input }) => {
     const expo = await ctx.db.expos.findFirst({
       where: {
         exposDetails: {
-          name: input.name,
+          slug: input.slug,
         },
       },
       include: {
@@ -71,7 +70,7 @@ export const expoRouter = createTRPCRouter({
         },
       },
     });
-    console.log(input.name);
+    console.log(input.slug);
     return expo ?? null;
   }),
 });

@@ -40,7 +40,7 @@ const CompetitionDetailsBox = ({
     <div className="relative flex h-full max-w-screen-lg flex-col overflow-y-scroll overscroll-none border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
       <div className="flex h-full w-full flex-col lg:flex-row">
         <Image
-          src={`/event_covers/competitions/${comp.competitionDetails.name.replace(" ", "%20")}.jpeg`}
+          src={`/event_covers/competitions/${comp.competitionDetails.slug}.jpeg`}
           width={576}
           height={768}
           alt={comp.competitionDetails.name}

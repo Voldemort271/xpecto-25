@@ -72,13 +72,13 @@ export const competitionRouter = createTRPCRouter({
     return competitions;
   }),
 
-  getCompByName: publicProcedure
-    .input(z.object({ name: z.string() }))
+  getCompBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
       const competition = await ctx.db.competition.findFirst({
         where: {
           competitionDetails: {
-            name: input.name,
+            slug: input.slug,
           },
         },
         include: {
@@ -87,7 +87,7 @@ export const competitionRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.name);
+      console.log(input.slug);
       return competition ?? null;
     }),
 });

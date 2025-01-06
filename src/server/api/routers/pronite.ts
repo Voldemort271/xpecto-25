@@ -54,13 +54,13 @@ export const proniteRouter = createTRPCRouter({
       
     }),
 
-    getProniteByName: publicProcedure
-    .input(z.object({ name: z.string() }))
+    getProniteBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
       const pronites = await ctx.db.pronite.findFirst({
         where: {
           proniteDetails: {
-            name: input.name,
+            slug: input.slug,
           },
         },
         include: {
@@ -69,7 +69,7 @@ export const proniteRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.name);
+      console.log(input.slug);
       return pronites ?? null;
     }),
   })

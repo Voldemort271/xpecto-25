@@ -22,9 +22,9 @@ const Page = () => {
       <div className="flex flex-col justify-center items-center gap-5">
         {expos?.map((comp) => {
           return (
-            <Link href={`/expos/${comp.exposDetails.name}`} key={comp.id} className="flex gap-2 items-center border-2 p-2 rounded-lg bg-amber-50 text-neutral-900">
+            <Link href={`/expos/${comp.exposDetails.slug}`} key={comp.id} className="flex gap-2 items-center border-2 p-2 rounded-lg bg-amber-50 text-neutral-900">
               <div
-                style={{ backgroundImage: `url(/event_covers/competitions/${comp.exposDetails.name.replace(' ', '%20')}.jpeg), url(logo.enc)` }}
+                style={{ backgroundImage: `url(/event_covers/competitions/${comp.exposDetails.slug}.jpeg), url(logo.enc)` }}
                 className="flex h-28 w-28 items-center justify-center bg-cover bg-no-repeat rounded-full"
               >
               </div>
