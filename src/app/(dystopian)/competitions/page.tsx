@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 import React, { useEffect } from "react";
 import { api } from "@/trpc/react";
@@ -5,7 +6,7 @@ import CompCard from "@/components/(dystopian)/(competitions)/competition-card";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import SectionHeader from "@/components/(dystopian)/common/section-header";
-
+import LOADING_ICON from "../../../../public/loading.gif";
 const Page = () => {
   const { data: competitions, isLoading } =
     api.competition.getCompetitions.useQuery();
@@ -21,16 +22,23 @@ const Page = () => {
       {/* //TODO: Add a searchbar for competitions */}
       <SectionHeader title="competitions">prove your mettle</SectionHeader>
       <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {isLoading &&
-          Array(6)
-            .fill(0)
-            .map((_el, i) => <CompCard key={i} title={""} details={""} />)}
+        {isLoading && (
+          <div className="overlay">
+            <img
+              className="loader"
+              src="/loading.gif"
+              width="190rem"
+              height="190rem"
+            ></img>
+          </div>
+        )}
 
         {competitions?.map((el, i) => (
           <CompCard
             key={i}
             img={`/event_covers/competitions/${el.competitionDetails.name.replace(" ", "%20")}.jpeg`}
             title={el.competitionDetails.name}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             details={el.competitionDetails.begin_time.toLocaleString()}
           />
         ))}
