@@ -7,6 +7,8 @@ import { postRouter } from "./routers/post";
 import { competitionRouter } from "./routers/competition";
 import { proniteRouter } from "./routers/pronite"
 import { eventRouter } from "./routers/event";
+import { expoRouter } from "./routers/expos";
+import { workshopRouter } from "./routers/workshop";
 /**
  * This is the primary router for your server.
  *
@@ -19,6 +21,8 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   competition: competitionRouter, 
   pronite: proniteRouter,
+  expo:expoRouter,
+  workshop:workshopRouter,
   event: eventRouter,
 });
 

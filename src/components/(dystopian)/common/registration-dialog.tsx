@@ -45,6 +45,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
   // const verifyPayment = api.event.verifyPayment.useMutation();
   const userAddToEvent = api.event.addUserToEvent.useMutation();
 
+
   const handleSuccess = (paymentId?: string) => {
     if (!paymentId) {
       paymentId = "free";
@@ -70,6 +71,13 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         },
       );
     }
+    console.log("CurrentUser :", CurrentUser );
+    console.log("Mutation Inputs:", {
+      paymentId: "free",
+      userId: CurrentUser ?.id,
+      regPlanId,
+      eventId,
+    });
   };
 
   const handlePay = async () => {
