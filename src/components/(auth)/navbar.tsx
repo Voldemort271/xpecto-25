@@ -23,16 +23,25 @@ const AuthNavbar = () => {
           indian institute of technology, mandi
         </div>
       </Link>
-      <div className="flex h-14 w-full flex-col justify-center border-2 border-l-0 border-amber-50 bg-neutral-900 text-3xl font-light uppercase text-amber-50">
+      <div className="flex h-14 w-full flex-col justify-center border-2 border-l-0 bg-amber-50 text-3xl font-normal uppercase text-neutral-900">
         <MarqueeContainer
           cursor
-          text={[
-            "Login to xperience xpecto",
-            "Login to xperience xpecto",
-            "Login to xperience xpecto",
-            "Login to xperience xpecto",
-          ]}
-          href={"/"}
+          text={
+            path === "/sign-in"
+              ? [
+                  "don't have an account?",
+                  "register for xpecto '25",
+                  "don't have an account?",
+                  "register for xpecto '25",
+                ]
+              : [
+                  "already have an account?",
+                  "sign in to xpecto '25",
+                  "already have an account?",
+                  "sign in to xpecto '25",
+                ]
+          }
+          href={path === "/sign-in" ? "/sign-up" : "/sign-in"}
         />
       </div>
     </div>
