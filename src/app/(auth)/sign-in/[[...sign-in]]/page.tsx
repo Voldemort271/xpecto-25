@@ -9,7 +9,6 @@ import GithubLogo from "@/components/(auth)/github";
 
 const SigninPage = () => {
   const { signIn } = useSignIn();
-
   if (!signIn) return null;
 
   const signInWith = (strategy: OAuthStrategy) => {
