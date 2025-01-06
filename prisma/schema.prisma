@@ -103,6 +103,7 @@ model EventDetails {
     begin_time  DateTime
     end_time    DateTime
     name        String
+    slug        String   @default("")
     description String
     venue       String
 
@@ -152,7 +153,6 @@ model RegistrationLevel {
 
 model Expos {
     id   String @id @default(cuid())
-    name String
 
     exposDetails   EventDetails @relation(fields: [exposDetailsId], references: [id])
     exposDetailsId String       @unique
@@ -163,7 +163,6 @@ model Expos {
 
 model Workshops {
     id   String @id @default(cuid())
-    name String
 
     workshopDetails   EventDetails @relation(fields: [workshopDetailsId], references: [id])
     workshopDetailsId String       @unique

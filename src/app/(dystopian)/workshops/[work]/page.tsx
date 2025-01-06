@@ -7,73 +7,73 @@ import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { use, useEffect, useState } from "react";
 
-const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
+const Page = ({ params }: { params: Promise<{ work: string }> }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const proSlug = use(params).pro;
-  const { data: pro } = api.pronite.getProniteBySlug.useQuery({
-    slug: proSlug,
+  const workSlug = use(params).work;
+  const { data: work } = api.workshop.getWorkshopBySlug.useQuery({
+    slug: workSlug,
   });
   const { data: plan } = api.event.checkUserRegisteration.useQuery(
     {
       userId: CurrentUser?.id ?? "",
-      eventId: pro?.proniteDetailsId ?? "",
-    },  
+      eventId: work?.workshopDetailsId ?? "",
+    },
     {
-      enabled: !!CurrentUser && !!pro,
+      enabled: !!CurrentUser && !!work,
     },
   );
 
   const [regPrice, setRegPrice] = useState(
-    pro?.proniteDetails.regPlans[0]?.price ?? 0,
+    work?.workshopDetails.regPlans[0]?.price ?? 0,
+  );
+  const [regPlanId, setRegPlanId] = useState(
+    work?.workshopDetails.regPlans[0]?.id ?? "",
   );
 
   useEffect(() => {
-      setRegPrice(pro?.proniteDetails.regPlans[0]?.price ?? 0);
-      setRegPlanId(pro?.proniteDetails.regPlans[0]?.id ?? "");
-    }, [pro]);
+    setRegPrice(work?.workshopDetails.regPlans[0]?.price ?? 0);
+    setRegPlanId(work?.workshopDetails.regPlans[0]?.id ?? "");
+  }, [work]);
 
-  const [regPlanId, setRegPlanId] = useState(
-    pro?.proniteDetails.regPlans[0]?.id ?? "",
-  );
   const regStatus = plan ? true : false;
 
-  const date = pro?.proniteDetails.begin_time.getDate();
-  const month = pro
-    ? pro.proniteDetails.begin_time.getMonth() + 1
+  const date = work?.workshopDetails.begin_time.getDate();
+  const month = work
+    ? work.workshopDetails.begin_time.getMonth() + 1
     : undefined; // Months are 0-indexed
-  const year = pro?.proniteDetails.begin_time.getFullYear();
-  const time = pro?.proniteDetails.begin_time.toLocaleTimeString();
+  const year = work?.workshopDetails.begin_time.getFullYear();
+  const time = work?.workshopDetails.begin_time.toLocaleTimeString();
 
-  const dateEnd = pro?.proniteDetails.end_time.getDate();
-  const monthEnd = pro
-    ? pro.proniteDetails.end_time.getMonth() + 1
+  const dateEnd = work?.workshopDetails.end_time.getDate();
+  const monthEnd = work
+    ? work.workshopDetails.end_time.getMonth() + 1
     : undefined; // Months are 0-indexed
-  const yearEnd = pro?.proniteDetails.end_time.getFullYear();
-  const timeEnd = pro?.proniteDetails.end_time.toLocaleTimeString();
+  const yearEnd = work?.workshopDetails.end_time.getFullYear();
+  const timeEnd = work?.workshopDetails.end_time.toLocaleTimeString();
 
-  //TODO: Add more expo details on the page. I have just added the basic ones
+  //TODO: Add more work details on the page. I have just added the basic ones
   return (
     <>
-      {pro && (
+      {work && (
         <div className="container mx-auto p-6">
           <div className="rounded-lg bg-amber-50 p-6 text-neutral-900 shadow-md">
             <div className="flex flex-col items-center">
               <div
                 style={{
-                  backgroundImage: `url(/event_covers/pronites/${pro.proniteDetails.slug}.jpeg), url(logo.enc)`,
+                  backgroundImage: `url(/event_covers/workshops/${work.workshopDetails.slug}.jpeg), url(logo.enc)`,
                 }}
                 className="mb-4 h-40 w-40 rounded-full bg-cover bg-no-repeat"
               ></div>
               <h1 className="mb-2 text-3xl font-bold">
-                {pro.proniteDetails.name}
+                {work.workshopDetails.name}
               </h1>
               <p className="mb-4 text-gray-600">
-                {pro.proniteDetails.description}
+                {work.workshopDetails.description}
               </p>
               <div className="text-lg">
                 <p>
-                  <strong>Venue:</strong> {pro.proniteDetails.venue}
+                  <strong>Venue:</strong> {work.workshopDetails.venue}
                 </p>
                 <p>
                   <strong>Starts at:</strong> {date}/{month}/{year} {time}
@@ -99,9 +99,9 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
                           setRegPlanId(e.split(" ")[1]!);
                           setRegPrice(parseInt(e.split(" ")[0]!));
                         }}
-                        defaultValue={pro.proniteDetails.regPlans[0]?.price.toString()}
+                        defaultValue={work.workshopDetails.regPlans[0]?.price.toString()}
                       >
-                        {pro.proniteDetails.regPlans.map((reg) => {
+                        {work.workshopDetails.regPlans.map((reg) => {
                           return (
                             <div
                               key={reg.id}
@@ -133,7 +133,7 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
                     }
                     price={regPrice}
                     regPlanId={regPlanId}
-                    eventId={pro.proniteDetails.id}
+                    eventId={work.workshopDetails.id}
                   />
                 )}
               </div>

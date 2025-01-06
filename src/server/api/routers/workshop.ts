@@ -1,17 +1,18 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
-export const proniteRouter = createTRPCRouter({
-  createPronite: publicProcedure
+export const workshopRouter = createTRPCRouter({
+  createWorkshop: publicProcedure
     .input(
       z.object({
-        max_capacity: z.number(),
-        ticket_price: z.number(),
+        // max_capacity: z.number(),
+        // ticket_price: z.number(),
         begin_time: z.date() ,
         description:z.string(),
         venue:z.string(),
         end_time:z.null(),
         name:z.string(),
+        workshopDetails:z.string()
       }),
     )
     .mutation(async ({ ctx, input })=> {
@@ -27,11 +28,11 @@ export const proniteRouter = createTRPCRouter({
           }
 
         });
-        return ctx.db.pronite.create({
+        return ctx.db.workshops.create({
           data: {
-            proniteDetailsId:eventDetails.id,
-            max_capacity: input.max_capacity,
-            ticket_price: input.ticket_price,
+            workshopDetailsId:eventDetails.id,
+            // max_capacity: input.max_capacity,
+            // ticket_price: input.ticket_price,
             createdAt: new Date(), 
             updatedAt: new Date(), 
           },
@@ -42,35 +43,35 @@ export const proniteRouter = createTRPCRouter({
 
     
 
-   getPronite: publicProcedure
+   getWorkshop: publicProcedure
    
     .query(async ({ ctx }) => {
-      const pronites = await ctx.db.pronite.findMany({
+      const workshop = await ctx.db.workshops.findMany({
       
       
-       include:{ proniteDetails:true}
+       include:{ workshopDetails:true}
       });
-      return pronites;
+      return workshop;
       
     }),
 
-    getProniteBySlug: publicProcedure
+    getWorkshopBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
-      const pronites = await ctx.db.pronite.findFirst({
+      const workshop = await ctx.db.workshops.findFirst({
         where: {
-          proniteDetails: {
+          workshopDetails: {
             slug: input.slug,
           },
         },
         include: {
-          proniteDetails: {
+          workshopDetails: {
             include: { regPlans: true },
           },
         },
       });
       console.log(input.slug);
-      return pronites ?? null;
+      return workshop ?? null;
     }),
   })
  

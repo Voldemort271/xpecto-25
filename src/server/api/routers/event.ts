@@ -73,7 +73,6 @@ export const eventRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { paymentId, userId, regPlanId, eventId } = input;
-
       await ctx.db.user.update({
         where: {
           id: userId,

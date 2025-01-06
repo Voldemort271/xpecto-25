@@ -5,69 +5,71 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 
-const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
+const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const compName = use(params).comp.replaceAll("%20", " ");
-  const { data: comp } = api.competition.getCompByName.useQuery({
-    name: compName,
+  const expoSlug = use(params).expo;
+  const { data: expo } = api.expo.getExpoBySlug.useQuery({
+    slug: expoSlug,
   });
   const { data: plan } = api.event.checkUserRegisteration.useQuery(
     {
       userId: CurrentUser?.id ?? "",
-      eventId: comp?.competitionDetailsId ?? "",
+      eventId: expo?.exposDetailsId ?? "",
     },
     {
-      enabled: !!CurrentUser && !!comp,
+      enabled: !!CurrentUser && !!expo,
     },
   );
 
   const [regPrice, setRegPrice] = useState(
-    comp?.competitionDetails.regPlans[0]?.price ?? 0,
+    expo?.exposDetails.regPlans[0]?.price ?? 0,
   );
   const [regPlanId, setRegPlanId] = useState(
-    comp?.competitionDetails.regPlans[0]?.id ?? "",
+    expo?.exposDetails.regPlans[0]?.id ?? "",
   );
+
+  useEffect(() => {
+      setRegPrice(expo?.exposDetails.regPlans[0]?.price ?? 0);
+      setRegPlanId(expo?.exposDetails.regPlans[0]?.id ?? "");
+    }, [expo]);
+
   const regStatus = plan ? true : false;
 
-  const date = comp?.competitionDetails.begin_time.getDate();
-  const month = comp
-    ? comp.competitionDetails.begin_time.getMonth() + 1
-    : undefined; // Months are 0-indexed
-  const year = comp?.competitionDetails.begin_time.getFullYear();
-  const time = comp?.competitionDetails.begin_time.toLocaleTimeString();
+  const date = expo?.exposDetails.begin_time.getDate();
+  const month = expo ? expo.exposDetails.begin_time.getMonth() + 1 : undefined; // Months are 0-indexed
+  const year = expo?.exposDetails.begin_time.getFullYear();
+  const time = expo?.exposDetails.begin_time.toLocaleTimeString();
 
-  const dateEnd = comp?.competitionDetails.end_time.getDate();
-  const monthEnd = comp
-    ? comp.competitionDetails.end_time.getMonth() + 1
-    : undefined; // Months are 0-indexed
-  const yearEnd = comp?.competitionDetails.end_time.getFullYear();
-  const timeEnd = comp?.competitionDetails.end_time.toLocaleTimeString();
+  const dateEnd = expo?.exposDetails.end_time.getDate();
+  const monthEnd = expo ? expo.exposDetails.end_time.getMonth() + 1 : undefined; // Months are 0-indexed
+  const yearEnd = expo?.exposDetails.end_time.getFullYear();
+  const timeEnd = expo?.exposDetails.end_time.toLocaleTimeString();
 
-  //TODO: Add more comp details on the page. I have just added the basic ones
+  //TODO: Add more expo details on the page. I have just added the basic ones
   return (
     <>
-      {comp && (
+      {expo && (
         <div className="container mx-auto p-6">
           <div className="rounded-lg bg-amber-50 p-6 text-neutral-900 shadow-md">
             <div className="flex flex-col items-center">
               <div
                 style={{
-                  backgroundImage: `url(/event_covers/competitions/${comp.competitionDetails.name.replace(" ", "%20")}.jpeg), url(logo.enc)`,
+                  backgroundImage: `url(/event_covers/expos/${expo.exposDetails.slug}.jpeg), url(logo.enc)`,
                 }}
                 className="mb-4 h-40 w-40 rounded-full bg-cover bg-no-repeat"
               ></div>
               <h1 className="mb-2 text-3xl font-bold">
-                {comp.competitionDetails.name}
+                {expo.exposDetails.name}
               </h1>
               <p className="mb-4 text-gray-600">
-                {comp.competitionDetails.description}
+                {expo.exposDetails.description}
               </p>
               <div className="text-lg">
                 <p>
-                  <strong>Venue:</strong> {comp.competitionDetails.venue}
+                  <strong>Venue:</strong> {expo.exposDetails.venue}
                 </p>
                 <p>
                   <strong>Starts at:</strong> {date}/{month}/{year} {time}
@@ -79,9 +81,7 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
               </div>
               <div className="mt-6">
                 {regStatus ? (
-                  <button className="w-full rounded-lg bg-green-500 p-2 text-white hover:bg-green-600">
-                    Create a team
-                  </button>
+                  <></>
                 ) : (
                   <RegisterDialog
                     trigger={
@@ -95,9 +95,9 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
                           setRegPlanId(e.split(" ")[1]!);
                           setRegPrice(parseInt(e.split(" ")[0]!));
                         }}
-                        defaultValue={comp.competitionDetails.regPlans[0]?.price.toString()}
+                        defaultValue={expo.exposDetails.regPlans[0]?.price.toString()}
                       >
-                        {comp.competitionDetails.regPlans.map((reg) => {
+                        {expo.exposDetails.regPlans.map((reg) => {
                           return (
                             <div
                               key={reg.id}
@@ -129,7 +129,7 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
                     }
                     price={regPrice}
                     regPlanId={regPlanId}
-                    eventId={comp.competitionDetails.id}
+                    eventId={expo.exposDetails.id}
                   />
                 )}
               </div>

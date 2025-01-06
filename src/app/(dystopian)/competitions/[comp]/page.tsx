@@ -12,9 +12,9 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const compName = use(params).comp.replaceAll("%20", " ");
-  const { data: comp } = api.competition.getCompByName.useQuery({
-    name: compName,
+  const compSlug = use(params).comp;
+  const { data: comp } = api.competition.getCompBySlug.useQuery({
+    slug: compSlug,
   });
   const { data: plan } = api.event.checkUserRegisteration.useQuery(
     {

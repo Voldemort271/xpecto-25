@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 import React, { useEffect } from "react";
 import { api } from "@/trpc/react";
@@ -6,7 +5,6 @@ import CompCard from "@/components/(dystopian)/(competitions)/competition-card";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import SectionHeader from "@/components/(dystopian)/common/section-header";
-import LOADING_ICON from "../../../../public/loading.gif";
 const Page = () => {
   const { data: competitions, isLoading } =
     api.competition.getCompetitions.useQuery();
@@ -36,8 +34,8 @@ const Page = () => {
         {competitions?.map((el, i) => (
           <CompCard
             key={i}
-            img={`/event_covers/competitions/${el.competitionDetails.name.replace(" ", "%20")}.jpeg`}
-            title={el.competitionDetails.name}
+            img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}
+            title={el.competitionDetails.slug}
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             details={el.competitionDetails.begin_time.toLocaleString()}
           />
