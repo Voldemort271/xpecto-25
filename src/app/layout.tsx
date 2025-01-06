@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import SharedContextProvider from "@/lib/context";
 import React from "react";
 
@@ -20,7 +20,10 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <TRPCReactProvider>
-            <SharedContextProvider>{children}</SharedContextProvider>
+            <SharedContextProvider>
+              <GoogleOneTap />
+              {children}
+            </SharedContextProvider>
           </TRPCReactProvider>
         </ClerkProvider>
         <div className="staticBg"></div>
