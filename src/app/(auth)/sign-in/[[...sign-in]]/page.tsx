@@ -4,7 +4,7 @@ import { SignIn, useSignIn } from "@clerk/nextjs";
 import React from "react";
 import type { OAuthStrategy } from "@clerk/types";
 
-const Signin = () => {
+const SigninPage = () => {
   const { signIn } = useSignIn();
 
   if (!signIn) return null;
@@ -30,4 +30,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default SigninPage;
