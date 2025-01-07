@@ -15,17 +15,17 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
       <div className="absolute left-0 top-0 z-10 w-screen">
         <AuthNavbar />
       </div>
-      <div className="h-28 w-full"></div>
+      <div className="h-14 w-full"></div>
       <Image
         src={SigninPic}
         alt={"Sign in background"}
-        className="absolute left-0 top-0 -z-10 h-screen w-screen object-cover opacity-10"
+        className="absolute left-0 top-0 -z-10 h-screen w-screen object-cover opacity-20"
       />
-      <div className="flex w-full flex-col items-center justify-center p-12">
+      <div className="flex min-h-[calc(100vh-124px)] w-full flex-col items-center justify-center p-12">
         {children}
       </div>
       <div
-        className={`absolute bottom-0 left-0 flex h-16 w-full flex-col justify-center border-t-2 border-amber-50 bg-neutral-900 text-4xl font-light uppercase text-amber-50 ${handjet.className} tracking-wider`}
+        className={`flex h-16 w-full flex-col justify-center border-t-2 border-amber-50 bg-neutral-900 text-4xl font-light uppercase text-amber-50 ${handjet.className} tracking-wider`}
       >
         <MarqueeContainer
           text={[

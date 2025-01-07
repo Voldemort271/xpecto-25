@@ -11,6 +11,7 @@ import Link from "next/link";
 
 interface Props {
   title: string;
+  slug: string;
   details: string;
   img?: string | StaticImport;
   animationDelay?: number;
@@ -48,7 +49,7 @@ const CompCard = (props: Props) => {
         </motion.span>
       </div>
       <Link
-        href={`/competitions/${props.title}`}
+        href={`/competitions/${props.slug}`}
         className="absolute bottom-0 right-0 flex h-16 w-full max-w-36 cursor-none flex-col items-center justify-center border-l-2 border-t-2 border-amber-50 bg-amber-50 text-3xl uppercase text-neutral-900"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
