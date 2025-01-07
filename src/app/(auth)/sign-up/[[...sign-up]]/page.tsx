@@ -1,6 +1,6 @@
 "use client";
 
-import { useSignUp } from "@clerk/nextjs";
+import { useSignIn, useSignUp } from "@clerk/nextjs";
 import React, { type FormEvent } from "react";
 import type { OAuthStrategy } from "@clerk/types";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
@@ -15,15 +15,17 @@ const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const SignupPage = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { signIn } = useSignIn();
   const [verifying, setVerifying] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [code, setCode] = React.useState("");
   const router = useRouter();
 
   if (!isLoaded && !signUp) return null;
+  if (!signIn) return null;
 
   const signUpWith = (strategy: OAuthStrategy) => {
-    return signUp.authenticateWithRedirect({
+    return signIn.authenticateWithRedirect({
       strategy,
       redirectUrl: "/sign-up/sso-callback",
       redirectUrlComplete: "/",
