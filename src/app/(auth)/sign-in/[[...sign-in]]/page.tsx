@@ -109,7 +109,7 @@ const SigninPage = () => {
           delay={1}
         />
       </div>
-      <div className="grid w-full grid-cols-2 gap-5 p-5">
+      <div className="grid w-full grid-cols-1 gap-5 p-5 sm:grid-cols-2">
         <button
           onClick={() => signInWith("oauth_google")}
           className="flex w-full items-center justify-center gap-2.5 bg-amber-50/[0.7] px-5 py-2 text-2xl uppercase transition-all hover:bg-amber-50"
@@ -136,7 +136,7 @@ const SigninPage = () => {
             onSubmit={handleVerification}
             className="flex w-full flex-col items-center justify-center gap-5 pt-5"
           >
-            <div className="flex w-full items-center justify-center gap-2.5 px-5">
+            <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
               <Label
                 htmlFor="code"
                 className="text-2xl font-normal uppercase text-amber-50"
@@ -152,7 +152,7 @@ const SigninPage = () => {
               />
             </div>
 
-            <div className="flex w-full items-end justify-between gap-2.5">
+            <div className="flex w-full flex-col items-end justify-between sm:flex-row sm:gap-2.5">
               <div
                 className={`${sharetech.className} p-5 tracking-tight text-amber-50/[0.5]`}
               >
@@ -172,7 +172,7 @@ const SigninPage = () => {
             onSubmit={handleSubmit}
             className="flex w-full flex-col items-center justify-center gap-5 pt-5"
           >
-            <div className="flex w-full items-center justify-center gap-2.5 px-5">
+            <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
               <Label
                 htmlFor="email"
                 className="text-2xl font-normal uppercase text-amber-50"
@@ -188,7 +188,7 @@ const SigninPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="flex w-full items-end justify-between gap-2.5">
+            <div className="flex w-full flex-col items-end justify-between sm:flex-row sm:gap-2.5">
               <div
                 className={`${sharetech.className} p-5 tracking-tight text-amber-50/[0.5]`}
               >
