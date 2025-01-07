@@ -21,6 +21,7 @@ import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
+import { toast } from "sonner";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -72,18 +73,18 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!CurrentUser) {
-      alert("User not logged in.");
+      toast.error("User not logged in.");
       return;
     }
 
     if (foundTeamName) {
       console.log(foundTeamName);
-      alert("Team with the same name already exists");
+      toast.error("Team with the same name already exists");
       return;
     }
     if (foundTeamUsers) {
       console.log(foundTeamUsers);
-      alert("A team with the same set of Users already exists. Modify it");
+      toast.error("A team with the same set of Users already exists. Modify it");
       return;
     }
 
@@ -96,11 +97,11 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       },
       {
         onSuccess: () => {
-          alert("Invitations Sent Successfully");
+          toast.success("Invitations Sent Successfully");
           window.location.reload();
         },
         onError: () => {
-          alert("Failed to send invitations. Please try again.");
+          toast.error("Failed to send invitations. Please try again.");
         },
       },
     );

@@ -10,6 +10,7 @@ import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { Handjet, Share_Tech } from "next/font/google";
+import { toast } from "sonner";
 
 // import Razorpay from "razorpay";
 
@@ -60,12 +61,12 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         },
         {
           onSuccess: () => {
-            alert("Registration successful!");
+            toast.success("Registration successful!");
             window.location.reload();
           },
           onError: () => {
-            alert(
-              "Either you are registering again for the same event or an error occurred while registering you for the event. Your payment was successful. Please contact the organizer if you have made two payments.",
+            toast.error(
+              "Either you are registering again for the same event or an error occurred while registering you for the event. Your payment was successful. Please contact the organizer if you have made two payments.", {duration: 5500,}
             );
           },
         },
@@ -87,7 +88,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 
     // I should check if user has already registered for the event
     if (plan) {
-      alert("You have already registered for this event.");
+      toast.error("You have already registered for this event.");
       return;
     }
 

@@ -3,6 +3,7 @@
 import React from "react";
 import { api } from "@/trpc/react"; // Import the api object
 import { ProniteType } from "../../../types";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 const Page = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const Page = () => {
       );
     } catch (e) {
       console.error(e);
-      alert("Could not create. Try again!");
+      toast.error("Could not create. Try again!");
     }
   };
 

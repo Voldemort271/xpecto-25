@@ -5,6 +5,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import SharedContextProvider from "@/lib/context";
 import React from "react";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Xpecto '25 | IIT Mandi",
@@ -26,6 +27,7 @@ export default function RootLayout({
             </SharedContextProvider>
           </TRPCReactProvider>
         </ClerkProvider>
+        <Toaster />
         <div className="staticBg"></div>
       </body>
     </html>
