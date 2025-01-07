@@ -26,14 +26,24 @@ const Page = () => {
             .fill(0)
             .map((_el, i) => <CompCard key={i} title={""} details={""} />)}
 
-        {competitions?.map((el, i) => (
-          <CompCard
-            key={i}
-            img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}
-            title={el.competitionDetails.slug}
-            details={el.competitionDetails.begin_time.toLocaleString()}
-          />
-        ))}
+        {competitions
+          ?.sort((a, b) =>
+            a.competitionDetails.begin_time > b.competitionDetails.begin_time
+              ? 1
+              : b.competitionDetails.begin_time >
+                  a.competitionDetails.begin_time
+                ? -1
+                : 0,
+          )
+          .map((el, i) => (
+            <CompCard
+              key={i}
+              slug={el.competitionDetails.slug}
+              img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}
+              title={el.competitionDetails.name}
+              details={el.competitionDetails.begin_time.toLocaleString()}
+            />
+          ))}
       </div>
       <motion.div
         className={`flex h-16 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50`}

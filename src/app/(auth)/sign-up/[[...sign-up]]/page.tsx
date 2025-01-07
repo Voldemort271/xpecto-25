@@ -21,7 +21,7 @@ const SignupPage = () => {
 
   return (
     <main className="relative flex min-w-[800px] flex-col items-center justify-center overflow-clip border-2 border-amber-50/[0.7] bg-neutral-900">
-      <div className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
+      <div className="relative z-10 flex h-12 w-full items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer
           text={[
             "register for xpecto '25",
