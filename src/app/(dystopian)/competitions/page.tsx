@@ -24,7 +24,9 @@ const Page = () => {
         {isLoading &&
           Array(6)
             .fill(0)
-            .map((_el, i) => <CompCard key={i} title={""} details={""} />)}
+            .map((_el, i) => (
+              <CompCard key={i} slug={""} title={""} details={""} />
+            ))}
 
         {competitions
           ?.sort((a, b) =>
