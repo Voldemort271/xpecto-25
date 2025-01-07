@@ -13,7 +13,9 @@ const AuthNavbar = () => {
   const path = usePathname();
 
   return (
-    <div className={`flex w-screen ${handjet.className} tracking-widest`}>
+    <div
+      className={`flex w-screen ${handjet.className} h-14 overflow-visible tracking-widest`}
+    >
       <Link
         className="z-10 flex h-28 flex-col items-start justify-center border-b-2 border-r-2 border-amber-50 bg-neutral-900 px-5 text-amber-50"
         href="/"
