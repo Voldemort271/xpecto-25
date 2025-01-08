@@ -6,6 +6,7 @@ import ClickToStart from "@/components/(dystopian)/common/click-to-start";
 import { motion } from "motion/react";
 import Image from "next/image";
 import BgImage from "../../../../public/transparent-bg.png";
+import LandingText from "@/components/(dystopian)/home/landing-text";
 
 // TODO: Shift bottom marquee animation when landing animation is ready
 
@@ -22,9 +23,10 @@ const HomeScreen = () => {
         <div className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold">
           welcome to
         </div>
-        <div className="text-8xl font-extrabold uppercase sm:text-9xl md:text-[200px] lg:text-[256px]">
-          xpecto&nbsp;&apos;25
+        <div className="text-8xl font-extrabold uppercase sm:text-9xl md:hidden">
+          Xpecto &apos;25
         </div>
+        <LandingText />
         <div className="text-4xl font-medium uppercase sm:text-6xl md:-mt-5 md:font-semibold">
           by iit mandi
         </div>
