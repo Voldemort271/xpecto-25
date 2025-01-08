@@ -5,7 +5,7 @@ import CompCard from "@/components/(dystopian)/(competitions)/competition-card";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import SectionHeader from "@/components/(dystopian)/common/section-header";
-import Loader from "@/components/(dystopian)/common/loader";
+
 const Page = () => {
   const { data: competitions, isLoading } =
     api.competition.getCompetitions.useQuery();
@@ -20,9 +20,8 @@ const Page = () => {
     <>
       {/* //TODO: Add a searchbar for competitions */}
       <SectionHeader title="competitions">prove your mettle</SectionHeader>
+      {isLoading && <div className="loading h-96 w-screen"></div>}
       <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-        {isLoading && <Loader/>}
         {competitions
           ?.sort((a, b) =>
             a.competitionDetails.begin_time > b.competitionDetails.begin_time
