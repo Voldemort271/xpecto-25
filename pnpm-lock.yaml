@@ -42,7 +42,7 @@ importers:
         specifier: ^8.17.10
         version: 8.17.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0)
       '@supabase/supabase-js':
-        specifier: ^2.47.8
+        specifier: ^2.47.10
         version: 2.47.10
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
