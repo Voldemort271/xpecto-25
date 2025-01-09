@@ -5,6 +5,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import SharedContextProvider from "@/lib/context";
 import React from "react";
+import { Toaster } from "sonner";
 import TardisNav from "@/components/root/navbar";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
               {children}
             </SharedContextProvider>
           </TRPCReactProvider>
+          <Toaster />
         </ClerkProvider>
         <div className="staticBg"></div>
         <div className="fixed bottom-16 right-16 z-50">

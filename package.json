@@ -52,6 +52,7 @@
     "react-dom": "^18.3.1",
     "react-query": "^3.39.3",
     "server-only": "^0.0.1",
+    "sonner": "^1.7.1",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",

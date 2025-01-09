@@ -11,6 +11,8 @@ import type { TeamWithFullDetails } from "@/app/types";
 import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import { toast } from "sonner";
+
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -32,14 +34,14 @@ const LeaveTeamDialog = ({ regTeam }: { regTeam: TeamWithFullDetails }) => {
         },
         {
           onSuccess: () => {
-            alert("Left the team successfully");
+            toast.success("Left the team successfully");
             window.location.reload();
           },
         },
       );
     } catch (e) {
       console.error(e);
-      alert("Failed to delete user. Please try again.");
+      toast.error("Failed to delete user. Please try again.");
     }
   };
   return (

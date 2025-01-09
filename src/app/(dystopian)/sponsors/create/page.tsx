@@ -2,6 +2,8 @@
 
 import { api } from "@/trpc/react";
 import React, { useState, useRef } from "react";
+import { toast } from "sonner";
+
 
 const Page = () => {
   const [sponName, setSponName] = useState("");
@@ -36,10 +38,10 @@ const Page = () => {
 
   const handleCreation = () => {
     if (sponName == "") {
-      return alert("Enter Sponsor name pls");
+      return toast.error("Enter Sponsor name pls");
     }
     if (sponsoredEventIds.length == 0) {
-      return alert("No events selected");
+      return toast.error("No events selected");
     }
     console.log("Ye sare events hai : ", sponsoredEventIds);
     sponCreateMutationRef.current.mutate({
@@ -47,7 +49,7 @@ const Page = () => {
       logo: sponLogo,
       eventIds: sponsoredEventIds,
     });
-    alert("creation successful!!");
+    toast.success("creation successful!!");
   };
 
   return (

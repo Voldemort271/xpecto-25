@@ -21,6 +21,8 @@ import type { TeamWithFullDetails } from "@/app/types";
 import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import { toast } from "sonner";
+
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -74,7 +76,7 @@ const InviteTeammatesDialog = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!CurrentUser) {
-      alert("User not logged in.");
+      toast.error("User not logged in.");
       return;
     }
 
@@ -85,11 +87,11 @@ const InviteTeammatesDialog = ({
       },
       {
         onSuccess: () => {
-          alert("Invitations Sent Successfully");
+          toast.success("Invitations Sent Successfully");
           window.location.reload();
         },
         onError: () => {
-          alert("Failed to send invitations. Please try again.");
+          toast.error("Failed to send invitations. Please try again.");
         },
       },
     );

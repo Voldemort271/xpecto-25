@@ -4,6 +4,8 @@ import React from "react";
 import { api } from "@/trpc/react"; // Import the api object
 import { ProniteType } from "../../../types";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 const Page = () => {
   const router = useRouter();
   const createPronite = api.pronite.createPronite.useMutation();
@@ -26,14 +28,14 @@ const Page = () => {
         },
         {
           onSuccess: (e) => {
-            //alert('Data Saved..')
+            toast.success('Data Saved..')
             router.push("/pronites");
           },
         },
       );
     } catch (e) {
       console.error(e);
-      alert("Could not create. Try again!");
+      toast.error("Could not create. Try again!");
     }
   };
 

@@ -2,6 +2,8 @@ import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
+import { toast } from "sonner";
+
 
 const InvitationBox = ({ compId }: { compId: string }) => {
   const { CurrentUser } = useCurrentUser();
@@ -51,7 +53,7 @@ const InvitationBox = ({ compId }: { compId: string }) => {
               );
             } else {
               if (!e) {
-                alert("Team has been deleted.");
+                toast.success("Team has been deleted.");
               }
               setMyInvites([]);
             }
@@ -60,7 +62,7 @@ const InvitationBox = ({ compId }: { compId: string }) => {
       );
     } catch (e) {
       console.error(e);
-      alert("Failed to accept the invitation. Please try again.");
+      toast.error("Failed to accept the invitation. Please try again.");
     }
   };
 
@@ -86,7 +88,7 @@ const InvitationBox = ({ compId }: { compId: string }) => {
       );
     } catch (e) {
       console.error(e);
-      alert("Failed to reject the invitation. Please try again.");
+      toast.error("Failed to reject the invitation. Please try again.");
     }
   };
 

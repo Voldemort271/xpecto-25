@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Share_Tech } from "next/font/google";
+import { toast } from "sonner";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -45,7 +46,7 @@ const SignupPage = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      alert(err.errors[0].longMessage);
+      toast.error(err.errors[0].longMessage);
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
@@ -63,6 +64,7 @@ const SignupPage = () => {
         await setActive({ session: signInAttempt.createdSessionId });
 
         router.push("/");
+        toast.success("Logged in successfully");
       } else {
         console.error(signInAttempt);
       }
@@ -71,7 +73,7 @@ const SignupPage = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      alert(err.errors[0].longMessage);
+      toast.error(err.errors[0].longMessage);
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
