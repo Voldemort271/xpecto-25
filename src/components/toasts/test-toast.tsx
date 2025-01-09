@@ -22,10 +22,10 @@ const toastStyles = cva(
   {
     variants: {
       intent: {
-        success: ["border-green-500"],
+        success: ["border-green-300"],
         info: ["border-blue-300"],
-        warning: ["border-yellow-300"],
-        error: ["border-red-400"],
+        warning: ["border-yellow-200"],
+        error: ["border-red-300"],
       },
     },
     defaultVariants: {
@@ -38,13 +38,13 @@ const TestToast = ({ variant, children, metadata }: Props) => {
   return (
     <div className={toastStyles({ intent: variant })}>
       <div
-        className={`relative h-10 w-full border-b text-xl font-light uppercase tracking-widest ${handjet.className} flex flex-col justify-center overflow-clip ${
+        className={`relative h-10 w-full border-b-2 text-xl font-light uppercase tracking-widest ${handjet.className} flex flex-col justify-center overflow-clip ${
           variant === "info"
             ? "border-blue-300 text-blue-300"
             : variant === "success"
-              ? "border-green-500 text-green-400"
+              ? "border-green-300 text-green-300"
               : variant === "warning"
-                ? "border-yellow-300 text-yellow-300"
+                ? "border-yellow-200 text-yellow-200"
                 : variant === "error"
                   ? "border-red-300 text-red-300"
                   : "border-amber-50 text-amber-50"
