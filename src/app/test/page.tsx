@@ -1,13 +1,20 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { toast } from "sonner";
+import TestToast from "@/components/toasts/test-toast";
 
 const TestPage = () => {
-  useEffect(() => {
-    toast.error("Oh no" as const);
-  }, []);
-  return <div>test</div>;
+  return (
+    <div
+      className="cursor-pointer bg-red-400 text-2xl"
+      onClick={() => {
+        toast.custom((t) => <TestToast />, { position: "top-center" });
+      }}
+    >
+      test
+    </div>
+  );
 };
 
 export default TestPage;
