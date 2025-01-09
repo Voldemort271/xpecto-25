@@ -14,6 +14,8 @@ import {
 } from "@/lib/utils";
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
+import { toast } from "sonner";
+
 
 const Page = () => {
   const createCompetition = api.competition.createCompetition.useMutation();
@@ -48,14 +50,14 @@ const Page = () => {
         },
         {
           onSuccess: () => {
-            //alert('Data Saved..')
+            toast.success('Data Saved..');
             window.location.href = "/competitions";
           },
         },
       );
     } catch (e) {
       console.error(e);
-      alert("Failed to accept the invitation. Please try again.");
+      toast.error("Failed to accept the invitation. Please try again.");
     }
   };
 

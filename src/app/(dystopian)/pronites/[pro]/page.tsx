@@ -101,7 +101,7 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
                         }}
                         defaultValue={pro.proniteDetails.regPlans[0]?.price.toString()}
                       >
-                        {pro.proniteDetails.regPlans.map((reg) => {
+                        {pro.proniteDetails.regPlans.map((reg:any) => {
                           return (
                             <div
                               key={reg.id}

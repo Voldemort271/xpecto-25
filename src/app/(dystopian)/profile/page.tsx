@@ -2,6 +2,8 @@
 import React, { useContext } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { SharedContext } from "@/lib/context";
+import { toast } from "sonner";
+
 
 const Page = () => {
   const { signOut } = useClerk();
@@ -32,8 +34,9 @@ const Page = () => {
         updatedAt: new Date(),
         id: "",
       });
+      toast.error("Signed Out Successfully");
     } catch (error) {
-      console.error("Error signing out:", error);
+      toast.error(`Error signing out: ${error}`);
     }
   };
 
