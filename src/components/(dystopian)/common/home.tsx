@@ -5,7 +5,7 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import ClickToStart from "@/components/(dystopian)/common/click-to-start";
 import { motion } from "motion/react";
 import Image from "next/image";
-import BgImage from "../../../../public/transparent-bg.png";
+import BgImage from "../../../../public/images/transparent-bg.png";
 import LandingText from "@/components/(dystopian)/home/landing-text";
 
 // TODO: Shift bottom marquee animation when landing animation is ready
