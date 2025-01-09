@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 import { Handjet, Share_Tech } from "next/font/google";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { toast } from "sonner";
+import { X } from "lucide-react";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -15,7 +16,7 @@ interface Props {
 
 const toastStyles = cva(
   [
-    "w-80 bg-neutral-900 border-2 p-0 shadow-2xl shadow-neutral-900",
+    "sm:w-80 bg-neutral-900 border-2 p-0 shadow-2xl shadow-neutral-900",
     sharetech.className,
     "tracking-tight",
   ],
@@ -34,7 +35,7 @@ const toastStyles = cva(
   },
 );
 
-const TestToast = ({ variant, children, metadata }: Props) => {
+const CustomToast = ({ variant, children, metadata }: Props) => {
   return (
     <div className={toastStyles({ intent: variant })}>
       <div
@@ -68,10 +69,20 @@ const TestToast = ({ variant, children, metadata }: Props) => {
       {metadata && (
         <div className="flex w-full justify-end">
           <div
-            className={`flex items-center justify-center bg-blue-300 px-2.5 py-1 text-neutral-900 ${handjet.className} cursor-pointer font-light uppercase tracking-widest`}
+            className={`flex cursor-pointer items-center justify-center p-1 ${
+              variant === "info"
+                ? "text-blue-300"
+                : variant === "success"
+                  ? "text-green-300"
+                  : variant === "warning"
+                    ? "text-yellow-200"
+                    : variant === "error"
+                      ? "text-red-300"
+                      : "text-amber-50"
+            }`}
             onClick={() => toast.dismiss(metadata)}
           >
-            Dismiss
+            <X />
           </div>
         </div>
       )}
@@ -79,4 +90,4 @@ const TestToast = ({ variant, children, metadata }: Props) => {
   );
 };
 
-export default TestToast;
+export default CustomToast;
