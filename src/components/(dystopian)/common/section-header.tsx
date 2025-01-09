@@ -1,6 +1,6 @@
 import React, { type ReactNode } from "react";
 import Image from "next/image";
-import BgImage from "public/transparent-bg.png";
+import BgImage from "../../../../public/images/transparent-bg.png";
 
 interface Props {
   title: string;

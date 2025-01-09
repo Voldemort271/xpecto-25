@@ -5,8 +5,8 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import { motion } from "motion/react";
 import styles from "@/styles/intro.module.css";
 import Image from "next/image";
-import IntroPic from "../../../../public/intro.png";
-import Hehe from "../../../../public/meme.png";
+import IntroPic from "../../../../public/images/intro.png";
+import Hehe from "../../../../public/images/meme.png";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
 
