@@ -16,7 +16,7 @@ interface Props {
 
 const toastStyles = cva(
   [
-    "sm:w-80 bg-neutral-900 border-2 p-0 shadow-2xl shadow-neutral-900",
+    "relative sm:w-80 bg-neutral-900 border-2 p-0 shadow-2xl shadow-neutral-900",
     sharetech.className,
     "tracking-tight",
   ],
@@ -61,7 +61,7 @@ const CustomToast = ({ variant, children, metadata }: Props) => {
                   ? ["easy there lad", "you have been warned"]
                   : variant === "error"
                     ? ["critical error", "you messed up"]
-                    : ["well maybe we messed up", "oh noes"]
+                    : ["oh noes", "well maybe we messed up"]
           }
         />
       </div>
@@ -86,6 +86,7 @@ const CustomToast = ({ variant, children, metadata }: Props) => {
           </div>
         </div>
       )}
+      <div className="staticBg"></div>
     </div>
   );
 };

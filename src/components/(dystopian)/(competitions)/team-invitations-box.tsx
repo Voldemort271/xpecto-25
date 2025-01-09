@@ -3,7 +3,7 @@ import { api } from "@/trpc/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
 import { toast } from "sonner";
-
+import CustomToast from "@/components/custom-toast";
 
 const InvitationBox = ({ compId }: { compId: string }) => {
   const { CurrentUser } = useCurrentUser();
@@ -53,7 +53,16 @@ const InvitationBox = ({ compId }: { compId: string }) => {
               );
             } else {
               if (!e) {
-                toast.success("Team has been deleted.");
+                toast.custom(
+                  (t) => (
+                    <CustomToast variant="success" metadata={t}>
+                      Team has been deleted.
+                    </CustomToast>
+                  ),
+                  {
+                    position: "top-center",
+                  },
+                );
               }
               setMyInvites([]);
             }
@@ -61,8 +70,17 @@ const InvitationBox = ({ compId }: { compId: string }) => {
         },
       );
     } catch (e) {
-      console.error(e);
-      toast.error("Failed to accept the invitation. Please try again.");
+      console.log(e);
+      toast.custom(
+        (t) => (
+          <CustomToast variant="error" metadata={t}>
+            Failed to accept the invitation. Please try again.
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
     }
   };
 
@@ -87,8 +105,17 @@ const InvitationBox = ({ compId }: { compId: string }) => {
         },
       );
     } catch (e) {
-      console.error(e);
-      toast.error("Failed to reject the invitation. Please try again.");
+      console.log(e);
+      toast.custom(
+        (t) => (
+          <CustomToast variant="error" metadata={t}>
+            Failed to reject the invitation. Please try again.
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
     }
   };
 

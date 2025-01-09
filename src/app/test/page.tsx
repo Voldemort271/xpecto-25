@@ -10,14 +10,9 @@ const TestPage = () => {
       className="h-screen w-screen cursor-pointer bg-neutral-900 text-2xl"
       onClick={() => {
         toast.custom(
-          (t) => (
-            <CustomToast variant="error" metadata={t}>
-              hello world!!
-            </CustomToast>
-          ),
+          (t) => <CustomToast metadata={t}>hello world!!</CustomToast>,
           {
             position: "top-center",
-            duration: 30000,
           },
         );
       }}
