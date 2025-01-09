@@ -5,10 +5,11 @@ import { teamRouter } from "./routers/team";
 import { inviteRouter } from "./routers/invite";
 import { postRouter } from "./routers/post";
 import { competitionRouter } from "./routers/competition";
-import { proniteRouter } from "./routers/pronite"
+import { proniteRouter } from "./routers/pronite";
 import { eventRouter } from "./routers/event";
 import { expoRouter } from "./routers/expos";
 import { workshopRouter } from "./routers/workshop";
+import { sponsorRouter } from "./routers/sponsor";
 /**
  * This is the primary router for your server.
  *
@@ -19,11 +20,12 @@ export const appRouter = createTRPCRouter({
   invite: inviteRouter,
   user: userRouter,
   post: postRouter,
-  competition: competitionRouter, 
+  competition: competitionRouter,
   pronite: proniteRouter,
-  expo:expoRouter,
-  workshop:workshopRouter,
+  expo: expoRouter,
+  workshop: workshopRouter,
   event: eventRouter,
+  sponsor: sponsorRouter,
 });
 
 // export type definition of API
