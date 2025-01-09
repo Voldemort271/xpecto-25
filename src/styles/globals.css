@@ -7,7 +7,7 @@ html {
 }
 
 body {
-	@apply font-normal text-base overflow-x-hidden antialiased;
+	@apply font-normal text-base overflow-x-hidden antialiased relative;
 	font-smooth: always;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

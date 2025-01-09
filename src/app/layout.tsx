@@ -5,6 +5,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider, GoogleOneTap } from "@clerk/nextjs";
 import SharedContextProvider from "@/lib/context";
 import React from "react";
+import TardisNav from "@/components/root/navbar";
 
 export const metadata: Metadata = {
   title: "Xpecto '25 | IIT Mandi",
@@ -27,6 +28,9 @@ export default function RootLayout({
           </TRPCReactProvider>
         </ClerkProvider>
         <div className="staticBg"></div>
+        <div className="fixed bottom-16 right-16 z-50">
+          <TardisNav />
+        </div>
       </body>
     </html>
   );
