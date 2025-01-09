@@ -7,9 +7,14 @@ import TestToast from "@/components/toasts/test-toast";
 const TestPage = () => {
   return (
     <div
-      className="cursor-pointer bg-red-400 text-2xl"
+      className="h-screen w-screen cursor-pointer bg-neutral-900 text-2xl"
       onClick={() => {
-        toast.custom((t) => <TestToast />, { position: "top-center" });
+        toast.custom(
+          (t) => <TestToast variant="error">hello world!!</TestToast>,
+          {
+            position: "top-center",
+          },
+        );
       }}
     >
       test
