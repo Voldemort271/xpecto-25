@@ -45,7 +45,7 @@ const SignupPage = () => {
       setEmail("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
       toast.error(err.errors[0].longMessage);
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
@@ -72,7 +72,7 @@ const SignupPage = () => {
       setEmail("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
       toast.error(err.errors[0].longMessage);
       // console.error("Error:", JSON.stringify(err, null, 2));
     }

@@ -3,11 +3,13 @@ import React, { useContext } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { SharedContext } from "@/lib/context";
 import { toast } from "sonner";
-
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { signOut } = useClerk();
   const context = useContext(SharedContext);
+  const router = useRouter();
+
   if (!context) {
     throw new Error(
       "SharedContext must be used within a SharedContextProvider in home page",
@@ -18,10 +20,13 @@ const Page = () => {
   const handleSignOut = async () => {
     try {
       if (!CurrentUser) {
-        throw new Error("No user data found");
+        toast.error("No user data found");
+        router.push("/sign-up");
       }
       if (!setCurrentUser) {
-        throw new Error("No setter function found");
+        toast.error("No setter function found");
+        router.push("/");
+        return;
       }
       await signOut();
       // Reset the shared context to its default state
@@ -36,7 +41,8 @@ const Page = () => {
       });
       toast.error("Signed Out Successfully");
     } catch (error) {
-      toast.error(`Error signing out: ${error}`);
+      toast.error(`Error signing out`);
+      console.log(error);
     }
   };
 
@@ -49,12 +55,15 @@ const Page = () => {
           margin: "1rem",
         }}
       >
-        <button className="border-2 p-2" disabled={CurrentUser?.clerkId === ""} onClick={handleSignOut}>
+        <button
+          className="border-2 p-2"
+          disabled={CurrentUser?.clerkId === ""}
+          onClick={handleSignOut}
+        >
           Sign Out
         </button>
       </div>
     </div>
   );
-  window.location.reload();
 };
 export default Page;

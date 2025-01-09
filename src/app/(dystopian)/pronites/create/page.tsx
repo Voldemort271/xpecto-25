@@ -2,7 +2,7 @@
 
 import React from "react";
 import { api } from "@/trpc/react"; // Import the api object
-import { ProniteType } from "../../../types";
+import { ProniteType } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -28,7 +28,7 @@ const Page = () => {
         },
         {
           onSuccess: (e) => {
-            toast.success('Data Saved..')
+            toast.success("Data Saved..");
             router.push("/pronites");
           },
         },
