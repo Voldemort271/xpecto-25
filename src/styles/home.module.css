@@ -1,0 +1,150 @@
+.introBorder::after {
+	content: "";
+	display: block;
+	position: absolute;
+	background: #171717;
+	inset: 2px;
+	z-index: 1;
+	transition: opacity .3s ease;
+}
+
+@property --r {
+	syntax: '<angle>';
+	inherits: false;
+	initial-value: 0deg;
+}
+
+.introBorder {
+	@apply relative h-full w-full bg-neutral-900;
+	background: conic-gradient(from var(--r), #242424 0%, #fffbeb 20%, #242424 40%);
+	animation: rotating 3s linear infinite;
+}
+
+@keyframes rotating {
+	0% {
+		--r: 0deg;
+	}
+	100% {
+		--r: 360deg;
+	}
+}
+
+.homeStatic {
+	position: relative;
+	mix-blend-mode: difference;
+	pointer-events: none;
+}
+
+.homeStatic::before {
+	content: "";
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('../../public/images/img.png');
+	animation: 100ms linear infinite tvStatic, 5s step-end staticFlicker;
+}
+
+@keyframes tvStatic {
+	0% {
+		background-position: 0 0;
+	}
+	10% {
+		background-position: 15% 0;
+	}
+	20% {
+		background-position: -15% 0;
+	}
+	30% {
+		background-position: 5% 0;
+	}
+	40% {
+		background-position: 20% 0;
+	}
+	50% {
+		background-position: -25% 0;
+	}
+	60% {
+		background-position: 15% 0;
+	}
+	70% {
+		background-position: 0 0;
+	}
+	80% {
+		background-position: 25% 0;
+	}
+	90% {
+		background-position: -10% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+@keyframes staticFlicker {
+	0% {
+		opacity: 1;
+	}
+	25% {
+		opacity: 0.7;
+	}
+	25.5% {
+		opacity: 1;
+	}
+	40% {
+		opacity: 0.3;
+	}
+	40.5% {
+		opacity: 1
+	}
+	42% {
+		opacity: 0.5;
+	}
+	42.5% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	60% {
+		opacity: 1;
+	}
+	60.5% {
+		opacity: 0.5;
+	}
+	62% {
+		opacity: 1;
+	}
+	63% {
+		opacity: 0.3;
+	}
+	64% {
+		opacity: 1;
+	}
+	64.5% {
+		opacity: 0.7;
+	}
+	66.5% {
+		opacity: 0.3;
+	}
+	67% {
+		opacity: 1;
+	}
+	67.5% {
+		opacity: 0.3
+	}
+	68.5% {
+		opacity: 0;
+	}
+}
+
+@keyframes terminate {
+	0% {
+		display: block
+	}
+	100% {
+		display: none
+	}
+}

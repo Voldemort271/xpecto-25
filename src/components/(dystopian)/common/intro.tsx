@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { motion } from "motion/react";
-import styles from "@/styles/intro.module.css";
+import styles from "@/styles/home.module.css";
 import Image from "next/image";
 import IntroPic from "../../../../public/images/intro.png";
 import Hehe from "../../../../public/images/meme.png";

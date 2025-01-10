@@ -26,7 +26,7 @@ const DystopianNav = () => {
         className={styles.brandContainer}
         initial={{ translateY: -100, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0 }}
+        transition={{ duration: 0.5, delay: 8 }}
       >
         <div className="text-4xl font-medium uppercase">xpecto &apos;25</div>
         <div className="text-sm font-normal uppercase leading-5">
@@ -39,7 +39,7 @@ const DystopianNav = () => {
             className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
             animate={{ translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
+            transition={{ duration: 0.5, delay: 8.25 }}
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
@@ -58,7 +58,7 @@ const DystopianNav = () => {
             className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
             animate={{ translateY: 0 }}
-            transition={{ duration: 0.5, delay: 0.25, ease: "linear" }}
+            transition={{ duration: 0.5, delay: 8.25, ease: "linear" }}
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer

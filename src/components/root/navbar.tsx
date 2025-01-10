@@ -8,21 +8,27 @@ import { motion } from "motion/react";
 const TardisNav = () => {
   return (
     <motion.div
-      initial={{ translateY: 0 }}
-      animate={{ translateY: 16 }}
-      transition={{
-        duration: 1,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut",
-      }}
-      className="cursor-pointer"
+      initial={{ opacity: 0, translateY: 100 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ duration: 1, delay: 10 }}
     >
-      <Image
-        src={Tardis}
-        alt={"Tardis lol"}
-        className="transition-all hover:scale-110"
-      />
+      <motion.div
+        initial={{ translateY: 0 }}
+        animate={{ translateY: 16 }}
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+        className="cursor-pointer"
+      >
+        <Image
+          src={Tardis}
+          alt={"Tardis lol"}
+          className="transition-all hover:scale-110"
+        />
+      </motion.div>
     </motion.div>
   );
 };
