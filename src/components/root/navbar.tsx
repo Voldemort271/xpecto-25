@@ -4,13 +4,16 @@ import React from "react";
 import Image from "next/image";
 import Tardis from "../../../public/images/tardis.png";
 import { motion } from "motion/react";
+import { usePathname } from "next/navigation";
 
 const TardisNav = () => {
+  const path = usePathname();
+
   return (
     <motion.div
       initial={{ opacity: 0, translateY: 100 }}
       animate={{ opacity: 1, translateY: 0 }}
-      transition={{ duration: 1, delay: 10 }}
+      transition={{ duration: 1, delay: path === "/" ? 10 : 0.5 }}
     >
       <motion.div
         initial={{ translateY: 0 }}

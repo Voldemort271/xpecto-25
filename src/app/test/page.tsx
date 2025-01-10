@@ -3,6 +3,7 @@ import React from "react";
 
 import { toast } from "sonner";
 import CustomToast from "@/components/custom-toast";
+import XText from "@/components/(dystopian)/home/x";
 
 const TestPage = () => {
   return (
@@ -22,6 +23,7 @@ const TestPage = () => {
       }}
     >
       test
+      <XText />
     </div>
   );
 };
