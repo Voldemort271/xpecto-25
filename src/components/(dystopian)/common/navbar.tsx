@@ -102,7 +102,7 @@ const DystopianNav = () => {
         onMouseLeave={() => setIsHovered(false)}
         initial={{ translateX: -1024 }}
         animate={{ translateX: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        transition={{ duration: 0.5, delay: 8.5 }}
       >
         {toggle ? (
           <svg

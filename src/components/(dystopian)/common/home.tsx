@@ -25,8 +25,8 @@ const HomeScreen = () => {
         animate={{ display: "none" }}
         transition={{ duration: 0.2, delay: 3.5 }}
       ></motion.div>
-      <div className="h-16"></div>
-      <div className="flex h-[calc(100vh-130px)] w-full flex-col items-center justify-center uppercase text-amber-50/[0.7]">
+      <div className="h-32 sm:h-16"></div>
+      <div className="flex h-[calc(100vh-194px)] w-full flex-col items-center justify-center uppercase text-amber-50 sm:h-[calc(100vh-130px)] md:text-amber-50/[0.7]">
         <motion.div
           className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold"
           initial={{ opacity: 0, translateY: 50 }}
@@ -35,9 +35,14 @@ const HomeScreen = () => {
         >
           welcome to
         </motion.div>
-        <div className="text-8xl font-extrabold uppercase sm:text-9xl md:hidden">
+        <motion.div
+          className="text-8xl font-extrabold uppercase sm:text-9xl md:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 4 }}
+        >
           Xpecto &apos;25
-        </div>
+        </motion.div>
         <LandingText />
         <motion.div
           className="text-4xl font-medium uppercase sm:text-6xl md:-mt-5 md:font-semibold"
