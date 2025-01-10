@@ -47,6 +47,12 @@
 	animation: 100ms linear infinite tvStatic, 5s step-end staticFlicker;
 }
 
+.homeStaticMobile {
+	width: 100%;
+	height: 100%;
+	background-image: url('../../public/images/img.png');
+}
+
 @keyframes tvStatic {
 	0% {
 		background-position: 0 0;
