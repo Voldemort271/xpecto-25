@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Tardis from "public/tardis.png";
+import Tardis from "../../../public/images/tardis.png";
 import { motion } from "motion/react";
 
 const TardisNav = () => {

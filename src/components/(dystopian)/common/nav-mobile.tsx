@@ -17,7 +17,7 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
     <AnimatePresence>
       {toggler && (
         <motion.div
-          className="fixed top-32 -z-10 block h-[calc(100vh-192px)] w-screen border-x-2 border-amber-50 backdrop-blur-2xl lg:hidden"
+          className="fixed top-32 -z-10 block h-[calc(100vh-194px)] w-screen border-x-2 border-amber-50 backdrop-blur-2xl sm:hidden"
           initial={{ left: -100, opacity: 0 }}
           animate={{ left: 0, opacity: 1 }}
           exit={{ left: 100, opacity: 0 }}
@@ -49,7 +49,7 @@ const NavMobile = ({ toggler, setToggler }: Props) => {
               onClick={() => setToggler(false)}
               animate={{ left: 0, opacity: 1 }}
               transition={{ delay: 2 }}
-              className="absolute left-0 top-96 flex h-16 w-full cursor-none flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-6xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
+              className="absolute left-0 top-96 flex h-16 w-full cursor-none flex-row items-center border-b-2 border-amber-50 bg-amber-50 text-4xl font-normal uppercase text-neutral-900 transition-all hover:bg-neutral-900 hover:text-amber-50"
             >
               <MarqueeContainer
                 href="/sign-in"

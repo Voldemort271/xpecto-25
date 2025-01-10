@@ -5,20 +5,14 @@
 import React, { useContext, useState } from "react";
 import styles from "../../../styles/navbar.module.css";
 import NavMobile from "@/components/(dystopian)/common/nav-mobile";
-import { navElements, useCurrentUser } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
-import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
-  const path = usePathname();
-  const firstPathItem = path.split("/")[1];
-
   const { CurrentUser } = useCurrentUser();
-
   const { setIsHovered } = useContext(CursorContext);
 
   return (
@@ -39,14 +33,10 @@ const DystopianNav = () => {
           indian institute of technology, mandi
         </div>
       </motion.div>
-      <div
-        className="hidden h-full w-full grid-cols-6 grid-rows-2 lg:grid"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <div className="hidden h-full w-full grid-cols-6 grid-rows-2 sm:grid">
         {CurrentUser?.id !== "" ? (
           <motion.div
-            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-[#8B8981]`}
+            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
             animate={{ translateY: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
@@ -65,7 +55,7 @@ const DystopianNav = () => {
           </motion.div>
         ) : (
           <motion.div
-            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border border-amber-50 bg-[#8B8981]`}
+            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
             animate={{ translateY: 0 }}
             transition={{ duration: 0.5, delay: 0.25, ease: "linear" }}
@@ -84,29 +74,29 @@ const DystopianNav = () => {
           </motion.div>
         )}
 
-        {navElements.map((item, index) => (
-          <motion.div
-            key={index}
-            className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-3xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-[#8B8981] text-neutral-900" : "bg-neutral-900"}`}
-            initial={{ translateY: -100, opacity: 0 }}
-            animate={{ translateY: 0, opacity: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.5 + index * 0.125,
-              ease: "backOut",
-            }}
-          >
-            <Link
-              href={`/${item !== "Home" ? item.toLowerCase() : ""}`}
-              className="flex h-full w-full cursor-none items-center justify-center"
-            >
-              {item}
-            </Link>
-          </motion.div>
-        ))}
+        {/*{navElements.map((item, index) => (*/}
+        {/*  <motion.div*/}
+        {/*    key={index}*/}
+        {/*    className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-3xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-[#8B8981] text-neutral-900" : "bg-neutral-900"}`}*/}
+        {/*    initial={{ translateY: -100, opacity: 0 }}*/}
+        {/*    animate={{ translateY: 0, opacity: 1 }}*/}
+        {/*    transition={{*/}
+        {/*      duration: 0.5,*/}
+        {/*      delay: 0.5 + index * 0.125,*/}
+        {/*      ease: "backOut",*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    <Link*/}
+        {/*      href={`/${item !== "Home" ? item.toLowerCase() : ""}`}*/}
+        {/*      className="flex h-full w-full cursor-none items-center justify-center"*/}
+        {/*    >*/}
+        {/*      {item}*/}
+        {/*    </Link>*/}
+        {/*  </motion.div>*/}
+        {/*))}*/}
       </div>
       <motion.div
-        className="flex h-full cursor-none flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 lg:hidden"
+        className="flex h-full cursor-none flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 sm:hidden"
         onClick={() => setToggle(!toggle)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
