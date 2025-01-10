@@ -18,8 +18,8 @@ const HomeScreen = () => {
         alt={"transparent bg"}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom"
       />
-      <div className="h-40"></div>
-      <div className="flex h-[calc(100vh-240px)] w-full flex-col items-center justify-center uppercase text-amber-50">
+      <div className="h-16"></div>
+      <div className="flex h-[calc(100vh-130px)] w-full flex-col items-center justify-center uppercase text-amber-50">
         <div className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold">
           welcome to
         </div>
