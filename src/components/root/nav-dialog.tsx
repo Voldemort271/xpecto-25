@@ -9,13 +9,17 @@ interface Props {
 
 const inter = Inter({ subsets: ["latin"] });
 
+const handleSubmit = (e: FormData) => {
+  console.log(e);
+};
+
 const NavDialog = ({ toggle, setToggle }: Props) => {
   return (
     <motion.div
       className={`w-full min-w-[400px] max-w-[600px] rounded-lg border bg-neutral-900 ${inter.className} `}
-      initial={{ opacity: 0, translateX: -100 }}
+      initial={{ opacity: 0, translateX: 100 }}
       animate={{ opacity: 1, translateX: 0 }}
-      exit={{ opacity: 0, translateX: -100 }}
+      exit={{ opacity: 0, translateX: 100 }}
     >
       <div className="relative flex w-full flex-row items-center justify-start gap-2.5 rounded-t-lg bg-slate-300 p-2.5 shadow-md shadow-neutral-900/[0.2]">
         <div
@@ -37,6 +41,10 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
           warp to your destination. Brought to you by Xpecto &apos;25.
         </div>
         hi
+        <form action={handleSubmit}>
+          <input type="text" name="data" id="na" />
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </motion.div>
   );
