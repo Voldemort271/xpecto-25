@@ -3,6 +3,7 @@
 import { api } from "@/trpc/react";
 import React, { useState, useRef } from "react";
 import { toast } from "sonner";
+import CustomToast from "@/components/custom-toast";
 
 
 const Page = () => {
@@ -38,10 +39,31 @@ const Page = () => {
 
   const handleCreation = () => {
     if (sponName == "") {
-      return toast.error("Enter Sponsor name pls");
+      return toast.custom(
+        (t) => (
+          <CustomToast variant={"warning"} metadata={t}>
+          Enter Sponsor name pls
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
+       
+      
     }
     if (sponsoredEventIds.length == 0) {
-      return toast.error("No events selected");
+      return  toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+           No events selected
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
+      // toast.error("No events selected");
     }
     console.log("Ye sare events hai : ", sponsoredEventIds);
     sponCreateMutationRef.current.mutate({
@@ -49,7 +71,17 @@ const Page = () => {
       logo: sponLogo,
       eventIds: sponsoredEventIds,
     });
-    toast.success("creation successful!!");
+    toast.custom(
+      (t) => (
+        <CustomToast variant={"success"} metadata={t}>
+        creation successful!!
+        </CustomToast>
+      ),
+      {
+        position: "top-center",
+      },
+    );
+    // toast.success("creation successful!!");
   };
 
   return (
