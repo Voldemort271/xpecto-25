@@ -22,7 +22,7 @@ import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { toast } from "sonner";
-
+import CustomToast from "@/components/custom-toast";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -76,7 +76,16 @@ const InviteTeammatesDialog = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!CurrentUser) {
-      toast.error("User not logged in.");
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          User not logged in
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
       return;
     }
 
@@ -87,11 +96,29 @@ const InviteTeammatesDialog = ({
       },
       {
         onSuccess: () => {
-          toast.success("Invitations Sent Successfully");
+          toast.custom(
+            (t) => (
+              <CustomToast variant={"success"} metadata={t}>
+              Invitations Sent Successfully
+              </CustomToast>
+            ),
+            {
+              position: "top-center",
+            },
+          );
           window.location.reload();
         },
         onError: () => {
-          toast.error("Failed to send invitations. Please try again.");
+          toast.custom(
+            (t) => (
+              <CustomToast variant={"error"} metadata={t}>
+              Failed to send invitations. Please try again.
+              </CustomToast>
+            ),
+            {
+              position: "top-center",
+            },
+          );
         },
       },
     );
