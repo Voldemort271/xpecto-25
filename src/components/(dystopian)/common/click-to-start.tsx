@@ -8,8 +8,6 @@ import { CursorContext } from "@/context/cursor-context";
 
 const ClickToStart = () => {
   const { setIsHovered } = useContext(CursorContext);
-  const scrollHeight =
-    typeof window !== "undefined" ? window.innerHeight - 128 : 1000;
 
   return (
     <div className="relative mt-5 w-full">
@@ -25,13 +23,8 @@ const ClickToStart = () => {
         transition={{ duration: 1, repeat: Infinity }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => {
-          setTimeout(() => {
-            window.scrollBy({ top: scrollHeight, behavior: "smooth" });
-          }, 250);
-        }}
       >
-        click to start
+        &lt;&lt; call the time machine &gt;&gt;
       </motion.div>
     </div>
   );

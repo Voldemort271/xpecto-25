@@ -30,7 +30,7 @@ export default function RootLayout({
           <Toaster />
         </ClerkProvider>
         <div className="staticBg"></div>
-        <div className="fixed bottom-16 right-16 z-50 hidden sm:block">
+        <div className="fixed -right-28 bottom-16 z-50 hidden w-48 transition-all hover:-right-16 hover:-rotate-12 sm:block">
           <TardisNav />
         </div>
       </body>
