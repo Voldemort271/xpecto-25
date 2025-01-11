@@ -3,17 +3,20 @@
 // TODO: Shift nav animations by some time offset once header animation is ready
 
 import React, { useContext, useState } from "react";
-import styles from "../../../styles/navbar.module.css";
+import styles from "@/styles/navbar.module.css";
 import NavMobile from "@/components/(dystopian)/common/nav-mobile";
 import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";
+import { usePathname } from "next/navigation";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
   const { CurrentUser } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
+  const path = usePathname();
+  const animationDelay = path === "/" ? 8 : 0;
 
   return (
     <motion.div
@@ -26,7 +29,7 @@ const DystopianNav = () => {
         className={styles.brandContainer}
         initial={{ translateY: -100, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 8.25 }}
+        transition={{ duration: 0.5, delay: animationDelay + 0.25 }}
       >
         <div className="text-4xl font-medium uppercase">xpecto &apos;25</div>
         <div className="text-sm font-normal uppercase leading-5">
@@ -39,7 +42,7 @@ const DystopianNav = () => {
             className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
             animate={{ translateY: 0 }}
-            transition={{ duration: 0.5, delay: 8.5 }}
+            transition={{ duration: 0.5, delay: animationDelay + 0.5 }}
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
@@ -58,7 +61,11 @@ const DystopianNav = () => {
             className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
             animate={{ translateY: 0 }}
-            transition={{ duration: 0.5, delay: 8.5, ease: "linear" }}
+            transition={{
+              duration: 0.5,
+              delay: animationDelay + 0.5,
+              ease: "linear",
+            }}
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
@@ -102,7 +109,7 @@ const DystopianNav = () => {
         onMouseLeave={() => setIsHovered(false)}
         initial={{ translateX: -1024 }}
         animate={{ translateX: 0 }}
-        transition={{ duration: 0.5, delay: 8.5 }}
+        transition={{ duration: 0.5, delay: animationDelay + 0.5 }}
       >
         {toggle ? (
           <svg
