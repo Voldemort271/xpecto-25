@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Share_Tech } from "next/font/google";
 import { toast } from "sonner";
+import CustomToast from "@/components/custom-toast";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -44,9 +45,19 @@ const SignupPage = () => {
     } catch (err) {
       setEmail("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-      toast.error(err.errors[0].longMessage);
+      const typedErr = err as { errors?: { longMessage: string }[] };
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          {typedErr.errors?.[0]?.longMessage?? ""}
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
+      
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
@@ -64,16 +75,34 @@ const SignupPage = () => {
         await setActive({ session: signInAttempt.createdSessionId });
 
         router.push("/");
-        toast.success("Logged in successfully");
+        toast.custom(
+          (t) => (
+            <CustomToast variant={"success"} metadata={t}>
+              Logged in successfully!!
+            </CustomToast>
+          ),
+          {
+            position: "top-center",
+          },
+        );
       } else {
         console.error(signInAttempt);
       }
     } catch (err) {
       setEmail("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-      toast.error(err.errors[0].longMessage);
+      const typedErr = err as { errors?: { longMessage: string }[] };
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          {typedErr.errors?.[0]?.longMessage?? ""}
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
@@ -192,3 +221,4 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
+
