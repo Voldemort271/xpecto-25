@@ -9,8 +9,6 @@ import BgImage from "public/images/transparent-bg.png";
 import LandingText from "@/components/(dystopian)/home/landing-text";
 import styles from "@/styles/home.module.css";
 
-// TODO: Shift bottom marquee animation when landing animation is ready
-
 const HomeScreen = () => {
   return (
     <div className="relative z-0 h-[calc(100vh-2px)] w-full overflow-clip bg-neutral-900">
