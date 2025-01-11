@@ -13,7 +13,7 @@ import FiveText from "@/components/(dystopian)/home/5";
 
 const LandingText = () => {
   return (
-    <div className="flex items-start gap-5 p-0 md:py-8">
+    <div className="hidden items-start gap-2 p-0 sm:flex md:gap-3 md:py-8 lg:gap-5">
       <XText />
       <PText />
       <EText />
