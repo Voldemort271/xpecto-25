@@ -1,18 +1,29 @@
 "use client";
 
 import React from "react";
-import Text256 from "@/components/(dystopian)/home/xpecto-256";
-import Text200 from "@/components/(dystopian)/home/xpecto-200";
+import XText from "@/components/(dystopian)/home/X";
+import PText from "@/components/(dystopian)/home/P";
+import EText from "@/components/(dystopian)/home/E";
+import CText from "@/components/(dystopian)/home/C";
+import TText from "@/components/(dystopian)/home/T";
+import OText from "@/components/(dystopian)/home/O";
+import QuoteText from "@/components/(dystopian)/home/'";
+import TwoText from "@/components/(dystopian)/home/2";
+import FiveText from "@/components/(dystopian)/home/5";
 
 const LandingText = () => {
   return (
-    <div className="p-0 md:py-8">
-      <div className="hidden lg:block">
-        <Text256 />
-      </div>
-      <div className="hidden md:block lg:hidden">
-        <Text200 />
-      </div>
+    <div className="flex items-start gap-5 p-0 md:py-8">
+      <XText />
+      <PText />
+      <EText />
+      <CText />
+      <TText />
+      <OText />
+      <div className="w-5"></div>
+      <QuoteText />
+      <TwoText />
+      <FiveText />
     </div>
   );
 };
