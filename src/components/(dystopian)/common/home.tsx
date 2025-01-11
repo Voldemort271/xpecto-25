@@ -20,11 +20,13 @@ const HomeScreen = () => {
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom"
       />
       <motion.div
-        className={`absolute left-0 top-0 -z-10 hidden h-full w-full sm:block ${styles.homeStatic}`}
+        className={`absolute left-0 top-0 -z-10 hidden h-full w-full stroke-black p-12 text-2xl font-medium text-indigo-600 sm:block ${styles.homeStatic}`}
         initial={{ display: "block" }}
         animate={{ display: "none" }}
         transition={{ duration: 0.2, delay: 3.5 }}
-      ></motion.div>
+      >
+        PLEASE WAIT, LOADING
+      </motion.div>
       <motion.div
         className={`absolute left-0 top-0 -z-10 block h-full w-full sm:hidden ${styles.homeStaticMobile}`}
         initial={{ opacity: 1 }}

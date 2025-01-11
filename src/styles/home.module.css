@@ -33,6 +33,7 @@
 	position: relative;
 	mix-blend-mode: difference;
 	pointer-events: none;
+	animation: 5s step-end staticFlicker;
 }
 
 .homeStatic::before {
@@ -45,6 +46,22 @@
 	height: 100%;
 	background-image: url('../../public/images/img.png');
 	animation: 100ms linear infinite tvStatic, 5s step-end staticFlicker;
+}
+
+.homeStatic:after {
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: bottom;
+	-webkit-animation: ellipsis steps(4, end) 900ms infinite;
+	animation: ellipsis steps(4, end) 900ms infinite;
+	content: "\2026";
+	width: 0;
+}
+
+@keyframes ellipsis {
+	to {
+		width: 24px;
+	}
 }
 
 .homeStaticMobile {
