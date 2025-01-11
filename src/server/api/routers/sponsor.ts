@@ -37,7 +37,24 @@ export const sponsorRouter = createTRPCRouter({
       const sponser = await ctx.db.sponsor.findMany({
         where: {
           id: {
-            contains:input.id
+            contains: input.id,
+          },
+        },
+        include: {
+          events: true,
+        },
+      });
+      return sponser;
+    }),
+
+  getSponsorBySlug: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const sponser = await ctx.db.sponsor.findFirst({
+        where: {
+          name: {
+            equals: input.slug.replaceAll("-", " "),
+            mode: "insensitive",
           },
         },
         include: {

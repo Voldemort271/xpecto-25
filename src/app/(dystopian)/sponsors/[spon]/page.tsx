@@ -6,12 +6,14 @@ import Image from "next/image";
 import dummyImage from "@/../public/spon_logos/300.png";
 
 const Page = ({ params }: { params: Promise<{ spon: string }> }) => {
-  const sponId = use(params).spon;
-  const {data, isLoading} = api.sponsor.getSponsor.useQuery({ id: sponId });
+  const sponSlug = use(params).spon;
+  const { data, isLoading } = api.sponsor.getSponsorBySlug.useQuery({
+    slug: sponSlug,
+  });
 
-  if(isLoading) return;
+  if (isLoading) return;
 
-  const sponDetails = data![0];
+  const sponDetails = data;
 
   return (
     <div style={{ paddingTop: 200, paddingLeft: 100 }}>
