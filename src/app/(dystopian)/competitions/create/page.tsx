@@ -15,6 +15,9 @@ import {
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
 import { toast } from "sonner";
+import CustomToast from "@/components/custom-toast";
+
+
 
 
 const Page = () => {
@@ -50,14 +53,33 @@ const Page = () => {
         },
         {
           onSuccess: () => {
-            toast.success('Data Saved..');
+            toast.custom(
+              (t) => (
+                <CustomToast variant={"success"} metadata={t}>
+                  Data Saved..
+                </CustomToast>
+              ),
+              {
+                position: "top-center",
+              },
+            );
+            
             window.location.href = "/competitions";
           },
         },
       );
     } catch (e) {
       console.error(e);
-      toast.error("Failed to accept the invitation. Please try again.");
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          Failed to accept the invitation. Please try again.
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
     }
   };
 
