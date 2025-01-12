@@ -15,10 +15,7 @@ import {
 import Links from "../../../../components/ui/Links";
 import MultiEntity from "../../../../components/ui/MultiEntity";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
-
-
-
+import CustomToast from "@/components/root/custom-toast";
 
 const Page = () => {
   const createCompetition = api.competition.createCompetition.useMutation();
@@ -63,7 +60,7 @@ const Page = () => {
                 position: "top-center",
               },
             );
-            
+
             window.location.href = "/competitions";
           },
         },
@@ -73,7 +70,7 @@ const Page = () => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          Failed to accept the invitation. Please try again.
+            Failed to accept the invitation. Please try again.
           </CustomToast>
         ),
         {

@@ -2,7 +2,7 @@
 import React from "react";
 
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 import XText from "@/components/(dystopian)/home/X";
 
 const TestPage = () => {

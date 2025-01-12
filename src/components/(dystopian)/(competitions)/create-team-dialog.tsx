@@ -22,8 +22,7 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
-
+import CustomToast from "@/components/root/custom-toast";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -78,7 +77,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          User not logged in.
+            User not logged in.
           </CustomToast>
         ),
         {
@@ -93,7 +92,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          Team with the same name already exists!!
+            Team with the same name already exists!!
           </CustomToast>
         ),
         {
@@ -107,7 +106,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          A team with the same set of Users already exists. Modify it!!
+            A team with the same set of Users already exists. Modify it!!
           </CustomToast>
         ),
         {
@@ -129,7 +128,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
           toast.custom(
             (t) => (
               <CustomToast variant={"success"} metadata={t}>
-              Invitations Sent Successfully
+                Invitations Sent Successfully
               </CustomToast>
             ),
             {
@@ -142,7 +141,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
           toast.custom(
             (t) => (
               <CustomToast variant={"error"} metadata={t}>
-              Failed to send invitations. Please try again.
+                Failed to send invitations. Please try again.
               </CustomToast>
             ),
             {

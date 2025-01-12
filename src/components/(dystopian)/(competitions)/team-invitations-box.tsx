@@ -3,7 +3,7 @@ import { api } from "@/trpc/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../ui/button";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 
 const InvitationBox = ({ compId }: { compId: string }) => {
   const { CurrentUser } = useCurrentUser();

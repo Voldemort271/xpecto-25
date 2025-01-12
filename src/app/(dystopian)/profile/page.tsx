@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { SharedContext } from "@/lib/context";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -25,14 +25,14 @@ const Page = () => {
         toast.custom(
           (t) => (
             <CustomToast variant={"error"} metadata={t}>
-            No user data found
+              No user data found
             </CustomToast>
           ),
           {
             position: "top-center",
           },
         );
-        
+
         router.push("/sign-up");
       }
       if (!setCurrentUser) {
@@ -40,7 +40,7 @@ const Page = () => {
         toast.custom(
           (t) => (
             <CustomToast variant={"error"} metadata={t}>
-            No setter function found
+              No setter function found
             </CustomToast>
           ),
           {
@@ -66,7 +66,7 @@ const Page = () => {
       toast.custom(
         (t) => (
           <CustomToast variant={"info"} metadata={t}>
-          Signed Out Successfully
+            Signed Out Successfully
           </CustomToast>
         ),
         {
@@ -77,7 +77,7 @@ const Page = () => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          Error signing out
+            Error signing out
           </CustomToast>
         ),
         {

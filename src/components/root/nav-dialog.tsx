@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { sleep } from "@/lib/utils";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

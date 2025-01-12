@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Share_Tech } from "next/font/google";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -50,14 +50,14 @@ const SignupPage = () => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          {typedErr.errors?.[0]?.longMessage?? ""}
+            {typedErr.errors?.[0]?.longMessage ?? ""}
           </CustomToast>
         ),
         {
           position: "top-center",
         },
       );
-      
+
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
@@ -96,7 +96,7 @@ const SignupPage = () => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          {typedErr.errors?.[0]?.longMessage?? ""}
+            {typedErr.errors?.[0]?.longMessage ?? ""}
           </CustomToast>
         ),
         {
@@ -221,4 +221,3 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
-

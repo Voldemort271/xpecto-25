@@ -12,7 +12,7 @@ import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -38,7 +38,7 @@ const LeaveTeamDialog = ({ regTeam }: { regTeam: TeamWithFullDetails }) => {
             toast.custom(
               (t) => (
                 <CustomToast variant={"success"} metadata={t}>
-                Left the team successfully
+                  Left the team successfully
                 </CustomToast>
               ),
               {
@@ -54,14 +54,13 @@ const LeaveTeamDialog = ({ regTeam }: { regTeam: TeamWithFullDetails }) => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          Failed to delete user. Please try again.
+            Failed to delete user. Please try again.
           </CustomToast>
         ),
         {
           position: "top-center",
         },
       );
-      
     }
   };
   return (

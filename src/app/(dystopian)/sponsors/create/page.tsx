@@ -1,10 +1,9 @@
 "use client";
 
 import { api } from "@/trpc/react";
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
-
+import CustomToast from "@/components/root/custom-toast";
 
 const Page = () => {
   const [sponName, setSponName] = useState("");
@@ -42,21 +41,19 @@ const Page = () => {
       return toast.custom(
         (t) => (
           <CustomToast variant={"warning"} metadata={t}>
-          Enter Sponsor name pls
+            Enter Sponsor name pls
           </CustomToast>
         ),
         {
           position: "top-center",
         },
       );
-       
-      
     }
     if (sponsoredEventIds.length == 0) {
-      return  toast.custom(
+      return toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-           No events selected
+            No events selected
           </CustomToast>
         ),
         {
@@ -74,7 +71,7 @@ const Page = () => {
     toast.custom(
       (t) => (
         <CustomToast variant={"success"} metadata={t}>
-        creation successful!!
+          creation successful!!
         </CustomToast>
       ),
       {

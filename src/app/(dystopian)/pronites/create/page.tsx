@@ -5,7 +5,7 @@ import { api } from "@/trpc/react"; // Import the api object
 import { ProniteType } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 
 const Page = () => {
   const router = useRouter();
@@ -33,15 +33,14 @@ const Page = () => {
             toast.custom(
               (t) => (
                 <CustomToast variant={"success"} metadata={t}>
-                Data Saved..
+                  Data Saved..
                 </CustomToast>
               ),
               {
                 position: "top-center",
               },
             );
-            
-            
+
             router.push("/pronites");
           },
         },
@@ -51,7 +50,7 @@ const Page = () => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          Could not create. Try again!
+            Could not create. Try again!
           </CustomToast>
         ),
         {

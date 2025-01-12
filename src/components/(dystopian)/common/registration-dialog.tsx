@@ -11,7 +11,7 @@ import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { Handjet, Share_Tech } from "next/font/google";
 import { toast } from "sonner";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/root/custom-toast";
 
 // import Razorpay from "razorpay";
 
@@ -47,7 +47,6 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
   // const verifyPayment = api.event.verifyPayment.useMutation();
   const userAddToEvent = api.event.addUserToEvent.useMutation();
 
-
   const handleSuccess = (paymentId?: string) => {
     if (!paymentId) {
       paymentId = "free";
@@ -65,10 +64,10 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
             toast.custom(
               (t) => (
                 <CustomToast variant={"success"} metadata={t}>
-                Registration successful!
+                  Registration successful!
                 </CustomToast>
               ),
-              
+
               {
                 position: "top-center",
               },
@@ -79,23 +78,26 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
             toast.custom(
               (t) => (
                 <CustomToast variant={"error"} metadata={t}>
-                Either you are registering again for the same event or an error occurred while registering you for the event. Your payment was successful. Please contact the organizer if you have made two payments.
+                  Either you are registering again for the same event or an
+                  error occurred while registering you for the event. Your
+                  payment was successful. Please contact the organizer if you
+                  have made two payments.
                 </CustomToast>
               ),
-              
+
               {
                 position: "top-center",
-                duration: 6000 
+                duration: 6000,
               },
             );
           },
         },
       );
     }
-    console.log("CurrentUser :", CurrentUser );
+    console.log("CurrentUser :", CurrentUser);
     console.log("Mutation Inputs:", {
       paymentId: "free",
-      userId: CurrentUser ?.id,
+      userId: CurrentUser?.id,
       regPlanId,
       eventId,
     });
@@ -111,7 +113,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-          You have already registered for this event.
+            You have already registered for this event.
           </CustomToast>
         ),
         {
