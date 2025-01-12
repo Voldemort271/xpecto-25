@@ -137,7 +137,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
               ))}
             </div>
           </div>
-          <div className="mt-5 flex items-center justify-start gap-2">
+          <div className="mt-2 flex items-center justify-start gap-2">
             <Input
               type="checkbox"
               name="override"
@@ -157,12 +157,24 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
             Checking this option will take you to the authorization screen.
             Proceed with caution.
           </div>
-          <Button
-            type="submit"
-            className="mt-2 w-fit bg-gradient-to-b from-blue-500 to-blue-600 px-5 py-2 text-amber-50 shadow-md shadow-neutral-900/[0.3]"
-          >
-            Submit
-          </Button>
+          <div className="flex gap-5">
+            <Button
+              type="reset"
+              onClick={() => {
+                setOverride(false);
+                setToggle(false);
+              }}
+              className="mt-2 w-fit border border-slate-400/[0.5] bg-slate-200 px-5 py-2 text-red-500 hover:bg-slate-300"
+            >
+              Abort
+            </Button>
+            <Button
+              type="submit"
+              className="mt-2 w-fit bg-gradient-to-b from-blue-500 to-blue-600 px-5 py-2 text-amber-50 shadow-md shadow-neutral-900/[0.3]"
+            >
+              Submit
+            </Button>
+          </div>
         </form>
       </div>
     </motion.div>

@@ -16,7 +16,7 @@ const TardisNav = () => {
       <AnimatePresence>
         {toggle && (
           <motion.div
-            className="fixed left-0 top-0 z-50 flex h-screen w-screen items-end justify-end bg-neutral-900/[0.5] p-12"
+            className="fixed left-0 top-0 z-50 flex h-screen w-screen items-end justify-end bg-neutral-900/[0.7] p-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
