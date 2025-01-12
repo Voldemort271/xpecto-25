@@ -7,6 +7,7 @@ import SharedContextProvider from "@/lib/context";
 import React from "react";
 import { Toaster } from "sonner";
 import TardisNav from "@/components/root/navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpecto.org/"),
@@ -30,6 +31,7 @@ export default function RootLayout({
           </TRPCReactProvider>
           <Toaster />
         </ClerkProvider>
+        <SpeedInsights />
         <div className="staticBg"></div>
         <div
           className="fixed -right-28 bottom-16 z-50 hidden w-48 sm:block"
