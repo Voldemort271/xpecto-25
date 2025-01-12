@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { SharedContext } from "@/lib/context";
 import { toast } from "sonner";
+import CustomToast from "@/components/custom-toast";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -20,11 +21,33 @@ const Page = () => {
   const handleSignOut = async () => {
     try {
       if (!CurrentUser) {
-        toast.error("No user data found");
+        // toast.error("No user data found");
+        toast.custom(
+          (t) => (
+            <CustomToast variant={"error"} metadata={t}>
+            No user data found
+            </CustomToast>
+          ),
+          {
+            position: "top-center",
+          },
+        );
+        
         router.push("/sign-up");
       }
       if (!setCurrentUser) {
-        toast.error("No setter function found");
+        // toast.error("No setter function found");
+        toast.custom(
+          (t) => (
+            <CustomToast variant={"error"} metadata={t}>
+            No setter function found
+            </CustomToast>
+          ),
+          {
+            position: "top-center",
+          },
+        );
+
         router.push("/");
         return;
       }
@@ -39,9 +62,29 @@ const Page = () => {
         updatedAt: new Date(),
         id: "",
       });
-      toast.error("Signed Out Successfully");
+      // toast.error("Signed Out Successfully");
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"info"} metadata={t}>
+          Signed Out Successfully
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
     } catch (error) {
-      toast.error(`Error signing out`);
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          Error signing out
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
+      // toast.error(`Error signing out`);
       console.log(error);
     }
   };

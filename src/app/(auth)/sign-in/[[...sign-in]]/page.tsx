@@ -15,6 +15,8 @@ import { Share_Tech } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import CustomToast from "@/components/custom-toast";
+
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -63,10 +65,22 @@ const SigninPage = () => {
       }
     } catch (err) {
       setEmail("");
+      
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
+      
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
-      toast.error(err.errors[0].longMessage);
+      // toast.error(err.errors[0].longMessage);
+      const typedErr = err as { errors?: { longMessage: string }[] };
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          {typedErr.errors?.[0]?.longMessage?? ""}
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
@@ -85,16 +99,34 @@ const SigninPage = () => {
         await setActive({ session: signInAttempt.createdSessionId });
 
         router.push("/");
-        toast.success("Logged in successfully");
+        toast.custom(
+          (t) => (
+            <CustomToast variant={"success"} metadata={t}>
+              Logged in successfully!!
+            </CustomToast>
+          ),
+          {
+            position: "top-center",
+          },
+        );
       } else {
         console.error(signInAttempt);
       }
     } catch (err) {
       setCode("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access
-      toast.error(err.errors[0].longMessage);
+      const typedErr = err as { errors?: { longMessage: string }[] };
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+          {typedErr.errors?.[0]?.longMessage?? ""}
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
       // console.error("Error:", JSON.stringify(err, null, 2));
     }
   };
