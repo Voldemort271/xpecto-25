@@ -1,7 +1,5 @@
 "use client";
 
-// TODO: Shift nav animations by some time offset once header animation is ready
-
 import React, { useContext, useState } from "react";
 import styles from "@/styles/navbar.module.css";
 import NavMobile from "@/components/(dystopian)/common/nav-mobile";
