@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 import TardisNav from "@/components/root/navbar";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.xpecto.org/"),
   title: "Xpecto '25 | IIT Mandi",
   description: "Blah blah here",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
