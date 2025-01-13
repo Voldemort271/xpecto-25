@@ -78,27 +78,6 @@ const DystopianNav = () => {
             </div>
           </motion.div>
         )}
-
-        {/*{navElements.map((item, index) => (*/}
-        {/*  <motion.div*/}
-        {/*    key={index}*/}
-        {/*    className={`relative flex w-full cursor-none items-center justify-center overflow-clip border border-b-2 border-amber-50 text-2xl font-normal uppercase xl:text-3xl ${item.toLowerCase() === firstPathItem?.toLowerCase() || (item === "Home" && firstPathItem === "") ? "bg-[#8B8981] text-neutral-900" : "bg-neutral-900"}`}*/}
-        {/*    initial={{ translateY: -100, opacity: 0 }}*/}
-        {/*    animate={{ translateY: 0, opacity: 1 }}*/}
-        {/*    transition={{*/}
-        {/*      duration: 0.5,*/}
-        {/*      delay: 0.5 + index * 0.125,*/}
-        {/*      ease: "backOut",*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <Link*/}
-        {/*      href={`/${item !== "Home" ? item.toLowerCase() : ""}`}*/}
-        {/*      className="flex h-full w-full cursor-none items-center justify-center"*/}
-        {/*    >*/}
-        {/*      {item}*/}
-        {/*    </Link>*/}
-        {/*  </motion.div>*/}
-        {/*))}*/}
       </div>
       <motion.div
         className="flex h-full cursor-none flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 sm:hidden"
