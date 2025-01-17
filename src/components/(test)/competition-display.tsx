@@ -4,7 +4,7 @@ import CompDisplayCard from "@/components/(test)/competition-display-card";
 
 const CompDisplay = () => {
   return (
-    <div className="grid h-full w-full grid-cols-[64px_auto]">
+    <div className="grid h-full w-full grid-rows-[56px_auto] md:grid-cols-[64px_auto] md:grid-rows-1">
       <div className="h-full w-full">
         <CompControl />
       </div>

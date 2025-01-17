@@ -11,7 +11,7 @@ const CompetitionsHeader = () => {
         alt={"Bg Image"}
         className="absolute left-0 top-0 h-full w-full object-cover object-center"
       />
-      <div className="absolute left-0 top-0 flex h-16 w-[100vh] -translate-x-[calc(50%-32px)] translate-y-[calc(50vh-32px)] -rotate-90 flex-col justify-center border-2 border-amber-50 bg-neutral-900 text-3xl font-light uppercase">
+      <div className="absolute left-0 top-[126px] flex h-16 w-screen flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-3xl font-light uppercase md:top-0 md:w-[100vh] md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:-rotate-90">
         <MarqueeContainer
           text={[
             "Competitions",
