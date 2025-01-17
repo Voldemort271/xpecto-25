@@ -8,7 +8,7 @@ export default function ProfileLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div
-      className={`relative flex w-screen border-2 border-amber-50 bg-neutral-900 text-amber-50 ${handjet.className} overflow-clip tracking-widest`}
+      className={`relative flex min-h-screen w-screen border-2 border-amber-50 bg-black text-amber-50 ${handjet.className} overflow-clip tracking-widest`}
     >
       <div className="mt-[60px] w-full">{children}</div>
     </div>
