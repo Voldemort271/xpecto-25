@@ -28,7 +28,7 @@ const CompDisplayCard = () => {
           test comp
         </div>
         <div
-          className={`max-w-screen-md px-5 ${sharetech.className} tracking-tight`}
+          className={`max-w-screen-md px-5 ${sharetech.className} text-lg tracking-tight`}
         >
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
           alias aliquam aliquid debitis fuga illo ipsum iusto minima qui quidem
