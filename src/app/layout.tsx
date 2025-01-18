@@ -34,7 +34,7 @@ export default function RootLayout({
         <SpeedInsights />
         <div className="staticBg"></div>
         <div
-          className="fixed -right-28 bottom-16 z-50 hidden w-48 sm:block"
+          className="fixed -right-20 bottom-16 z-50 hidden w-48 sm:block"
           id="hi"
         >
           <TardisNav />
