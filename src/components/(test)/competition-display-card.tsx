@@ -13,7 +13,8 @@ const CompDisplayCard = () => {
       <Image
         src={BgImage}
         alt={"Bg"}
-        placeholder="blur"
+        width={500}
+        height={500}
         className="-mt-40 aspect-square min-h-96 w-[calc(100%-100px)] max-w-[500px] border-2 border-amber-50 object-cover md:-ml-40 md:mt-0 md:h-[400px] md:w-[400px] lg:-ml-32 lg:h-[450px] lg:w-[450px]"
       />
       <div className="mt-12 flex w-full flex-col gap-5 md:mt-0">

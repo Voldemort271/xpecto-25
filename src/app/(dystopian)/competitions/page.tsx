@@ -1,14 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
-import CompCard from "@/components/(dystopian)/(competitions)/competition-card";
-import { motion } from "motion/react";
-import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
-import SectionHeader from "@/components/(dystopian)/common/section-header";
+import CompControl from "@/components/(test)/competition-display-control";
+import CompDisplayCard from "@/components/(test)/competition-display-card";
 
 const Page = () => {
   const { data: competitions, isLoading } =
     api.competition.getCompetitions.useQuery();
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (competitions) {
@@ -19,51 +18,34 @@ const Page = () => {
   return (
     <>
       {/* //TODO: Add a searchbar for competitions */}
-      <SectionHeader title="competitions">prove your mettle</SectionHeader>
-      {isLoading && <div className="loading h-96 w-screen"></div>}
-      <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {competitions
-          ?.sort((a, b) =>
-            a.competitionDetails.begin_time > b.competitionDetails.begin_time
-              ? 1
-              : b.competitionDetails.begin_time >
-                  a.competitionDetails.begin_time
-                ? -1
-                : 0,
-          )
-          .map((el, i) => (
-            <CompCard
-              key={i}
-              slug={el.competitionDetails.slug}
-              img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}
-              title={el.competitionDetails.name}
-              details={el.competitionDetails.begin_time.toLocaleString()}
-            />
-          ))}
+      {/*<div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">*/}
+      {/*  {competitions*/}
+      {/*    ?.sort((a, b) =>*/}
+      {/*      a.competitionDetails.begin_time > b.competitionDetails.begin_time*/}
+      {/*        ? 1*/}
+      {/*        : b.competitionDetails.begin_time >*/}
+      {/*            a.competitionDetails.begin_time*/}
+      {/*          ? -1*/}
+      {/*          : 0,*/}
+      {/*    )*/}
+      {/*    .map((el, i) => (*/}
+      {/*      <CompCard*/}
+      {/*        key={i}*/}
+      {/*        slug={el.competitionDetails.slug}*/}
+      {/*        img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}*/}
+      {/*        title={el.competitionDetails.name}*/}
+      {/*        details={el.competitionDetails.begin_time.toLocaleString()}*/}
+      {/*      />*/}
+      {/*    ))}*/}
+      {/*</div>*/}
+      <div className="grid h-full w-full grid-rows-[56px_auto] md:grid-cols-[64px_auto] md:grid-rows-1">
+        <div className="h-full w-full">
+          <CompControl index={index} setIndex={setIndex} length={10} />
+        </div>
+        <div className="flex h-full w-full flex-col justify-center">
+          <CompDisplayCard />
+        </div>
       </div>
-      <motion.div
-        className={`flex h-16 w-full flex-row items-center overflow-hidden border-t-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50`}
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.span
-          className="flex h-full w-full cursor-none flex-col items-center justify-center"
-          initial={{ translateY: -50, opacity: 0 }}
-          whileInView={{ translateY: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.125 }}
-        >
-          <MarqueeContainer
-            text={[
-              "you have reached the end",
-              "that's all we have for now",
-              "you have reached the end",
-              "that's all we have for now",
-            ]}
-            delay={1}
-          />
-        </motion.span>
-      </motion.div>
     </>
   );
 };

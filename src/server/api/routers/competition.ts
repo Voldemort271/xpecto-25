@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+
 export const competitionRouter = createTRPCRouter({
   createCompetition: publicProcedure
     .input(
@@ -62,14 +63,14 @@ export const competitionRouter = createTRPCRouter({
     }),
 
   getCompetitions: publicProcedure.query(async ({ ctx }) => {
-    const competitions = await ctx.db.competition.findMany({
+    return await ctx.db.competition.findMany({
       include: {
         competitionDetails: {
           include: { regPlans: true },
         },
       },
+      orderBy: { createdAt: "asc" },
     });
-    return competitions;
   }),
 
   getCompBySlug: publicProcedure
