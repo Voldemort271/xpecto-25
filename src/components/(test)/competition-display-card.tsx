@@ -1,18 +1,27 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import BgImage from "public/images/signin.jpg";
 import Image from "next/image";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
-
 import { Share_Tech } from "next/font/google";
+import { type StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const CompDisplayCard = () => {
+interface Props {
+  title: string;
+  children: ReactNode;
+  img?: string | StaticImport;
+  slug: string;
+  begin_time: Date;
+  end_time: Date;
+}
+
+const CompDisplayCard = (props: Props) => {
   return (
     <div className="relative flex w-full flex-col items-center md:flex-row">
       <Image
-        src={BgImage}
-        alt={"Bg"}
+        src={props.img ?? BgImage}
+        alt={props.title}
         width={500}
         height={500}
         className="-mt-40 aspect-square min-h-96 w-[calc(100%-100px)] max-w-[500px] border-2 border-amber-50 object-cover md:-ml-40 md:mt-0 md:h-[400px] md:w-[400px] lg:-ml-32 lg:h-[450px] lg:w-[450px]"
@@ -27,32 +36,25 @@ const CompDisplayCard = () => {
           </div>
         </div>
         <div className="px-5 text-6xl font-bold uppercase lg:text-7xl">
-          test comp
+          {props.title || "Upcoming Event"}
         </div>
         <div
           className={`max-w-screen-md px-5 ${sharetech.className} text-lg tracking-tight`}
         >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-          alias aliquam aliquid debitis fuga illo ipsum iusto minima qui quidem
-          repellendus, rerum similique sint vel velit voluptatem voluptates
-          voluptatibus, voluptatum!{" "}
-          <span className="inline md:hidden xl:inline">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-            alias aliquam aliquid debitis fuga illo ipsum iusto minima qui
-            quidem repellendus, rerum similique sint vel velit voluptatem
-            voluptates voluptatibus, voluptatum!{" "}
-          </span>
+          {props.children}
         </div>
         <div className="mt-12 flex h-16 w-full flex-col justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-amber-50/[0.7] text-3xl font-normal uppercase text-neutral-900 md:h-12 md:text-2xl">
           <MarqueeContainer
             text={[
               "visit full page",
-              "test comp",
+              props.title || "Upcoming Event",
+              props.begin_time.toLocaleString() +
+                " to " +
+                props.end_time.toLocaleString(),
+              props.title || "Upcoming Event",
               "visit full page",
-              "test comp",
-              "visit full page",
-              "test comp",
             ]}
+            href={`/competitions/${props.slug}`}
           />
         </div>
       </div>
