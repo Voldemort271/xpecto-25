@@ -45,6 +45,7 @@ const Page = () => {
               slug={competitions[0].competitionDetails.slug}
               begin_time={competitions[0].competitionDetails.begin_time}
               end_time={competitions[0].competitionDetails.end_time}
+              img={`/event_covers/competitions/${competitions[0].competitionDetails.slug}.jpeg`}
             >
               <div className="hidden md:block lg:hidden">
                 {competitions[0].competitionDetails.description.slice(0, 250)}
