@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
-import CompControl from "@/components/(test)/competition-display-control";
-import CompDisplayCard from "@/components/(test)/competition-display-card";
+import CompControl from "@/components/(dystopian)/(competitions)/competition-display-control";
+import CompDisplayCard from "@/components/(dystopian)/(competitions)/competition-display-card";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 
 const Page = () => {
   const { data: competitions, isLoading } =
@@ -18,30 +19,24 @@ const Page = () => {
 
   return (
     <>
-      {/* //TODO: Add a searchbar for competitions */}
-      {/*<div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">*/}
-      {/*  {competitions*/}
-      {/*    ?.sort((a, b) =>*/}
-      {/*      a.competitionDetails.begin_time > b.competitionDetails.begin_time*/}
-      {/*        ? 1*/}
-      {/*        : b.competitionDetails.begin_time >*/}
-      {/*            a.competitionDetails.begin_time*/}
-      {/*          ? -1*/}
-      {/*          : 0,*/}
-      {/*    )*/}
-      {/*    .map((el, i) => (*/}
-      {/*      <CompCard*/}
-      {/*        key={i}*/}
-      {/*        slug={el.competitionDetails.slug}*/}
-      {/*        img={`/event_covers/competitions/${el.competitionDetails.slug}.jpeg`}*/}
-      {/*        title={el.competitionDetails.name}*/}
-      {/*        details={el.competitionDetails.begin_time.toLocaleString()}*/}
-      {/*      />*/}
-      {/*    ))}*/}
-      {/*</div>*/}
       <div className="grid h-full w-full grid-rows-[56px_auto] md:grid-cols-[64px_auto] md:grid-rows-1">
         <div className="h-full w-full">
-          <CompControl index={index} setIndex={setIndex} length={10} />
+          {!isLoading ? (
+            <CompControl index={index} setIndex={setIndex} length={10} />
+          ) : (
+            <div className="relative flex h-full w-full">
+              <div className="absolute left-0 top-0 hidden h-16 w-[100vh] -translate-x-[calc(50%-32px)] translate-y-[calc(50vh-32px)] -rotate-90 flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-3xl font-light uppercase md:flex">
+                <MarqueeContainer
+                  text={[
+                    "loading page",
+                    "we'll be right back",
+                    "this doesn't take long",
+                    "hang in there",
+                  ]}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex h-full w-full flex-col justify-center">
           {!isLoading && competitions && competitions[0] ? (
