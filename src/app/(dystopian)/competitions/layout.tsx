@@ -1,6 +1,6 @@
 import React from "react";
 import { Handjet } from "next/font/google";
-import CompetitionsHeader from "@/components/(dystopian)/(competitions)/competitions-header";
+import CompetitionsHeader from "@/components/(dystopian)/competitions/competitions-header";
 
 const handjet = Handjet({ subsets: ["latin"] });
 

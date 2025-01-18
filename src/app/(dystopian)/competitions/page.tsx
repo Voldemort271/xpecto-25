@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
-import CompControl from "@/components/(dystopian)/(competitions)/competition-display-control";
-import CompDisplayCard from "@/components/(dystopian)/(competitions)/competition-display-card";
+import CompControl from "@/components/(dystopian)/competitions/competition-display-control";
+import CompDisplayCard from "@/components/(dystopian)/competitions/competition-display-card";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 
 const Page = () => {
@@ -39,6 +39,7 @@ const Page = () => {
           )}
         </div>
         <div className="flex h-full w-full flex-col justify-center">
+          {/*TODO: Entry and exit animations on carousel shift*/}
           {!isLoading && competitions && competitions[0] ? (
             <CompDisplayCard
               title={competitions[0].competitionDetails.name}
