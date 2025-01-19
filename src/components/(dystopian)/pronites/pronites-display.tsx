@@ -4,7 +4,7 @@ import PronitesDetails from "@/components/(dystopian)/pronites/pronites-details"
 
 const PronitesDisplay = () => {
   return (
-    <div className="relative z-0 h-full w-full">
+    <div className="relative z-0 h-full w-full overflow-clip">
       <PronitesDetails />
       <PronitesControl />
     </div>
