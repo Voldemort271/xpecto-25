@@ -1,11 +1,16 @@
 "use client";
 
-import React from "react";
+import React, {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from "react";
 import Image from "next/image";
 import BgImage from "public/images/background.jpg";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
 import PronitesControlMobile from "@/components/(dystopian)/pronites/pronites-control-mobile";
+import { type StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -15,13 +20,29 @@ const keyframes = {
   },
 };
 
-const PronitesDetails = () => {
+interface Props {
+  title: string;
+  children: ReactNode;
+  img?: string | StaticImport;
+  slug: string;
+  begin_time: Date;
+  end_time: Date;
+  hash: string;
+
+  index: number;
+  length: number;
+  setIndex: Dispatch<SetStateAction<number>>;
+}
+
+const PronitesDetails = (props: Props) => {
   return (
     <div className="relative h-full w-full">
       <Image
-        src={BgImage}
-        alt={"bg image"}
-        className="absolute left-0 top-32 -z-20 h-full w-full object-cover object-bottom opacity-100 sm:top-0"
+        src={props.img ?? BgImage}
+        width={1920}
+        height={1080}
+        alt={props.title}
+        className="absolute left-0 top-32 -z-20 h-full w-full object-cover object-center opacity-100 sm:top-0"
       />
       <div className="absolute left-0 top-32 -z-10 h-full w-full bg-gradient-to-r from-black/[0.5] to-black/[0.7] sm:top-0"></div>
       <div className="flex min-h-screen w-full flex-col items-start justify-between gap-12 p-12 pr-12 pt-44 md:pr-28">
@@ -50,7 +71,7 @@ const PronitesDetails = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            test pronite
+            {props.title}
           </motion.div>
           <motion.div
             className={`max-w-screen-sm text-right text-lg ${sharetech.className} tracking-tight text-amber-50`}
@@ -58,13 +79,7 @@ const PronitesDetails = () => {
             animate={{ opacity: 1, translateX: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias
-            cupiditate dolorem dolorum illo itaque, laudantium magnam, nesciunt
-            nostrum quo sequi similique voluptatum! Aperiam autem ea est eum
-            mollitia nihil voluptas? Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit. Ad animi assumenda commodi cumque deleniti,
-            dignissimos dolore earum eius error laborum, nobis repellendus vel,
-            vero.
+            {props.children}
           </motion.div>
         </div>
         <div className="flex w-full flex-col items-start justify-between gap-12 sm:flex-row sm:items-end">
@@ -77,10 +92,10 @@ const PronitesDetails = () => {
                 duration: 1,
                 ease: "linear",
                 delay: 1.25,
-                repeat: 2,
+                repeat: 1,
               }}
             >
-              #001
+              #00{props.index + 1}
             </motion.div>
             <motion.div
               className="text-xl font-extralight uppercase text-amber-50/[0.7]"
@@ -90,37 +105,37 @@ const PronitesDetails = () => {
                 duration: 1,
                 ease: "linear",
                 delay: 1.5,
-                repeat: 2,
+                repeat: 1,
               }}
             >
-              exhibit: featured celebrity
+              exhibit: {props.slug}
             </motion.div>
             <motion.div
-              className="mb-2 text-xl font-extralight uppercase text-amber-50/[0.7]"
+              className="text-xl font-extralight uppercase text-amber-50/[0.7]"
               variants={keyframes}
               animate="flicker"
               transition={{
                 duration: 1,
                 ease: "linear",
                 delay: 1.75,
-                repeat: 2,
+                repeat: 1,
               }}
             >
-              timeline: {new Date("12-2-2024").toLocaleDateString()} -{" "}
-              {new Date("12-20-2024").toLocaleDateString()}
+              timeline: {props.begin_time.toLocaleDateString()} -{" "}
+              {props.end_time.toLocaleDateString()}
             </motion.div>
             <motion.div
-              className="text-lg font-extralight uppercase text-amber-50/[0.7]"
+              className="text-base font-extralight uppercase text-amber-50/[0.5]"
               variants={keyframes}
               animate="flicker"
               transition={{
                 duration: 1,
                 ease: "linear",
                 delay: 2,
-                repeat: 2,
+                repeat: 1,
               }}
             >
-              more details &gt;&gt;
+              unique archive registrar {props.hash.substring(2, 10)}
             </motion.div>
           </div>
           <div className="flex gap-12">
