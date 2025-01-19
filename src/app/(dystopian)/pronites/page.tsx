@@ -35,7 +35,14 @@ const Page = () => {
       ) : (
         <div className="loading h-full w-full"></div>
       )}
-      {!isLoading && pronites && pronites[0] && <PronitesControl />}
+      {!isLoading && pronites && pronites[0] && (
+        <PronitesControl
+          title={pronites[0].proniteDetails.name}
+          begin_time={pronites[0].proniteDetails.begin_time}
+          end_time={pronites[0].proniteDetails.end_time}
+          venue={pronites[0].proniteDetails.venue}
+        />
+      )}
     </div>
   );
 };

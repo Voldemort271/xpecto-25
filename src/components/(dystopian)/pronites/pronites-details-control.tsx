@@ -8,7 +8,14 @@ import { Share_Tech } from "next/font/google";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const PronitesControl = () => {
+interface Props {
+  title: string;
+  begin_time: Date;
+  end_time: Date;
+  venue: string;
+}
+
+const PronitesControl = (props: Props) => {
   const [toggle, setToggle] = useState(true);
   const { setIsHovered } = useContext(CursorContext);
 
@@ -58,7 +65,8 @@ const PronitesControl = () => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Featuring
           </div>
-          <div className="text-4xl font-normal uppercase">DJ HABIbi wallah</div>
+          {/* TODO: Change this to "featured" when schema is updated */}
+          <div className="text-4xl font-normal uppercase">{props.title}</div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
         <motion.div
@@ -71,7 +79,7 @@ const PronitesControl = () => {
             Date
           </div>
           <div className="text-4xl font-normal uppercase">
-            {new Date("12-22-2025 17:34").toLocaleDateString()}
+            {props.begin_time.toLocaleDateString()}
           </div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
@@ -85,8 +93,8 @@ const PronitesControl = () => {
             Time
           </div>
           <div className="text-4xl font-normal uppercase">
-            {new Date("12-22-2025 17:34").toLocaleTimeString()} -{" "}
-            {new Date("12-22-2025 19:34").toLocaleTimeString()}
+            {props.begin_time.toLocaleTimeString()} -{" "}
+            {props.end_time.toLocaleTimeString()}
           </div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
@@ -99,7 +107,7 @@ const PronitesControl = () => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Venue
           </div>
-          <div className="text-4xl font-normal uppercase">Your mom</div>
+          <div className="text-4xl font-normal uppercase">{props.venue}</div>
         </motion.div>
       </div>
 
