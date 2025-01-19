@@ -33,7 +33,7 @@ const PronitesControlMobile = () => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Featuring
           </div>
-          <div className="text-4xl font-normal uppercase">DJ HABIbi wallah</div>
+          <div className="text-3xl font-normal uppercase">DJ HABIbi wallah</div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
         <motion.div
@@ -45,7 +45,7 @@ const PronitesControlMobile = () => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Date
           </div>
-          <div className="text-4xl font-normal uppercase">
+          <div className="text-3xl font-normal uppercase">
             {new Date("12-22-2025 17:34").toLocaleDateString()}
           </div>
         </motion.div>
@@ -59,7 +59,7 @@ const PronitesControlMobile = () => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Time
           </div>
-          <div className="text-4xl font-normal uppercase">
+          <div className="text-3xl font-normal uppercase">
             {new Date("12-22-2025 17:34").toLocaleTimeString()} -{" "}
             {new Date("12-22-2025 19:34").toLocaleTimeString()}
           </div>
@@ -74,7 +74,7 @@ const PronitesControlMobile = () => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Venue
           </div>
-          <div className="text-4xl font-normal uppercase">Your mom</div>
+          <div className="text-3xl font-normal uppercase">Your mom</div>
         </motion.div>
       </div>
       <div
