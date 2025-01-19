@@ -8,7 +8,7 @@ const TestPage = () => {
       <div className="h-full w-full bg-neutral-900">
         <PronitesHeader />
       </div>
-      <div className="relative h-full w-full">
+      <div className="relative h-full w-full bg-neutral-900">
         <PronitesDisplay />
       </div>
     </div>
