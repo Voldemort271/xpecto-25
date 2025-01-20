@@ -157,6 +157,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
             Checking this option will take you to the authorization screen.
             Proceed with caution.
           </div>
+          {/* TODO: Add contact button as well ("File a complaint" or something similar) */}
           <div className="flex gap-5">
             <Button
               type="reset"
