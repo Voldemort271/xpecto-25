@@ -1,7 +1,7 @@
 import React from "react";
 
 const TestPage = () => {
-  return <div>hi</div>;
+  return <div className="h-full w-full bg-red-400">hi</div>;
 };
 
 export default TestPage;
