@@ -26,8 +26,10 @@ const CompDisplayCard = (props: Props) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
+      {/* TODO: Add actual image instead of placeholder */}
       <Image
-        src={props.img ?? BgImage}
+        // src={props.img ?? BgImage}
+        src={BgImage}
         alt={props.title}
         width={500}
         height={500}
