@@ -89,6 +89,7 @@ model Tag {
 model Sponsor {
     id   String @id @default(cuid())
     name String
+    tier String
     logo String
 
     events EventDetails[] // Using this we can get to know what type of event is sposored by the sponsor
