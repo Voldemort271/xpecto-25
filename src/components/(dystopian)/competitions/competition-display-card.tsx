@@ -6,11 +6,7 @@ import Image from "next/image";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
-import { type Prisma } from "@prisma/client";
-
-type CompetitionWithDetails = Prisma.CompetitionGetPayload<{
-  include: { competitionDetails: true };
-}>;
+import { type CompetitionWithDetails } from "@/app/types";
 
 interface Props {
   comp: CompetitionWithDetails;
