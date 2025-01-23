@@ -10,16 +10,6 @@ datasource db {
     url       = env("DATABASE_URL")
     directUrl = env("DIRECT_URL")
 }
-
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([name])
-}
-
 // We can use the prize money field to detect an organiser register
 model User {
     id           String @id @default(cuid())
@@ -77,9 +67,8 @@ model Competition {
     prizepool         Int    @default(0)
     max_team_size     Int    @default(5)
     min_team_size     Int    @default(1)
-    levels            String
-    rules             String
-    problem_statement String
+    rulebook          String? // Supposed to be a link
+    problem_statement String? // Supposed to be a link
 
     competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
     competitionDetailsId String       @unique
@@ -88,6 +77,13 @@ model Competition {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Tag {
+    id   String @id @default(cuid())
+    name String
+
+    events EventDetails[]
 }
 
 model Sponsor {
@@ -115,6 +111,7 @@ model EventDetails {
     sponsors      Sponsor[]
     regPlans      RegistrationLevel[]
     registrations Registration[]
+    tags          Tag[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

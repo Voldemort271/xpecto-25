@@ -55,9 +55,9 @@ export const competitionRouter = createTRPCRouter({
           prizepool: input.prizepool,
           teams: undefined,
           updatedAt: new Date(),
-          levels: input.levels,
-          problem_statement: input.problem_statement,
-          rules: input.rules,
+          // levels: input.levels,
+          // problem_statement: input.problem_statement,
+          // rules: input.rules,
         },
       });
     }),
@@ -66,7 +66,7 @@ export const competitionRouter = createTRPCRouter({
     return await ctx.db.competition.findMany({
       include: {
         competitionDetails: {
-          include: { regPlans: true },
+          include: { regPlans: true, tags: true },
         },
       },
       orderBy: { createdAt: "asc" },
@@ -84,7 +84,7 @@ export const competitionRouter = createTRPCRouter({
         },
         include: {
           competitionDetails: {
-            include: { regPlans: true },
+            include: { regPlans: true, tags: true },
           },
         },
       });

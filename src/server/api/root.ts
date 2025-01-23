@@ -3,7 +3,6 @@ import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 import { userRouter } from "./routers/user";
 import { teamRouter } from "./routers/team";
 import { inviteRouter } from "./routers/invite";
-import { postRouter } from "./routers/post";
 import { competitionRouter } from "./routers/competition";
 import { proniteRouter } from "./routers/pronite";
 import { eventRouter } from "./routers/event";
@@ -19,7 +18,6 @@ export const appRouter = createTRPCRouter({
   team: teamRouter,
   invite: inviteRouter,
   user: userRouter,
-  post: postRouter,
   competition: competitionRouter,
   pronite: proniteRouter,
   expo: expoRouter,
