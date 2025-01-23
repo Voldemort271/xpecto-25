@@ -4,6 +4,7 @@ import { api } from "@/trpc/react";
 import CompControl from "@/components/(dystopian)/competitions/competition-display-control";
 import CompDisplayCard from "@/components/(dystopian)/competitions/competition-display-card";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import { AnimatePresence } from "motion/react";
 
 const Page = () => {
   const { data: competitions, isLoading } =
@@ -38,31 +39,9 @@ const Page = () => {
         <div className="flex h-full w-full flex-col justify-center">
           {/*TODO: Entry and exit animations on carousel shift*/}
           {!isLoading && competitions && competitions[index] ? (
-            <CompDisplayCard
-              title={competitions[index].competitionDetails.name}
-              slug={competitions[index].competitionDetails.slug}
-              begin_time={competitions[index].competitionDetails.begin_time}
-              end_time={competitions[index].competitionDetails.end_time}
-              img={`/event_covers/competitions/${competitions[index].competitionDetails.slug}.jpeg`}
-            >
-              <div className="hidden md:block lg:hidden">
-                {competitions[index].competitionDetails.description.slice(
-                  0,
-                  250,
-                )}
-                ...
-              </div>
-              <div className="hidden lg:block xl:hidden">
-                {competitions[index].competitionDetails.description.slice(
-                  0,
-                  400,
-                )}
-                ...
-              </div>
-              <div className="block md:hidden xl:block">
-                {competitions[index].competitionDetails.description}
-              </div>
-            </CompDisplayCard>
+            <AnimatePresence mode="wait">
+              <CompDisplayCard comp={competitions[index]}></CompDisplayCard>
+            </AnimatePresence>
           ) : (
             <div className="loading h-full w-full"></div>
           )}
