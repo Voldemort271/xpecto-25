@@ -40,7 +40,10 @@ const Page = () => {
           {/*TODO: Entry and exit animations on carousel shift*/}
           {!isLoading && competitions && competitions[index] ? (
             <AnimatePresence mode="wait">
-              <CompDisplayCard comp={competitions[index]}></CompDisplayCard>
+              <CompDisplayCard
+                comp={competitions[index]}
+                key={index}
+              ></CompDisplayCard>
             </AnimatePresence>
           ) : (
             <div className="loading h-full w-full"></div>

@@ -19,6 +19,7 @@ interface Props {
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const CompDisplayCard = ({ comp }: Props) => {
+  console.log("Component rendered");
   return (
     <motion.div
       className="relative flex w-full flex-col items-center md:flex-row"
@@ -26,14 +27,16 @@ const CompDisplayCard = ({ comp }: Props) => {
       animate={{ opacity: 1 }}
     >
       {/* TODO: Add actual image instead of placeholder */}
-      <Image
-        // src={props.img ?? BgImage}
-        src={BgImage}
-        alt={comp.competitionDetails.name || "Untitled Event"}
-        width={500}
-        height={500}
-        className="z-10 -mt-40 aspect-square min-h-96 w-[calc(100%-100px)] max-w-[500px] border-2 border-amber-50 object-cover md:-ml-40 md:mt-0 md:h-[400px] md:w-[400px] lg:-ml-32 lg:h-[450px] lg:w-[450px]"
-      />
+      <motion.div className="z-10 -mt-40 aspect-square min-h-96 w-[calc(100%-100px)] max-w-[500px] border-2 border-amber-50 object-cover md:-ml-40 md:mt-0 md:h-[400px] md:w-[400px] lg:-ml-40 lg:h-[450px] lg:w-[450px]">
+        <Image
+          // src={props.img ?? BgImage}
+          src={BgImage}
+          alt={comp.competitionDetails.name || "Untitled Event"}
+          width={500}
+          height={500}
+          className="h-full w-full object-cover"
+        />
+      </motion.div>
       <div className="mt-12 flex w-full flex-col gap-5 md:mt-0">
         <div className="flex flex-wrap items-baseline gap-2.5 px-5">
           <motion.div
@@ -62,7 +65,7 @@ const CompDisplayCard = ({ comp }: Props) => {
           {comp.competitionDetails.name || "Upcoming Event"}
         </motion.div>
         <motion.div
-          className={`max-w-screen-md px-5 ${sharetech.className} text-lg tracking-tight`}
+          className={`max-w-screen-lg px-5 ${sharetech.className} text-lg tracking-tight`}
           initial={{ opacity: 0, translateX: -50 }}
           animate={{ opacity: 1, translateX: 0 }}
           transition={{ duration: 0.5, delay: 1 }}
