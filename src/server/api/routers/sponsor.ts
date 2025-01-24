@@ -21,6 +21,7 @@ export const sponsorRouter = createTRPCRouter({
         data: {
           name: name,
           logo: logo,
+          tier: "",
           events: {
             connect: eventIds.map((ele) => {
               return { id: ele };

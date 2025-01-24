@@ -37,6 +37,8 @@ export const competitionRouter = createTRPCRouter({
               name: input.name,
               description: input.description,
               venue: input.venue,
+              slug: input.name.toLowerCase().replace(/ /g, "-"),
+              cover: "",
               regPlans: {
                 createMany: {
                   data: input.regPlans.map((regPlan) => ({

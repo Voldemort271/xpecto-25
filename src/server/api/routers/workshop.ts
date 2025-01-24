@@ -25,6 +25,8 @@ export const workshopRouter = createTRPCRouter({
             name:input.name,
             description:input.description,
             venue:input.venue,
+            slug: input.name.toLowerCase().replace(/ /g, "-"),
+            cover: "",
           }
 
         });

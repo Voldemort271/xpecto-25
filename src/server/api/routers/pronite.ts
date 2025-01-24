@@ -22,6 +22,8 @@ export const proniteRouter = createTRPCRouter({
           name: input.name,
           description: input.description,
           venue: input.venue,
+          slug: input.name.toLowerCase().replace(/ /g, "-"),
+          cover: "",
         },
       });
       return ctx.db.pronite.create({
