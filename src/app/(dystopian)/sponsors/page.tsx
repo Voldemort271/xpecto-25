@@ -6,6 +6,7 @@ import { api } from "@/trpc/react";
 import Image from "next/image";
 import dummyImage from "@/../public/spon_logos/300.png";
 import SponsorTitle from "@/components/(dystopian)/sponsors/sponsor-title";
+import TitleSponsor from "@/components/(dystopian)/sponsors/title-sponsor";
 
 const Page = () => {
   const allSpons = api.sponsor.getSponsor.useQuery({ id: "" }).data; // id="" fetches all spons
@@ -13,7 +14,9 @@ const Page = () => {
   return (
     <div className="w-full bg-neutral-900">
       <SponsorTitle />
-      <div className="w-full bg-neutral-900 p-12">hi</div>
+      <div className="flex w-full flex-col gap-12 bg-neutral-900 p-24">
+        <TitleSponsor />
+      </div>
       <div style={{ paddingTop: 200, paddingLeft: 100 }}>
         <Link
           href="/sponsors/create"
