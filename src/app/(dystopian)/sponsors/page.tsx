@@ -14,7 +14,7 @@ const Page = () => {
   return (
     <div className="w-full bg-neutral-900">
       <SponsorTitle />
-      <div className="flex w-full flex-col gap-12 bg-neutral-900 p-24">
+      <div className="flex w-full flex-col gap-12 bg-neutral-900 p-5 pt-24 sm:p-12 md:p-24">
         <TitleSponsor />
       </div>
       <div style={{ paddingTop: 200, paddingLeft: 100 }}>
