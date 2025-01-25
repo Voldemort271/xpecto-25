@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Tag" AS ENUM ('ML', 'AI', 'WebDev', 'AppDev', 'GameDev', 'Heuristics', 'Robotics', 'IoT', 'Blockchain', 'DataStructures', 'Algorithms', 'Programming', 'Coding');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -42,8 +45,8 @@ CREATE TABLE "Competition" (
     "prizepool" INTEGER NOT NULL DEFAULT 0,
     "max_team_size" INTEGER NOT NULL DEFAULT 5,
     "min_team_size" INTEGER NOT NULL DEFAULT 1,
-    "rulebook" TEXT NOT NULL,
-    "problem_statement" TEXT NOT NULL,
+    "rulebook" TEXT,
+    "problem_statement" TEXT,
     "competitionDetailsId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -52,17 +55,10 @@ CREATE TABLE "Competition" (
 );
 
 -- CreateTable
-CREATE TABLE "Tag" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-
-    CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Sponsor" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "tier" TEXT NOT NULL,
     "logo" TEXT NOT NULL,
 
     CONSTRAINT "Sponsor_pkey" PRIMARY KEY ("id")
@@ -77,6 +73,8 @@ CREATE TABLE "EventDetails" (
     "slug" TEXT NOT NULL DEFAULT '',
     "description" TEXT NOT NULL,
     "venue" TEXT NOT NULL,
+    "cover" TEXT NOT NULL,
+    "tags" "Tag"[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -144,25 +142,13 @@ CREATE TABLE "Pronite" (
 -- CreateTable
 CREATE TABLE "_TeamToUser" (
     "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL,
-
-    CONSTRAINT "_TeamToUser_AB_pkey" PRIMARY KEY ("A","B")
-);
-
--- CreateTable
-CREATE TABLE "_CompetitionToTag" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL,
-
-    CONSTRAINT "_CompetitionToTag_AB_pkey" PRIMARY KEY ("A","B")
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_EventDetailsToSponsor" (
     "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL,
-
-    CONSTRAINT "_EventDetailsToSponsor_AB_pkey" PRIMARY KEY ("A","B")
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
@@ -193,10 +179,13 @@ CREATE UNIQUE INDEX "Workshops_workshopDetailsId_key" ON "Workshops"("workshopDe
 CREATE UNIQUE INDEX "Pronite_proniteDetailsId_key" ON "Pronite"("proniteDetailsId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "_TeamToUser_AB_unique" ON "_TeamToUser"("A", "B");
+
+-- CreateIndex
 CREATE INDEX "_TeamToUser_B_index" ON "_TeamToUser"("B");
 
 -- CreateIndex
-CREATE INDEX "_CompetitionToTag_B_index" ON "_CompetitionToTag"("B");
+CREATE UNIQUE INDEX "_EventDetailsToSponsor_AB_unique" ON "_EventDetailsToSponsor"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_EventDetailsToSponsor_B_index" ON "_EventDetailsToSponsor"("B");
@@ -242,12 +231,6 @@ ALTER TABLE "_TeamToUser" ADD CONSTRAINT "_TeamToUser_A_fkey" FOREIGN KEY ("A") 
 
 -- AddForeignKey
 ALTER TABLE "_TeamToUser" ADD CONSTRAINT "_TeamToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_CompetitionToTag" ADD CONSTRAINT "_CompetitionToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Competition"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_CompetitionToTag" ADD CONSTRAINT "_CompetitionToTag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_EventDetailsToSponsor" ADD CONSTRAINT "_EventDetailsToSponsor_A_fkey" FOREIGN KEY ("A") REFERENCES "EventDetails"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -41,7 +41,7 @@ export const proniteRouter = createTRPCRouter({
     const pronites = await ctx.db.pronite.findMany({
       include: {
         proniteDetails: {
-          include: { regPlans: true, tags: true },
+          include: { regPlans: true },
         },
       },
     });

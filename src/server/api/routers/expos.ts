@@ -40,7 +40,7 @@ export const expoRouter = createTRPCRouter({
 
   getExpo: publicProcedure.query(async ({ ctx }) => {
     const expo = await ctx.db.expos.findMany({
-      include: { exposDetails: { include: { regPlans: true, tags: true } } },
+      include: { exposDetails: { include: { regPlans: true } } },
     });
     return expo;
   }),
@@ -56,7 +56,7 @@ export const expoRouter = createTRPCRouter({
         },
         include: {
           exposDetails: {
-            include: { regPlans: true, tags: true },
+            include: { regPlans: true},
           },
         },
       });

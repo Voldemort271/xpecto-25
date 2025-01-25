@@ -68,7 +68,7 @@ export const competitionRouter = createTRPCRouter({
     return await ctx.db.competition.findMany({
       include: {
         competitionDetails: {
-          include: { regPlans: true, tags: true },
+          include: { regPlans: true },
         },
       },
       orderBy: { 
@@ -89,7 +89,7 @@ export const competitionRouter = createTRPCRouter({
         },
         include: {
           competitionDetails: {
-            include: { regPlans: true, tags: true },
+            include: { regPlans: true },
           },
         },
       });

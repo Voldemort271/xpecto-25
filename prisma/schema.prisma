@@ -111,7 +111,7 @@ model EventDetails {
     slug        String   @default("")
     description String
     venue       String
-    cover       String // Contains link of the cover image
+    cover       String  // Contains link of the cover image
 
     pronite     Pronite?
     competition Competition?
