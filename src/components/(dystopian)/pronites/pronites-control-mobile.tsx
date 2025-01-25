@@ -1,12 +1,32 @@
-import React, { useContext } from "react";
+import React, {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useContext,
+} from "react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { motion } from "motion/react";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
+import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const PronitesControlMobile = () => {
+interface Props {
+  title: string;
+  children: ReactNode;
+  img?: string | StaticImport;
+  slug: string;
+  begin_time: Date;
+  end_time: Date;
+  hash: string;
+
+  index: number;
+  length: number;
+  setIndex: Dispatch<SetStateAction<number>>;
+}
+
+const PronitesControlMobile = (props: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   return (

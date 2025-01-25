@@ -14,7 +14,7 @@ const Page = () => {
       console.log("pronites", pronites);
     }
   }, [pronites]);
-
+  // TODO: Fix prop sharing to pass whole pronites object
   return (
     <div className="relative z-0 h-full w-full overflow-clip">
       {!isLoading && pronites && pronites[0] ? (

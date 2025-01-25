@@ -6,7 +6,6 @@ import React, {
   type SetStateAction,
 } from "react";
 import Image from "next/image";
-import BgImage from "public/images/background.jpg";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
 import PronitesControlMobile from "@/components/(dystopian)/pronites/pronites-control-mobile";
@@ -38,7 +37,10 @@ const PronitesDetails = (props: Props) => {
   return (
     <div className="relative h-full w-full">
       <Image
-        src={props.img ?? `https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg`}
+        src={
+          props.img ??
+          `https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg`
+        }
         width={1920}
         height={1080}
         alt={props.title}
@@ -148,7 +150,7 @@ const PronitesDetails = (props: Props) => {
           </div>
         </div>
       </div>
-      <PronitesControlMobile />
+      <PronitesControlMobile {...props} />
     </div>
   );
 };
