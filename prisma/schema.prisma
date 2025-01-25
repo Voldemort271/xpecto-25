@@ -79,12 +79,20 @@ model Competition {
     updatedAt DateTime @updatedAt
 }
 
-model Tag {
-    id   String @id @default(cuid())
-    name String
-
-    events EventDetails[]
+enum Tag {
+    ML
+    AI
+    WebDev
+    AppDev
+    GameDev
+    Heuristics
+    Robotics
+    IoT
+    Blockchain
+    DataStructures
+    Algorithms
 }
+
 
 model Sponsor {
     id   String @id @default(cuid())
