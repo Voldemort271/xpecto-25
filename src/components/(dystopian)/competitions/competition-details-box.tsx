@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import CreateTeamDialog from "./create-team-dialog";
-import RegisterDialog from "../common/registration-dialog";
 import { useCurrentUser } from "@/lib/utils";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
-import { Label } from "../../ui/label";
 import type { CompetitionWithDetails, TeamWithFullDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
-import { Clock, Pin } from "lucide-react";
-import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { CursorContext } from "@/context/cursor-context";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import RegisterDialog from "@/components/(dystopian)/common/registration-dialog";
+import CreateTeamDialog from "@/components/(dystopian)/competitions/create-team-dialog";
+import MissionBrief from "@/components/(dystopian)/competitions/mission-briefing";
+import CompTeamBox from "@/components/(dystopian)/competitions/competition-team-box";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ const CompetitionDetailsBox = ({
 }) => {
   const { CurrentUser } = useCurrentUser();
 
-  const { isHovered, setIsHovered } = useContext(CursorContext);
+  const { setIsHovered } = useContext(CursorContext);
 
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
@@ -37,41 +38,42 @@ const CompetitionDetailsBox = ({
   //TODO: Add more comp details on the page. I have just added the basic ones
 
   return (
-    <div className="relative flex h-full max-w-screen-lg flex-col overflow-y-scroll overscroll-none border-2 border-amber-50 lg:h-[calc(100vh-290px)]">
-      <div className="flex h-full w-full flex-col lg:flex-row">
+    <>
+      <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
         <Image
-          src={`/event_covers/competitions/${comp.competitionDetails.slug}.jpeg`}
-          width={576}
-          height={768}
+          src={
+            // comp.competitionDetails.cover ??
+            `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
+          }
           alt={comp.competitionDetails.name}
-          className="aspect-video w-full object-cover lg:aspect-auto lg:w-96"
+          width={500}
+          height={1080}
+          className="sticky top-0 h-96 w-full shrink border-2 border-t-0 border-amber-50 object-cover md:h-screen md:w-[300px] md:border-l-0 md:border-t-2 lg:w-[400px]"
         />
-        <div className="flex h-full w-full flex-col">
-          <div className="px-5 pt-12 text-7xl font-semibold uppercase">
-            {comp.competitionDetails.name}
-          </div>
-          <div
-            className={`${sharetech.className} mt-2.5 space-y-1 px-5 text-base tracking-tight sm:text-lg`}
-          >
-            {comp.competitionDetails.description}
-          </div>
-          <div
-            className={`${sharetech.className} my-5 space-y-1 px-5 text-base tracking-tight sm:text-xl`}
-          >
-            <div className="flex w-fit flex-row items-center justify-center gap-1">
-              <Pin />
-              <span>{comp.competitionDetails.venue}</span>
+        <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
+          <div className="space-y-5 overflow-scroll overscroll-none p-12 md:pt-28">
+            <div className="-mb-2.5 flex flex-wrap gap-2.5">
+              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
+                programming
+              </div>
+              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
+                ml/ai
+              </div>
             </div>
-            <div className="flex w-fit flex-row items-center justify-center gap-1">
-              <Clock />
-              <span>
-                {comp.competitionDetails.begin_time.toLocaleString()} to{" "}
-                {comp.competitionDetails.end_time.toLocaleString()}
-              </span>
+            <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
+              {comp.competitionDetails.name}
+            </div>
+            <div
+              className={`${sharetech.className} max-w-screen-lg text-base tracking-tight text-amber-50 lg:text-lg`}
+            >
+              {comp.competitionDetails.description}
+            </div>
+            <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
+              <MissionBrief />
+              {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />}
             </div>
           </div>
-
-          <div className="mt-12 h-12">
+          <div className="relative h-12 w-full bg-neutral-900">
             {regStatus ? (
               !regTeam && <CreateTeamDialog competitionId={comp.id} />
             ) : (
@@ -86,7 +88,7 @@ const CompetitionDetailsBox = ({
                     onMouseLeave={() => setIsHovered(false)}
                   >
                     <div
-                      className={`absolute bottom-0 flex h-12 w-full items-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
+                      className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                     >
                       <MarqueeContainer
                         text={[
@@ -159,7 +161,7 @@ const CompetitionDetailsBox = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

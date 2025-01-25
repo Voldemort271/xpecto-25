@@ -1,7 +1,6 @@
 "use client";
 
 import CompetitionDetailsBox from "@/components/(dystopian)/competitions/competition-details-box";
-import CompTeamBox from "@/components/(dystopian)/competitions/competition-team-box";
 
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
@@ -38,13 +37,12 @@ const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
   return (
     <>
       {comp && (
-        <div className="flex w-screen flex-col items-center justify-center gap-12 p-12 xl:flex-row">
+        <div className="flex w-screen flex-col items-center justify-center gap-12 xl:flex-row">
           <CompetitionDetailsBox
             comp={comp}
             regStatus={regStatus}
             regTeam={regTeam}
           />
-          {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />}
         </div>
       )}
     </>

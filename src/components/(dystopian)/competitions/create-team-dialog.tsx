@@ -157,7 +157,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
     <Dialog>
       <DialogTrigger>
         <div
-          className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 lg:w-[calc(100%-384px)]`}
+          className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
           onMouseEnter={() => {
             if (CurrentUser?.email !== "") setIsHovered(true);
           }}
@@ -165,6 +165,8 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
         >
           <MarqueeContainer
             text={[
+              "Create your team",
+              "Create your team",
               "Create your team",
               "Create your team",
               "Create your team",
