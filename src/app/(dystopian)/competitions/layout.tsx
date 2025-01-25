@@ -23,7 +23,7 @@ export default function ProfileLayout({
       <div className="relative h-full w-full">
         <CompetitionsHeader />
       </div>
-      <div className="relative h-full w-full bg-red-400">{children}</div>
+      <div className="relative h-full w-full bg-neutral-900">{children}</div>
     </div>
   );
 }
