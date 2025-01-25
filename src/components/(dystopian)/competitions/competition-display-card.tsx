@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import BgImage from "public/images/signin.jpg";
 import Image from "next/image";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { Share_Tech } from "next/font/google";
@@ -18,7 +17,7 @@ const CompDisplayCard = ({ comp }: Props) => {
   console.log("Component rendered");
   return (
     <motion.div
-      className="relative flex w-full flex-col items-center md:flex-row"
+      className="relative flex w-screen flex-col items-center md:flex-row"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
