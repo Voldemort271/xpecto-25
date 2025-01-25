@@ -14,8 +14,10 @@ export default function RootLayout({
     <CursorProvider>
       <div className={`relative min-h-screen w-screen ${imfell.className}`}>
         <Image
-          src={NewspaperBg}
+          src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/newspaper-bg_nkajzg.png`}
           alt={"Background"}
+          width={1920}
+          height={1000}
           className="absolute bottom-0 left-0 right-0 top-0 -z-10 h-full w-screen object-cover"
         />
         <NewspaperNavbar />

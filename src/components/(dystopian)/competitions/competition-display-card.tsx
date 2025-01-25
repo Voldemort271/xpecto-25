@@ -35,7 +35,7 @@ const CompDisplayCard = ({ comp }: Props) => {
       >
         <Image
           // src={props.img ?? BgImage}
-          src={BgImage}
+          src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`}
           alt={comp.competitionDetails.name || "Untitled Event"}
           width={500}
           height={500}

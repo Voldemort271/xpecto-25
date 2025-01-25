@@ -18,7 +18,7 @@ const Page = ({ params }: { params: Promise<{ spon: string }> }) => {
   return (
     <div style={{ paddingTop: 200, paddingLeft: 100 }}>
       <strong>{sponDetails?.name}</strong>
-      <Image src={dummyImage} width={100} height={100} alt="logo" />
+      <Image src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737324/300_ainvey.png`} width={100} height={100} alt="logo" />
       <br />
       This sponser sponsers these events :
       <br />

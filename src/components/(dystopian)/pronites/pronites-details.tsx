@@ -38,7 +38,7 @@ const PronitesDetails = (props: Props) => {
   return (
     <div className="relative h-full w-full">
       <Image
-        src={props.img ?? BgImage}
+        src={props.img ?? `https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg`}
         width={1920}
         height={1080}
         alt={props.title}
