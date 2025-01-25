@@ -59,7 +59,7 @@ export const proniteRouter = createTRPCRouter({
         },
         include: {
           proniteDetails: {
-            include: { regPlans: true, tags: true },
+            include: { regPlans: true },
           },
         },
       });
