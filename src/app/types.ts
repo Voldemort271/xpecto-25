@@ -1,4 +1,12 @@
-import type { Competition, EventDetails, InviteToken, RegistrationLevel, Team, User } from "@prisma/client";
+import type {
+  Competition,
+  EventDetails,
+  InviteToken,
+  Pronite,
+  RegistrationLevel,
+  Team,
+  User,
+} from "@prisma/client";
 
 export type CompetitionType = {
   max_team_size: number;
@@ -50,5 +58,6 @@ export interface CompetitionWithDetails extends Competition {
   competitionDetails: EventWithPlans;
 }
 
-
-
+export interface ProniteWithDetails extends Pronite {
+  proniteDetails: EventWithPlans;
+}

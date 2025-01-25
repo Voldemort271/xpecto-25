@@ -1,15 +1,11 @@
 "use client";
 
-import React, {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-} from "react";
+import React, { type Dispatch, type SetStateAction } from "react";
 import Image from "next/image";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
 import PronitesControlMobile from "@/components/(dystopian)/pronites/pronites-control-mobile";
-import { type StaticImport } from "next/dist/shared/lib/get-img-props";
+import { ProniteWithDetails } from "@/app/types";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -20,30 +16,24 @@ const keyframes = {
 };
 
 interface Props {
-  title: string;
-  children: ReactNode;
-  img?: string | StaticImport;
-  slug: string;
-  begin_time: Date;
-  end_time: Date;
-  hash: string;
+  pronite: ProniteWithDetails;
 
   index: number;
   length: number;
   setIndex: Dispatch<SetStateAction<number>>;
 }
 
-const PronitesDetails = (props: Props) => {
+const PronitesDetails = ({ pronite, index, length, setIndex }: Props) => {
   return (
     <div className="relative h-full w-full">
       <Image
         src={
-          props.img ??
+          pronite.proniteDetails.cover ??
           `https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg`
         }
         width={1920}
         height={1080}
-        alt={props.title}
+        alt={pronite.proniteDetails.name}
         className="absolute left-0 top-32 -z-20 h-full w-full object-cover object-center opacity-100 sm:top-0"
       />
       <div className="absolute left-0 top-32 -z-10 h-full w-full bg-gradient-to-r from-black/[0.5] to-black/[0.7] sm:top-0"></div>
@@ -73,7 +63,7 @@ const PronitesDetails = (props: Props) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {props.title}
+            {pronite.proniteDetails.name}
           </motion.div>
           <motion.div
             className={`max-w-screen-sm text-right text-lg ${sharetech.className} tracking-tight text-amber-50`}
@@ -81,7 +71,7 @@ const PronitesDetails = (props: Props) => {
             animate={{ opacity: 1, translateX: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            {props.children}
+            {pronite.proniteDetails.description}
           </motion.div>
         </div>
         <div className="flex w-full flex-col items-start justify-between gap-12 sm:flex-row sm:items-end">
@@ -97,7 +87,7 @@ const PronitesDetails = (props: Props) => {
                 repeat: 1,
               }}
             >
-              #00{props.index + 1}
+              #00{index + 1}
             </motion.div>
             <motion.div
               className="text-xl font-extralight uppercase text-amber-50/[0.7]"
@@ -110,7 +100,7 @@ const PronitesDetails = (props: Props) => {
                 repeat: 1,
               }}
             >
-              exhibit: {props.slug}
+              exhibit: {pronite.proniteDetails.slug}
             </motion.div>
             <motion.div
               className="text-xl font-extralight uppercase text-amber-50/[0.7]"
@@ -123,8 +113,8 @@ const PronitesDetails = (props: Props) => {
                 repeat: 1,
               }}
             >
-              timeline: {props.begin_time.toLocaleDateString()} -{" "}
-              {props.end_time.toLocaleDateString()}
+              timeline: {pronite.proniteDetails.begin_time.toLocaleDateString()}{" "}
+              - {pronite.proniteDetails.end_time.toLocaleDateString()}
             </motion.div>
             <motion.div
               className="text-base font-extralight uppercase text-amber-50/[0.5]"
@@ -137,7 +127,7 @@ const PronitesDetails = (props: Props) => {
                 repeat: 1,
               }}
             >
-              unique archive registrar {props.hash.substring(2, 10)}
+              unique archive registrar {pronite.id.substring(2, 10)}
             </motion.div>
           </div>
           <div className="flex gap-12">
@@ -150,7 +140,12 @@ const PronitesDetails = (props: Props) => {
           </div>
         </div>
       </div>
-      <PronitesControlMobile {...props} />
+      <PronitesControlMobile
+        pronite={pronite}
+        length={length}
+        index={index}
+        setIndex={setIndex}
+      />
     </div>
   );
 };

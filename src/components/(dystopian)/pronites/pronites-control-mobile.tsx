@@ -1,32 +1,21 @@
-import React, {
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-  useContext,
-} from "react";
+import React, { type Dispatch, type SetStateAction, useContext } from "react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { motion } from "motion/react";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
-import type { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { ProniteWithDetails } from "@/app/types";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 interface Props {
-  title: string;
-  children: ReactNode;
-  img?: string | StaticImport;
-  slug: string;
-  begin_time: Date;
-  end_time: Date;
-  hash: string;
+  pronite: ProniteWithDetails;
 
   index: number;
   length: number;
   setIndex: Dispatch<SetStateAction<number>>;
 }
 
-const PronitesControlMobile = (props: Props) => {
+const PronitesControlMobile = ({ pronite, length, index, setIndex }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   return (
@@ -35,10 +24,10 @@ const PronitesControlMobile = (props: Props) => {
         <MarqueeContainer
           text={[
             "more details",
-            "test pronite",
+            pronite.proniteDetails.name,
             "xpecto '25",
             "more details",
-            "test pronite",
+            pronite.proniteDetails.name,
             "xpecto '25",
           ]}
         />
@@ -53,7 +42,9 @@ const PronitesControlMobile = (props: Props) => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Featuring
           </div>
-          <div className="text-3xl font-normal uppercase">DJ HABIbi wallah</div>
+          <div className="text-3xl font-normal uppercase">
+            {pronite.proniteDetails.name}
+          </div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
         <motion.div
@@ -66,7 +57,7 @@ const PronitesControlMobile = (props: Props) => {
             Date
           </div>
           <div className="text-3xl font-normal uppercase">
-            {new Date("12-22-2025 17:34").toLocaleDateString()}
+            {pronite.proniteDetails.begin_time.toLocaleDateString()}
           </div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
@@ -80,8 +71,8 @@ const PronitesControlMobile = (props: Props) => {
             Time
           </div>
           <div className="text-3xl font-normal uppercase">
-            {new Date("12-22-2025 17:34").toLocaleTimeString()} -{" "}
-            {new Date("12-22-2025 19:34").toLocaleTimeString()}
+            {pronite.proniteDetails.begin_time.toLocaleTimeString()} -{" "}
+            {pronite.proniteDetails.end_time.toLocaleTimeString()}
           </div>
         </motion.div>
         <div className="h-[2px] w-full max-w-16 bg-amber-50"></div>
@@ -94,7 +85,9 @@ const PronitesControlMobile = (props: Props) => {
           <div className={`${sharetech.className} text-xl tracking-tight`}>
             Venue
           </div>
-          <div className="text-3xl font-normal uppercase">Your mom</div>
+          <div className="text-3xl font-normal uppercase">
+            {pronite.proniteDetails.venue}
+          </div>
         </motion.div>
       </div>
       <div
@@ -105,10 +98,10 @@ const PronitesControlMobile = (props: Props) => {
         <MarqueeContainer
           text={[
             "book a seat",
-            "test pronite",
+            pronite.proniteDetails.name,
             "xpecto '25",
             "book a seat",
-            "test pronite",
+            pronite.proniteDetails.name,
             "xpecto '25",
           ]}
         />

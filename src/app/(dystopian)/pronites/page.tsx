@@ -19,29 +19,18 @@ const Page = () => {
     <div className="relative z-0 h-full w-full overflow-clip">
       {!isLoading && pronites && pronites[0] ? (
         <PronitesDetails
-          title={pronites[0].proniteDetails.name}
-          slug={pronites[0].proniteDetails.slug}
-          begin_time={pronites[0].proniteDetails.begin_time}
-          end_time={pronites[0].proniteDetails.end_time}
-          img={`/event_covers/pronites/${pronites[0].proniteDetails.slug}.jpeg`}
-          hash={pronites[0].proniteDetailsId}
+          pronite={pronites[0]}
           index={index}
           length={10}
           setIndex={setIndex}
         >
           {/* TODO BONUS: Host all images on Cloudinary to reduce bundle size drastically */}
-          {pronites[0].proniteDetails.description}
         </PronitesDetails>
       ) : (
         <div className="loading h-full w-full"></div>
       )}
       {!isLoading && pronites && pronites[0] && (
-        <PronitesControl
-          title={pronites[0].proniteDetails.name}
-          begin_time={pronites[0].proniteDetails.begin_time}
-          end_time={pronites[0].proniteDetails.end_time}
-          venue={pronites[0].proniteDetails.venue}
-        />
+        <PronitesControl pronite={pronites[0]} />
       )}
     </div>
   );
