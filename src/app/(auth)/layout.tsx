@@ -17,7 +17,9 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
       </div>
       <div className="h-14 w-full"></div>
       <Image
-        src={SigninPic}
+        src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`}
+        width={300}
+        height={300}
         alt={"Sign in background"}
         className="absolute left-0 top-0 -z-10 h-screen w-screen object-cover opacity-20"
       />

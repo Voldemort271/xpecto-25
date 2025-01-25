@@ -11,7 +11,7 @@ const TestPage = () => {
   return (
     <div className="relative flex h-full w-full flex-col items-start md:flex-row">
       <Image
-        src={BgImage}
+        src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`}
         alt={"Hello"}
         width={500}
         height={500}

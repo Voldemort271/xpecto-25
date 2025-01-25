@@ -24,7 +24,9 @@ const IntroScreen = () => {
         transition={{ duration: 1, delay: 0.25 }}
       >
         <Image
-          src={IntroPic}
+          src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737279/intro_wmcn1h.png`}
+          width={300}
+          height={300}
           alt={"Intro picture"}
           className="absolute left-[2px] top-[2px] z-10 flex h-[calc(100%-4px)] w-[calc(100%-4px)] object-cover object-bottom"
         />
@@ -51,8 +53,10 @@ const IntroScreen = () => {
           </div>
         </div>
         <Image
-          src={Hehe}
+          src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737278/meme_fwwsj1.png`}
           alt={"hehe"}
+          width={300}
+          height={300}
           className="absolute bottom-[2px] right-[2px] z-10 hidden h-64 w-64 object-cover lg:block"
         />
       </motion.div>

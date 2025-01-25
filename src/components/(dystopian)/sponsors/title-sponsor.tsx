@@ -49,7 +49,9 @@ const TitleSponsor = () => {
         </div>
         <div className="relative z-0 flex flex-col gap-5">
           <Image
-            src={BgImage}
+            src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`}
+            width={1000}
+            height={500}
             alt={"Title Sponsor"}
             className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-center"
           />

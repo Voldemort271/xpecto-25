@@ -50,7 +50,9 @@ const TardisNav = () => {
             }}
             className="cursor-pointer"
           >
-            <Image src={Tardis} alt={"Tardis lol"} className="transition-all" />
+            <Image src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737279/tardis_cvwwxx.png`}
+            width={200} height={200} //Added a sample width and height
+            alt={"Tardis lol"} className="transition-all" />
           </motion.div>
         </motion.div>
       </motion.div>

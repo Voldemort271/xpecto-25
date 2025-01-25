@@ -70,7 +70,9 @@ const page = () => {
       </div>
       <div className="md:flex-col">
         <Image
-          src={collegeImg}
+          src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/iit-mandi-img_kbkhed.png`}
+          width={400}
+          height={400}
           alt={"College Image"}
           className="size-56 w-full border-[3px] border-black object-cover md:h-[25rem]"
         />
@@ -98,7 +100,9 @@ const page = () => {
               </div>
             </div>
             <Image
-              src={roadImg}
+              src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737278/road-img_e43dxk.png`}
+              width={300}
+              height={300}
               alt={"Road Image"}
               className="w-full border-[1px] border-black"
             />

@@ -8,7 +8,9 @@ const SponsorTitle = () => {
     <>
       <div className="relative z-0 flex h-[70vh] w-full flex-col items-center justify-center p-5 pt-44 sm:p-12 sm:pt-28">
         <Image
-          src={SponBg}
+          src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737789549/spon_ljtsho.png`}
+          width={1920}
+          height={500}
           alt={"Sponsors title bg"}
           className="absolute left-0 top-0 -z-10 h-full w-full border-2 border-amber-50 object-cover object-center"
         />
