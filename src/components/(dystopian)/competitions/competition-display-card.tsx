@@ -17,7 +17,7 @@ const CompDisplayCard = ({ comp }: Props) => {
   console.log("Component rendered");
   return (
     <motion.div
-      className="relative flex w-screen flex-col items-center md:flex-row"
+      className="relative flex w-screen flex-col items-center md:w-full md:flex-row"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
