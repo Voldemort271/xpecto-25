@@ -71,10 +71,11 @@ export const competitionRouter = createTRPCRouter({
           include: { regPlans: true },
         },
       },
-      orderBy: { 
-        competitionDetails:{
-          begin_time: "asc" },
+      orderBy: {
+        competitionDetails: {
+          begin_time: "asc",
         },
+      },
     });
   }),
 
@@ -95,5 +96,31 @@ export const competitionRouter = createTRPCRouter({
       });
       console.log(input.slug);
       return competition ?? null;
+    }),
+
+  searchCompetitions: publicProcedure
+    .input(z.object({ query: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.competition.findMany({
+        where: {
+          OR: [
+            {
+              competitionDetails: {
+                name: { contains: input.query, mode: "insensitive" },
+              },
+            },
+            {
+              competitionDetails: {
+                description: { contains: input.query, mode: "insensitive" },
+              },
+            },
+          ],
+        },
+        include: {
+          competitionDetails: {
+            include: { regPlans: true },
+          },
+        },
+      });
     }),
 });
