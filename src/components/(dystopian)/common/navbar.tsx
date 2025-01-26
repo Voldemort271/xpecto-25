@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import styles from "@/styles/navbar.module.css";
 import NavMobile from "@/components/(dystopian)/common/nav-mobile";
 import { useCurrentUser } from "@/lib/utils";
@@ -8,60 +8,14 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
-import { api } from "@/trpc/react";
-import Link from "next/link";
-
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func.apply(null, args);
-    }, delay);
-  };
-};
+import SearchBar from "./searchbar";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false); // Local loading state
   const { CurrentUser } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
   const path = usePathname();
   const animationDelay = path === "/" ? 8 : 0;
-
-  // Use useQuery to fetch competitions based on searchQuery
-  const { data: searchResults, refetch } =
-    api.competition.searchCompetitions.useQuery(
-      { query: searchQuery },
-      {
-        enabled: !!searchQuery,
-        refetchOnWindowFocus: false,
-      },
-    );
-
-  // Debounced function to handle input changes
-  const debouncedRefetch = debounce(async (query) => {
-    setLoading(true); // Set loading to true when starting a new search
-    try {
-      await refetch(); // Await refetch to ensure we can catch any errors
-    } catch (error) {
-      console.error("Error fetching competitions:", error); // Log any errors
-    } finally {
-      setLoading(false); // Reset loading state regardless of success or failure
-    }
-  }, 600); // Adjust delay as needed
-
-  // Handle input change
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    if (value) {
-      debouncedRefetch(value); // Call the debounced function only if there's a value
-    } else {
-      setLoading(false); // Reset loading if search query is empty
-    }
-  };
 
   return (
     <motion.div
@@ -126,59 +80,15 @@ const DystopianNav = () => {
             </div>
           </motion.div>
         )}
-        <motion.div
-          className="absolute left-auto top-1/2 h-full w-full cursor-none flex-col items-center justify-center rounded-t-none text-2xl font-normal uppercase text-neutral-900"
-          initial={{ translateY: -160 }}
-          animate={{ translateY: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: animationDelay + 0.6,
-            ease: "easeOut",
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Search events..."
-            value={searchQuery}
-            onChange={handleInputChange}
-            className="w-full rounded-none bg-[#242424] px-5 py-2 text-amber-50"
-          />
-          <div className="relative mr-2">
-            {" "}
-            {/* Added overflow-hidden */}
-            {searchQuery ? (
-              loading ? ( // Check if the custom loading state is true
-                <p className="te bg-[#24242479] px-2 text-3xl text-amber-50">
-                  Loading...
-                </p>
-              ) : searchResults?.length > 0 ? (
-                <ul className="max-h-60 list-none overflow-y-scroll overflow-x-hidden ">
-                  {/* Use an unordered list */}
-                  {searchResults.map((competition) => (
-                    <li key={competition.id} className="">
-                      {" "}
-                      {/* Added margin-bottom for spacing */}
-                      <Link
-                        href={`/competitions/${competition.competitionDetails.slug}`}
-                        className="duration-250 block w-full border-b-2 border-transparent bg-[#242424] p-0.5 pl-6 pr-4 text-3xl text-amber-50 transition-transform ease-in-out hover:scale-[1.01] hover:border-amber-50 hover:bg-[#2a2a2a] hover:shadow-lg"
-                        onClick={() => {
-                          setSearchQuery("");
-                        }}
-                      >
-                        {competition.competitionDetails.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="bg-[#241919] pl-2 text-3xl text-white">
-                  No results found.
-                </p> // Message when no results match the query
-              )
-            ) : null}{" "}
-            {/* Render nothing if searchQuery is empty */}
+
+        {(path === "/competitions" ||
+          path === "/expos" ||
+          path === "/pronites" ||
+          path === "/workshops") && (
+          <div className="searchBar">
+            <SearchBar />
           </div>
-        </motion.div>
+        )}
       </div>
       <motion.div
         className="flex h-full cursor-none flex-col items-end justify-center bg-amber-50 p-5 text-4xl font-bold uppercase text-neutral-900 sm:hidden"

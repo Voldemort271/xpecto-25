@@ -112,9 +112,40 @@ export const eventRouter = createTRPCRouter({
         },
         include: {
           plan: true,
-        }
+        },
       });
 
       return reg;
+    }),
+
+  searchEvents: publicProcedure
+    .input(z.object({ query: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { query } = input;
+
+      // Querying EventDetails with filters on name and description
+      const events = await ctx.db.eventDetails.findMany({
+        where: {
+          OR: [
+            {
+              name: { contains: query, mode: "insensitive" }, // Filter by event name
+            },
+            {
+              description: { contains: query, mode: "insensitive" }, // Filter by event description
+            },
+          ],
+        },
+        include: {
+          competition: true,
+          expos: true,
+          pronite: true,
+          regPlans: true,
+          sponsors: true,
+          workshops: true,
+          registrations: true,
+        },
+      });
+
+      return events;
     }),
 });

@@ -16,11 +16,16 @@ const Page = () => {
       <div className="grid h-full w-full grid-rows-[56px_auto] md:grid-cols-[64px_auto] md:grid-rows-1">
         <div className="h-full w-full">
           {!isLoading && competitions ? (
+            <>
+            
             <CompControl
               index={index}
               setIndex={setIndex}
               length={competitions.length}
             />
+            
+            </>
+            
           ) : (
             <div className="relative flex h-full w-full">
               <div className="absolute left-0 top-0 hidden h-16 w-[100vh] -translate-x-[calc(50%-32px)] translate-y-[calc(50vh-32px)] -rotate-90 flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-3xl font-light uppercase md:flex">

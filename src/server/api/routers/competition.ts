@@ -98,29 +98,5 @@ export const competitionRouter = createTRPCRouter({
       return competition ?? null;
     }),
 
-  searchCompetitions: publicProcedure
-    .input(z.object({ query: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.db.competition.findMany({
-        where: {
-          OR: [
-            {
-              competitionDetails: {
-                name: { contains: input.query, mode: "insensitive" },
-              },
-            },
-            {
-              competitionDetails: {
-                description: { contains: input.query, mode: "insensitive" },
-              },
-            },
-          ],
-        },
-        include: {
-          competitionDetails: {
-            include: { regPlans: true },
-          },
-        },
-      });
-    }),
+    
 });
