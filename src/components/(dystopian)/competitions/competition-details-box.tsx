@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useCurrentUser } from "@/lib/utils";
-import type { CompetitionWithDetails, TeamWithFullDetails } from "@/app/types";
+import type { CompetitionWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
 import { CursorContext } from "@/context/cursor-context";
@@ -11,24 +11,40 @@ import RegisterDialog from "@/components/(dystopian)/common/registration-dialog"
 import CreateTeamDialog from "@/components/(dystopian)/competitions/create-team-dialog";
 import MissionBrief from "@/components/(dystopian)/competitions/mission-briefing";
 import CompTeamBox from "@/components/(dystopian)/competitions/competition-team-box";
+import { api } from "@/trpc/react";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const CompetitionDetailsBox = ({
-  comp,
-  regStatus,
-  regTeam,
-}: {
-  comp: CompetitionWithDetails;
-  regStatus: boolean;
-  regTeam: TeamWithFullDetails | null | undefined;
-}) => {
+const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const { CurrentUser } = useCurrentUser();
 
   const { setIsHovered } = useContext(CursorContext);
 
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
+
+  const { data: plan, isLoading: isRegistrationLoading } =
+    api.event.checkUserRegisteration.useQuery(
+      {
+        userId: CurrentUser?.id ?? "",
+        eventId: comp?.competitionDetailsId ?? "",
+      },
+      {
+        enabled: !!CurrentUser && !!comp,
+      },
+    );
+  const { data: regTeam, isLoading: isTeamLoading } =
+    api.team.findTeamOfUser.useQuery(
+      {
+        userId: CurrentUser?.id ?? "",
+        competitionId: comp?.id ?? "",
+      },
+      {
+        enabled: !!CurrentUser && !!comp,
+      },
+    );
+
+  const regStatus = !!plan;
 
   useEffect(() => {
     setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
@@ -70,6 +86,9 @@ const CompetitionDetailsBox = ({
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <MissionBrief />
+              {isRegistrationLoading && (
+                <div className="loading h-full w-full border-2 border-amber-50"></div>
+              )}
               {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />}
             </div>
           </div>

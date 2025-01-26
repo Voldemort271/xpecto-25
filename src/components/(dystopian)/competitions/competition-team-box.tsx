@@ -18,7 +18,7 @@ const CompTeamBox = ({
   const { CurrentUser } = useCurrentUser();
 
   return (
-    <div className="relative flex flex-col overflow-x-clip overflow-y-scroll border-2 border-amber-50">
+    <div className="relative flex min-h-96 flex-col overflow-x-clip overflow-y-scroll border-2 border-amber-50">
       {regTeam ? (
         <>
           <motion.div
