@@ -40,7 +40,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-image: url('https://res.cloudinary.com/diqdg481x/image/upload/v1737737278/img_luzzrc.png');
+	background-image: url('../../public/images/img.png');
 	animation: 100ms linear infinite noise;
 }
 
@@ -198,7 +198,7 @@ tbody {
 }
 
 .addRow td, .pl-0 {
-	padding-left: 0px !important;
+	padding-left: 0 !important;
 }
 
 th {
@@ -227,6 +227,6 @@ tr, td {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-image: url('https://res.cloudinary.com/diqdg481x/image/upload/v1737737278/img_luzzrc.png');
+	background-image: url('../../public/images/img.png');
 	animation: 100ms linear infinite noise;
 }

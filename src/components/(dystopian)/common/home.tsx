@@ -5,7 +5,6 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import ClickToStart from "@/components/(dystopian)/common/click-to-start";
 import { motion } from "motion/react";
 import Image from "next/image";
-import BgImage from "public/images/transparent-bg.png";
 import LandingText from "@/components/(dystopian)/home/landing-text";
 import styles from "@/styles/home.module.css";
 
@@ -15,8 +14,8 @@ const HomeScreen = () => {
       <Image
         src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/transparent-bg_md7je0.png`} //Changed this from {BgImage}
         alt={"transparent bg"}
-        width={300} //Added  a sample width and height as it was showing an error without it
-        height={300}
+        width={1920} //Added  a sample width and height as it was showing an error without it
+        height={1080}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom"
       />
       <motion.div
