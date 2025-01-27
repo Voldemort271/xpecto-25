@@ -40,6 +40,10 @@ interface Event {
   registrations?: Registration[];
 }
 
+interface SearchBarProps {
+  userId: string; // Define userId as a string
+}
+
 const getHref = (event: Event) => {
   if (event.competition) {
     return `/competitions/${event.slug}`;
@@ -58,7 +62,7 @@ const getHref = (event: Event) => {
   return "#";
 };
 
-const SearchBar = () => {
+const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showRegistered, setShowRegistered] = useState(true);
   const [showUnregistered, setShowUnregistered] = useState(true);
@@ -66,6 +70,15 @@ const SearchBar = () => {
   const path = usePathname();
   const animationDelay = path === "/" ? 8 : 0;
   const { setIsHovered } = useContext(CursorContext);
+
+  // Fetching registered events for the logged-in user
+  const { data: registeredEvents = [] } =
+    api.user.getUserRegisteredEvents.useQuery(
+      { userId },
+      { enabled: !!userId }, // Only fetch if userId is available
+    );
+
+  // Use useQuery to fetch competitions based on searchQuery
 
   // Use useQuery to fetch competitions based on searchQuery
   const { data: searchResults = [], refetch } = api.event.searchEvents.useQuery(
@@ -116,14 +129,15 @@ const SearchBar = () => {
   // Use useMemo to optimize filtered results calculation
   const filteredResults = useMemo(() => {
     return searchResults.filter((event) => {
-      const isRegistered =
-        event.registrations && event.registrations.length > 0;
+      const isRegistered = registeredEvents.some(
+        (reg) => reg.eventId === event.id,
+      );
 
       return (
         (showRegistered && isRegistered) || (showUnregistered && !isRegistered)
       );
     });
-  }, [searchResults, showRegistered, showUnregistered]);
+  }, [searchResults, registeredEvents, showRegistered, showUnregistered]);
 
   return (
     <motion.div

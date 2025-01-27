@@ -17,6 +17,9 @@ const DystopianNav = () => {
   const path = usePathname();
   const animationDelay = path === "/" ? 8 : 0;
 
+  // Extract userId from CurrentUser
+  const loggedInUserId = CurrentUser?.id || ""; // Default to empty string if not logged in
+
   return (
     <motion.div
       className={styles.navContainer}
@@ -85,7 +88,7 @@ const DystopianNav = () => {
           path.includes("/pronites") ||
           path.includes("/workshops")) && (
           <div className="searchBar relative col-span-6">
-            <SearchBar />
+            <SearchBar userId={loggedInUserId} />
           </div>
         )}
       </div>
