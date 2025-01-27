@@ -3,8 +3,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const sponsorRouter = createTRPCRouter({
   getAllEvents: publicProcedure.query(async ({ ctx }) => {
-    const allEvents = await ctx.db.eventDetails.findMany();
-    return allEvents;
+    return await ctx.db.eventDetails.findMany();
   }),
 
   createSponsor: publicProcedure
@@ -17,7 +16,7 @@ export const sponsorRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { name, logo, eventIds } = input;
-      const sponser = await ctx.db.sponsor.create({
+      return await ctx.db.sponsor.create({
         data: {
           name: name,
           logo: logo,
@@ -29,13 +28,12 @@ export const sponsorRouter = createTRPCRouter({
           },
         },
       });
-      return sponser;
     }),
 
   getSponsor: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const sponser = await ctx.db.sponsor.findMany({
+      return await ctx.db.sponsor.findMany({
         where: {
           id: {
             contains: input.id,
@@ -45,13 +43,12 @@ export const sponsorRouter = createTRPCRouter({
           events: true,
         },
       });
-      return sponser;
     }),
 
   getSponsorBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
-      const sponser = await ctx.db.sponsor.findFirst({
+      return await ctx.db.sponsor.findFirst({
         where: {
           name: {
             equals: input.slug.replaceAll("-", " "),
@@ -62,6 +59,5 @@ export const sponsorRouter = createTRPCRouter({
           events: true,
         },
       });
-      return sponser;
     }),
 });
