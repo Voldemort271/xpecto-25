@@ -80,11 +80,10 @@ const DystopianNav = () => {
             </div>
           </motion.div>
         )}
-
-        {(path === "/competitions" ||
-          path === "/expos" ||
-          path === "/pronites" ||
-          path === "/workshops") && (
+        {(path.includes("/competitions") ||
+          path.includes("/expos") ||
+          path.includes("/pronites") ||
+          path.includes("/workshops")) && (
           <div className="searchBar relative col-span-6">
             <SearchBar />
           </div>
