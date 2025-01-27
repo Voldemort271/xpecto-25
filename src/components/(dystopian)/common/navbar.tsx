@@ -8,6 +8,7 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
+import SearchBar from "./searchbar";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
@@ -34,6 +35,7 @@ const DystopianNav = () => {
           indian institute of technology, mandi
         </div>
       </motion.div>
+
       <div className="hidden h-full w-full grid-cols-6 grid-rows-2 sm:grid">
         {CurrentUser?.id !== "" ? (
           <motion.div
@@ -77,6 +79,15 @@ const DystopianNav = () => {
               />
             </div>
           </motion.div>
+        )}
+
+        {(path === "/competitions" ||
+          path === "/expos" ||
+          path === "/pronites" ||
+          path === "/workshops") && (
+          <div className="searchBar">
+            <SearchBar />
+          </div>
         )}
       </div>
       <motion.div

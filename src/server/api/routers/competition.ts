@@ -71,10 +71,11 @@ export const competitionRouter = createTRPCRouter({
           include: { regPlans: true },
         },
       },
-      orderBy: { 
-        competitionDetails:{
-          begin_time: "asc" },
+      orderBy: {
+        competitionDetails: {
+          begin_time: "asc",
         },
+      },
     });
   }),
 
@@ -96,4 +97,6 @@ export const competitionRouter = createTRPCRouter({
       console.log(input.slug);
       return competition ?? null;
     }),
+
+    
 });

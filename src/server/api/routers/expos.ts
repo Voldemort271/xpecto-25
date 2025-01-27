@@ -56,7 +56,7 @@ export const expoRouter = createTRPCRouter({
         },
         include: {
           exposDetails: {
-            include: { regPlans: true},
+            include: { regPlans: true },
           },
         },
       });
