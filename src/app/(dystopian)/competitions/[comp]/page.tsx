@@ -1,14 +1,10 @@
 "use client";
 
 import CompetitionDetailsBox from "@/components/(dystopian)/competitions/competition-details-box";
-
-import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import React, { use } from "react";
 
 const Page = ({ params }: { params: Promise<{ comp: string }> }) => {
-  const { CurrentUser } = useCurrentUser();
-
   const compSlug = use(params).comp;
   const { data: comp, isLoading } = api.competition.getCompBySlug.useQuery({
     slug: compSlug,
