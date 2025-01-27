@@ -1,11 +1,13 @@
-import type {
-  Competition,
-  EventDetails,
-  InviteToken,
-  Pronite,
-  RegistrationLevel,
-  Team,
-  User,
+import {
+  type Competition,
+  type EventDetails,
+  type Expos,
+  type InviteToken,
+  type Pronite,
+  type RegistrationLevel,
+  type Team,
+  type User,
+  type Workshops,
 } from "@prisma/client";
 
 export type CompetitionType = {
@@ -56,6 +58,14 @@ export interface EventWithPlans extends EventDetails {
 
 export interface CompetitionWithDetails extends Competition {
   competitionDetails: EventWithPlans;
+}
+
+export interface ExpoWithDetails extends Expos {
+  expoDetails: EventWithPlans;
+}
+
+export interface WorkshopWithDetails extends Workshops {
+  workshopDetails: EventWithPlans;
 }
 
 export interface ProniteWithDetails extends Pronite {

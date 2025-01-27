@@ -1,39 +1,46 @@
-import React, { useState, useMemo } from "react";
+import React, {
+  type ChangeEventHandler,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { api } from "@/trpc/react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
+import { debounce } from "@/lib/utils";
+import {
+  type Competition,
+  type Expos,
+  type Pronite,
+  type Registration,
+  type Workshops,
+} from "@prisma/client";
+import {
+  type CompetitionWithDetails,
+  type ExpoWithDetails,
+  type ProniteWithDetails,
+  type WorkshopWithDetails,
+} from "@/app/types";
+import { toast } from "sonner";
+import CustomToast from "@/components/root/custom-toast";
+import { Share_Tech } from "next/font/google";
+import { CursorContext } from "@/context/cursor-context";
 
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      func.apply(null, args);
-    }, delay);
-  };
-};
-
-interface Registration {
-  id: string;
-  userId: string;
-  eventId: string;
-  planId: string;
-}
+const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 interface Event {
   id: string;
   slug: string;
   name: string;
-  competition?: any;
-  expos?: any;
-  pronite?: any;
-  workshops?: any;
+  competition?: Competition | CompetitionWithDetails | null;
+  expos?: Expos | ExpoWithDetails | null;
+  pronite?: Pronite | ProniteWithDetails | null;
+  workshops?: Workshops | WorkshopWithDetails | null;
   registrations?: Registration[];
 }
 
 const getHref = (event: Event) => {
-
   if (event.competition) {
     return `/competitions/${event.slug}`;
   } else if (event.expos) {
@@ -43,6 +50,11 @@ const getHref = (event: Event) => {
   } else if (event.workshops) {
     return `/workshops/${event.slug}`;
   }
+  toast.custom((t) => (
+    <CustomToast variant={"error"} metadata={t}>
+      Requested event not found. Please try with a different keyword.
+    </CustomToast>
+  ));
   return "#";
 };
 
@@ -53,9 +65,9 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false); // Local loading state
   const path = usePathname();
   const animationDelay = path === "/" ? 8 : 0;
+  const { setIsHovered } = useContext(CursorContext);
 
   // Use useQuery to fetch competitions based on searchQuery
-
   const { data: searchResults = [], refetch } = api.event.searchEvents.useQuery(
     { query: searchQuery },
     {
@@ -68,26 +80,31 @@ const SearchBar = () => {
   const debouncedRefetch = debounce(async (query) => {
     setLoading(true);
     try {
-      await refetch(); 
+      await refetch();
     } catch (error) {
-      console.error(`Error fetching Event:`, error);
+      toast.custom((t) => (
+        <CustomToast variant={"error"} metadata={t}>
+          Error encountered while fetching event. Please try again, or check
+          console for more details.
+        </CustomToast>
+      ));
+      console.log(`Error fetching Event:`, error);
     } finally {
       setLoading(false);
     }
   }, 750);
 
-  
-  const handleInputChange = (e) => {
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     if (value) {
-      debouncedRefetch(value); 
+      debouncedRefetch(value);
     } else {
       setLoading(false);
     }
   };
 
-  const handleFilterChange = (event) => {
+  const handleFilterChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, checked } = event.target;
     if (name === "registered") {
       setShowRegistered(checked);
@@ -110,7 +127,7 @@ const SearchBar = () => {
 
   return (
     <motion.div
-      className="absolute left-auto top-1/2 h-full w-full cursor-none flex-col items-center justify-center rounded-t-none text-2xl font-normal uppercase text-neutral-900"
+      className={`relative w-full cursor-none flex-col items-center justify-center rounded-t-none border-b-2 border-amber-50 text-2xl font-normal text-amber-50 ${sharetech.className} tracking-tight`}
       initial={{ translateY: -160 }}
       animate={{ translateY: 0 }}
       transition={{
@@ -121,15 +138,20 @@ const SearchBar = () => {
     >
       <input
         type="text"
-        placeholder={`Search Events...`}
+        placeholder={`Search events`}
         value={searchQuery}
         onChange={handleInputChange}
-        className="w-full rounded-none bg-[#242424] px-5 py-2 text-amber-50"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="h-16 w-full cursor-none rounded-none bg-neutral-900/[0.5] px-5 py-2 text-amber-50 outline-none backdrop-blur-sm"
       />
 
-
-      <div className="absolute text-amber-50 z-50 -translate-y-12 block right-72">
-        <label className="mr-4 flex cursor-pointer items-center">
+      <div className="absolute right-0 top-0 flex h-16 flex-col justify-center gap-1 border-x-2 border-amber-50 bg-neutral-600 px-5">
+        <label
+          className="mr-4 flex cursor-none items-center"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <input
             type="checkbox"
             name="registered"
@@ -137,10 +159,14 @@ const SearchBar = () => {
             onChange={handleFilterChange}
             className="form-checkbox h-4 w-4 rounded border-amber-50 text-amber-500 focus:ring-amber-500"
           />
-          <span className="ml-2 text-base">Registered Events</span>
+          <span className="ml-2 text-base uppercase">Registered</span>
         </label>
 
-        <label className="flex cursor-pointer items-center">
+        <label
+          className="flex cursor-none items-center"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <input
             type="checkbox"
             name="unregistered"
@@ -148,24 +174,25 @@ const SearchBar = () => {
             onChange={handleFilterChange}
             className="form-checkbox h-4 w-4 rounded border-amber-50 text-amber-500 focus:ring-amber-500"
           />
-          <span className="ml-2 text-base">Unregistered Events</span>
+          <span className="ml-2 text-base uppercase">Unregistered</span>
         </label>
       </div>
 
-      <div className="relative">
-        {" "}
+      <div className="absolute left-[-2px] top-16 w-full max-w-[600px] bg-neutral-900/[0.7] backdrop-blur-xl">
         {searchQuery ? (
           loading ? (
-            <p className="bg-[#24242479] px-2 text-xl text-amber-50">
+            <p className="border-2 border-amber-50 px-5 py-2 text-lg text-amber-50">
               Loading...
             </p>
           ) : filteredResults?.length > 0 ? (
-            <ul className="max-h-60 list-none overflow-x-hidden overflow-y-scroll">
+            <ul className="max-h-60 list-none overflow-x-hidden overflow-y-scroll border-2 border-amber-50 p-2">
               {filteredResults.map((event) => (
                 <li key={event.id}>
                   <Link
                     href={getHref(event)}
-                    className="duration-250 block w-full border-b-2 border-transparent bg-[#242424] p-0.5 pl-6 pr-4 text-2xl text-amber-50 transition-transform ease-in-out hover:scale-[1.01] hover:border-amber-50 hover:bg-[#2a2a2a] hover:shadow-lg"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    className="block w-full cursor-none px-5 py-1 transition-all duration-200 hover:bg-amber-50/[0.3]"
                     onClick={() => {
                       setSearchQuery("");
                     }}
@@ -176,7 +203,7 @@ const SearchBar = () => {
               ))}
             </ul>
           ) : (
-            <p className="bg-[#241919] pl-2 text-2xl text-amber-50">
+            <p className="border-2 border-amber-50 px-5 py-2 text-lg text-amber-50">
               No results found.
             </p>
           )

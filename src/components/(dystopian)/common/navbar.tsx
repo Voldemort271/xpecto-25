@@ -8,7 +8,7 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
-import SearchBar from "./searchbar";
+import SearchBar from "@/components/(dystopian)/common/searchbar";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
@@ -85,7 +85,7 @@ const DystopianNav = () => {
           path === "/expos" ||
           path === "/pronites" ||
           path === "/workshops") && (
-          <div className="searchBar">
+          <div className="searchBar relative col-span-6">
             <SearchBar />
           </div>
         )}

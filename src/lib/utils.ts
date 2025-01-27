@@ -1,4 +1,4 @@
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useContext } from "react";
 import { SharedContext } from "./context";
@@ -70,39 +70,62 @@ export function getCollFromEmail(email: string, csv: string): string {
   return "Individual";
 }
 
+export const competitionLevelSchema = [
+  { name: "add", type: "icon", displayName: "", width: "2rem" },
+  { name: "name", type: "string", displayName: "Name", width: "16rem" },
+  {
+    name: "description",
+    type: "string",
+    displayName: "Description",
+    width: "30rem",
+  },
+  { name: "timeline", type: "date", displayName: "Timeline", width: "10rem" },
+  { name: "venue", type: "string", displayName: "Venue", width: "16rem" },
+  { name: "delete", type: "icon", displayName: "", width: "2rem" },
+];
 
-export const competitionLevelSchema=
-[
-    {name :'add', type:'icon',displayName:'',width:'2rem' },
-    {name :'name', type:'string',displayName:'Name',width:'16rem' },
-    {name :'description', type:'string',displayName:'Description',width:'30rem' },
-    {name :'timeline', type:'date',displayName:'Timeline',width:'10rem' },
-    {name :'venue', type:'string',displayName:'Venue',width:'16rem' },
-    {name :'delete', type:'icon',displayName:'',width:'2rem' },
-]; 
- 
+export const problemStatementSchema = [
+  { name: "add", type: "icon", displayName: "", width: "2rem" },
+  { name: "name", type: "string", displayName: "Name", width: "16rem" },
+  {
+    name: "description",
+    type: "string",
+    displayName: "Description",
+    width: "30rem",
+  },
+  { name: "delete", type: "icon", displayName: "", width: "2rem" },
+];
 
-export const problemStatementSchema=
-[
-    {name :'add', type:'icon',displayName:'',width:'2rem' },
-    {name :'name', type:'string',displayName:'Name',width:'16rem' },
-    {name :'description', type:'string',displayName:'Description',width:'30rem' },
-    {name :'delete', type:'icon',displayName:'',width:'2rem' },
-]; 
- 
-export const ruleSchema=
-[
-    {name :'add', type:'icon',displayName:'',width:'2rem' },
-    {name :'name', type:'string',displayName:'Name',width:'16rem' },
-    {name :'delete', type:'icon',displayName:'',width:'2rem' },
-]; 
+export const ruleSchema = [
+  { name: "add", type: "icon", displayName: "", width: "2rem" },
+  { name: "name", type: "string", displayName: "Name", width: "16rem" },
+  { name: "delete", type: "icon", displayName: "", width: "2rem" },
+];
 
-export const planSchema=
-[
-  {name :'add', type:'icon',displayName:'',width:'2rem' },
-  {name :'name', type:'string',displayName:'Name',width:'16rem' },
-  {name :'description', type:'string',displayName:'Description',width:'16rem' },
-  {name :'price', type:'string',displayName:'Price',width:'16rem' },
-  {name :'labelling', type:'string',displayName:'Label',width:'16rem' },  
-  {name :'delete', type:'icon',displayName:'',width:'2rem' },
-]; 
+export const planSchema = [
+  { name: "add", type: "icon", displayName: "", width: "2rem" },
+  { name: "name", type: "string", displayName: "Name", width: "16rem" },
+  {
+    name: "description",
+    type: "string",
+    displayName: "Description",
+    width: "16rem",
+  },
+  { name: "price", type: "string", displayName: "Price", width: "16rem" },
+  { name: "labelling", type: "string", displayName: "Label", width: "16rem" },
+  { name: "delete", type: "icon", displayName: "", width: "2rem" },
+];
+
+export const debounce = <T extends (...args: unknown[]) => void>(
+  fn: T,
+  ms = 300,
+) => {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  };
+};
