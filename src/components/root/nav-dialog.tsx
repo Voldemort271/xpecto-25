@@ -10,6 +10,7 @@ import { sleep } from "@/lib/utils";
 import CustomToast from "@/components/root/custom-toast";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Props {
   toggle: boolean;
@@ -27,6 +28,7 @@ const pageLinks = [
   },
   { name: "Expos", href: "/expos" },
   { name: "Pronites", href: "/pronites" },
+  { name: "Workshops", href: "/workshops" },
   { name: "Sponsors", href: "/sponsors" },
 ];
 
@@ -52,7 +54,8 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
         toast.custom(
           (t) => (
             <CustomToast variant="warning" metadata={t}>
-              Warping to {e.get("location")?.toString()}. Please standby.
+              Warping [{e.get("name") ? e.get("name")?.toString() : "Subject"}]
+              to {e.get("location")?.toString()}. Please standby.
             </CustomToast>
           ),
           { duration: 1000, position: "top-right" },
@@ -87,7 +90,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
           Time Machine Interface
         </div>
       </div>
-      <div className="flex h-full max-h-96 flex-col gap-5 overflow-scroll rounded-b-lg bg-slate-200 p-5">
+      <div className="flex h-full max-h-[400px] flex-col gap-5 overflow-scroll rounded-b-lg bg-slate-200 p-5">
         <div className="px-5 text-sm font-medium text-slate-500">
           Welcome. This wizard will walk you through our experimental time
           travel technology. Please select the appropriate options and submit to
@@ -158,23 +161,32 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
             Proceed with caution.
           </div>
           {/* TODO: Add contact button as well ("File a complaint" or something similar) */}
-          <div className="flex gap-5">
-            <Button
-              type="reset"
-              onClick={() => {
-                setOverride(false);
-                setToggle(false);
-              }}
-              className="mt-2 w-fit border border-slate-400/[0.5] bg-slate-200 px-5 py-2 text-red-500 hover:bg-slate-300"
+          <div className="flex w-full justify-between gap-5">
+            <div className="space-x-5">
+              <Button
+                type="reset"
+                onClick={() => {
+                  setOverride(false);
+                  setToggle(false);
+                }}
+                className="mt-2 w-fit border border-slate-400/[0.5] bg-slate-200 px-5 py-2 text-red-500 hover:bg-slate-300"
+              >
+                Abort
+              </Button>
+              <Button
+                type="submit"
+                className="mt-2 w-fit bg-gradient-to-b from-blue-500 to-blue-600 px-5 py-2 text-amber-50 shadow-md shadow-neutral-900/[0.3]"
+              >
+                Submit
+              </Button>
+            </div>
+            <Link
+              href={"/team"}
+              onClick={() => setToggle(false)}
+              className="self-end text-sm text-indigo-500 underline"
             >
-              Abort
-            </Button>
-            <Button
-              type="submit"
-              className="mt-2 w-fit bg-gradient-to-b from-blue-500 to-blue-600 px-5 py-2 text-amber-50 shadow-md shadow-neutral-900/[0.3]"
-            >
-              Submit
-            </Button>
+              View credits
+            </Link>
           </div>
         </form>
       </div>
