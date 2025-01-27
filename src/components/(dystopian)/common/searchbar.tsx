@@ -4,15 +4,16 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
+function debounce<T extends any[]>(func: (...args: T) => void, delay: number) {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return (...args: T) => {
     if (timeoutId) clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      func.apply(null, args);
+      func(...args);
     }, delay);
   };
-};
+}
 
 interface Registration {
   id: string;
