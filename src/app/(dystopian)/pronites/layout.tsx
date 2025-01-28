@@ -1,8 +1,5 @@
 import React from "react";
-import { Handjet } from "next/font/google";
 import PronitesHeader from "@/components/(dystopian)/pronites/pronites-header";
-
-const handjet = Handjet({ subsets: ["latin"] });
 
 export default function ProfileLayout({
   children,

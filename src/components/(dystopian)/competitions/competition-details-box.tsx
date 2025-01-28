@@ -33,16 +33,15 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
         enabled: !!CurrentUser && !!comp,
       },
     );
-  const { data: regTeam, isLoading: isTeamLoading } =
-    api.team.findTeamOfUser.useQuery(
-      {
-        userId: CurrentUser?.id ?? "",
-        competitionId: comp?.id ?? "",
-      },
-      {
-        enabled: !!CurrentUser && !!comp,
-      },
-    );
+  const { data: regTeam } = api.team.findTeamOfUser.useQuery(
+    {
+      userId: CurrentUser?.id ?? "",
+      competitionId: comp?.id ?? "",
+    },
+    {
+      enabled: !!CurrentUser && !!comp,
+    },
+  );
 
   const regStatus = !!plan;
 

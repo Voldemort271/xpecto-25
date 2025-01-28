@@ -4,8 +4,6 @@ import {
   IM_Fell_Double_Pica_SC,
   Jacquard_24,
 } from "next/font/google";
-import collegeImg from "../../../../public/images/iit-mandi-img.png";
-import roadImg from "../../../../public/images/road-img.png";
 import Image from "next/image";
 
 const jacquard = Jacquard_24({ weight: "400", subsets: ["latin"] });

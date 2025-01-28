@@ -4,11 +4,8 @@ import React from "react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { usePathname } from "next/navigation";
 
 const CompetitionsHeader = () => {
-  const path = usePathname();
-
   return (
     <div className="relative flex h-full w-full flex-row gap-0 bg-neutral-900">
       <Image

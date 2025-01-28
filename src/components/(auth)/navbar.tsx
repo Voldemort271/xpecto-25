@@ -2,12 +2,11 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { Handjet, Share_Tech } from "next/font/google";
+import { Handjet } from "next/font/google";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import Link from "next/link";
 
 const handjet = Handjet({ subsets: ["latin"] });
-const sharetech = Share_Tech({ weight: ["400"], subsets: ["latin"] });
 
 const AuthNavbar = () => {
   const path = usePathname();

@@ -4,7 +4,6 @@ import React, { useContext } from "react";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import Image from "next/image";
-import BgImage from "public/images/signin.jpg";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";

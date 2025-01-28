@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
 import PronitesControlMobile from "@/components/(dystopian)/pronites/pronites-control-mobile";
-import { ProniteWithDetails } from "@/app/types";
+import { type ProniteWithDetails } from "@/app/types";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 

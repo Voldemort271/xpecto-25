@@ -5,18 +5,17 @@ import {
   DialogFooter,
   DialogTitle,
   DialogTrigger,
-} from "../../ui/dialog";
+} from "@/components/ui/dialog";
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
-import { Handjet, Share_Tech } from "next/font/google";
+import { Handjet } from "next/font/google";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 
 // import Razorpay from "razorpay";
 
 const handjet = Handjet({ subsets: ["latin"] });
-const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 interface RegisterDialogProps {
   trigger: React.ReactNode;

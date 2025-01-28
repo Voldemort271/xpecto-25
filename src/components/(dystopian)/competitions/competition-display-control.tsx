@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useContext } from "react";
+import React, { type Dispatch, type SetStateAction, useContext } from "react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { CursorContext } from "@/context/cursor-context";
 

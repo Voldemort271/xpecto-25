@@ -221,7 +221,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
               No results found.
             </p>
           )
-        ) : null}{" "}
+        ) : null}
       </div>
     </motion.div>
   );

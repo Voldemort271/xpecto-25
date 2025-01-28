@@ -6,7 +6,7 @@ import SponsorTitle from "@/components/(dystopian)/sponsors/sponsor-title";
 import TitleSponsor from "@/components/(dystopian)/sponsors/title-sponsor";
 
 const Page = () => {
-  const allSpons = api.sponsor.getSponsor.useQuery({ id: "" }).data; // id="" fetches all spons
+  const allSponsors = api.sponsor.getSponsor.useQuery({ id: "" }).data; // id="" fetches all spons
 
   return (
     <div className="w-full bg-neutral-900">

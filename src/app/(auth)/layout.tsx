@@ -1,7 +1,6 @@
 import React from "react";
 import AuthNavbar from "@/components/(auth)/navbar";
 import Image from "next/image";
-import SigninPic from "../../../public/images/signin.jpg";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import { Handjet } from "next/font/google";
 

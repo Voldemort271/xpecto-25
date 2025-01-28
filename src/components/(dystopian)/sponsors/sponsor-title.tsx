@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import SponBg from "public/images/spon.png";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 
 const SponsorTitle = () => {

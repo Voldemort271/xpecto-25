@@ -3,7 +3,7 @@ import MarqueeContainer from "@/components/(dystopian)/common/marquee-container"
 import { motion } from "motion/react";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
-import { ProniteWithDetails } from "@/app/types";
+import { type ProniteWithDetails } from "@/app/types";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -15,7 +15,7 @@ interface Props {
   setIndex: Dispatch<SetStateAction<number>>;
 }
 
-const PronitesControlMobile = ({ pronite, length, index, setIndex }: Props) => {
+const PronitesControlMobile = ({ pronite }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   return (
