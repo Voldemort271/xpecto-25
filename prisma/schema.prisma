@@ -10,6 +10,24 @@ datasource db {
     url       = env("DATABASE_URL")
     directUrl = env("DIRECT_URL")
 }
+
+model Member {
+    id        String @id @default(cuid())
+    name      String
+    email     String
+    github    String
+    linkedin  String
+    instagram String
+    contact   Int
+    org       String
+    image     String
+    desc      String
+    role      String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
 // We can use the prize money field to detect an organiser register
 model User {
     id           String @id @default(cuid())
@@ -17,15 +35,25 @@ model User {
     email        String @unique
     name         String
     college_name String @default("Individual")
+    role         String @default("participant")
 
-    teamLeader Team[]        @relation("teamLeader")
-    invites    InviteToken[]
+    teamLeader       Team[]           @relation("teamLeader")
+    invites          InviteToken[]
+    ambassadorInvite AmbassadorToken?
 
     teams     Team[]
     regEvents Registration[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model AmbassadorToken {
+    token     String   @id
+    userId    String   @unique
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [userId], references: [id])
 }
 
 model Team {
@@ -63,10 +91,10 @@ model InviteToken {
 }
 
 model Competition {
-    id                String @id @default(cuid())
-    prizepool         Int    @default(0)
-    max_team_size     Int    @default(5)
-    min_team_size     Int    @default(1)
+    id                String  @id @default(cuid())
+    prizepool         Int     @default(0)
+    max_team_size     Int     @default(5)
+    min_team_size     Int     @default(1)
     rulebook          String? // Supposed to be a link
     problem_statement String? // Supposed to be a link
 
@@ -93,7 +121,6 @@ enum Tag {
     Algorithms
 }
 
-
 model Sponsor {
     id   String @id @default(cuid())
     name String
@@ -111,7 +138,7 @@ model EventDetails {
     slug        String   @default("")
     description String
     venue       String
-    cover       String  // Contains link of the cover image
+    cover       String // Contains link of the cover image
 
     pronite     Pronite?
     competition Competition?
@@ -159,7 +186,7 @@ model RegistrationLevel {
 }
 
 model Expos {
-    id   String @id @default(cuid())
+    id String @id @default(cuid())
 
     exposDetails   EventDetails @relation(fields: [exposDetailsId], references: [id])
     exposDetailsId String       @unique
@@ -169,7 +196,7 @@ model Expos {
 }
 
 model Workshops {
-    id   String @id @default(cuid())
+    id String @id @default(cuid())
 
     workshopDetails   EventDetails @relation(fields: [workshopDetailsId], references: [id])
     workshopDetailsId String       @unique
