@@ -165,4 +165,13 @@ export const userRouter = createTRPCRouter({
       });
       return user;
     }),
+  getUserRegisteredEvents: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const registrations = await ctx.db.registration.findMany({
+        where: { userId: input.userId },
+        include: { event: true }, // Include event details
+      });
+      return registrations;
+    }),
 });
