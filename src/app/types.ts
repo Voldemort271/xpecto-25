@@ -9,42 +9,54 @@ import {
   type User,
   type Workshops,
 } from "@prisma/client";
+import { type StaticImport } from "next/dist/shared/lib/get-img-props";
 
-export type CompetitionType = {
-  max_team_size: number;
-  min_team_size: number;
+export type TeamData = {
   name: string;
-  prizepool: number;
-  description: string;
-  begin_time: Date;
-  end_time: Date;
-  venue: string;
-  levels: string;
-  rules: string;
-  problem_statement: string;
-  regPlans: {
-    id: string;
-    name: string;
-    description: string;
-    price: string;
-    labelling: string;
-  }[];
-};
-export type ProniteType = {
-  max_capacity: number;
-  ticket_price: number;
-  name: string;
-  description: string;
-  begin_time: Date;
-  end_time: null;
-  venue: string;
+  role: "convenor" | "co-convenor" | "head" | "volunteer";
+  org?: string;
+  image: string | StaticImport;
+  desc: string;
+  github?: string;
+  linkedin?: string;
+  instagram?: string;
 };
 
-export type MultiEntitySchemaType = {
-  name: string;
-  type: string;
-  displayName: string;
-};
+// export type CompetitionType = {
+//   max_team_size: number;
+//   min_team_size: number;
+//   name: string;
+//   prizepool: number;
+//   description: string;
+//   begin_time: Date;
+//   end_time: Date;
+//   venue: string;
+//   levels: string;
+//   rules: string;
+//   problem_statement: string;
+//   regPlans: {
+//     id: string;
+//     name: string;
+//     description: string;
+//     price: string;
+//     labelling: string;
+//   }[];
+// };
+// export type ProniteType = {
+//   max_capacity: number;
+//   ticket_price: number;
+//   name: string;
+//   description: string;
+//   begin_time: Date;
+//   end_time: null;
+//   venue: string;
+// };
+//
+// export type MultiEntitySchemaType = {
+//   name: string;
+//   type: string;
+//   displayName: string;
+// };
 
 export interface TeamWithFullDetails extends Team {
   leader: User;
