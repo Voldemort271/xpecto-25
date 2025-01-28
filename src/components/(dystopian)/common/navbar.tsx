@@ -18,7 +18,7 @@ const DystopianNav = () => {
   const animationDelay = path === "/" ? 8 : 0;
 
   // Extract userId from CurrentUser
-  const loggedInUserId = CurrentUser?.id || ""; // Default to empty string if not logged in
+  const loggedInUserId = CurrentUser?.id ?? ""; // Default to empty string if not logged in
 
   return (
     <motion.div
