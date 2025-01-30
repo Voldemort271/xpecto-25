@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { CursorContext } from "@/context/cursor-context";
 import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,7 @@ const ClickToStart = () => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="relative mt-5 w-full">
+    <div className="relative mt-5 flex w-full flex-col items-center justify-center">
       <motion.div
         className="w-full px-12 py-5 text-xl font-light"
         initial={{ opacity: 1 }}
@@ -48,6 +49,21 @@ const ClickToStart = () => {
         }}
       >
         &lt;&lt; call the time machine &gt;&gt;
+      </motion.div>
+      <motion.div
+        className="block px-12 text-xl font-light sm:hidden"
+        initial={{ opacity: 1 }}
+        variants={{
+          blink: {
+            opacity: [1, 0, 1],
+          },
+        }}
+        animate="blink"
+        transition={{ duration: 1, repeat: Infinity, delay: 1 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <Link href={"/team"}>&lt;&lt; view credits &gt;&gt;</Link>
       </motion.div>
       {visible && (
         <div
