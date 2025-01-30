@@ -2,7 +2,7 @@
 
 import {
   Carousel,
-  CarouselApi,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
@@ -25,21 +25,35 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
   const [apiDesktop, setApiDesktop] = useState<CarouselApi>();
   const [apiMobile, setApiMobile] = useState<CarouselApi>();
 
+  const [pos, setPos] = useState(0);
+
   useEffect(() => {
     if (!apiDesktop) return;
     apiDesktop.scrollTo(index);
   }, [apiDesktop, index]);
 
   useEffect(() => {
-    if (!apiDesktop) return;
-    setIndex(apiDesktop.selectedScrollSnap());
-    console.log(apiDesktop.selectedScrollSnap());
-  }, [apiDesktop, setIndex]);
-
-  useEffect(() => {
     if (!apiMobile) return;
     apiMobile.scrollTo(index);
   }, [apiMobile, index]);
+
+  useEffect(() => {
+    if (!apiDesktop) return;
+    apiDesktop.on("select", () => {
+      setPos(apiDesktop.selectedScrollSnap());
+    });
+  }, [apiDesktop]);
+
+  useEffect(() => {
+    if (!apiMobile) return;
+    apiMobile.on("select", () => {
+      setPos(apiMobile.selectedScrollSnap());
+    });
+  }, [apiMobile]);
+
+  useEffect(() => {
+    setIndex(pos);
+  }, [pos, setIndex]);
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center px-5 lg:px-12">
