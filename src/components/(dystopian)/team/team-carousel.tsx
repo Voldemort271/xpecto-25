@@ -21,7 +21,7 @@ interface Props {
   setIndex: Dispatch<SetStateAction<number>>;
 }
 
-const TeamCarousel = ({ data, index }: Props) => {
+const TeamCarousel = ({ data, index, setIndex }: Props) => {
   const [apiDesktop, setApiDesktop] = useState<CarouselApi>();
   const [apiMobile, setApiMobile] = useState<CarouselApi>();
 
@@ -29,6 +29,12 @@ const TeamCarousel = ({ data, index }: Props) => {
     if (!apiDesktop) return;
     apiDesktop.scrollTo(index);
   }, [apiDesktop, index]);
+
+  useEffect(() => {
+    if (!apiDesktop) return;
+    setIndex(apiDesktop.selectedScrollSnap());
+    console.log(apiDesktop.selectedScrollSnap());
+  }, [apiDesktop, setIndex]);
 
   useEffect(() => {
     if (!apiMobile) return;

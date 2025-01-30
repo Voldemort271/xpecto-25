@@ -2,8 +2,8 @@ import React, { type ReactNode } from "react";
 
 const MemberDetailsContainer = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center bg-neutral-950">
-      {children}
+    <div className="h-full w-full bg-neutral-950 md:pt-16">
+      <div className="relative h-full w-full">{children}</div>
     </div>
   );
 };

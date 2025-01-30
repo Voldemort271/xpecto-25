@@ -69,10 +69,20 @@ const TeamPage = () => {
 
   return (
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-      <TeamCarouselContainer>
+      <TeamCarouselContainer data={teamData} index={index}>
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
       </TeamCarouselContainer>
-      <MemberDetailsContainer>hi</MemberDetailsContainer>
+      <MemberDetailsContainer>
+        {[1, 2, 3, 4, 5].map((el) => (
+          <div
+            key={el}
+            onClick={() => setIndex(el)}
+            className="m-5 bg-red-400 p-12"
+          >
+            {el}
+          </div>
+        ))}
+      </MemberDetailsContainer>
     </div>
   );
 };
