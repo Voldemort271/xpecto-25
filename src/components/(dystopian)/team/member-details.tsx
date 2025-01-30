@@ -8,6 +8,7 @@ import { Share_Tech } from "next/font/google";
 import PixelEmail from "@/components/svg/mail";
 import PixelInsta from "@/components/svg/insta";
 import PixelPhone from "@/components/svg/phone";
+import PixelLinkedin from "@/components/svg/linkedin";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -57,9 +58,10 @@ const MemberDetails = ({ data }: Props) => {
         </div>
         <div className="mb-5 h-[2px] w-full bg-amber-50/[0.5] backdrop-blur-2xl"></div>
         <div className="flex flex-wrap justify-end gap-8">
-          <PixelEmail size={32} color={"#fffbeb"} />
-          <PixelInsta size={32} color={"#fffbeb"} />
           <PixelPhone size={32} color={"#fffbeb"} />
+          <PixelInsta size={32} color={"#fffbeb"} />
+          <PixelEmail size={32} color={"#fffbeb"} />
+          <PixelLinkedin size={32} color={"#fffbeb"} />
         </div>
       </div>
     </div>

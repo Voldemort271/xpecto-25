@@ -17,9 +17,10 @@ export type TeamData = {
   org?: string;
   image: string | StaticImport;
   desc: string;
-  github?: string;
-  linkedin?: string;
+  email?: string;
+  phone?: string;
   instagram?: string;
+  linkedin?: string;
 };
 
 // export type CompetitionType = {
