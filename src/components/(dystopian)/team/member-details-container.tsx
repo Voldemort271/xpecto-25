@@ -26,11 +26,9 @@ const MemberDetailsContainer = ({ setIndex, children }: Props) => {
 
   return (
     <div className="h-full w-full bg-neutral-900 md:pt-16">
-      {/* TODO: Add "back to home" link */}
-      {/* TODO: Display controls at bottom right in a tech-like fashion */}
       <div className="relative flex h-full w-full flex-col items-start justify-between">
         {children}
-        <div className="z-0 grid min-w-72 grid-cols-2 p-2.5 sm:p-5">
+        <div className="z-0 grid min-w-72 grid-cols-2 p-2.5 pb-12 sm:p-5">
           <motion.div
             className="col-span-2 text-xl font-extralight uppercase text-amber-50/[0.7]"
             variants={keyframes}

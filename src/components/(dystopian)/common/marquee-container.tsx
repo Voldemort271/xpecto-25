@@ -19,7 +19,7 @@ const MarqueeContainer = ({ text, href, onclick, delay, cursor }: Props) => {
 
   return href ? (
     <Link
-      className={`flex items-center ${cursor ? "cursor-pointer" : "cursor-none"}`}
+      className={`flex items-center ${cursor ? "cursor-pointer" : "cursor-none"} select-none`}
       href={href}
       onClick={onclick}
       onMouseEnter={() => setIsHovered(true)}
@@ -45,7 +45,7 @@ const MarqueeContainer = ({ text, href, onclick, delay, cursor }: Props) => {
   ) : (
     <>
       <div
-        className={styles.marquee}
+        className={`${styles.marquee} select-none`}
         style={{ animationDelay: `${delay ? delay : 0}s` }}
       >
         <span style={{ animationDelay: `${delay ? delay - 25 : -25}s` }}>
@@ -53,7 +53,7 @@ const MarqueeContainer = ({ text, href, onclick, delay, cursor }: Props) => {
         </span>
       </div>
       <div
-        className={`${styles.marquee} ${styles.marquee2}`}
+        className={`${styles.marquee} ${styles.marquee2} select-none`}
         style={{ animationDelay: `${delay ? delay : 0}s` }}
       >
         <span style={{ animationDelay: `${delay ? delay : 0}s` }}>
