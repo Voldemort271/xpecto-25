@@ -15,7 +15,6 @@ const teamData: TeamData[] = [
   {
     name: "player 1",
     role: "convenor",
-    // org: "web dev",
     image: Pic1,
     desc: "lorem ipsum",
     github: "",
@@ -72,16 +71,8 @@ const TeamPage = () => {
       <TeamCarouselContainer data={teamData} index={index}>
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
       </TeamCarouselContainer>
-      <MemberDetailsContainer>
-        {[0, 1, 2, 3, 4].map((el) => (
-          <div
-            key={el}
-            onClick={() => setIndex(el)}
-            className="m-5 bg-red-400 p-12"
-          >
-            {el + 1}
-          </div>
-        ))}
+      <MemberDetailsContainer index={index} setIndex={setIndex}>
+        hi
       </MemberDetailsContainer>
     </div>
   );
