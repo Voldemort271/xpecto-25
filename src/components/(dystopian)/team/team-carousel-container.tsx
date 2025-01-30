@@ -5,11 +5,10 @@ import type { TeamData } from "@/app/types";
 
 interface Props {
   children: ReactNode;
-  data: TeamData[];
-  index: number;
+  data?: TeamData;
 }
 
-const TeamCarouselContainer = ({ children, data, index }: Props) => {
+const TeamCarouselContainer = ({ children, data }: Props) => {
   return (
     <div className="relative z-0 grid h-full w-full grid-rows-[56px_auto_56px] bg-neutral-900 pt-[126px] md:grid-cols-[64px_auto_64px] md:grid-rows-1 md:pt-0 lg:grid-cols-[56px_auto_56px]">
       <Image
@@ -40,23 +39,20 @@ const TeamCarouselContainer = ({ children, data, index }: Props) => {
         <div className="absolute left-0 top-0 flex h-14 w-screen flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:top-1 md:h-16 md:w-[100vh] md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:rotate-90 md:text-3xl lg:left-[-4px] lg:h-14 lg:text-2xl">
           <MarqueeContainer
             text={
-              data?.[index]
+              data
                 ? [
-                    data[index].name,
-                    data[index].role === "convenor" ||
-                    data[index].role === "co-convenor"
-                      ? data[index].role
-                      : data[index].org + " " + data[index].role,
-                    data[index].name,
-                    data[index].role === "convenor" ||
-                    data[index].role === "co-convenor"
-                      ? data[index].role
-                      : data[index].org + " " + data[index].role,
-                    data[index].name,
-                    data[index].role === "convenor" ||
-                    data[index].role === "co-convenor"
-                      ? data[index].role
-                      : data[index].org + " " + data[index].role,
+                    data.name,
+                    data.role === "convenor" || data.role === "co-convenor"
+                      ? data.role
+                      : data.org + " " + data.role,
+                    data.name,
+                    data.role === "convenor" || data.role === "co-convenor"
+                      ? data.role
+                      : data.org + " " + data.role,
+                    data.name,
+                    data.role === "convenor" || data.role === "co-convenor"
+                      ? data.role
+                      : data.org + " " + data.role,
                   ]
                 : [
                     "unknown player",

@@ -10,6 +10,7 @@ import Pic4 from "public/images/background.jpg";
 import Pic5 from "public/images/iit-mandi-img.png";
 import { type TeamData } from "@/app/types";
 import MemberDetailsContainer from "@/components/(dystopian)/team/member-details-container";
+import MemberDetails from "@/components/(dystopian)/team/member-details";
 
 const teamData: TeamData[] = [
   {
@@ -68,11 +69,11 @@ const TeamPage = () => {
 
   return (
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-      <TeamCarouselContainer data={teamData} index={index}>
+      <TeamCarouselContainer data={teamData[index]}>
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
       </TeamCarouselContainer>
       <MemberDetailsContainer index={index} setIndex={setIndex}>
-        hi
+        <MemberDetails />
       </MemberDetailsContainer>
     </div>
   );
