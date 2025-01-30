@@ -9,6 +9,7 @@ import Pic3 from "public/images/spon.png";
 import Pic4 from "public/images/background.jpg";
 import Pic5 from "public/images/iit-mandi-img.png";
 import { type TeamData } from "@/app/types";
+import MemberDetailsContainer from "@/components/(dystopian)/team/member-details-container";
 
 const teamData: TeamData[] = [
   {
@@ -71,17 +72,7 @@ const TeamPage = () => {
       <TeamCarouselContainer>
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
       </TeamCarouselContainer>
-      <div className="flex h-full w-full flex-col items-center justify-center">
-        {[1, 2, 3, 4, 5].map((el) => (
-          <div
-            key={el}
-            className="my-2 bg-red-400 px-12 py-2"
-            onClick={() => setIndex(el - 1)}
-          >
-            {el}
-          </div>
-        ))}
-      </div>
+      <MemberDetailsContainer>hi</MemberDetailsContainer>
     </div>
   );
 };

@@ -15,7 +15,7 @@ const TeamCarouselContainer = ({ children }: { children: ReactNode }) => {
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom opacity-20"
       />
       <div className="relative h-full w-full">
-        <div className="absolute left-0 top-0 flex h-14 w-screen flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:top-0 md:w-[100vh] md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:-rotate-90 lg:h-16 lg:text-3xl">
+        <div className="absolute left-0 top-0 flex h-14 w-screen flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:top-1 md:h-16 md:w-[100vh] md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:-rotate-90 md:text-3xl lg:h-14 lg:text-2xl">
           <MarqueeContainer
             text={[
               "xpecto '25 squad",
@@ -30,7 +30,7 @@ const TeamCarouselContainer = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="relative h-full w-full">{children}</div>
       <div className="relative h-full w-full">
-        <div className="absolute left-0 top-0 flex h-14 w-screen flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:top-0 md:w-[100vh] md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:rotate-90 lg:h-16 lg:text-3xl">
+        <div className="absolute left-0 top-0 flex h-14 w-screen flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:top-1 md:h-16 md:w-[100vh] md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:rotate-90 md:text-3xl lg:left-[-4px] lg:h-14 lg:text-2xl">
           <MarqueeContainer
             text={[
               "player 1",
