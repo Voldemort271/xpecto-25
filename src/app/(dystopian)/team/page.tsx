@@ -18,9 +18,6 @@ const teamData: TeamData[] = [
     role: "convenor",
     image: Pic1,
     desc: "lorem ipsum",
-    github: "",
-    linkedin: "",
-    instagram: "",
   },
   {
     name: "player 2",
@@ -28,9 +25,6 @@ const teamData: TeamData[] = [
     org: "web dev",
     image: Pic2,
     desc: "lorem ipsum",
-    github: "",
-    linkedin: "",
-    instagram: "",
   },
   {
     name: "player 3",
@@ -38,9 +32,6 @@ const teamData: TeamData[] = [
     org: "web dev",
     image: Pic3,
     desc: "lorem ipsum",
-    github: "",
-    linkedin: "",
-    instagram: "",
   },
   {
     name: "player 4",
@@ -48,9 +39,6 @@ const teamData: TeamData[] = [
     org: "content",
     image: Pic4,
     desc: "lorem ipsum",
-    github: "",
-    linkedin: "",
-    instagram: "",
   },
   {
     name: "player 5",
@@ -58,9 +46,6 @@ const teamData: TeamData[] = [
     org: "content",
     image: Pic5,
     desc: "lorem ipsum",
-    github: "",
-    linkedin: "",
-    instagram: "",
   },
 ];
 
@@ -73,7 +58,7 @@ const TeamPage = () => {
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
       </TeamCarouselContainer>
       <MemberDetailsContainer index={index} setIndex={setIndex}>
-        <MemberDetails />
+        <MemberDetails data={teamData[index]} />
       </MemberDetailsContainer>
     </div>
   );
