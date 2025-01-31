@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useContext } from "react";
-import { motion } from "motion/react";
+import React, { useContext, useRef } from "react";
+import { motion, useInView } from "motion/react";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import Image from "next/image";
 import { Share_Tech } from "next/font/google";
@@ -12,21 +12,29 @@ const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const TitleSponsor = () => {
   const { setIsHovered } = useContext(CursorContext);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref);
 
   return (
-    <motion.div className="relative z-0 h-[500px] w-full overflow-clip border-2 border-amber-50">
+    <motion.div
+      className="relative z-0 h-[500px] w-full overflow-clip border-2 border-amber-50"
+      ref={ref}
+    >
       <motion.div
         initial={{ left: "100%", translateX: "0%" }}
-        animate={{ left: "0", translateX: "-100%" }}
+        animate={{
+          left: inView ? "0" : "100%",
+          translateX: inView ? "-100%" : "0",
+        }}
         transition={{ duration: 5, delay: 0.5 }}
-        className="pointer-events-none absolute left-0 top-0 z-20 w-fit border-x-2 border-amber-50 bg-neutral-900 px-36 text-[496px] font-extrabold uppercase leading-none"
+        className="pointer-events-none absolute left-0 top-0 z-20 w-fit select-none border-x-2 border-amber-50 bg-neutral-900 px-36 text-[496px] font-extrabold uppercase leading-none"
       >
         title&nbsp;sponsor
       </motion.div>
       <motion.div
         className="loading absolute left-0 top-0 z-10 h-full w-full"
         initial={{ display: "block" }}
-        animate={{ display: "none" }}
+        animate={{ display: inView ? "none" : "block" }}
         transition={{ duration: 0, delay: 2.5 }}
       ></motion.div>
       <div className="relative grid h-full w-full grid-cols-[48px_auto_48px] overflow-clip overflow-y-scroll overscroll-none bg-neutral-900 md:grid-cols-[64px_auto_64px]">

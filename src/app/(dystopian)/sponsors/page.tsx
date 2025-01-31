@@ -13,6 +13,7 @@ const Page = () => {
       <SponsorTitle />
       <div className="flex w-full flex-col gap-12 bg-neutral-900 p-5 pt-24 sm:p-12 md:p-24">
         <TitleSponsor />
+        <TitleSponsor />
       </div>
     </div>
   );
