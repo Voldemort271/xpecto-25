@@ -2,217 +2,236 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider  = "postgresql"
-    url       = env("DATABASE_URL")
-    directUrl = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Member {
-    id        String @id @default(cuid())
-    name      String
-    email     String
-    github    String
-    linkedin  String
-    instagram String
-    contact   Int
-    org       String
-    image     String
-    desc      String
-    role      String
+  id        String  @id @default(cuid())
+  name      String
+  role      Role
+  org       Org?
+  image     String
+  desc      String
+  email     String?
+  contact   BigInt?
+  linkedin  String?
+  instagram String?
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // We can use the prize money field to detect an organiser register
 model User {
-    id           String @id @default(cuid())
-    clerkId      String @unique
-    email        String @unique
-    name         String
-    college_name String @default("Individual")
-    role         String @default("participant")
+  id           String @id @default(cuid())
+  clerkId      String @unique
+  email        String @unique
+  name         String
+  college_name String @default("Individual")
+  role         String @default("participant")
 
-    teamLeader       Team[]           @relation("teamLeader")
-    invites          InviteToken[]
-    ambassadorInvite AmbassadorToken?
+  teamLeader       Team[]           @relation("teamLeader")
+  invites          InviteToken[]
+  ambassadorInvite AmbassadorToken?
 
-    teams     Team[]
-    regEvents Registration[]
+  teams     Team[]
+  regEvents Registration[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model AmbassadorToken {
-    token     String   @id
-    userId    String   @unique
-    createdAt DateTime @default(now())
+  token     String   @id
+  userId    String   @unique
+  createdAt DateTime @default(now())
 
-    user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Team {
-    id          String @id @default(cuid())
-    name        String
-    prize_money Int    @default(0)
-    ranking     Int?
-    submissions String // Contains link to location of submission
+  id          String @id @default(cuid())
+  name        String
+  prize_money Int    @default(0)
+  ranking     Int?
+  submissions String // Contains link to location of submission
 
-    leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
-    leaderId String
+  leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
+  leaderId String
 
-    competition   Competition @relation(fields: [competitionId], references: [id])
-    competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  competitionId String
 
-    team_members User[]
-    invitations  InviteToken[]
+  team_members User[]
+  invitations  InviteToken[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    @@unique([name, competitionId])
+  @@unique([name, competitionId])
 }
 
 model InviteToken {
-    token     String   @id
-    teamId    String
-    userId    String
-    createdAt DateTime @default(now())
+  token     String   @id
+  teamId    String
+  userId    String
+  createdAt DateTime @default(now())
 
-    team Team @relation(fields: [teamId], references: [id])
-    user User @relation(fields: [userId], references: [id])
+  team Team @relation(fields: [teamId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
-    @@unique([teamId, userId])
+  @@unique([teamId, userId])
 }
 
 model Competition {
-    id                String  @id @default(cuid())
-    prizepool         Int     @default(0)
-    max_team_size     Int     @default(5)
-    min_team_size     Int     @default(1)
-    rulebook          String? // Supposed to be a link
-    problem_statement String? // Supposed to be a link
+  id                String  @id @default(cuid())
+  prizepool         Int     @default(0)
+  max_team_size     Int     @default(5)
+  min_team_size     Int     @default(1)
+  rulebook          String? // Supposed to be a link
+  problem_statement String? // Supposed to be a link
 
-    competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
-    competitionDetailsId String       @unique
+  competitionDetails   EventDetails @relation(fields: [competitionDetailsId], references: [id])
+  competitionDetailsId String       @unique
 
-    teams Team[]
+  teams Team[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-enum Tag {
-    ML
-    AI
-    WebDev
-    AppDev
-    GameDev
-    Heuristics
-    Robotics
-    IoT
-    Blockchain
-    DataStructures
-    Algorithms
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Sponsor {
-    id   String @id @default(cuid())
-    name String
-    tier String
-    logo String
+  id   String @id @default(cuid())
+  name String
+  tier String
+  logo String
 
-    events EventDetails[] // Using this we can get to know what type of event is sposored by the sponsor
+  events EventDetails[] // Using this we can get to know what type of event is sposored by the sponsor
 }
 
 model EventDetails {
-    id          String   @id @default(cuid())
-    begin_time  DateTime
-    end_time    DateTime
-    name        String
-    slug        String   @default("")
-    description String
-    venue       String
-    cover       String // Contains link of the cover image
+  id          String   @id @default(cuid())
+  begin_time  DateTime
+  end_time    DateTime
+  name        String
+  slug        String   @default("")
+  description String
+  venue       String
+  cover       String // Contains link of the cover image
 
-    pronite     Pronite?
-    competition Competition?
-    expos       Expos?
-    workshops   Workshops?
+  pronite     Pronite?
+  competition Competition?
+  expos       Expos?
+  workshops   Workshops?
 
-    sponsors      Sponsor[]
-    regPlans      RegistrationLevel[]
-    registrations Registration[]
-    tags          Tag[]
+  sponsors      Sponsor[]
+  regPlans      RegistrationLevel[]
+  registrations Registration[]
+  tags          Tag[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Registration {
-    id        String   @id @default(cuid())
-    userId    String
-    planId    String
-    eventId   String
-    paymentId String
-    createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  planId    String
+  eventId   String
+  paymentId String
+  createdAt DateTime @default(now())
 
-    user  User              @relation(fields: [userId], references: [id])
-    plan  RegistrationLevel @relation(fields: [planId], references: [id])
-    event EventDetails      @relation(fields: [eventId], references: [id])
+  user  User              @relation(fields: [userId], references: [id])
+  plan  RegistrationLevel @relation(fields: [planId], references: [id])
+  event EventDetails      @relation(fields: [eventId], references: [id])
 
-    @@unique([userId, eventId]) // I had to take eventId here to make sure one user can only register in an event once
+  @@unique([userId, eventId]) // I had to take eventId here to make sure one user can only register in an event once
 }
 
 model RegistrationLevel {
-    id          String @id @default(cuid())
-    name        String @default("")
-    description String @default("")
-    price       Int    @default(0)
-    labelling   String @default("basic") // Basically to show if the container will be star marked or can have another marking. This can be used to dynamically assign it
+  id          String @id @default(cuid())
+  name        String @default("")
+  description String @default("")
+  price       Int    @default(0)
+  labelling   String @default("basic") // Basically to show if the container will be star marked or can have another marking. This can be used to dynamically assign it
 
-    eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
-    eventDetailsId String
+  eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
+  eventDetailsId String
 
-    Registrations Registration[]
+  Registrations Registration[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Expos {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    exposDetails   EventDetails @relation(fields: [exposDetailsId], references: [id])
-    exposDetailsId String       @unique
+  exposDetails   EventDetails @relation(fields: [exposDetailsId], references: [id])
+  exposDetailsId String       @unique
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Workshops {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    workshopDetails   EventDetails @relation(fields: [workshopDetailsId], references: [id])
-    workshopDetailsId String       @unique
+  workshopDetails   EventDetails @relation(fields: [workshopDetailsId], references: [id])
+  workshopDetailsId String       @unique
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Pronite {
-    id           String @id @default(cuid())
-    max_capacity Int    @default(1000)
-    ticket_price Int    @default(0)
+  id           String @id @default(cuid())
+  max_capacity Int    @default(1000)
+  ticket_price Int    @default(0)
 
-    proniteDetails   EventDetails @relation(fields: [proniteDetailsId], references: [id])
-    proniteDetailsId String       @unique
+  proniteDetails   EventDetails @relation(fields: [proniteDetailsId], references: [id])
+  proniteDetailsId String       @unique
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Tag {
+  ML
+  AI
+  WebDev
+  AppDev
+  GameDev
+  Heuristics
+  Robotics
+  IoT
+  Blockchain
+  DataStructures
+  Algorithms
+}
+
+enum Org {
+  WebDev
+  Design
+  Content
+  Planning
+  Photography
+  Sponsorship
+  Security
+  Publicity
+  Media
+  Hospitality
+  Decoration
+}
+
+enum Role {
+  Convenor
+  CoConvenor
+  Head
 }
