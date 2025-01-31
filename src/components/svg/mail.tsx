@@ -14,7 +14,7 @@ const PixelEmail = ({ size, color }: Props) => {
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1128_7916)">
+      <g clipPath="url(#clip0_1128_7916)">
         <path d="M31.3301 12.19V10.67H29.8001V9.14H28.2801V6.1H26.7601V18.29H28.2801V16.76H29.8001V15.24H31.3301V28.95H32.8501V12.19H31.3301Z" />
         <path d="M31.33 28.95H29.8V30.48H31.33V28.95Z" />
         <path d="M29.8001 30.48H3.90015V32H29.8001V30.48Z" />

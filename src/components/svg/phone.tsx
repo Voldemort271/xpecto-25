@@ -14,7 +14,7 @@ const PixelPhone = ({ size, color }: Props) => {
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1128_19710)">
+      <g clipPath="url(#clip0_1128_19710)">
         <path d="M32.8501 11.43H31.3201V20.57H32.8501V11.43Z" />
         <path d="M31.3201 20.57H29.8001V23.62H31.3201V20.57Z" />
         <path d="M31.3201 8.38H29.8001V11.43H31.3201V8.38Z" />

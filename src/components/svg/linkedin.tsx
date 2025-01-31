@@ -14,7 +14,7 @@ const PixelLinkedin = ({ size, color }: Props) => {
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1128_19960)">
+      <g clipPath="url(#clip0_1128_19960)">
         <path d="M32.8501 3.04999H31.3201V28.95H32.8501V3.04999Z" />
         <path d="M31.32 28.95H29.8V30.48H31.32V28.95Z" />
         <path d="M31.32 1.51999H29.8V3.04999H31.32V1.51999Z" />

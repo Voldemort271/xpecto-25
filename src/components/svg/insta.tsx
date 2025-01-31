@@ -14,7 +14,7 @@ const PixelInsta = ({ size, color }: Props) => {
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1128_19866)">
+      <g clipPath="url(#clip0_1128_19866)">
         <path d="M31.3201 3.04999V10.67H20.6601V12.19H22.1801V13.71H23.7001V12.19H31.3201V28.95H32.8501V3.04999H31.3201Z" />
         <path d="M31.3201 28.95H29.8001V30.48H31.3201V28.95Z" />
         <path d="M31.3201 1.51999H29.8001V3.04999H31.3201V1.51999Z" />
