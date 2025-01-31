@@ -16,7 +16,7 @@ const TeamPage = () => {
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
       </TeamCarouselContainer>
       <MemberDetailsContainer index={index} setIndex={setIndex}>
-        <MemberDetails data={teamData[index]} />
+        <MemberDetails data={teamData[index]} key={index} />
       </MemberDetailsContainer>
     </div>
   );

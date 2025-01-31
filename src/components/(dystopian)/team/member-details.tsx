@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext } from "react";
 import BgImg from "public/images/background-teams.png";
 import { type TeamData } from "@/app/types";
@@ -9,8 +11,15 @@ import PixelEmail from "@/components/svg/mail";
 import PixelInsta from "@/components/svg/insta";
 import PixelPhone from "@/components/svg/phone";
 import PixelLinkedin from "@/components/svg/linkedin";
+import { motion } from "motion/react";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
+
+const keyframes = {
+  flicker: {
+    opacity: [0, 1, 0.3, 0.0, 0.3, 1, 0.3, 0, 0.3, 1, 0.3, 1],
+  },
+};
 
 interface Props {
   data?: TeamData;
@@ -38,7 +47,15 @@ const MemberDetails = ({ data }: Props) => {
         >
           &lt;&lt; back to launchpad
         </Link>
-        <div className="flex flex-wrap items-baseline gap-2.5 uppercase">
+        <motion.div
+          className="flex flex-wrap items-baseline gap-2.5 uppercase"
+          variants={keyframes}
+          animate="flicker"
+          transition={{
+            duration: 0.5,
+            ease: "linear",
+          }}
+        >
           <span className="mr-5 text-6xl font-bold sm:text-7xl md:text-6xl lg:text-8xl">
             {data?.name ?? "unknown player"}
           </span>
@@ -48,21 +65,35 @@ const MemberDetails = ({ data }: Props) => {
           <span className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase">
             {data ? (data.org ?? "admin") : "mystery"} team
           </span>
-        </div>
-        <div>
-          <p
-            className={`py-5 text-lg tracking-tight text-amber-50 ${shareTech.className} max-w-screen-sm`}
-          >
-            {data?.desc ?? "No details provided for selected player."}
-          </p>
-        </div>
+        </motion.div>
+        <motion.div
+          className={`py-5 text-lg tracking-tight text-amber-50 ${shareTech.className} max-w-screen-sm`}
+          variants={keyframes}
+          animate="flicker"
+          transition={{
+            duration: 0.5,
+            ease: "linear",
+            delay: 0.25,
+          }}
+        >
+          {data?.desc ?? "No details provided for selected player."}
+        </motion.div>
         <div className="mb-5 h-[2px] w-full bg-amber-50/[0.5] backdrop-blur-2xl"></div>
-        <div className="flex flex-wrap justify-end gap-8">
+        <motion.div
+          className="flex flex-wrap justify-end gap-8"
+          variants={keyframes}
+          animate="flicker"
+          transition={{
+            duration: 0.5,
+            ease: "linear",
+            delay: 0.5,
+          }}
+        >
           <PixelPhone size={32} color={"#fffbeb"} />
           <PixelInsta size={32} color={"#fffbeb"} />
           <PixelEmail size={32} color={"#fffbeb"} />
           <PixelLinkedin size={32} color={"#fffbeb"} />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
