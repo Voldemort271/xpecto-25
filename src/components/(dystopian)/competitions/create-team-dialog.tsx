@@ -214,12 +214,12 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
               {invitees.map((user) => {
                 return (
                   <div
-                    className={`flex w-80 flex-wrap bg-amber-50/[0.3] px-5 py-2 ${sharetech.className} cursor-pointer text-lg tracking-tight`}
+                    className={`flex max-w-80 flex-col flex-wrap bg-amber-50/[0.3] px-5 py-2 ${sharetech.className} cursor-pointer text-lg tracking-tight`}
                     key={user.id}
                     onClick={() => deleteUserFromInvitees(user.id)}
                   >
                     <div className="">{user.name}</div>
-                    <div>{user.email}</div>
+                    <div className="text-base">{user.email}</div>
                   </div>
                 );
               })}
@@ -258,8 +258,8 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
                     key={user.id}
                     onClick={() => addUserToInvitees(user)}
                   >
-                    <div className="">{user.name}</div>
-                    <div>{user.email}</div>
+                    <div className="text-base">{user.name}</div>
+                    <div className="text-sm">{user.email}</div>
                   </div>
                 ))}
               </PopoverContent>
