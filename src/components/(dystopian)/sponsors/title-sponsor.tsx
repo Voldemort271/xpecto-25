@@ -13,7 +13,7 @@ const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 const TitleSponsor = () => {
   const { setIsHovered } = useContext(CursorContext);
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref);
+  const inView = useInView(ref, { once: true });
 
   return (
     <motion.div
