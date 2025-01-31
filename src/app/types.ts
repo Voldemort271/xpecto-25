@@ -13,14 +13,25 @@ import { type StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export type TeamData = {
   name: string;
-  role: "convenor" | "co-convenor" | "head" | "volunteer";
-  org?: string;
+  role: "convenor" | "co-convenor" | "head"; // enum
+  org?:
+    | "web dev"
+    | "design"
+    | "content"
+    | "planning"
+    | "photography"
+    | "sponsorship"
+    | "security"
+    | "publicity"
+    | "media"
+    | "hospitality"
+    | "decoration"; // enum
   image: string | StaticImport;
   desc: string;
-  email?: string;
-  phone?: string;
-  instagram?: string;
-  linkedin?: string;
+  email?: string; // url
+  phone?: string; // number maybe?
+  instagram?: string; // url
+  linkedin?: string; // url
 };
 
 // export type CompetitionType = {

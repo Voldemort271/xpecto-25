@@ -43,7 +43,7 @@ const MemberDetailsContainer = ({ setIndex, children }: Props) => {
           </motion.div>
           {[0, 1, 2, 3, 4].map((el) => (
             <motion.div
-              className="text-lg font-extralight uppercase text-amber-50/[0.7] transition-all hover:font-light"
+              className="text-lg font-light uppercase text-amber-50/[0.7] transition-all hover:font-light md:font-extralight"
               key={el}
               onClick={() => setIndex(el)}
               onMouseEnter={() => setIsHovered(true)}
