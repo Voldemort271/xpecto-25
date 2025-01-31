@@ -21,7 +21,7 @@ const PlatinumSponsor = ({ delay }: Props) => {
 
   return (
     <div
-      className="relative z-0 min-h-96 w-full overflow-clip border-2 border-amber-50"
+      className="relative z-0 w-full overflow-clip border-2 border-amber-50"
       ref={ref}
     >
       <motion.div
