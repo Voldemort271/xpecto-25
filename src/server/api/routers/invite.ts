@@ -103,4 +103,41 @@ export const inviteRouter = createTRPCRouter({
 
       return res;
     }),
+
+  isAmbassadorInviteValid: publicProcedure
+    .input(z.object({ token: z.string(), userId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      if (
+        !(await ctx.db.ambassadorToken.findFirst({
+          where: {
+            token: input.token,
+            userId: input.userId
+          }
+        }))
+      ) {
+        return false;
+      }
+      return true;
+    }),
+
+  acceptAmbassadorInvite: publicProcedure
+    .input(z.object({ token: z.string(), userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.user.update({
+        data: {
+          role: "Ambassador",
+        },
+        where: {
+          id: input.userId,
+        },
+      });
+
+      await ctx.db.ambassadorToken.delete({
+        where: {
+          token: input.token,
+        },
+      });
+      
+      return true;
+    }),
 });
