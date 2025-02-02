@@ -21,6 +21,8 @@ const SignupPage = () => {
   const [verifying, setVerifying] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [code, setCode] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
   const router = useRouter();
 
   if (!isLoaded && !signUp) return null;
@@ -39,18 +41,23 @@ const SignupPage = () => {
     if (!isLoaded && !signUp) return null;
 
     try {
-      await signUp?.create({ emailAddress: email });
+      if (firstName === ""){
+        throw new Error("First Name is required");
+      }
+      await signUp?.create({ emailAddress: email, firstName: firstName, lastName: lastName});
       await signUp?.prepareEmailAddressVerification();
       setVerifying(true);
     } catch (err) {
       setEmail("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-      const typedErr = err as { errors?: { longMessage: string }[] };
+      const typedErr = err as { errors?: { longMessage: string }[] } | { message: string };
+      const errorMessage = (typedErr as { errors?: { longMessage: string }[] }).errors?.[0]?.longMessage ?? (typedErr as { message: string }).message ?? "An error occurred";
+
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-            {typedErr.errors?.[0]?.longMessage ?? ""}
+            {errorMessage}
           </CustomToast>
         ),
         {
@@ -67,12 +74,12 @@ const SignupPage = () => {
     if (!isLoaded && !signUp) return null;
 
     try {
-      const signInAttempt = await signUp?.attemptEmailAddressVerification({
-        code,
+      const signUpAttempt = await signUp?.attemptEmailAddressVerification({
+        code: code,
       });
 
-      if (signInAttempt.status === "complete") {
-        await setActive({ session: signInAttempt.createdSessionId });
+      if (signUpAttempt.status === "complete") {
+        await setActive({ session: signUpAttempt.createdSessionId });
 
         router.push("/");
         toast.custom(
@@ -86,7 +93,7 @@ const SignupPage = () => {
           },
         );
       } else {
-        console.error(signInAttempt);
+        console.error(signUpAttempt);
       }
     } catch (err) {
       setEmail("");
@@ -182,6 +189,38 @@ const SignupPage = () => {
             onSubmit={handleSubmit}
             className="flex w-full flex-col items-center justify-center gap-5 pt-5"
           >
+            <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
+              <Label
+                htmlFor="firstName"
+                className="text-2xl font-normal uppercase text-amber-50"
+              >
+                First Name
+              </Label>
+              <Input
+                value={firstName}
+                id="firstName"
+                name="firstName"
+                type="text"
+                className={`max-w-sm rounded-none border-2 border-amber-50 text-lg text-amber-50 ${sharetech.className} tracking-tight`}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
+              <Label
+                htmlFor="lastName"
+                className="text-2xl font-normal uppercase text-amber-50"
+              >
+                Last Name
+              </Label>
+              <Input
+                value={lastName}
+                id="lastName"
+                name="lastName"
+                type="text"
+                className={`max-w-sm rounded-none border-2 border-amber-50 text-lg text-amber-50 ${sharetech.className} tracking-tight`}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
             <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
               <Label
                 htmlFor="email"

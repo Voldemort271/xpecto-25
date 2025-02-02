@@ -16,7 +16,7 @@ export const userRouter = createTRPCRouter({
       const existingUser = await ctx.db.user.findUnique({
         where: { clerkId: input.clerkId },
       });
-      console.log(existingUser);
+      console.log('Hello', existingUser, 'World');
 
       if (!existingUser) {
         const csv: string = fs.readFileSync("public/allUnivs.csv").toString();
