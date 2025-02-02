@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
+
 export const workshopRouter = createTRPCRouter({
   createWorkshop: publicProcedure
     .input(
@@ -12,7 +13,16 @@ export const workshopRouter = createTRPCRouter({
         venue:z.string(),
         end_time:z.null(),
         name:z.string(),
-        workshopDetails:z.string()
+        workshopDetails:z.string(),
+        // regPlans: z
+        //   .object({
+        //     id: z.string(),
+        //     name: z.string(),
+        //     description: z.string(),
+        //     price: z.string(),
+        //     labelling: z.string(),
+        //   })
+        //   .array(),
       }),
     )
     .mutation(async ({ ctx, input })=> {
@@ -27,6 +37,16 @@ export const workshopRouter = createTRPCRouter({
             venue:input.venue,
             slug: input.name.toLowerCase().replace(/ /g, "-"),
             cover: "",
+            // regPlans: {
+            //     createMany: {
+            //       data: input.regPlans.map((regPlan) => ({
+            //         name: regPlan.name,
+            //         description: regPlan.description,
+            //         price: parseInt(regPlan.price),
+            //         labelling: regPlan.labelling,
+            //       })),
+            //     },
+            //   },
           }
 
         });
@@ -49,9 +69,11 @@ export const workshopRouter = createTRPCRouter({
    
     .query(async ({ ctx }) => {
       const workshop = await ctx.db.workshops.findMany({
-      
-      
-       include:{ workshopDetails:true}
+        include: {
+          workshopDetails: {
+            include: { regPlans: true },
+          },
+        }
       });
       return workshop;
       
