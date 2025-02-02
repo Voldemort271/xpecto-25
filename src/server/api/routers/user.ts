@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import fs from "fs";
+// import fs from "fs";
 import { getCollFromEmail } from "@/lib/utils";
 
 export const userRouter = createTRPCRouter({
@@ -19,7 +19,13 @@ export const userRouter = createTRPCRouter({
       console.log('Hello', existingUser, 'World');
 
       if (!existingUser) {
-        const csv: string = fs.readFileSync("allUnivs.csv").toString();
+        const csv = await fetch(`https://xpecto.org/allUnivs.csv`)
+        .then(res => res.text())
+        .catch(err => {
+          console.error("Error fetching allUnivs.csv:", err);
+          return "";
+        });
+      
 
         //TODO: Add registration to all competitions if college is IIT Mandi. Similarly, when a competition is added, add its reg to all IIT Mandi users.
         //TODO: The above can also be achieved by making registration directly go to handleSuccess in the register dialog content if the CurrentUser college name is IITMD
