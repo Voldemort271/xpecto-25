@@ -15,7 +15,7 @@ import { api } from "@/trpc/react";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
+const WorkshopDetailsBox = ({ work }: { work:  WorkshopWithDetails }) => {
   const { CurrentUser } = useCurrentUser();
 
   const { setIsHovered } = useContext(CursorContext);
@@ -27,30 +27,22 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
     api.event.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
-        eventId: comp?.workshopDetailsId ?? "",
+        eventId: work?.workshopDetailsId ?? "",
       },
       {
-        enabled: !!CurrentUser && !!comp,
+        enabled: !!CurrentUser && !!work,
       },
     );
-  // const { data: regTeam } = api.team.findTeamOfUser.useQuery(
-  //   {
-  //     userId: CurrentUser?.id ?? "",
-  //     competitionId: comp?.id ?? "",
-  //   },
-  //   {
-  //     enabled: !!CurrentUser && !!comp,
-  //   },
-  // );
+
 
   const regStatus = !!plan;
 
   useEffect(() => {
-    setRegPrice(comp?.workshopDetails.regPlans[0]?.price ?? 0);
-    setRegPlanId(comp?.workshopDetails.regPlans[0]?.id ?? "");
-  }, [comp]);
+    setRegPrice(work?.workshopDetails.regPlans[0]?.price ?? 0);
+    setRegPlanId(work?.workshopDetails.regPlans[0]?.id ?? "");
+  }, [work]);
 
-  //TODO: Add more comp details on the page. I have just added the basic ones
+  //TODO: Add more work details on the page. I have just added the basic ones
 
   return (
     <>
@@ -60,7 +52,7 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
             // comp.competitionDetails.cover ??
             `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
           }
-          alt={comp.workshopDetails.name}
+          alt={work.workshopDetails.name}
           width={500}
           height={1080}
           className="sticky top-0 h-96 w-full shrink border-2 border-t-0 border-amber-50 object-cover md:h-screen md:w-[300px] md:border-l-0 md:border-t-2 lg:w-[400px]"
@@ -76,12 +68,12 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
               </div>
             </div>
             <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
-              {comp.workshopDetails.name}
+              {work.workshopDetails.name}
             </div>
             <div
               className={`${sharetech.className} max-w-screen-lg text-base tracking-tight text-amber-50 lg:text-lg`}
             >
-              {comp.workshopDetails.description}
+              {work.workshopDetails.description}
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <MissionBrief />
@@ -94,7 +86,7 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
           </div>
           <div className="relative h-12 w-full bg-neutral-900">
             {regStatus ? (
-              !CurrentUser       //&& <CreateTeamDialog competitionId={comp.id} />// need to create a regUser && regUser 
+              <></>      //&& <CreateTeamDialog competitionId={comp.id} />// need to create a regUser && regUser 
             ) : (
               <RegisterDialog
                 trigger={
@@ -111,14 +103,14 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
                     >
                       <MarqueeContainer
                         text={[
-                          `register for ${comp.workshopDetails.name}`,
+                          `register for ${work.workshopDetails.name}`,
                           CurrentUser?.email === ""
                             ? "login required to register"
-                            : `register for ${comp.workshopDetails.name}`,
-                          `register for ${comp.workshopDetails.name}`,
+                            : `register for ${work.workshopDetails.name}`,
+                          `register for ${work.workshopDetails.name}`,
                           CurrentUser?.email === ""
                             ? "login required to register"
-                            : `register for ${comp.workshopDetails.name}`,
+                            : `register for ${work.workshopDetails.name}`,
                         ]}
                       />
                     </div>
@@ -131,13 +123,13 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
                       setRegPrice(parseInt(e.split(" ")[0]!));
                     }}
                     defaultValue={
-                      (comp.workshopDetails.regPlans[0]?.price.toString() ??
+                      (work.workshopDetails.regPlans[0]?.price.toString() ??
                         "") +
                       " " +
-                      (comp.workshopDetails.regPlans[0]?.id ?? "")
+                      (work.workshopDetails.regPlans[0]?.id ?? "")
                     }
                   >
-                    {comp.workshopDetails.regPlans.map((reg) => {
+                    {work.workshopDetails.regPlans.map((reg) => {
                       return (
                         <div
                           key={reg.id}
@@ -174,7 +166,7 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
                 }
                 price={regPrice}
                 regPlanId={regPlanId}
-                eventId={comp.workshopDetails.id}
+                eventId={work.workshopDetails.id}
               />
             )}
           </div>
@@ -184,4 +176,4 @@ const CompetitionDetailsBox = ({ comp }: { comp:  WorkshopWithDetails }) => {
   );
 };
 
-export default CompetitionDetailsBox;
+export default WorkshopDetailsBox ;
