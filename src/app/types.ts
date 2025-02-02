@@ -85,7 +85,7 @@ export interface CompetitionWithDetails extends Competition {
 }
 
 export interface ExpoWithDetails extends Expos {
-  expoDetails: EventWithPlans;
+  exposDetails: EventWithPlans;
 }
 
 export interface WorkshopWithDetails extends Workshops {
