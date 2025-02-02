@@ -19,7 +19,7 @@ export const userRouter = createTRPCRouter({
       console.log('Hello', existingUser, 'World');
 
       if (!existingUser) {
-        const csv: string = fs.readFileSync("/allUnivs.csv").toString();
+        const csv: string = fs.readFileSync("allUnivs.csv").toString();
 
         //TODO: Add registration to all competitions if college is IIT Mandi. Similarly, when a competition is added, add its reg to all IIT Mandi users.
         //TODO: The above can also be achieved by making registration directly go to handleSuccess in the register dialog content if the CurrentUser college name is IITMD
