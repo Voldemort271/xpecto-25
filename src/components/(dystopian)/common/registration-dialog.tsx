@@ -16,6 +16,7 @@ import CustomToast from "@/components/root/custom-toast";
 // import Razorpay from "razorpay";
 
 const handjet = Handjet({ subsets: ["latin"] });
+const accomodationFee = 1000;
 
 interface RegisterDialogProps {
   trigger: React.ReactNode;
@@ -130,12 +131,12 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     // try {
     //   // Create a Razorpay order
     //   const { orderId } = await createOrder.mutateAsync({
-    //     amount: price,
+    //     amount: price + accomodationFee,
     //   });
 
     //   const options = {
     //     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-    //     amount: price * 100,
+    //     amount: (price+accomodationFee) * 100,
     //     currency: "INR",
     //     name: "Your Event Name",
     //     description: "Event Registration Fee",
@@ -190,8 +191,11 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
           </DialogTitle>
           <div className="my-4">{content}</div>
           <div className="flex flex-col items-stretch justify-between sm:flex-row">
+            <div className={`px-5 py-2 text-md font-normal uppercase`}>
+              Accomodation charges: Rs <span className="text-4xl">{accomodationFee}</span>
+            </div>
             <div className={`px-5 py-2 text-xl font-normal uppercase`}>
-              Total charges: Rs <span className="text-4xl">{price}</span>
+              Total charges: Rs <span className="text-4xl">{price + accomodationFee}</span>
             </div>
             <DialogFooter>
               <button

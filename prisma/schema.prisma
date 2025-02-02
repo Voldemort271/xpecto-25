@@ -29,19 +29,23 @@ model Member {
 
 // We can use the prize money field to detect an organiser register
 model User {
-  id           String @id @default(cuid())
-  clerkId      String @unique
-  email        String @unique
+  id           String  @id @default(cuid())
+  clerkId      String  @unique
+  email        String  @unique
   name         String
-  college_name String @default("Individual")
-  role         String @default("participant")
+  college_name String  @default("Individual")
+  role         String  @default("participant")
+  POCId        String?
 
-  teamLeader       Team[]           @relation("teamLeader")
-  invites          InviteToken[]
-  ambassadorInvite AmbassadorToken?
+  teamLeader Team[]        @relation("teamLeader")
+  invites    InviteToken[]
 
   teams     Team[]
   regEvents Registration[]
+
+  ambassadorInvite AmbassadorToken?
+  ambassador       Ambassador?
+  POC              Ambassador?      @relation("POC", fields: [POCId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,6 +57,19 @@ model AmbassadorToken {
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model Ambassador {
+  id          String @id @default(cuid())
+  token       String @unique
+  userId      String @unique
+  tier        String
+  contingents User[] @relation("POC")
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Team {
@@ -158,7 +175,7 @@ model RegistrationLevel {
   id          String @id @default(cuid())
   name        String @default("")
   description String @default("")
-  price       Int    @default(0)
+  price       Int    @default(0) // Rememebr this is for event fee only. It does not include accom fee
   labelling   String @default("basic") // Basically to show if the container will be star marked or can have another marking. This can be used to dynamically assign it
 
   eventDetails   EventDetails @relation(fields: [eventDetailsId], references: [id])
@@ -234,4 +251,5 @@ enum Role {
   Convenor
   CoConvenor
   Head
+  Mentor
 }
