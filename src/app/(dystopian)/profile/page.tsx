@@ -62,6 +62,7 @@ const Page = () => {
         updatedAt: new Date(),
         id: "",
         role: "",
+        POCId: null
       });
       // toast.error("Signed Out Successfully");
       toast.custom(
