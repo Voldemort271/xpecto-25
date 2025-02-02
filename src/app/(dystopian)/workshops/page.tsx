@@ -1,42 +1,59 @@
 "use client";
-import React, { useEffect } from "react";
-import { api } from "@/trpc/react"; // Import the api object
-import Link from "next/link";
-import SectionHeader from "@/components/(dystopian)/common/section-header";
-
+import React, { useState } from "react";
+import { api } from "@/trpc/react";
+import CompControl from "@/components/(dystopian)/competitions/competition-display-control";
+import WorkDisplayCard from "@/components/(dystopian)/workshops/workshop-display-card";
+import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import { AnimatePresence } from "motion/react";
 
 const Page = () => {
-  const { data: workshops } = api.workshop.getWorkshop.useQuery();
-
-  useEffect(() => {
-    if (workshops) {
-      console.log("workshops", workshops);
-    }
-  }, [workshops]);
-
+  const { data: workshops, isLoading } =
+    api.workshop.getWorkshop.useQuery();
+  const [index, setIndex] = useState(0);
 
   return (
     <>
-    {/* //TODO: Add a searchbar for competitions */}
-    <SectionHeader title="Workshops">Put on the learning hat</SectionHeader>
-      <div className="flex flex-col justify-center items-center gap-5">
-        {workshops?.map((comp) => {
-          return (
-            <Link href={`/workshops/${comp.workshopDetails.slug}`} key={comp.id} className="flex gap-2 items-center border-2 p-2 rounded-lg bg-amber-50 text-neutral-900">
-              <div
-                style={{ backgroundImage: `url(/event_covers/workshops/${comp.workshopDetails.slug}.jpeg), url(logo.enc)` }}
-                className="flex h-28 w-28 items-center justify-center bg-cover bg-no-repeat rounded-full"
-              >
+      <div className="grid h-full w-full grid-rows-[56px_auto] md:grid-cols-[64px_auto] md:grid-rows-1">
+        <div className="h-full w-full">
+          {!isLoading && workshops ? (
+            <>
+            
+            <CompControl
+              index={index}
+              setIndex={setIndex}
+              length={workshops.length}
+            />
+            
+            </>
+            
+          ) : (
+            <div className="relative flex h-full w-full">
+              <div className="absolute left-0 top-0 hidden h-16 w-[100vh] -translate-x-[calc(50%-32px)] translate-y-[calc(50vh-32px)] -rotate-90 flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-3xl font-light uppercase md:flex">
+                <MarqueeContainer
+                  text={[
+                    "loading page",
+                    "we'll be right back",
+                    "this doesn't take long",
+                    "hang in there",
+                  ]}
+                />
               </div>
-              <div className="bg-amber-50 w-1 h-28"></div>
-              <div>
-              <div className="font-bold text-lg">{comp.workshopDetails.name}</div>
-              <div>{comp.workshopDetails.begin_time.toString()}</div>
-              <div>{comp.workshopDetails.description.slice(0, 51) + (comp.workshopDetails.description.length > 50 ? "....." : "")}</div>
-              </div>
-            </Link>
-          );
-        })}
+            </div>
+          )}
+        </div>
+        <div className="flex h-full w-full flex-col justify-center">
+          {/*TODO: Entry and exit animations on carousel shift*/}
+          {!isLoading && workshops && workshops[index] ? (
+            <AnimatePresence mode="wait">
+              <WorkDisplayCard
+                comp={workshops[index]}
+                key={index}
+              ></WorkDisplayCard>
+            </AnimatePresence>  
+          ) : (
+            <div className="loading h-full w-full"></div>
+          )}
+        </div>
       </div>
     </>
   );
