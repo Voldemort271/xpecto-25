@@ -36,6 +36,7 @@ model User {
   college_name String  @default("Individual")
   role         String  @default("participant")
   POCId        String?
+  accomodation Boolean @default(false) // If some genius wants to make accomodation of different price for each user, then we need this integer
 
   teamLeader Team[]        @relation("teamLeader")
   invites    InviteToken[]
@@ -54,6 +55,7 @@ model User {
 model AmbassadorToken {
   token     String   @id
   userId    String   @unique
+  tier      String   @default("basic")
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])

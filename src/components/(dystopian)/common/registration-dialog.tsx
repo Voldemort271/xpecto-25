@@ -16,7 +16,7 @@ import CustomToast from "@/components/root/custom-toast";
 // import Razorpay from "razorpay";
 
 const handjet = Handjet({ subsets: ["latin"] });
-const accomodationFee = 1000; //TODO: Change this to 0 if event is online
+const accomodationFee = 1000; //TODO: Change this to 0 if event is online or current user has already paid the accomodation fee (also remove any kind of token discounts on this then)
 
 interface RegisterDialogProps {
   trigger: React.ReactNode;

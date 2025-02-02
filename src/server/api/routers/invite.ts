@@ -107,25 +107,29 @@ export const inviteRouter = createTRPCRouter({
   isAmbassadorInviteValid: publicProcedure
     .input(z.object({ token: z.string(), userId: z.string() }))
     .query(async ({ ctx, input }) => {
-      if (
-        !(await ctx.db.ambassadorToken.findFirst({
-          where: {
-            token: input.token,
-            userId: input.userId
-          }
-        }))
-      ) {
-        return false;
-      }
-      return true;
+      const token = await ctx.db.ambassadorToken.findUnique({
+        where: {
+          token: input.token,
+          userId: input.userId,
+        },
+      });
+      return token;
     }),
 
   acceptAmbassadorInvite: publicProcedure
-    .input(z.object({ token: z.string(), userId: z.string() }))
+    .input(
+      z.object({ token: z.string(), tier: z.string(), userId: z.string() }),
+    )
     .mutation(async ({ ctx, input }) => {
       await ctx.db.user.update({
         data: {
           role: "Ambassador",
+          ambassador: {
+            create: {
+              token: input.token,
+              tier: input.tier,
+            },
+          },
         },
         where: {
           id: input.userId,
@@ -137,7 +141,18 @@ export const inviteRouter = createTRPCRouter({
           token: input.token,
         },
       });
-      
+
+      return true;
+    }),
+
+  deleteAmbassadorInvite: publicProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.ambassadorToken.delete({
+        where: {
+          token: input.token,
+        },
+      });
       return true;
     }),
 });
