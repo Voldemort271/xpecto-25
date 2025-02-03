@@ -11,7 +11,7 @@ const details = [
 
 const MissionBrief = () => {
   return (
-    <div className="relative h-96 w-full overflow-scroll overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full md:max-h-96">
+    <div className="relative w-full overflow-scroll overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full">
       <div className="sticky left-0 top-0 z-10 flex h-8 w-full flex-col justify-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-lg font-extralight uppercase text-amber-50">
         <MarqueeContainer
           text={[

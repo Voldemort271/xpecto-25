@@ -66,7 +66,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
           className="sticky top-0 h-96 w-full shrink border-2 border-t-0 border-amber-50 object-cover md:h-screen md:w-[300px] md:border-l-0 md:border-t-2 lg:w-[400px]"
         />
         <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
-          <div className="space-y-5 overflow-scroll overscroll-none p-12 md:pt-28">
+          <div className="space-y-5 overflow-scroll overscroll-none p-12 md:pt-44">
             <div className="-mb-2.5 flex flex-wrap gap-2.5">
               <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
                 programming
@@ -83,6 +83,92 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
             >
               {comp.competitionDetails.description}
             </div>
+            <div className="relative h-12 w-full bg-neutral-900">
+              {regStatus ? (
+                !regTeam && <CreateTeamDialog competitionId={comp.id} />
+              ) : (
+                <RegisterDialog
+                  trigger={
+                    <button
+                      className="w-full cursor-none overflow-clip"
+                      disabled={CurrentUser?.email === ""}
+                      onMouseEnter={() => {
+                        if (CurrentUser?.email !== "") setIsHovered(true);
+                      }}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      <div
+                        className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                      >
+                        <MarqueeContainer
+                          text={[
+                            `register for ${comp.competitionDetails.name}`,
+                            CurrentUser?.email === ""
+                              ? "login required to register"
+                              : `register for ${comp.competitionDetails.name}`,
+                            `register for ${comp.competitionDetails.name}`,
+                            CurrentUser?.email === ""
+                              ? "login required to register"
+                              : `register for ${comp.competitionDetails.name}`,
+                          ]}
+                        />
+                      </div>
+                    </button>
+                  }
+                  content={
+                    <RadioGroup
+                      onValueChange={(e) => {
+                        setRegPlanId(e.split(" ")[1]!);
+                        setRegPrice(parseInt(e.split(" ")[0]!));
+                      }}
+                      defaultValue={
+                        (comp.competitionDetails.regPlans[0]?.price.toString() ??
+                          "") +
+                        " " +
+                        (comp.competitionDetails.regPlans[0]?.id ?? "")
+                      }
+                    >
+                      {comp.competitionDetails.regPlans.map((reg) => {
+                        return (
+                          <div
+                            key={reg.id}
+                            className="mb-2 flex items-center gap-2 px-5"
+                          >
+                            <RadioGroupItem
+                              className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
+                              value={reg.price.toString() + " " + reg.id}
+                              key={reg.id}
+                            />
+                            <Label
+                              htmlFor={reg.id}
+                              className="flex w-full flex-col p-2"
+                            >
+                              <div className="flex items-center gap-2">
+                                <div className="text-xl font-normal uppercase">
+                                  {reg.name} - ₹{reg.price}
+                                </div>
+                                <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
+                                  {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
+                                  {reg.labelling}
+                                </div>
+                              </div>
+                              <div
+                                className={`${sharetech.className} mt-1 text-base tracking-tight`}
+                              >
+                                {reg.description}
+                              </div>
+                            </Label>
+                          </div>
+                        );
+                      })}
+                    </RadioGroup>
+                  }
+                  price={regPrice}
+                  regPlanId={regPlanId}
+                  eventId={comp.competitionDetails.id}
+                />
+              )}
+            </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <MissionBrief />
               {isRegistrationLoading && (
@@ -90,92 +176,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
               )}
               {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />}
             </div>
-          </div>
-          <div className="relative h-12 w-full bg-neutral-900">
-            {regStatus ? (
-              !regTeam && <CreateTeamDialog competitionId={comp.id} />
-            ) : (
-              <RegisterDialog
-                trigger={
-                  <button
-                    className="w-full cursor-none overflow-clip"
-                    disabled={CurrentUser?.email === ""}
-                    onMouseEnter={() => {
-                      if (CurrentUser?.email !== "") setIsHovered(true);
-                    }}
-                    onMouseLeave={() => setIsHovered(false)}
-                  >
-                    <div
-                      className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-                    >
-                      <MarqueeContainer
-                        text={[
-                          `register for ${comp.competitionDetails.name}`,
-                          CurrentUser?.email === ""
-                            ? "login required to register"
-                            : `register for ${comp.competitionDetails.name}`,
-                          `register for ${comp.competitionDetails.name}`,
-                          CurrentUser?.email === ""
-                            ? "login required to register"
-                            : `register for ${comp.competitionDetails.name}`,
-                        ]}
-                      />
-                    </div>
-                  </button>
-                }
-                content={
-                  <RadioGroup
-                    onValueChange={(e) => {
-                      setRegPlanId(e.split(" ")[1]!);
-                      setRegPrice(parseInt(e.split(" ")[0]!));
-                    }}
-                    defaultValue={
-                      (comp.competitionDetails.regPlans[0]?.price.toString() ??
-                        "") +
-                      " " +
-                      (comp.competitionDetails.regPlans[0]?.id ?? "")
-                    }
-                  >
-                    {comp.competitionDetails.regPlans.map((reg) => {
-                      return (
-                        <div
-                          key={reg.id}
-                          className="mb-2 flex items-center gap-2 px-5"
-                        >
-                          <RadioGroupItem
-                            className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
-                            value={reg.price.toString() + " " + reg.id}
-                            key={reg.id}
-                          />
-                          <Label
-                            htmlFor={reg.id}
-                            className="flex w-full flex-col p-2"
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className="text-xl font-normal uppercase">
-                                {reg.name} - ₹{reg.price}
-                              </div>
-                              <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
-                                {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
-                                {reg.labelling}
-                              </div>
-                            </div>
-                            <div
-                              className={`${sharetech.className} mt-1 text-base tracking-tight`}
-                            >
-                              {reg.description}
-                            </div>
-                          </Label>
-                        </div>
-                      );
-                    })}
-                  </RadioGroup>
-                }
-                price={regPrice}
-                regPlanId={regPlanId}
-                eventId={comp.competitionDetails.id}
-              />
-            )}
           </div>
         </div>
       </div>
