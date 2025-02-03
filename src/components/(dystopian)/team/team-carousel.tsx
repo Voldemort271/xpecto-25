@@ -78,7 +78,6 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
                   alt={"Volunteer pic"}
                   className="h-full w-full object-cover"
                 />
-                {index}
               </div>
             </CarouselItem>
           ))}
