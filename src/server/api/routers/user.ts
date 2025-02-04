@@ -90,6 +90,15 @@ export const userRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const users = await ctx.db.user.findMany({
         where: {
+          regEvents: {
+            some: {
+              event: {
+                competition: {
+                  id: input.competitionId,
+                },
+              },
+            },
+          },
           teams: {
             none: {
               competitionId: input.competitionId,

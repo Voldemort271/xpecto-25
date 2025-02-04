@@ -16,7 +16,6 @@ import CustomToast from "@/components/root/custom-toast";
 // import Razorpay from "razorpay";
 
 const handjet = Handjet({ subsets: ["latin"] });
-const accomodationFee = 1000; //TODO: Change this to 0 if event is online or current user has already paid the accomodation fee (also remove any kind of token discounts on this then)
 
 interface RegisterDialogProps {
   trigger: React.ReactNode;
@@ -191,11 +190,8 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
           </DialogTitle>
           <div className="my-4">{content}</div>
           <div className="flex flex-col items-stretch justify-between sm:flex-row">
-            <div className={`px-5 py-2 text-md font-normal uppercase`}>
-              Accomodation charges: Rs <span className="text-4xl">{accomodationFee}</span>
-            </div>
             <div className={`px-5 py-2 text-xl font-normal uppercase`}>
-              Total charges: Rs <span className="text-4xl">{price + accomodationFee}</span>
+              Total charges: Rs <span className="text-4xl">{price}</span>
             </div>
             <DialogFooter>
               <button
