@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 import { CursorContext } from "@/context/cursor-context";
 
 const DystopianCursor = () => {
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
-  const springConfig = { damping: 40, stiffness: 500 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  // const springConfig = { damping: 100, stiffness: 1000 };
+  // const cursorXSpring = useSpring(cursorX, springConfig);
+  // const cursorYSpring = useSpring(cursorY, springConfig);
 
   const { isHovered } = useContext(CursorContext);
 
@@ -28,8 +28,8 @@ const DystopianCursor = () => {
     <motion.div
       className="custom-cursor pointer-events-none fixed z-50 h-8 w-8 rounded-full bg-amber-50 text-neutral-900 mix-blend-difference"
       style={{
-        x: cursorXSpring,
-        y: cursorYSpring,
+        x: cursorX,
+        y: cursorY,
       }}
       animate={{
         scale: isHovered ? 3 : 1,
