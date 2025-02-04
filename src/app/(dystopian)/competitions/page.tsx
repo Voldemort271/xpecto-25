@@ -10,7 +10,7 @@ const Page = () => {
   const { data: competitions, isLoading } =
     api.competition.getCompetitions.useQuery();
   const [index, setIndex] = useState(0);
-
+  // TODO: Replicate /team layout in competitions, pronites, expos, workshops
   return (
     <>
       <div className="grid h-full w-full grid-rows-[56px_auto] md:grid-cols-[64px_auto] md:grid-rows-1">
