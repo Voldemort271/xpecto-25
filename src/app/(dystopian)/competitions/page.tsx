@@ -17,15 +17,12 @@ const Page = () => {
         <div className="h-full w-full">
           {!isLoading && competitions ? (
             <>
-            
-            <CompControl
-              index={index}
-              setIndex={setIndex}
-              length={competitions.length}
-            />
-            
+              <CompControl
+                index={index}
+                setIndex={setIndex}
+                length={competitions.length}
+              />
             </>
-            
           ) : (
             <div className="relative flex h-full w-full">
               <div className="absolute left-0 top-0 hidden h-16 w-[100vh] -translate-x-[calc(50%-32px)] translate-y-[calc(50vh-32px)] -rotate-90 flex-col justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-3xl font-light uppercase md:flex">
@@ -42,7 +39,7 @@ const Page = () => {
           )}
         </div>
         <div className="flex h-full w-full flex-col justify-center">
-          {/*TODO: Entry and exit animations on carousel shift*/}
+          {/* TODO: Entry and exit animations on carousel shift */}
           {!isLoading && competitions && competitions[index] ? (
             <AnimatePresence mode="wait">
               <CompDisplayCard
