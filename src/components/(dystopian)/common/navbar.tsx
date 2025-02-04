@@ -33,6 +33,7 @@ const DystopianNav = () => {
         animate={{ translateY: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: animationDelay + 0.25 }}
       >
+        {/* TODO: Make this a hyperlink to / */}
         <div className="text-4xl font-medium uppercase">xpecto &apos;25</div>
         <div className="text-sm font-normal uppercase leading-5">
           indian institute of technology, mandi

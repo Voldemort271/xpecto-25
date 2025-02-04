@@ -128,6 +128,7 @@ const CompDisplayCard = ({ comp }: Props) => {
             transition: { duration: 1, ease: "anticipate" },
           }}
         >
+          {/* TODO: Make these buttons */}
           <MarqueeContainer
             text={[
               "view all details",

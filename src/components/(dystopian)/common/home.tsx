@@ -26,6 +26,7 @@ const HomeScreen = () => {
       >
         PLEASE WAIT, LOADING
       </motion.div>
+      {/* TODO: Reduce delay in static */}
       <motion.div
         className={`absolute left-0 top-0 -z-10 block h-full w-full sm:hidden ${styles.homeStaticMobile}`}
         initial={{ opacity: 1 }}

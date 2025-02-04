@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description: "Blah blah here",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
+// TODO: Add favicon, opengraph and metadata
 
 export default function RootLayout({
   children,
