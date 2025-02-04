@@ -41,18 +41,31 @@ const SignupPage = () => {
     if (!isLoaded && !signUp) return null;
 
     try {
-      if (firstName === ""){
+      if (firstName === "") {
         throw new Error("First Name is required");
       }
-      await signUp?.create({ emailAddress: email, firstName: firstName, lastName: lastName});
+      await signUp?.create({
+        emailAddress: email,
+        firstName: firstName,
+        lastName: lastName,
+      });
       await signUp?.prepareEmailAddressVerification();
       setVerifying(true);
     } catch (err) {
       setEmail("");
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-      const typedErr = err as { errors?: { longMessage: string }[] } | { message: string };
-      const errorMessage = (typedErr as { errors?: { longMessage: string }[] }).errors?.[0]?.longMessage ?? (typedErr as { message: string }).message ?? "An error occurred";
+      const typedErr = err as
+        | { errors?: { longMessage: string }[] }
+        | { message: string };
+      const errorMessage =
+        (
+          typedErr as {
+            errors?: { longMessage: string }[];
+          }
+        ).errors?.[0]?.longMessage ??
+        (typedErr as { message: string }).message ??
+        "An error occurred";
 
       toast.custom(
         (t) => (
@@ -115,7 +128,7 @@ const SignupPage = () => {
   };
 
   return (
-    <main className="relative flex min-w-[800px] flex-col items-center justify-center overflow-clip border-2 border-amber-50/[0.7] bg-neutral-900">
+    <main className="relative flex max-w-[800px] flex-col items-center justify-center overflow-clip border-2 border-amber-50/[0.7] bg-neutral-900">
       <div className="relative z-10 flex h-12 w-full items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer
           text={[
@@ -126,7 +139,7 @@ const SignupPage = () => {
           delay={1}
         />
       </div>
-      <div className="grid w-full grid-cols-2 gap-5 p-5">
+      <div className="grid w-full grid-cols-1 gap-5 p-5 sm:grid-cols-2">
         <button
           onClick={() => signUpWith("oauth_google")}
           className="flex w-full items-center justify-center gap-2.5 bg-amber-50/[0.7] px-5 py-2 text-2xl uppercase transition-all hover:bg-amber-50"
