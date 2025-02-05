@@ -9,6 +9,7 @@ import { CursorContext } from "@/context/cursor-context";
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import SearchBar from "@/components/(dystopian)/common/searchbar";
+import Link from "next/link";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
@@ -33,11 +34,17 @@ const DystopianNav = () => {
         animate={{ translateY: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: animationDelay + 0.25 }}
       >
-        {/* TODO: Make this a hyperlink to / */}
-        <div className="text-4xl font-medium uppercase">xpecto &apos;25</div>
-        <div className="text-sm font-normal uppercase leading-5">
-          indian institute of technology, mandi
-        </div>
+        <Link
+          href="/"
+          className="cursor-none"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="text-4xl font-medium uppercase">xpecto &apos;25</div>
+          <div className="text-sm font-normal uppercase leading-5">
+            indian institute of technology, mandi
+          </div>
+        </Link>
       </motion.div>
 
       <div className="hidden h-full w-full grid-cols-6 grid-rows-2 sm:grid">
