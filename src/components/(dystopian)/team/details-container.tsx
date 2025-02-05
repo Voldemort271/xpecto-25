@@ -21,7 +21,7 @@ const keyframes = {
   },
 };
 
-const MemberDetailsContainer = ({ setIndex, children }: Props) => {
+const DetailsContainer = ({ setIndex, children }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   return (
@@ -66,4 +66,4 @@ const MemberDetailsContainer = ({ setIndex, children }: Props) => {
   );
 };
 
-export default MemberDetailsContainer;
+export default DetailsContainer;

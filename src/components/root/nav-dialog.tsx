@@ -160,7 +160,6 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
             Checking this option will take you to the authorization screen.
             Proceed with caution.
           </div>
-          {/* TODO: Add contact button as well ("File a complaint" or something similar) */}
           <div className="flex w-full justify-between gap-5">
             <div className="space-x-5">
               <Button

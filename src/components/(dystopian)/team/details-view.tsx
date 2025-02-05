@@ -25,7 +25,7 @@ interface Props {
   data?: TeamData;
 }
 
-const MemberDetails = ({ data }: Props) => {
+const DetailsView = ({ data }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   return (
@@ -99,4 +99,4 @@ const MemberDetails = ({ data }: Props) => {
   );
 };
 
-export default MemberDetails;
+export default DetailsView;
