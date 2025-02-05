@@ -21,7 +21,7 @@ interface Props {
   setIndex: Dispatch<SetStateAction<number>>;
 }
 
-const ResponsiveCarousel = ({ data, index, setIndex }: Props) => {
+const TeamCarousel = ({ data, index, setIndex }: Props) => {
   const [apiDesktop, setApiDesktop] = useState<CarouselApi>();
   const [apiMobile, setApiMobile] = useState<CarouselApi>();
 
@@ -111,4 +111,4 @@ const ResponsiveCarousel = ({ data, index, setIndex }: Props) => {
   );
 };
 
-export default ResponsiveCarousel;
+export default TeamCarousel;

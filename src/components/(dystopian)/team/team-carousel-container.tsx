@@ -8,7 +8,7 @@ interface Props {
   data?: TeamData;
 }
 
-const ResponsiveCarouselContainer = ({ children, data }: Props) => {
+const TeamCarouselContainer = ({ children, data }: Props) => {
   return (
     <div className="relative z-0 grid h-full w-full grid-rows-[56px_auto_56px] bg-neutral-900 pt-[126px] md:grid-cols-[64px_auto_64px] md:grid-rows-1 md:pt-0 lg:grid-cols-[56px_auto_56px]">
       <Image
@@ -70,4 +70,4 @@ const ResponsiveCarouselContainer = ({ children, data }: Props) => {
   );
 };
 
-export default ResponsiveCarouselContainer;
+export default TeamCarouselContainer;
