@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import TeamDetailsContainer from "@/components/(dystopian)/team/team-details-container";
-import TeamDetailsView from "@/components/(dystopian)/team/team-details-view";
-import { teamData } from "@/lib/team-data";
 import { api } from "@/trpc/react";
 import CompetitionsCarouselContainer from "@/components/(dystopian)/(test)/competitions-carousel-container";
 import CompetitionsCarousel from "@/components/(dystopian)/(test)/competitions-carousel";
+import CompetitionDetailsContainer from "@/components/(dystopian)/(test)/competition-details-container";
+import CompetitionDetailsView from "@/components/(dystopian)/(test)/competition-details-view";
 
 const TeamPage = () => {
   const { data: competitions, isLoading } =
@@ -27,9 +26,17 @@ const TeamPage = () => {
           />
         </CompetitionsCarouselContainer>
       )}
-      <TeamDetailsContainer index={index} setIndex={setIndex}>
-        <TeamDetailsView data={teamData[index]} key={index} />
-      </TeamDetailsContainer>
+      {isLoading || !competitions || !competitions[index] ? (
+        <div className="h-full w-full bg-neutral-900"></div>
+      ) : (
+        <CompetitionDetailsContainer
+          data={competitions}
+          index={index}
+          setIndex={setIndex}
+        >
+          <CompetitionDetailsView data={competitions[index]} key={index} />
+        </CompetitionDetailsContainer>
+      )}
     </div>
   );
 };
