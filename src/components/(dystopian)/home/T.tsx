@@ -11,13 +11,13 @@ const TText = () => {
       className="h-24 md:h-36 lg:h-48"
       initial={{ fill: "#fffbeb00" }}
       animate={{ fill: "#fffbeb" }}
-      transition={{ duration: 1, delay: 6, ease: "anticipate" }}
+      transition={{ duration: 1, delay: 4.5, ease: "anticipate" }}
     >
       <motion.polygon
         className="stroke-amber-50 stroke-2"
         initial={{ pathLength: 0, opacity: 0.5 }}
         animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 3, delay: 3.5, ease: "easeInOut" }}
+        transition={{ duration: 3, delay: 2, ease: "easeInOut" }}
         points="1 1 88.34 1 88.34 28.11 58.22 28.11 58.22 178.69 31.12 178.69 31.12 28.11 1 28.11 1 1"
       />
     </motion.svg>

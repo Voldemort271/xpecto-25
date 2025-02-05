@@ -19,19 +19,17 @@ const HomeScreen = () => {
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom"
       />
       <motion.div
-        className={`absolute left-0 top-0 -z-10 hidden h-full w-full stroke-black p-12 text-2xl font-medium text-indigo-600 sm:block ${styles.homeStatic}`}
+        className={`absolute left-0 top-0 z-0 hidden h-full w-full  stroke-black p-12 text-2xl font-medium text-indigo-600 sm:block ${styles.homeStatic}`}
         initial={{ display: "block" }}
         animate={{ display: "none" }}
-        transition={{ duration: 0.2, delay: 3.5 }}
+        transition={{ duration: 0.2, delay: 2 }}
       >
-        PLEASE WAIT, LOADING
       </motion.div>
-      {/* TODO: Reduce delay in static */}
       <motion.div
         className={`absolute left-0 top-0 -z-10 block h-full w-full sm:hidden ${styles.homeStaticMobile}`}
         initial={{ opacity: 1 }}
         animate={{ opacity: 0, display: "none" }}
-        transition={{ duration: 0.2, delay: 3.5 }}
+        transition={{ duration: 0.2, delay: 2 }}
       ></motion.div>
       <div className="h-32 sm:h-16"></div>
       <div className="flex h-[calc(100vh-194px)] w-full flex-col items-center justify-center uppercase text-amber-50 sm:h-[calc(100vh-130px)] md:text-amber-50">
@@ -39,7 +37,7 @@ const HomeScreen = () => {
           className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold"
           initial={{ opacity: 0, translateY: 50 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 6.5 }}
+          transition={{ duration: 0.5, delay: 5 }}
         >
           welcome to
         </motion.div>
@@ -47,7 +45,7 @@ const HomeScreen = () => {
           className="text-8xl font-extrabold uppercase sm:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 4 }}
+          transition={{ duration: 1, delay: 3 }}
         >
           Xpecto &apos;25
         </motion.div>
@@ -56,7 +54,7 @@ const HomeScreen = () => {
           className="text-4xl font-medium uppercase sm:text-6xl md:-mt-5 md:font-semibold"
           initial={{ opacity: 0, translateY: -50 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 6.5 }}
+          transition={{ duration: 0.5, delay: 5 }}
         >
           by iit mandi
         </motion.div>
@@ -64,7 +62,7 @@ const HomeScreen = () => {
           className="relative text-amber-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 9 }}
+          transition={{ duration: 1, delay: 6 }}
         >
           <ClickToStart />
         </motion.div>
@@ -73,13 +71,13 @@ const HomeScreen = () => {
         className={`absolute bottom-0 left-0 flex h-16 w-full flex-row items-center overflow-hidden border-y-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase`}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 7.5 }}
+        transition={{ duration: 0.5, delay: 5 }}
       >
         <motion.span
           className="flex h-full w-full flex-col items-center justify-center"
           initial={{ translateY: -50, opacity: 0 }}
           animate={{ translateY: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 8 }}
+          transition={{ duration: 0.5, delay: 5.5 }}
         >
           <MarqueeContainer
             text={[
