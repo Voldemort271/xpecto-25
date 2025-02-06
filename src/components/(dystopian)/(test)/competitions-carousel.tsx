@@ -57,7 +57,7 @@ const CompetitionsCarousel = ({ data, index, setIndex }: Props) => {
   }, [pos, setIndex]);
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center px-5 lg:px-12">
+    <div className="relative flex h-full w-full flex-col items-center justify-center md:px-5 lg:px-12">
       <Carousel
         setApi={setApiDesktop}
         opts={{
@@ -95,13 +95,13 @@ const CompetitionsCarousel = ({ data, index, setIndex }: Props) => {
           loop: true,
         }}
         orientation="horizontal"
-        className="flex h-full w-full flex-col items-center justify-center py-5 md:hidden"
+        className="flex h-full w-screen flex-col items-center justify-center md:hidden"
       >
-        <CarouselContent className="h-full">
+        <CarouselContent className="w-screen px-5">
           {data.map((el, index) => (
             <CarouselItem
               key={index}
-              className="relative h-full max-h-[300px] max-w-[400px] basis-3/4 pl-5"
+              className={`${index === 0 ? "-ml-2.5" : "ml-2.5"} h-[300px] w-full max-w-[400px] basis-3/4`}
             >
               <Image
                 src={
