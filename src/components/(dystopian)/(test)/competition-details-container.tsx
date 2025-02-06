@@ -57,7 +57,9 @@ const CompetitionDetailsContainer = ({
               <motion.div
                 className="pr-2.5 text-lg font-light uppercase text-amber-50/[0.7] transition-all hover:font-light md:font-extralight"
                 key={i}
-                onClick={() => setIndex(i)}
+                onClick={() =>
+                  setIndex((prev) => (prev < 2 ? prev + i : prev - 2 + i))
+                }
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 variants={keyframes}
