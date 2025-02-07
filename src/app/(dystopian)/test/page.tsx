@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { api } from "@/trpc/react";
-import CompetitionsCarouselContainer from "@/components/(dystopian)/(test)/competitions-carousel-container";
-import CompetitionsCarousel from "@/components/(dystopian)/(test)/competitions-carousel";
-import CompetitionDetailsContainer from "@/components/(dystopian)/(test)/competition-details-container";
-import CompetitionDetailsView from "@/components/(dystopian)/(test)/competition-details-view";
+import CompetitionsCarouselContainer from "@/components/(dystopian)/competitions/competitions-carousel-container";
+import CompetitionsCarousel from "@/components/(dystopian)/competitions/competitions-carousel";
+import CompetitionDetailsContainer from "@/components/(dystopian)/competitions/competition-details-container";
+import CompetitionDetailsView from "@/components/(dystopian)/competitions/competition-details-view";
 
 const TeamPage = () => {
   const { data: competitions, isLoading } =

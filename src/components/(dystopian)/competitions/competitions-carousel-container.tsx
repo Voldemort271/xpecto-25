@@ -2,7 +2,7 @@ import React, { type ReactNode } from "react";
 import Image from "next/image";
 import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
 import type { CompetitionWithDetails } from "@/app/types";
-import BgImage from "public/images/background.jpg";
+import BgImage from "../../../../public/images/background.jpg";
 
 interface Props {
   children: ReactNode;

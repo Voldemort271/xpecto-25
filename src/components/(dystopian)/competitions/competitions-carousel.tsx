@@ -14,7 +14,7 @@ import React, {
 } from "react";
 import Image from "next/image";
 import { type CompetitionWithDetails } from "@/app/types";
-import StaticImg from "public/images/img.png";
+import StaticImg from "../../../../public/images/img.png";
 
 interface Props {
   data: CompetitionWithDetails[];
