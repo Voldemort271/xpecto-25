@@ -8,13 +8,13 @@ import React, {
 } from "react";
 import { motion } from "motion/react";
 import { CursorContext } from "@/context/cursor-context";
-import { type CompetitionWithDetails } from "@/app/types";
+import { ProniteWithDetails } from "@/app/types";
 
 interface Props {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   children: ReactNode;
-  data: CompetitionWithDetails[];
+  data: ProniteWithDetails[];
 }
 
 const keyframes = {
@@ -23,7 +23,7 @@ const keyframes = {
   },
 };
 
-const CompetitionDetailsContainer = ({
+const ProniteDetailsContainer = ({
   index,
   setIndex,
   children,
@@ -71,7 +71,7 @@ const CompetitionDetailsContainer = ({
                   delay: 0.5 + i * 0.2,
                 }}
               >
-                {el.competitionDetails.name}
+                {el.proniteDetails.name}
               </motion.div>
             ))}
         </div>
@@ -80,4 +80,4 @@ const CompetitionDetailsContainer = ({
   );
 };
 
-export default CompetitionDetailsContainer;
+export default ProniteDetailsContainer;

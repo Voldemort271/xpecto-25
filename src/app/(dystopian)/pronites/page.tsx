@@ -1,38 +1,39 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import { api } from "@/trpc/react";
-import PronitesDetails from "@/components/(dystopian)/pronites/pronites-details";
-import PronitesControl from "@/components/(dystopian)/pronites/pronites-details-control";
+import PronitesCarouselContainer from "@/components/(dystopian)/pronites/pronites-carousel-container";
+import PronitesCarousel from "@/components/(dystopian)/pronites/pronites-carousel";
+import ProniteDetailsContainer from "@/components/(dystopian)/pronites/pronite-details-container";
+import ProniteDetailsView from "@/components/(dystopian)/pronites/pronite-details-view";
 
-const Page = () => {
-  const [index, setIndex] = useState(0);
-
+const PronitesPage = () => {
   const { data: pronites, isLoading } = api.pronite.getPronite.useQuery();
 
-  useEffect(() => {
-    if (pronites) {
-      console.log("pronites", pronites);
-    }
-  }, [pronites]);
-  // TODO: Fix prop sharing to pass whole pronites object
+  const [index, setIndex] = useState(0);
+
   return (
-    <div className="relative z-0 h-full w-full overflow-clip">
-      {!isLoading && pronites && pronites[0] ? (
-        <PronitesDetails
-          pronite={pronites[0]}
+    <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
+      {isLoading || !pronites || !pronites[index] ? (
+        <div className="loading h-full w-full border-2 border-amber-50 bg-neutral-900"></div>
+      ) : (
+        <PronitesCarouselContainer data={pronites[index]}>
+          <PronitesCarousel data={pronites} index={index} setIndex={setIndex} />
+        </PronitesCarouselContainer>
+      )}
+      {isLoading || !pronites || !pronites[index] ? (
+        <div className="h-full w-full bg-neutral-900"></div>
+      ) : (
+        <ProniteDetailsContainer
+          data={pronites}
           index={index}
-          length={10}
           setIndex={setIndex}
         >
-          {/* TODO BONUS: Host all images on Cloudinary to reduce bundle size drastically */}
-        </PronitesDetails>
-      ) : (
-        <div className="loading h-full w-full"></div>
-      )}
-      {!isLoading && pronites && pronites[0] && (
-        <PronitesControl pronite={pronites[0]} />
+          <ProniteDetailsView data={pronites[index]} key={index} />
+        </ProniteDetailsContainer>
       )}
     </div>
   );
 };
-export default Page;
+
+export default PronitesPage;
