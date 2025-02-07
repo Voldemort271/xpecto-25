@@ -2,35 +2,39 @@
 
 import React, { useState } from "react";
 import { api } from "@/trpc/react";
-import PronitesCarouselContainer from "@/components/(dystopian)/pronites/pronites-carousel-container";
-import PronitesCarousel from "@/components/(dystopian)/pronites/pronites-carousel";
-import ProniteDetailsContainer from "@/components/(dystopian)/pronites/pronite-details-container";
-import ProniteDetailsView from "@/components/(dystopian)/pronites/pronite-details-view";
+import WorkshopsCarouselContainer from "@/components/(dystopian)/workshops/workshops-carousel-container";
+import WorkshopsCarousel from "@/components/(dystopian)/workshops/workshops-carousel";
+import WorkshopDetailsContainer from "@/components/(dystopian)/workshops/workshop-details-container";
+import WorkshopDetailsView from "@/components/(dystopian)/workshops/workshop-details-view";
 
 const TeamPage = () => {
-  const { data: pronites, isLoading } = api.pronite.getPronite.useQuery();
+  const { data: workshops, isLoading } = api.workshop.getWorkshop.useQuery();
 
   const [index, setIndex] = useState(0);
 
   return (
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-      {isLoading || !pronites || !pronites[index] ? (
+      {isLoading || !workshops || !workshops[index] ? (
         <div className="loading h-full w-full border-2 border-amber-50 bg-neutral-900"></div>
       ) : (
-        <PronitesCarouselContainer data={pronites[index]}>
-          <PronitesCarousel data={pronites} index={index} setIndex={setIndex} />
-        </PronitesCarouselContainer>
+        <WorkshopsCarouselContainer data={workshops[index]}>
+          <WorkshopsCarousel
+            data={workshops}
+            index={index}
+            setIndex={setIndex}
+          />
+        </WorkshopsCarouselContainer>
       )}
-      {isLoading || !pronites || !pronites[index] ? (
+      {isLoading || !workshops || !workshops[index] ? (
         <div className="h-full w-full bg-neutral-900"></div>
       ) : (
-        <ProniteDetailsContainer
-          data={pronites}
+        <WorkshopDetailsContainer
+          data={workshops}
           index={index}
           setIndex={setIndex}
         >
-          <ProniteDetailsView data={pronites[index]} key={index} />
-        </ProniteDetailsContainer>
+          <WorkshopDetailsView data={workshops[index]} key={index} />
+        </WorkshopDetailsContainer>
       )}
     </div>
   );
