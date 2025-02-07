@@ -32,7 +32,7 @@ const CompetitionDetailsContainer = ({
   const { setIsHovered } = useContext(CursorContext);
 
   return (
-    <div className="h-full w-full bg-neutral-900 md:pt-16">
+    <div className="h-full w-full bg-neutral-900 md:pt-32">
       <div className="relative flex h-full w-full flex-col items-start justify-between">
         {children}
         <div className="z-0 grid min-w-72 grid-cols-2 p-2.5 pb-12 sm:p-5">
