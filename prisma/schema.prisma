@@ -159,12 +159,14 @@ model EventDetails {
 }
 
 model Registration {
-  id        String   @id @default(cuid())
-  userId    String
-  planId    String
-  eventId   String
-  paymentId String
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  userId       String
+  planId       String
+  eventId      String
+  paymentId    String
+  paymentProof String // Contains link to the payment proof image
+  verified     Boolean  @default(false)
+  createdAt    DateTime @default(now())
 
   user  User              @relation(fields: [userId], references: [id])
   plan  RegistrationLevel @relation(fields: [planId], references: [id])

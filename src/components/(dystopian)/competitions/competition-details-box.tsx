@@ -24,7 +24,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const [regPlanId, setRegPlanId] = useState("");
 
   const { data: plan, isLoading: isRegistrationLoading } =
-    api.event.checkUserRegisteration.useQuery(
+    api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
         eventId: comp?.competitionDetailsId ?? "",
@@ -43,14 +43,30 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
     },
   );
 
+  const { data: offlinePlans } = api.event.getOfflinePlans.useQuery();
+
   const regStatus = !!plan;
+  const offlineEvent = comp?.competitionDetails.venue !== "online";
+  const { data: offlineReg } = api.registration.checkUserRegisteration.useQuery(
+    {
+      userId: CurrentUser?.id ?? "",
+      eventId: "universaleve",
+    },
+    {
+      enabled: !!CurrentUser,
+    },
+  );
 
   useEffect(() => {
-    setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
-    setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
-  }, [comp]);
+    if (offlineEvent && !CurrentUser?.accomodation) {
+      setRegPrice(offlinePlans?.regPlans[0]?.price ?? 0);
+      setRegPlanId(offlinePlans?.regPlans[0]?.id ?? "");
+    } else {
+      setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
+      setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
+    }
+  }, [comp, offlinePlans, offlineEvent, CurrentUser]);
 
-  //TODO: Add more comp details on the page. I have just added the basic ones
 
   return (
     <>
@@ -85,7 +101,17 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
               {regStatus ? (
-                !regTeam && <CreateTeamDialog competitionId={comp.id} />
+                plan.verified ? (
+                  !regTeam && <CreateTeamDialog competitionId={comp.id} />
+                ) : (
+                  <div className="border-2 text-lg font-extrabold p-2 w-fit bg-amber-50 text-neutral-900">
+                    Your payment is being verified right now
+                  </div>
+                )
+              ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
+                <div className="border-2 text-lg font-extrabold p-2 w-fit bg-amber-50 text-neutral-900">
+                  Your payment is being verified right now
+                </div>
               ) : (
                 <RegisterDialog
                   trigger={
@@ -97,75 +123,146 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                       }}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      <div
-                        className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-                      >
-                        <MarqueeContainer
-                          text={[
-                            `register for ${comp.competitionDetails.name}`,
-                            CurrentUser?.email === ""
-                              ? "login required to register"
-                              : `register for ${comp.competitionDetails.name}`,
-                            `register for ${comp.competitionDetails.name}`,
-                            CurrentUser?.email === ""
-                              ? "login required to register"
-                              : `register for ${comp.competitionDetails.name}`,
-                          ]}
-                        />
-                      </div>
+                      {offlineEvent && !CurrentUser?.accomodation ? (
+                        <div
+                          className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                        >
+                          <MarqueeContainer
+                            text={[
+                              `register for Offline Events`,
+                              CurrentUser?.email === ""
+                                ? "login required to register"
+                                : `register for Offline Events`,
+                              `register for Offline Events`,
+                              CurrentUser?.email === ""
+                                ? "login required to register"
+                                : `register for Offline Events`,
+                            ]}
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                        >
+                          <MarqueeContainer
+                            text={[
+                              `register for ${comp.competitionDetails.name}`,
+                              CurrentUser?.email === ""
+                                ? "login required to register"
+                                : `register for ${comp.competitionDetails.name}`,
+                              `register for ${comp.competitionDetails.name}`,
+                              CurrentUser?.email === ""
+                                ? "login required to register"
+                                : `register for ${comp.competitionDetails.name}`,
+                            ]}
+                          />
+                        </div>
+                      )}
                     </button>
                   }
                   content={
-                    <RadioGroup
-                      onValueChange={(e) => {
-                        setRegPlanId(e.split(" ")[1]!);
-                        setRegPrice(parseInt(e.split(" ")[0]!));
-                      }}
-                      defaultValue={
-                        (comp.competitionDetails.regPlans[0]?.price.toString() ??
-                          "") +
-                        " " +
-                        (comp.competitionDetails.regPlans[0]?.id ?? "")
-                      }
-                    >
-                      {comp.competitionDetails.regPlans.map((reg) => {
-                        return (
-                          <div
-                            key={reg.id}
-                            className="mb-2 flex items-center gap-2 px-5"
-                          >
-                            <RadioGroupItem
-                              className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
-                              value={reg.price.toString() + " " + reg.id}
+                    offlineEvent && !CurrentUser?.accomodation ? (
+                      <RadioGroup
+                        onValueChange={(e) => {
+                          setRegPlanId(e.split(" ")[1]!);
+                          setRegPrice(parseInt(e.split(" ")[0]!));
+                        }}
+                        defaultValue={
+                          (offlinePlans?.regPlans[0]?.price.toString() ?? "") +
+                          " " +
+                          (offlinePlans?.regPlans[0]?.id ?? "")
+                        }
+                      >
+                        {offlinePlans?.regPlans.map((reg) => {
+                          return (
+                            <div
                               key={reg.id}
-                            />
-                            <Label
-                              htmlFor={reg.id}
-                              className="flex w-full flex-col p-2"
+                              className="mb-2 flex items-center gap-2 px-5"
                             >
-                              <div className="flex items-center gap-2">
-                                <div className="text-xl font-normal uppercase">
-                                  {reg.name} - ₹{reg.price}
-                                </div>
-                                <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
-                                  {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
-                                  {reg.labelling}
-                                </div>
-                              </div>
-                              <div
-                                className={`${sharetech.className} mt-1 text-base tracking-tight`}
+                              <RadioGroupItem
+                                className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
+                                value={reg.price.toString() + " " + reg.id}
+                                key={reg.id}
+                              />
+                              <Label
+                                htmlFor={reg.id}
+                                className="flex w-full flex-col p-2"
                               >
-                                {reg.description}
-                              </div>
-                            </Label>
-                          </div>
-                        );
-                      })}
-                    </RadioGroup>
+                                <div className="flex items-center gap-2">
+                                  <div className="text-xl font-normal uppercase">
+                                    {reg.name} - ₹{reg.price}
+                                  </div>
+                                  <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
+                                    {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
+                                    {reg.labelling}
+                                  </div>
+                                </div>
+                                <div
+                                  className={`${sharetech.className} mt-1 text-base tracking-tight`}
+                                >
+                                  {reg.description}
+                                </div>
+                              </Label>
+                            </div>
+                          );
+                        })}
+                      </RadioGroup>
+                    ) : (
+                      <RadioGroup
+                        onValueChange={(e) => {
+                          setRegPlanId(e.split(" ")[1]!);
+                          setRegPrice(parseInt(e.split(" ")[0]!));
+                        }}
+                        defaultValue={
+                          (comp.competitionDetails.regPlans[0]?.price.toString() ??
+                            "") +
+                          " " +
+                          (comp.competitionDetails.regPlans[0]?.id ?? "")
+                        }
+                      >
+                        {comp.competitionDetails.regPlans.map((reg) => {
+                          return (
+                            <div
+                              key={reg.id}
+                              className="mb-2 flex items-center gap-2 px-5"
+                            >
+                              <RadioGroupItem
+                                className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
+                                value={reg.price.toString() + " " + reg.id}
+                                key={reg.id}
+                              />
+                              <Label
+                                htmlFor={reg.id}
+                                className="flex w-full flex-col p-2"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <div className="text-xl font-normal uppercase">
+                                    {reg.name} - ₹{reg.price}
+                                  </div>
+                                  <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
+                                    {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
+                                    {reg.labelling}
+                                  </div>
+                                </div>
+                                <div
+                                  className={`${sharetech.className} mt-1 text-base tracking-tight`}
+                                >
+                                  {reg.description}
+                                </div>
+                              </Label>
+                            </div>
+                          );
+                        })}
+                      </RadioGroup>
+                    )
                   }
                   price={regPrice}
                   regPlanId={regPlanId}
-                  eventId={comp.competitionDetails.id}
+                  eventId={
+                    offlineEvent && !CurrentUser?.accomodation
+                      ? (offlinePlans?.id ?? "")
+                      : comp.competitionDetails.id
+                  }
                 />
               )}
             </div>
@@ -174,7 +271,9 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
               {isRegistrationLoading && (
                 <div className="loading h-full w-full border-2 border-amber-50"></div>
               )}
-              {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />}
+              {regStatus && plan.verified && (
+                <CompTeamBox regTeam={regTeam} comp={comp} />
+              )}
             </div>
           </div>
         </div>

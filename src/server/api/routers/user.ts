@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-// import fs from "fs";
 import { getCollFromEmail } from "@/lib/utils";
+import cloudinary from "@/lib/cloudinary";
+
 
 export const userRouter = createTRPCRouter({
   createUser: publicProcedure
@@ -16,7 +17,6 @@ export const userRouter = createTRPCRouter({
       const existingUser = await ctx.db.user.findUnique({
         where: { clerkId: input.clerkId },
       });
-      console.log('Hello', existingUser, 'World');
 
       if (!existingUser) {
         const csv = await fetch(`https://xpecto.org/allUnivs.csv`)
@@ -180,13 +180,31 @@ export const userRouter = createTRPCRouter({
       });
       return user;
     }),
-  getUserRegisteredEvents: publicProcedure
-    .input(z.object({ userId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const registrations = await ctx.db.registration.findMany({
-        where: { userId: input.userId },
-        include: { event: true }, // Include event details
-      });
-      return registrations;
+
+    uploadImageToFolder: publicProcedure
+    .input(z.object({ base64: z.string(), folderName: z.string() })) // Expect a Base64 image
+    .mutation(async ({ input }) => {
+      try {
+        const result = await cloudinary.uploader.upload(input.base64, {
+          folder: input.folderName,
+        });
+
+        return { success: true, publicId: result.public_id, url: result.secure_url };
+      } catch (error) {
+        console.error(error);
+        return { success: false, message: "Upload failed" };
+      }
+    }),
+
+    deleteImage: publicProcedure
+    .input(z.object({ publicId: z.string() }))
+    .mutation(async ({ input }) => {
+      try {
+        await cloudinary.uploader.destroy(input.publicId);
+        return { success: true };
+      } catch (error) {
+        console.error(error);
+        return { success: false, message: "Deletion failed" };
+      }
     }),
 });

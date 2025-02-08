@@ -78,10 +78,6 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     );
   }, [clerkUser, isLoaded, url]);
 
-  useEffect(() => {
-    console.log("currentUser", clerkUser);
-  }, [clerkUser, currentUser]);
-
   return (
     <SharedContext.Provider
       value={{ CurrentUser: currentUser, setCurrentUser }}

@@ -24,7 +24,7 @@ const WorkshopDetailsBox = ({ work }: { work:  WorkshopWithDetails }) => {
   const [regPlanId, setRegPlanId] = useState("");
 
   const { data: plan, isLoading: isRegistrationLoading } =
-    api.event.checkUserRegisteration.useQuery(
+    api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
         eventId: work?.workshopDetailsId ?? "",

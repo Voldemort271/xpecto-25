@@ -15,7 +15,7 @@ const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
   const { data: expo } = api.expo.getExpoBySlug.useQuery({
     slug: expoSlug,
   });
-  const { data: plan } = api.event.checkUserRegisteration.useQuery(
+  const { data: plan } = api.registration.checkUserRegisteration.useQuery(
     {
       userId: CurrentUser?.id ?? "",
       eventId: expo?.exposDetailsId ?? "",

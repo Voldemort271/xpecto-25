@@ -15,7 +15,7 @@ const Page = ({ params }: { params: Promise<{ pro: string }> }) => {
   const { data: pro } = api.pronite.getProniteBySlug.useQuery({
     slug: proSlug,
   });
-  const { data: plan } = api.event.checkUserRegisteration.useQuery(
+  const { data: plan } = api.registration.checkUserRegisteration.useQuery(
     {
       userId: CurrentUser?.id ?? "",
       eventId: pro?.proniteDetailsId ?? "",

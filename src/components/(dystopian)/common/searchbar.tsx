@@ -73,7 +73,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
 
   // Fetching registered events for the logged-in user
   const { data: registeredEvents = [] } =
-    api.user.getUserRegisteredEvents.useQuery(
+    api.registration.getUserRegisteredEvents.useQuery(
       { userId },
       { enabled: !!userId }, // Only fetch if userId is available
     );
