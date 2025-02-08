@@ -44,8 +44,8 @@ model User {
   teams     Team[]
   regEvents Registration[]
 
-  ambassador       Ambassador?
-  POC              Ambassador?      @relation("POC", fields: [POCId], references: [id])
+  ambassador Ambassador?
+  POC        Ambassador? @relation("POC", fields: [POCId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,7 +55,7 @@ model Ambassador {
   id          String @id @default(cuid())
   token       String @unique
   userId      String @unique
-  tier        String
+  tier        String @default("basic")
   contingents User[] @relation("POC")
 
   user User @relation(fields: [userId], references: [id])

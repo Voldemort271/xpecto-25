@@ -5,12 +5,15 @@ import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/lib/utils";
+import { api } from "@/trpc/react";
 
 const Page = () => {
   const { signOut } = useClerk();
   const router = useRouter();
 
   const { CurrentUser, setCurrentUser } = useCurrentUser();
+
+  const { data: ambassador } = api.ambassador.getAmbassador.useQuery({userId: CurrentUser?.id ?? ""});
 
   const handleSignOut = async () => {
     try {
@@ -97,10 +100,12 @@ const Page = () => {
           >
             Sign Out
           </button>
-          {/*//TODO: Shift this to home page after it has been redisgned*/}
-          {CurrentUser.role === "Ambassador" ? (
-            <div className="border-2 p-2">Ambassador Token : {}</div>
+          {CurrentUser.role === "ambassador" ? (
+            <div><div className="border-2 p-2 flex justify-center">Ambassador Token : {ambassador?.token ?? ""}</div>
+            <div>Current number of participants brought : {ambassador?.contingents.length}</div></div>
+            //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
           ) : (
+            //TODO: Shift this to home page after it has been redisgned*/
             <button
               className="border-2 p-2"
               onClick={() => router.push("/ambassador")}

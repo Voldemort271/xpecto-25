@@ -104,55 +104,5 @@ export const inviteRouter = createTRPCRouter({
       return res;
     }),
 
-  isAmbassadorInviteValid: publicProcedure
-    .input(z.object({ token: z.string(), userId: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const token = await ctx.db.ambassadorToken.findUnique({
-        where: {
-          token: input.token,
-          userId: input.userId,
-        },
-      });
-      return token;
-    }),
-
-  acceptAmbassadorInvite: publicProcedure
-    .input(
-      z.object({ token: z.string(), tier: z.string(), userId: z.string() }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.user.update({
-        data: {
-          role: "Ambassador",
-          ambassador: {
-            create: {
-              token: input.token,
-              tier: input.tier,
-            },
-          },
-        },
-        where: {
-          id: input.userId,
-        },
-      });
-
-      await ctx.db.ambassadorToken.delete({
-        where: {
-          token: input.token,
-        },
-      });
-
-      return true;
-    }),
-
-  deleteAmbassadorInvite: publicProcedure
-    .input(z.object({ token: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.ambassadorToken.delete({
-        where: {
-          token: input.token,
-        },
-      });
-      return true;
-    }),
+  
 });
