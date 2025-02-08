@@ -67,7 +67,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
     }
   }, [comp, offlinePlans, offlineEvent, CurrentUser]);
 
-
   return (
     <>
       <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
@@ -104,12 +103,12 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                 plan.verified ? (
                   !regTeam && <CreateTeamDialog competitionId={comp.id} />
                 ) : (
-                  <div className="border-2 text-lg font-extrabold p-2 w-fit bg-amber-50 text-neutral-900">
+                  <div className="w-fit border-2 bg-amber-50 p-2 text-lg font-extrabold text-neutral-900">
                     Your payment is being verified right now
                   </div>
                 )
               ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
-                <div className="border-2 text-lg font-extrabold p-2 w-fit bg-amber-50 text-neutral-900">
+                <div className="w-fit border-2 bg-amber-50 p-2 text-lg font-extrabold text-neutral-900">
                   Your payment is being verified right now
                 </div>
               ) : (
@@ -129,14 +128,14 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                         >
                           <MarqueeContainer
                             text={[
-                              `register for Offline Events`,
+                              `register for ${comp.competitionDetails.name} - offline event`,
                               CurrentUser?.email === ""
                                 ? "login required to register"
-                                : `register for Offline Events`,
-                              `register for Offline Events`,
+                                : `register for ${comp.competitionDetails.name} - offline event`,
+                              `register for  ${comp.competitionDetails.name} - offline event`,
                               CurrentUser?.email === ""
                                 ? "login required to register"
-                                : `register for Offline Events`,
+                                : `register for ${comp.competitionDetails.name} - offline event`,
                             ]}
                           />
                         </div>

@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { sleep } from "@/lib/utils";
+import { navElements, sleep } from "@/lib/utils";
 import CustomToast from "@/components/root/custom-toast";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -18,19 +18,6 @@ interface Props {
 }
 
 const inter = Inter({ subsets: ["latin"] });
-
-const pageLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  {
-    name: "Competitions",
-    href: "/competitions",
-  },
-  { name: "Expos", href: "/expos" },
-  { name: "Pronites", href: "/pronites" },
-  { name: "Workshops", href: "/workshops" },
-  { name: "Sponsors", href: "/sponsors" },
-];
 
 const NavDialog = ({ toggle, setToggle }: Props) => {
   const router = useRouter();
@@ -116,25 +103,25 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
               Select destination
             </div>
             <div className="grid w-full grid-cols-2 gap-2">
-              {pageLinks.map((el, i) => (
+              {navElements.map((el, i) => (
                 <div className="flex items-center gap-2" key={i}>
                   <Input
                     type="radio"
                     name="location"
-                    value={el.href}
-                    id={el.name}
+                    value={`/${el !== "Home" ? el.toLowerCase() : ""}`}
+                    id={el}
                     className="h-4 w-4 cursor-pointer align-middle"
                     disabled={override}
                   />
                   <Label
-                    htmlFor={el.name}
+                    htmlFor={el}
                     className={
                       override
                         ? "cursor-not-allowed text-slate-500"
                         : "cursor-pointer text-slate-800"
                     }
                   >
-                    {el.name}
+                    {el}
                   </Label>
                 </div>
               ))}
