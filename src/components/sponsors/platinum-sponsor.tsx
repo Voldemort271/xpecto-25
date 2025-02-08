@@ -51,7 +51,7 @@ const PlatinumSponsor = ({ delay }: Props) => {
           </div>
         </div>
         <div className="mb-2 text-4xl font-semibold uppercase text-amber-50 md:text-5xl">
-          logitech<span className="font-extralight">&reg;</span>
+          sample<span className="font-extralight">&reg;</span>
         </div>
         <div className={`mb-5 text-base ${sharetech.className} tracking-tight`}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi

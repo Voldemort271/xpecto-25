@@ -46,7 +46,7 @@ const Page = () => {
           <GenericSponsor
             key={el}
             tier={el % 3 == 0 ? "gold" : el % 3 == 1 ? "silver" : "bronze"}
-            name={"Logitech"}
+            name={"sample"}
             link={"/"}
           />
         ))}

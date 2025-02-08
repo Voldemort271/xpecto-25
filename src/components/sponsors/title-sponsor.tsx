@@ -42,11 +42,11 @@ const TitleSponsor = () => {
           <div className="top-0 flex h-12 w-[100vh] -translate-x-[calc(50%-24px)] translate-y-[calc(50vh-24px)] -rotate-90 flex-col justify-center overflow-clip border-2 border-r-0 border-t-0 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:h-16 md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:text-3xl">
             <MarqueeContainer
               text={[
-                "presenting logitech",
+                "presenting sample",
                 "title sponsor",
                 "xpecto '25",
                 "iit mandi",
-                "presenting logitech",
+                "presenting sample",
                 "title sponsor",
                 "xpecto '25",
                 "iit mandi",
@@ -72,7 +72,7 @@ const TitleSponsor = () => {
               </div>
             </div>
             <div className="mb-2 text-5xl font-semibold uppercase text-amber-50 sm:text-6xl md:text-7xl">
-              logitech<span className="font-extralight">&reg;</span>
+              sample<span className="font-extralight">&reg;</span>
             </div>
             <div
               className={`mb-5 max-w-screen-sm text-right text-base sm:text-lg ${sharetech.className} tracking-tight`}
@@ -98,11 +98,11 @@ const TitleSponsor = () => {
           <div className="top-0 flex h-12 w-[100vh] -translate-x-[calc(50%-24px)] translate-y-[calc(50vh-24px)] rotate-90 flex-col justify-center overflow-clip border-2 border-l-0 border-t-0 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:h-16 md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:text-3xl">
             <MarqueeContainer
               text={[
-                "presenting logitech",
+                "presenting sample",
                 "title sponsor",
                 "xpecto '25",
                 "iit mandi",
-                "presenting logitech",
+                "presenting sample",
                 "title sponsor",
                 "xpecto '25",
                 "iit mandi",
