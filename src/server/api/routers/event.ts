@@ -2,7 +2,6 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { sendPaymentVerifyingEmail } from "@/lib/email";
 
-
 export const eventRouter = createTRPCRouter({
   addUserToEvent: publicProcedure
     .input(
@@ -14,10 +13,11 @@ export const eventRouter = createTRPCRouter({
         eventId: z.string(),
         paymentProof: z.string(),
         email: z.string(),
+        POC: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { verified, paymentId, userId, regPlanId, eventId } = input;
+      const { verified, paymentId, userId, regPlanId, eventId, POC } = input;
 
       await ctx.db.user.update({
         where: {
@@ -43,6 +43,21 @@ export const eventRouter = createTRPCRouter({
           },
         },
       });
+
+      if (POC) {
+        await ctx.db.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            POC: {
+              connect: {
+                token: POC,
+              },
+            },
+          },
+        });
+      }
 
       if (!verified) await sendPaymentVerifyingEmail(input.email);
 
@@ -80,21 +95,17 @@ export const eventRouter = createTRPCRouter({
       return events;
     }),
 
-    getOfflinePlans: publicProcedure
-    .query(async ({ ctx }) => {
+  getOfflinePlans: publicProcedure.query(async ({ ctx }) => {
+    // Querying EventDetails with filters on name and description
+    const event = await ctx.db.eventDetails.findUnique({
+      where: {
+        id: "universaleve",
+      },
+      include: {
+        regPlans: true,
+      },
+    });
 
-      // Querying EventDetails with filters on name and description
-      const event = await ctx.db.eventDetails.findUnique({
-        where: {
-          id: "universaleve"
-        },
-        include: {
-          regPlans: true,
-        },
-      });
-
-      return event;
-    }),
-
-    
+    return event;
+  }),
 });

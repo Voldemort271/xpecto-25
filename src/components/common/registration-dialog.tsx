@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 const handjet = Handjet({ subsets: ["latin"] });
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
+const universalEvent = "universaleve";
+
 interface RegisterDialogProps {
   trigger: React.ReactNode;
   content: React.ReactNode;
@@ -41,15 +43,24 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
   const [image, setImage] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [transactionID, setTransactionID] = useState("");
+  const [token, setToken] = useState("");
   const [isUploading, setIsUploading] = useState(false); //TODO: Use this to show a loading spinner while sending the image
 
   const uploadImage = api.user.uploadImageToFolder.useMutation();
   const userAddToEvent = api.event.addUserToEvent.useMutation();
 
+  const { data: isToken } = api.ambassador.findToken.useQuery({
+    token: token,
+  });
+
   const handleTransactionIDChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setTransactionID(e.target.value);
+  };
+
+  const handleTokenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setToken(e.target.value);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,8 +88,10 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     paymentProof: string,
     paymentId: string,
     verified: boolean,
+    POC?: string,
   ) => {
     if (!CurrentUser) return;
+    console.log(POC);
     userAddToEvent.mutate(
       {
         paymentId: paymentId,
@@ -88,6 +101,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         paymentProof: paymentProof,
         email: CurrentUser.email,
         verified: verified,
+        POC: POC,
       },
       {
         onSuccess: () => {
@@ -175,6 +189,23 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       return;
     }
 
+    if (token !== "" && eventId === universalEvent) {
+      if (!isToken) {
+        toast.custom(
+          (t) => (
+            <CustomToast variant={"error"} metadata={t}>
+              Invalid token. Please check the token and try again.
+            </CustomToast>
+          ),
+          {
+            position: "top-center",
+            duration: 3000,
+          },
+        );
+        return;
+      }
+    }
+
     setIsUploading(true);
 
     try {
@@ -208,7 +239,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
             );
             setImage(e.url ?? null); // Show the final uploaded image
             setSelectedFile(null); // Reset file selection};
-            createReg(e.publicId, transactionID, false);
+            createReg(e.publicId, transactionID, false, token);
           },
           onError: (e) => {
             console.error("Error uploading image:", e);
@@ -310,6 +341,28 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
                     (You are supposed to give the main transactionID. If paying
                     via UPI, give the UPI transaction ID or the UTR.)
                   </div>
+                  {eventId === universalEvent && (
+                    <>
+                      <label
+                        className="mb-1 mt-2 block text-lg font-bold uppercase text-amber-50"
+                        htmlFor="transactionID"
+                      >
+                        Ambassador token (5% discount)
+                      </label>
+                      <Input
+                        type="text"
+                        id="token"
+                        value={token}
+                        onChange={handleTokenChange}
+                        className="block w-full rounded-none p-2 text-amber-50"
+                      />
+                      <div className="mt-2 text-neutral-400">
+                        (You are supposed to give the token of the ambassador
+                        you have been referred from. You get a 5% discount for a
+                        valid token.)
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="mb-4">
                   <label className="mb-2 text-lg font-bold uppercase text-amber-50">

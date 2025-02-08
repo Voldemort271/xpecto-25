@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { sendPaymentRejectionEmail, sendRegistrationConfirmationEmail } from "@/lib/email";
+import {
+  sendPaymentRejectionEmail,
+  sendRegistrationConfirmationEmail,
+} from "@/lib/email";
 import cloudinary from "@/lib/cloudinary";
 
-
 export const registrationtRouter = createTRPCRouter({
-    checkUserRegisteration: publicProcedure
+  checkUserRegisteration: publicProcedure
     .input(z.object({ userId: z.string(), eventId: z.string() }))
     .query(async ({ ctx, input }) => {
       const { userId, eventId } = input;
@@ -24,7 +26,7 @@ export const registrationtRouter = createTRPCRouter({
       return reg;
     }),
 
-    getUserRegisteredEvents: publicProcedure
+  getUserRegisteredEvents: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ ctx, input }) => {
       const registrations = await ctx.db.registration.findMany({
@@ -34,18 +36,18 @@ export const registrationtRouter = createTRPCRouter({
       return registrations;
     }),
 
-    getUnverifiedRegistrations: publicProcedure
+  getUnverifiedRegistrations: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const acceptableUsers = process.env.ADMINS?.split(", ");
-      
-      if (!acceptableUsers?.includes(input)){
+
+      if (!acceptableUsers?.includes(input)) {
         return [];
       }
 
       const registrations = await ctx.db.registration.findMany({
         where: {
-          verified: false
+          verified: false,
         },
         include: {
           plan: true,
@@ -57,7 +59,7 @@ export const registrationtRouter = createTRPCRouter({
       return registrations;
     }),
 
-    verifyRegistration: publicProcedure
+  verifyRegistration: publicProcedure
     .input(z.object({ registrationId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       // Update the registration record in db to verified & accomodation becomes true if event was universaleve
@@ -73,7 +75,7 @@ export const registrationtRouter = createTRPCRouter({
         include: {
           user: true,
           event: true,
-        }
+        },
       });
 
       if (reg.eventId === process.env.UNIVERSAL_EVENT_ID) {
@@ -84,7 +86,7 @@ export const registrationtRouter = createTRPCRouter({
           },
           data: {
             accomodation: true,
-          }
+          },
         });
       }
 
@@ -93,7 +95,7 @@ export const registrationtRouter = createTRPCRouter({
       return reg;
     }),
 
-    rejectRegistration: publicProcedure
+  rejectRegistration: publicProcedure
     .input(z.object({ registrationId: z.string(), reason: z.string() }))
     .mutation(async ({ ctx, input }) => {
       // Delete the registration record from db
@@ -106,8 +108,21 @@ export const registrationtRouter = createTRPCRouter({
         },
         include: {
           user: true,
-        }
+        },
       });
+
+      if (reg.eventId === process.env.UNIVERSAL_EVENT_ID) {
+        await ctx.db.user.update({
+          where: {
+            id: reg.userId,
+          },
+          data: {
+            POC: {
+              disconnect: true,
+            },
+          },
+        });
+      }
 
       await sendPaymentRejectionEmail(reg.user.email, input.reason);
 
@@ -115,4 +130,4 @@ export const registrationtRouter = createTRPCRouter({
 
       return reg;
     }),
-})
+});
