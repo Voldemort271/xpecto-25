@@ -1,22 +1,16 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
 import { useClerk } from "@clerk/nextjs";
-import { SharedContext } from "@/lib/context";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/lib/utils";
 
 const Page = () => {
   const { signOut } = useClerk();
-  const context = useContext(SharedContext);
   const router = useRouter();
 
-  if (!context) {
-    throw new Error(
-      "SharedContext must be used within a SharedContextProvider in home page",
-    );
-  }
-  const { CurrentUser, setCurrentUser } = context;
+  const { CurrentUser, setCurrentUser } = useCurrentUser();
 
   const handleSignOut = async () => {
     try {
@@ -93,22 +87,29 @@ const Page = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div
-        style={{
-          transform: "scale(3)",
-          display: "inline-block",
-          margin: "1rem",
-        }}
-      >
-        <button
-          className="border-2 p-2"
-          disabled={CurrentUser?.clerkId === ""}
-          onClick={handleSignOut}
-        >
-          Sign Out
-        </button>
-      </div>
+    <div className="flex justify-center">
+      {CurrentUser && CurrentUser.clerkId !== "" && (
+        <div className="m-4 flex scale-150 flex-col gap-4">
+          <button
+            className="border-2 p-2"
+            disabled={CurrentUser?.clerkId === ""}
+            onClick={handleSignOut}
+          >
+            Sign Out
+          </button>
+          {/*//TODO: Shift this to home page after it has been redisgned*/}
+          {CurrentUser.role === "Ambassador" ? (
+            <div className="border-2 p-2">Ambassador Token : {}</div>
+          ) : (
+            <button
+              className="border-2 p-2"
+              onClick={() => router.push("/ambassador")}
+            >
+              Register as campus ambassador
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

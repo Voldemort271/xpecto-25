@@ -44,21 +44,11 @@ model User {
   teams     Team[]
   regEvents Registration[]
 
-  ambassadorInvite AmbassadorToken?
   ambassador       Ambassador?
   POC              Ambassador?      @relation("POC", fields: [POCId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model AmbassadorToken {
-  token     String   @id
-  userId    String   @unique
-  tier      String   @default("basic")
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id])
 }
 
 model Ambassador {
