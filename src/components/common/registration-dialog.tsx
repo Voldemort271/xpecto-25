@@ -285,6 +285,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
                   <div className={styles.inputContainer}>
                     <input
                       type="file"
+                      className={styles.input}
                       accept="image/*"
                       id="image"
                       onChange={handleFileChange}

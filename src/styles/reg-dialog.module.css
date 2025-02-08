@@ -4,7 +4,7 @@
 	border: 1px solid #fffbeb;
 }
 
-input[type=file]::file-selector-button {
+.input[type=file]::file-selector-button {
 	font-family: 'Handjet', sans-serif;
 	font-size: 20px;
 	text-transform: uppercase;
@@ -20,7 +20,7 @@ input[type=file]::file-selector-button {
 	transition: .5s;
 }
 
-input[type=file]::file-selector-button:hover {
+.input[type=file]::file-selector-button:hover {
 	background-color: #fffbeb;
 	border: 0;
 }
