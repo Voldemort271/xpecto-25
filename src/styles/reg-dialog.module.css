@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&display=swap');
+
+.inputContainer {
+	border: 1px solid #fffbeb;
+}
+
+input[type=file]::file-selector-button {
+	font-family: 'Handjet', sans-serif;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: 400;
+	cursor: pointer;
+	letter-spacing: 2px;
+	background-color: #fffbebdd;
+	content: "hello";
+	border: none;
+	color: #171717;
+	padding: 7px 15px;
+	margin-right: 10px;
+	transition: .5s;
+}
+
+input[type=file]::file-selector-button:hover {
+	background-color: #fffbeb;
+	border: 0;
+}

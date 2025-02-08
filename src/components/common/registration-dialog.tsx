@@ -9,12 +9,15 @@ import {
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import MarqueeContainer from "@/components/common/marquee-container";
-import { Handjet } from "next/font/google";
+import { Handjet, Share_Tech } from "next/font/google";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import Image from "next/image";
+import styles from "@/styles/reg-dialog.module.css";
+import { Input } from "@/components/ui/input";
 
 const handjet = Handjet({ subsets: ["latin"] });
+const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 interface RegisterDialogProps {
   trigger: React.ReactNode;
@@ -98,6 +101,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 
               {
                 position: "top-center",
+                duration: 1000,
               },
             );
           } else {
@@ -111,6 +115,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 
               {
                 position: "top-center",
+                duration: 1000,
               },
             );
           }
@@ -142,11 +147,31 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     e.preventDefault();
     //TODO: Someone just convert all the alerts to toasts throughout the doc.
     if (!CurrentUser) {
-      alert("No user logged in. Log in");
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+            You need to be logged in to register for the event.
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+          duration: 3000,
+        },
+      );
       return;
     }
     if (!image || !selectedFile || !transactionID) {
-      alert("Please provide all required information.");
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+            Please fill all the fields.
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+          duration: 3000,
+        },
+      );
       return;
     }
 
@@ -158,9 +183,18 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         {
           onSuccess: (e) => {
             if (!e.publicId) {
-              throw new Error(
-                "Uploading image did not return an ID. Try again!",
+              toast.custom(
+                (t) => (
+                  <CustomToast variant={"error"} metadata={t}>
+                    Error uploading image. Please try again.
+                  </CustomToast>
+                ),
+                {
+                  position: "top-center",
+                  duration: 3000,
+                },
               );
+              return;
             }
             toast.custom(
               (t) => (
@@ -181,7 +215,8 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
             toast.custom(
               (t) => (
                 <CustomToast variant={"error"} metadata={t}>
-                  Error uploading image
+                  Error uploading image. Please try again, or check your console
+                  for more information.
                 </CustomToast>
               ),
               {
@@ -232,45 +267,51 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
                 ]}
               />
             </DialogTitle>
-            <div className="p-4">
+            <div className={`p-4 ${shareTech.className} tracking-tight`}>
               <button
                 onClick={() => setPaying(false)}
-                className="mb-2 border-2 p-2"
+                className={`bg-red-400/[0.1] px-5 py-2 text-xl font-light uppercase text-red-200 ${handjet.className} tracking-wider`}
               >
-                Back
+                &lt;&lt; cancel payment
               </button>
-              <form>
-                <div className="mb-4">
-                  <label className="mb-2 block text-amber-50" htmlFor="image">
-                    Upload Image (Max 1MB)
+              <form className="border-2 p-5">
+                <div className="mb-5 flex flex-col gap-1 text-base sm:text-lg">
+                  <label
+                    className="font-bold uppercase text-amber-50"
+                    htmlFor="image"
+                  >
+                    Upload image (max 1MB)
                   </label>
-                  <input
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="block w-full text-amber-50"
-                  />
+                  <div className={styles.inputContainer}>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="image"
+                      onChange={handleFileChange}
+                    />
+                  </div>
                 </div>
                 <div className="mb-4">
                   <label
-                    className="mb-2 block text-amber-50"
+                    className="mb-1 block text-lg font-bold uppercase text-amber-50"
                     htmlFor="transactionID"
                   >
-                    Transaction ID (You are supposed to give the main
-                    transactionID. If paying via UPI, give the UPI transaction
-                    ID or the UTR.)
+                    Transaction ID
                   </label>
-                  <input
+                  <Input
                     type="text"
                     id="transactionID"
                     value={transactionID}
                     onChange={handleTransactionIDChange}
-                    className="block w-full p-2 text-neutral-900"
+                    className="block w-full rounded-none p-2 text-amber-50"
                   />
+                  <div className="mt-2 text-neutral-400">
+                    (You are supposed to give the main transactionID. If paying
+                    via UPI, give the UPI transaction ID or the UTR.)
+                  </div>
                 </div>
                 <div className="mb-4">
-                  <label className="mb-2 block text-amber-50">
+                  <label className="mb-2 text-lg font-bold uppercase text-amber-50">
                     Scan to Pay via UPI
                   </label>
                   <Image
@@ -290,9 +331,9 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="border-2 p-2"
+                  className={`bg-green-400/[0.1] px-5 py-2 text-xl font-light uppercase text-emerald-200 ${handjet.className} tracking-wider`}
                 >
-                  Submit
+                  &lt;&lt; Submit &gt;&gt;
                 </button>
               </form>
             </div>
