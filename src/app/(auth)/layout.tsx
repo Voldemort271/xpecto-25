@@ -1,7 +1,7 @@
 import React from "react";
 import AuthNavbar from "@/components/(auth)/navbar";
 import Image from "next/image";
-import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import MarqueeContainer from "@/components/common/marquee-container";
 import { Handjet } from "next/font/google";
 
 const handjet = Handjet({ subsets: ["latin"] });

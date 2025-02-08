@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { Handjet } from "next/font/google";
-import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import MarqueeContainer from "@/components/common/marquee-container";
 import Link from "next/link";
 
 const handjet = Handjet({ subsets: ["latin"] });

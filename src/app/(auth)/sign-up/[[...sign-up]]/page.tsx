@@ -3,7 +3,7 @@
 import { useSignIn, useSignUp } from "@clerk/nextjs";
 import React, { type FormEvent } from "react";
 import type { OAuthStrategy } from "@clerk/types";
-import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import MarqueeContainer from "@/components/common/marquee-container";
 import GoogleLogo from "@/components/(auth)/google";
 import GithubLogo from "@/components/(auth)/github";
 import { useRouter } from "next/navigation";

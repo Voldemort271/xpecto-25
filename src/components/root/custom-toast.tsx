@@ -1,7 +1,7 @@
 import React from "react";
 import { cva } from "class-variance-authority";
 import { Handjet, Share_Tech } from "next/font/google";
-import MarqueeContainer from "@/components/(dystopian)/common/marquee-container";
+import MarqueeContainer from "@/components/common/marquee-container";
 import { toast } from "sonner";
 import { X } from "lucide-react";
 
