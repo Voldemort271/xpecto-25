@@ -35,7 +35,7 @@ const DystopianNav = () => {
         transition={{ duration: 0.5, delay: animationDelay + 0.25 }}
       >
         <Link
-          href="/public"
+          href="/"
           className="cursor-none"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
