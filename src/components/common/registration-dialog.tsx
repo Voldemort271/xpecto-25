@@ -364,24 +364,32 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
                     </>
                   )}
                 </div>
-                <div className="mb-4">
-                  <label className="mb-2 text-lg font-bold uppercase text-amber-50">
-                    Scan to Pay via UPI
-                  </label>
-                  <Image
-                    src="/images/merchant_qr.png"
-                    alt="QR Code"
-                    className="mx-auto mb-2 block h-32 w-32"
-                    width={100}
-                    height={100}
-                  />
-                  <p className="text-center text-amber-50">
-                    Bank Details: <br />
-                    Account Name: Your Account Name <br />
-                    Account Number: 1234567890 <br />
-                    IFSC Code: ABCD0123456
-                  </p>
-                </div>
+                {isUploading ? (
+                  <div
+                    className={`py-5 text-2xl font-light uppercase text-amber-200 ${handjet.className} tracking-wider`}
+                  >
+                    uploading image...
+                  </div>
+                ) : (
+                  <div className="mb-4">
+                    <label className="mb-2 text-lg font-bold uppercase text-amber-50">
+                      Scan to Pay via UPI
+                    </label>
+                    <Image
+                      src="/images/merchant_qr.png"
+                      alt="QR Code"
+                      className="mx-auto mb-2 block h-32 w-32"
+                      width={100}
+                      height={100}
+                    />
+                    <p className="text-center text-amber-50">
+                      Bank Details: <br />
+                      Account Name: Your Account Name <br />
+                      Account Number: 1234567890 <br />
+                      IFSC Code: ABCD0123456
+                    </p>
+                  </div>
+                )}
                 <button
                   type="submit"
                   onClick={handleSubmit}

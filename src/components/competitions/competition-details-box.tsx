@@ -103,12 +103,12 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                 plan.verified ? (
                   !regTeam && <CreateTeamDialog competitionId={comp.id} />
                 ) : (
-                  <div className="w-fit border-2 bg-amber-50 p-2 text-lg font-extrabold text-neutral-900">
+                  <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                     Your payment is being verified right now
                   </div>
                 )
               ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
-                <div className="w-fit border-2 bg-amber-50 p-2 text-lg font-extrabold text-neutral-900">
+                <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                   Your payment is being verified right now
                 </div>
               ) : (
