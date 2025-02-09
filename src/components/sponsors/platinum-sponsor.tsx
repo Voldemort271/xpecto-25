@@ -2,7 +2,6 @@
 
 import React, { useContext, useRef } from "react";
 import { motion, useInView } from "motion/react";
-import Pic1 from "../../../public/images/admin.jpg";
 import Image from "next/image";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
@@ -37,7 +36,9 @@ const PlatinumSponsor = ({ delay }: Props) => {
         transition={{ delay: 0.5 + delay }}
       ></motion.div>
       <Image
-        src={Pic1}
+        src={
+          "https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg"
+        }
         alt={"Brand"}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover opacity-30"
       />

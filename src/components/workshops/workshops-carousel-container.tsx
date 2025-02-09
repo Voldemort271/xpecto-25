@@ -2,7 +2,6 @@ import React, { type ReactNode } from "react";
 import Image from "next/image";
 import MarqueeContainer from "@/components/common/marquee-container";
 import type { WorkshopWithDetails } from "@/app/types";
-import BgImage from "../../../public/images/signin.jpg";
 
 interface Props {
   children: ReactNode;
@@ -13,7 +12,9 @@ const WorkshopsCarouselContainer = ({ children, data }: Props) => {
   return (
     <div className="relative z-0 grid h-full w-full grid-rows-[56px_auto_56px] bg-neutral-900 pt-[126px] md:grid-cols-[64px_auto_64px] md:grid-rows-1 md:pt-0 lg:grid-cols-[56px_auto_56px]">
       <Image
-        src={BgImage}
+        src={
+          "https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg"
+        }
         width={1920}
         height={1080}
         alt={"Background"}
