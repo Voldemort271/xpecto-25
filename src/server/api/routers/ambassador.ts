@@ -36,7 +36,7 @@ export const ambassadorRouter = createTRPCRouter({
       return true;
     }),
 
-    findToken: publicProcedure
+  findToken: publicProcedure
     .input(z.object({ token: z.string() }))
     .query(async ({ ctx, input }) => {
       const reg = await ctx.db.ambassador.findUnique({
@@ -47,5 +47,4 @@ export const ambassadorRouter = createTRPCRouter({
 
       return reg ? true : false;
     }),
-
 });
