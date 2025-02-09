@@ -24,6 +24,7 @@ export const navElements = [
   "Home",
   "Team",
   "Competitions",
+  "About",
   "Workshops",
   "Expos",
   "Pronites",
