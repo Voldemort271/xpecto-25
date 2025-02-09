@@ -39,6 +39,8 @@ const PlatinumSponsor = ({ delay }: Props) => {
         src={
           "https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg"
         }
+        width={800}
+        height={800}
         alt={"Brand"}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover opacity-30"
       />
