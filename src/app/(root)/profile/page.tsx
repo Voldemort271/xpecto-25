@@ -1,15 +1,21 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
+import { Share_Tech } from "next/font/google";
+import { CursorContext } from "@/context/cursor-context";
+import Link from "next/link";
+
+const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const Page = () => {
   const { signOut } = useClerk();
   const router = useRouter();
+  const { setIsHovered } = useContext(CursorContext);
 
   const { CurrentUser, setCurrentUser } = useCurrentUser();
 
@@ -92,47 +98,80 @@ const Page = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      {CurrentUser && CurrentUser.clerkId !== "" && (
-        <div className="m-4 flex scale-150 flex-col gap-4">
-          {CurrentUser.name} <br />
-          {CurrentUser.college_name}
-          <br />
-          {CurrentUser.email}
-          <br />
-          {CurrentUser.createdAt.toLocaleString()}
-          <br />
-          {CurrentUser.role}
-          <br />
-          <button
-            className="border-2 p-2"
-            disabled={CurrentUser?.clerkId === ""}
-            onClick={handleSignOut}
-          >
-            Sign Out
-          </button>
-          {CurrentUser.role === "ambassador" ? (
-            <div>
-              <div className="flex justify-center border-2 p-2">
-                Ambassador Token : {ambassador?.token ?? ""}
+    <div>
+      <div
+        className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-xl font-light uppercase text-red-300"
+        onClick={() => router.back()}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        &lt;&lt; go back
+      </div>
+      <div className="border-2 border-amber-50/[0.5] bg-neutral-950 p-12 md:min-w-[600px] lg:min-w-[1000px]">
+        {CurrentUser && CurrentUser.clerkId !== "" && (
+          <div>
+            <div className="flex items-center gap-2.5">
+              <div className="text-6xl font-medium uppercase">
+                {CurrentUser.name}
               </div>
-              <div>
-                Current number of participants brought :{" "}
-                {ambassador?.contingents.length}
+              <div
+                className={`text-lg ${sharetech.className} rounded-full bg-neutral-600 px-5 uppercase tracking-tight`}
+              >
+                {CurrentUser.role}
               </div>
             </div>
-          ) : (
-            //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
-            //TODO: Shift this to home page after it has been redesigned
+            <div className={`${sharetech.className} mb-5 tracking-tight`}>
+              <div className="mb-2 text-sm text-neutral-600">
+                Account created on {CurrentUser.createdAt.toLocaleDateString()}
+              </div>
+              <div className="mb-1 text-xl font-medium">
+                Institution name: {CurrentUser.college_name}
+              </div>
+              <div className="mb-1 text-xl font-medium">
+                Email:{" "}
+                <Link
+                  href={`mailto:${CurrentUser.email}`}
+                  target={"_blank"}
+                  className="cursor-none underline"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  {CurrentUser.email}
+                </Link>
+              </div>
+            </div>
             <button
-              className="border-2 p-2"
-              onClick={() => router.push("/ambassador")}
+              disabled={CurrentUser?.clerkId === ""}
+              onClick={handleSignOut}
+              className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-red-300"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              Register as campus ambassador
+              Sign Out
             </button>
-          )}
-        </div>
-      )}
+            {CurrentUser.role === "ambassador" ? (
+              <div>
+                <div className="flex justify-center border-2 p-2">
+                  Ambassador Token : {ambassador?.token ?? ""}
+                </div>
+                <div>
+                  Current number of participants brought :{" "}
+                  {ambassador?.contingents.length}
+                </div>
+              </div>
+            ) : (
+              //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
+              //TODO: Shift this to home page after it has been redesigned
+              <button
+                className="border-2 p-2"
+                onClick={() => router.push("/ambassador")}
+              >
+                Register as campus ambassador
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
