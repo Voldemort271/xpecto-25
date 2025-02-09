@@ -100,7 +100,7 @@ const Page = () => {
   return (
     <div>
       <div
-        className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-xl font-light uppercase text-red-300"
+        className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-xl font-light uppercase text-red-300 backdrop-blur-2xl"
         onClick={() => router.back()}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -140,35 +140,40 @@ const Page = () => {
                 </Link>
               </div>
             </div>
-            <button
-              disabled={CurrentUser?.clerkId === ""}
-              onClick={handleSignOut}
-              className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-red-300"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              Sign Out
-            </button>
-            {CurrentUser.role === "ambassador" ? (
-              <div>
-                <div className="flex justify-center border-2 p-2">
-                  Ambassador Token : {ambassador?.token ?? ""}
-                </div>
-                <div>
-                  Current number of participants brought :{" "}
-                  {ambassador?.contingents.length}
-                </div>
-              </div>
-            ) : (
-              //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
-              //TODO: Shift this to home page after it has been redesigned
+            <div className="flex items-start gap-5">
               <button
-                className="border-2 p-2"
-                onClick={() => router.push("/ambassador")}
+                disabled={CurrentUser?.clerkId === ""}
+                onClick={handleSignOut}
+                className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-red-300"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               >
-                Register as campus ambassador
+                Sign Out
               </button>
-            )}
+              {CurrentUser.role === "ambassador" ? (
+                <div className="space-y-1">
+                  <div className="bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300">
+                    Ambassador Token: {ambassador?.token ?? "none"}
+                  </div>
+                  <div
+                    className={`text-lg ${sharetech.className} text-2xl font-normal tracking-tight text-amber-200`}
+                  >
+                    Current score: {ambassador?.contingents.length}
+                  </div>
+                </div>
+              ) : (
+                //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
+                //TODO: Shift this to home page after it has been redesigned
+                <button
+                  className="w-fit cursor-none bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  onClick={() => router.push("/ambassador")}
+                >
+                  Register as campus ambassador
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
