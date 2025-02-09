@@ -118,7 +118,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
                   : "cursor-pointer text-sm font-medium text-slate-700"
               }
             >
-              &gt;&gt; Safety protocols: {override ? "Overridden" : "Intact"}
+              &gt;&gt; Login
             </div>
           </div>
           <div className="-mt-1 mb-2 text-left text-xs font-medium text-slate-400">
