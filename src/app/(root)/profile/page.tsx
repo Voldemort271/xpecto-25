@@ -13,7 +13,9 @@ const Page = () => {
 
   const { CurrentUser, setCurrentUser } = useCurrentUser();
 
-  const { data: ambassador } = api.ambassador.getAmbassador.useQuery({userId: CurrentUser?.id ?? ""});
+  const { data: ambassador } = api.ambassador.getAmbassador.useQuery({
+    userId: CurrentUser?.id ?? "",
+  });
 
   const handleSignOut = async () => {
     try {
@@ -93,6 +95,15 @@ const Page = () => {
     <div className="flex justify-center">
       {CurrentUser && CurrentUser.clerkId !== "" && (
         <div className="m-4 flex scale-150 flex-col gap-4">
+          {CurrentUser.name} <br />
+          {CurrentUser.college_name}
+          <br />
+          {CurrentUser.email}
+          <br />
+          {CurrentUser.createdAt.toLocaleString()}
+          <br />
+          {CurrentUser.role}
+          <br />
           <button
             className="border-2 p-2"
             disabled={CurrentUser?.clerkId === ""}
@@ -101,11 +112,18 @@ const Page = () => {
             Sign Out
           </button>
           {CurrentUser.role === "ambassador" ? (
-            <div><div className="border-2 p-2 flex justify-center">Ambassador Token : {ambassador?.token ?? ""}</div>
-            <div>Current number of participants brought : {ambassador?.contingents.length}</div></div>
-            //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
+            <div>
+              <div className="flex justify-center border-2 p-2">
+                Ambassador Token : {ambassador?.token ?? ""}
+              </div>
+              <div>
+                Current number of participants brought :{" "}
+                {ambassador?.contingents.length}
+              </div>
+            </div>
           ) : (
-            //TODO: Shift this to home page after it has been redisgned*/
+            //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
+            //TODO: Shift this to home page after it has been redesigned
             <button
               className="border-2 p-2"
               onClick={() => router.push("/ambassador")}
