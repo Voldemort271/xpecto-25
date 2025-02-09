@@ -86,8 +86,8 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 
   const createReg = (
     paymentProof: string,
-    paymentId: string,
     verified: boolean,
+    paymentId?: string,
     POC?: string,
   ) => {
     if (!CurrentUser) return;
@@ -140,10 +140,10 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
           toast.custom(
             (t) => (
               <CustomToast variant={"error"} metadata={t}>
-                Either you are registering again for the same event or an error
-                occurred while registering you for the event. Your payment was
-                successful. Please contact the organizer if you have made two
-                payments.
+                Your transactionId already exists or you are registering again
+                for the same event or an an unseen error occurred while
+                registering you for the event. Please contact the organizer if
+                you have made a legit payment.
               </CustomToast>
             ),
 
@@ -239,7 +239,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
             );
             setImage(e.url ?? null); // Show the final uploaded image
             setSelectedFile(null); // Reset file selection};
-            createReg(e.publicId, transactionID, false, token);
+            createReg(e.publicId, false, transactionID, token);
           },
           onError: (e) => {
             console.error("Error uploading image:", e);
@@ -424,7 +424,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
                     if (price !== 0) {
                       setPaying(true);
                     } else {
-                      createReg("", "free", true);
+                      createReg("", true);
                     }
                   }}
                   className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"

@@ -61,7 +61,6 @@ const Page = () => {
       setCurrentUser({
         name: "",
         email: "",
-        clerkId: "",
         college_name: "",
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -108,7 +107,7 @@ const Page = () => {
         &lt;&lt; go back
       </div>
       <div className="border-2 border-amber-50/[0.5] bg-neutral-950 p-12 md:min-w-[600px] lg:min-w-[1000px]">
-        {CurrentUser && CurrentUser.clerkId !== "" && (
+        {CurrentUser && CurrentUser.id !== "" && (
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
               <div className="text-4xl font-medium uppercase sm:text-6xl">
@@ -142,7 +141,7 @@ const Page = () => {
             </div>
             <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-5">
               <button
-                disabled={CurrentUser?.clerkId === ""}
+                disabled={CurrentUser?.id === ""}
                 onClick={handleSignOut}
                 className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-xl font-normal uppercase text-red-300 sm:text-2xl"
                 onMouseEnter={() => setIsHovered(true)}

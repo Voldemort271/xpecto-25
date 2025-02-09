@@ -2,6 +2,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { getCollFromEmail } from "@/lib/utils";
 import cloudinary from "@/lib/cloudinary";
+import { createClerkClient } from '@clerk/nextjs/server'
+
+const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
 export const userRouter = createTRPCRouter({
   createUser: publicProcedure
@@ -9,12 +12,11 @@ export const userRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1),
         email: z.string().email(),
-        clerkId: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const existingUser = await ctx.db.user.findUnique({
-        where: { clerkId: input.clerkId },
+        where: { email: input.email },
       });
 
       if (!existingUser) {
@@ -33,7 +35,6 @@ export const userRouter = createTRPCRouter({
           data: {
             name: input.name,
             email: input.email,
-            clerkId: input.clerkId,
             college_name: getCollFromEmail(input.email, csv),
           },
         });
@@ -41,6 +42,22 @@ export const userRouter = createTRPCRouter({
         return existingUser;
       }
     }),
+
+  addToClerk: publicProcedure
+  .input(z.object({ clerkId: z.string(), dbId: z.string() }))
+  .mutation(async ({ ctx, input }) => {
+    try {
+      const updatedUser = await clerk.users.updateUser(input.clerkId, {
+        externalId: input.dbId,
+      });
+
+      return { success: true, updatedUser };
+    } catch (error) {
+      console.error("Failed to update externalId:", error);
+      throw new Error("Failed to update externalId");
+    }
+
+  }),
 
   getUserTeams: publicProcedure
     .input(z.object({ userId: z.string() }))

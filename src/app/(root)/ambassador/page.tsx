@@ -32,7 +32,7 @@ const Page = () => {
     <div>
       <div className="h-32"></div>
       {CurrentUser &&
-        CurrentUser.clerkId !== "" &&
+        CurrentUser.id !== "" &&
         CurrentUser.role !== "ambassador" && (
           <div>
             Put the content of campus ambassador here. Content guys job. Also
