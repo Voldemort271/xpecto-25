@@ -88,6 +88,41 @@ export const registrationtRouter = createTRPCRouter({
             accomodation: true,
           },
         });
+
+        //Updating tier of POC
+
+        const poc = await ctx.db.ambassador.findUnique({
+          where: {
+            id: reg.user.POCId!,
+          },
+          include: {
+            contingents: true,
+          },
+        });
+
+        if (poc) {
+          const contingentLength = poc.contingents.length;
+
+          let newTier = poc.tier;
+          if (contingentLength > 31) {
+            newTier = 'gold';
+          } else if (contingentLength > 23) {
+            newTier = 'silver';
+          } else if (contingentLength > 15) {
+            newTier = 'bronze';
+          }
+
+          if (newTier !== poc.tier) {
+            await ctx.db.ambassador.update({
+              where: {
+                id: poc.id,
+              },
+              data: {
+                tier: newTier,
+              },
+            });
+          }
+        }
       }
 
       await sendRegistrationConfirmationEmail(reg.user.email, reg.event.name);
