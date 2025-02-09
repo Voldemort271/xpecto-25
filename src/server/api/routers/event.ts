@@ -64,9 +64,8 @@ export const eventRouter = createTRPCRouter({
   
         return true;
       }
-      catch (error) {
-        console.error("Probably paymentId already exists:", error);
-        return false;
+      catch (e) {
+        throw new Error("Payment ID already exists");
       }
     }),
 
