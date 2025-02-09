@@ -98,7 +98,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
                   className={
                     override
                       ? "cursor-not-allowed text-sm font-medium text-slate-500"
-                      : "cursor-pointer text-sm font-medium text-slate-800 underline"
+                      : "cursor-pointer text-sm font-medium text-slate-800 underline hover:text-slate-600"
                   }
                 >
                   {el}
@@ -115,7 +115,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
               className={
                 override
                   ? "cursor-pointer text-sm font-medium text-red-600"
-                  : "cursor-pointer text-sm font-medium text-slate-700"
+                  : "cursor-pointer text-sm font-medium text-slate-700 hover:underline"
               }
             >
               &gt;&gt; Login
