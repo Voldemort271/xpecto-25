@@ -177,6 +177,26 @@ const Page = () => {
           </div>
         )}
       </div>
+      <div
+        className={`flex w-full justify-end gap-2.5 ${sharetech.className} tracking-tight`}
+      >
+        <div
+          className="w-fit cursor-none bg-sky-500/[0.1] px-5 py-1 text-base font-light uppercase text-indigo-300 backdrop-blur-2xl"
+          onClick={() => router.push("/legal/terms")}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          terms of service
+        </div>
+        <div
+          className="w-fit cursor-none bg-sky-500/[0.1] px-5 py-1 text-base font-light uppercase text-indigo-300 backdrop-blur-2xl"
+          onClick={() => router.push("/legal/privacy")}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          privacy policy
+        </div>
+      </div>
     </div>
   );
 };
