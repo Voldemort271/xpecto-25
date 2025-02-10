@@ -11,22 +11,14 @@ const Home = () => {
       <Marquee speed={5}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
         architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
-        laboriosam magnam neque, perferendis praesentium provident quia,
-        reprehenderit repudiandae sit voluptatem. Lorem ipsum dolor sit amet,
-        consectetur adipisicing elit. Asperiores aut debitis dolor ea eveniet ex
-        facere facilis inventore ipsum laborum laudantium, numquam odio porro
-        provident quae qui velit voluptas voluptatum!
+        laboriosam magnam neque.
       </Marquee>
       <AboutXpecto />
       <AboutIITMandi />
       <Marquee>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
         architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
-        laboriosam magnam neque, perferendis praesentium provident quia,
-        reprehenderit repudiandae sit voluptatem. Lorem ipsum dolor sit amet,
-        consectetur adipisicing elit. Asperiores aut debitis dolor ea eveniet ex
-        facere facilis inventore ipsum laborum laudantium, numquam odio porro
-        provident quae qui velit voluptas voluptatum!
+        laboriosam magnam neque.
       </Marquee>
       hihihi
     </div>
