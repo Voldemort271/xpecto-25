@@ -1,3 +1,5 @@
+"use client"
+
 import { AuthenticateWithRedirectCallback, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
