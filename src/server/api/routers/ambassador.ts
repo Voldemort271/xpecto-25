@@ -5,7 +5,7 @@ export const ambassadorRouter = createTRPCRouter({
   getAmbassador: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ ctx, input }) => {
-      const ambassador = await ctx.db.ambassador.findFirst({
+      const ambassador = await ctx.db.ambassador.findUnique({
         where: {
           userId: input.userId,
         },
@@ -52,13 +52,13 @@ export const ambassadorRouter = createTRPCRouter({
     .query(async ({ ctx }) => {
       const ambassadors = await ctx.db.ambassador.findMany({
         include: {
+          user: true,
           contingents: true,
         },
       });
 
       const topAmbassadors = ambassadors
         .sort((a, b) => b.contingents.length - a.contingents.length)
-        .slice(0, 5);
 
       return topAmbassadors;
     }),

@@ -1,188 +1,265 @@
-'use client';
+"use client";
 
-import { CircleUser, Trophy, Users, Medal } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { api } from '@/trpc/react';
-import { useEffect } from 'react';
-import { useCurrentUser } from '@/lib/utils';
+import { CircleUser, Trophy, Users, Medal } from "lucide-react";
+import { Award, Star } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { api } from "@/trpc/react";
+import { useCurrentUser } from "@/lib/utils";
 
-// Mock data - replace with actual API data
-// const leaderboardData = [
-//   { id: 1, name: 'Alex Johnson', rank: 1, contingents: 45, college: 'MIT' },
-//   { id: 2, name: 'Sarah Williams', rank: 2, contingents: 38, college: 'Stanford' },
-//   { id: 3, name: 'Michael Chen', rank: 3, contingents: 32, college: 'Harvard' },
-//   { id: 4, name: 'Emma Davis', rank: 4, contingents: 29, college: 'Berkeley' },
-//   { id: 5, name: 'James Wilson', rank: 5, contingents: 25, college: 'CalTech' },
-// ];
-
-
-
-
-// const currentUser = {
-//   name: 'Alex Johnson',
-//   rank: 1,
-//   contingents: 45,
-//   recentContingents: [
-//     { name: 'Team Alpha', members: 5, date: '2024-03-20' },
-//     { name: 'Tech Innovators', members: 8, date: '2024-03-18' },
-//     { name: 'Digital Squad', members: 6, date: '2024-03-15' },
-//   ],
-// };
-
-export default function  LeaderboardPage() {
-  
-  
-  
-  const { data: leaderboardData, isLoading } = api.ambassador.getTopAmbassadors.useQuery();
+export default function LeaderboardPage() {
+  const { data: sortedAmbassadors, isLoading } =
+    api.ambassador.getTopAmbassadors.useQuery();
   const { CurrentUser } = useCurrentUser();
+  const { data: currentUserAmbassador } = api.ambassador.getAmbassador.useQuery(
+    {
+      userId: CurrentUser?.id ?? "",
+    },
+  );
 
-  const { data: ambassador } = api.ambassador.getAmbassador.useQuery({
-    userId: CurrentUser?.id ?? "",
-  });
-  
-  useEffect(() => {
-    console.log('Leaderboard Data:', leaderboardData);
-    console.log('Current User :', CurrentUser);
-  }, [leaderboardData, CurrentUser]);
-
-  if (isLoading){
-    return <div>Loading...</div>
+  function getUserRank(userId: string) {
+    const rank =
+      (sortedAmbassadors?.findIndex((item) => item.userId === userId) ?? -1) +
+      1;
+    return rank;
   }
-  const getRankColor = (rank: number) => {
+
+  const currentUserRank = getUserRank(CurrentUser?.id ?? "");
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const RankIcon = ({ rank }: { rank: number }) => {
     switch (rank) {
       case 1:
-        return 'text-yellow-500';
+        return <Trophy className="h-6 w-6 text-yellow-400" />;
       case 2:
-        return 'text-gray-400';
+        return <Medal className="h-6 w-6 text-gray-300" />;
       case 3:
-        return 'text-amber-600';
+        return <Award className="h-6 w-6 text-amber-600" />;
       default:
-        return 'text-slate-700';
+        return <Star className="h-6 w-6 text-indigo-400" />;
     }
   };
 
   return (
     <div>
-      {CurrentUser && CurrentUser.role === "ambassador" ?  (
-        <div className="p-6">
-          <div className="max-w-7xl mx-auto space-y-8">
+      {CurrentUser && CurrentUser.role === "ambassador" ? (
+        <div className="p-6 bg-[#161616]">
+          <div className="mx-auto max-w-7xl space-y-8">
             {/* Hero Section */}
-            <div className="text-center space-y-4 mt-32 lg:mt-24">
-              <h1 className="text-5xl font-bold">Campus Ambassador Leaderboard</h1>
+            <div className="mt-32 space-y-4 text-center lg:mt-24">
+              <h1 className="text-4xl sm:text-5xl font-bold">
+                Campus Ambassador Leaderboard
+              </h1>
               <p className="text-md">
                 Track your performance and compete with other ambassadors
               </p>
             </div>
-  
+
             {/* Current User Stats */}
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="p-6 flex items-center space-x-4">
-                <Trophy className="w-12 h-12" />
+            <div className="grid gap-6 md:grid-cols-3">
+              <Card className="flex items-center space-x-4 p-6">
+                <Trophy className="h-12 w-12" />
                 <div>
-                  <p className="text-md font-medium">Your Rank</p>
-                  {/* <h2 className="text-3xl font-bold">#{currentUser.rank}</h2> */}
+                  <p className="text-lg font-medium">Your Rank</p>
+                  <h2 className="text-3xl font-bold">#{currentUserRank}</h2>
                 </div>
               </Card>
-  
-              <Card className="p-6 flex items-center space-x-4">
-                <Users className="w-12 h-12" />
+
+              <Card className="flex items-center space-x-4 p-6">
+                <Users className="h-12 w-12" />
                 <div>
-                  <p className="text-md font-medium">Total Contingents</p>
-                  <h2 className="text-3xl font-bold">{}</h2>
+                  <p className="text-lg font-medium">Total Contingents</p>
+                  <h2 className="text-3xl font-bold">
+                    {currentUserAmbassador?.contingents.length}
+                  </h2>
                 </div>
               </Card>
-  
-              <Card className="p-6 flex items-center space-x-4">
-                <CircleUser className="w-12 h-12" />
+
+              <Card className="flex items-center space-x-4 p-6">
+                <CircleUser className="h-12 w-12" />
                 <div>
-                  <p className="text-md font-medium">Ambassador Status</p>
-                  <h2 className="text-lg font-semibold">Gold Tier</h2>
+                  <p className="text-lg font-medium">Ambassador Status</p>
+                  <h2 className="text-lg font-semibold">{currentUserAmbassador?.tier.toLocaleUpperCase()}</h2>
                 </div>
               </Card>
             </div>
-  
+
             {/* Recent Contingents */}
-            <Card className="p-6">
-              <h3 className="text-2xl font-semibold mb-4">Your Recent Contingents</h3>
-              <div className="space-y-4">
-                {/* {currentUser.recentContingents.map((contingent, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-4 rounded-lg"
-                  >
-                    <div>
-                      <h4 className="font-medium">{contingent.name}</h4>
-                      <p className="text-sm">
-                        {contingent.members} members • {contingent.date}
-                      </p>
-                    </div>
-                    <Users className="w-5 h-5" />
-                  </div>
-                ))} */}
-              </div>
-            </Card>
-  
-            {/* Global Leaderboard */}
-            <Card className="p-6">
-              <h3 className="text-2xl font-semibold mb-6">Global Rankings</h3>
-              <div className="">
-                <table className="w-full">
-                  <thead>
-                    <tr className="">
-                      <th className="p-4 text-left text-lg font-semibold w-20">Rank</th>
-                      <th className="p-4 text-left text-lg font-semibold">Ambassador</th>
-                      {/* <th className="p-4 text-left text-lg font-semibold hidden sm:block">College</th> */}
-                      <th className="p-4 text-right text-lg font-semibold">Contingents</th>
-                    </tr>
-                  </thead>
-                  <tbody className="">
-                    {leaderboardData && leaderboardData.map((ambassador, index) => (
-                      <tr
-                        key={ambassador.id}
-                        // className={`group transition-colors hover:bg-gray-300 ${
-                        //   ambassador.name === currentUser.name ? 'bg-slate-300' : ''
-                        // }`}z
+            {currentUserAmbassador?.contingents &&
+            currentUserAmbassador.contingents.length > 0 ? (
+              <Card className="p-6">
+                <h3 className="mb-4 text-2xl font-semibold">
+                  Your Recent Contingents
+                </h3>
+                <div className="space-y-4">
+                  {currentUserAmbassador?.contingents
+                    .slice(0, 3)
+                    .map((contingent, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between rounded-lg p-4"
                       >
-                        <td className="py-4">
-                          <div className="flex items-center gap-2">
-                            {index + 1 <= 3 ? (
-                              <Medal className={`w-5 h-5 ${getRankColor(index)}`} />
-                            ) : null}
-                            <span className={`font-medium ${getRankColor(index + 1)}`}>
-                              #{index + 1}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
-                              <CircleUser className="w-5 h-5" />
-                            </div>
-                            <span className="font-medium">{ambassador.token}</span>
-                          </div>
-                        </td>
-                        {/* <td className="py-4 text-muted-foreground hidden sm:block">{ambassador.college}</td> */}
-                        <td className="py-4 text-right">
-                          <span className="inline-flex items-center gap-1 font-semibold">
-                            <Users className="w-4 h-4 text-muted-foreground" />
-                            {ambassador.contingents.length}
-                          </span>
-                        </td>
-                      </tr>
+                        <div>
+                          <h4 className="font-medium">{contingent.name}</h4>
+                          <p className="text-sm">
+                            {contingent?.role} members •{" "}
+                            {new Date(
+                              contingent.createdAt,
+                            ).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <Users className="h-5 w-5" />
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                </div>
+              </Card>
+            ) : (
+              <Card className="p-6">
+                <p className="text-2xl">
+                  Add Contingents to see recent Contingents here.
+                </p>
+              </Card>
+            )}
+
+            {/* Global Leaderboard */}
+            <div className="py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-7xl">
+                {/* Header */}
+                <div className="flex flex-col items-center justify-center mb-6 sm:mb-10">
+                  <div className="flex items-center mb-2 sm:mb-4">
+                    <Users className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-400 mr-2 sm:mr-3" />
+                    <h1 className="text-3xl font-bold text-gray-100">
+                      Ambassador Rankings
+                    </h1>
+                  </div>
+                </div>
+
+                {/* Top 3 Podium */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-10">
+                  {sortedAmbassadors?.slice(0, 3).map((ambassador) => {
+                    const userAmbassador = ambassador.user;
+                    return (
+                      <div
+                        key={ambassador.id}
+                        className={`relative ${
+                          getUserRank(ambassador?.userId) === 1
+                            ? "sm:order-2 sm:-translate-y-4 sm:transform"
+                            : getUserRank(ambassador?.userId) === 2
+                              ? "sm:order-1"
+                              : "sm:order-3"
+                        }`}
+                      >
+                        <div
+                          className={`rounded-xl border bg-gray-800 p-4 sm:p-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
+                            CurrentUser.id === ambassador.userId
+                              ? "border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]"
+                              : "border-gray-700"
+                          } `}
+                        >
+                          <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
+                            <RankIcon rank={getUserRank(ambassador?.userId)} />
+                          </div>
+                          <div className="mt-3 text-center">
+                            <h3
+                              className={`mb-2 text-lg sm:text-xl font-semibold ${
+                                CurrentUser.id === ambassador.userId
+                                  ? "text-indigo-400"
+                                  : "text-gray-100"
+                              } `}
+                            >
+                              {userAmbassador?.name}
+                            </h3>
+                            <span className="rounded-full border border-gray-600 bg-gray-700 px-3 py-1 text-sm text-gray-300">
+                              {ambassador.token}
+                            </span>
+                            <div className=" mt-3 sm:mt-4">
+                              <div className="text-2xl font-bold text-indigo-400">
+                                {ambassador.contingents.length}
+                              </div>
+                              <div className="text-sm text-gray-400">
+                                Contingents
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Remaining Rankings */}
+                <div className="space-y-3 sm:space-y-4">
+                  {sortedAmbassadors?.slice(3, 10).map((ambassador) => {
+                    const userAmbassador = ambassador.user;
+                    return (
+                      <div
+                        key={ambassador.id}
+                        className={`rounded-lg border bg-gray-800 p-4 transition-all duration-200 hover:bg-gray-700/50 ${
+                          CurrentUser.id === ambassador.userId
+                            ? "border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]"
+                            : "border-gray-700"
+                        } `}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3 sm:space-x-4">
+                            <div className="flex-shrink-0">
+                              <span
+                                className={`inline-flex h-8 sm:h-10 w-8 sm:w-10 items-center justify-center rounded-full border ${
+                                  CurrentUser.id === ambassador.userId
+                                    ? "border-indigo-500 bg-indigo-900/50"
+                                    : "border-gray-600 bg-gray-700"
+                                } `}
+                              >
+                                <span
+                                  className={`text-lg font-semibold ${
+                                    CurrentUser.id === ambassador.userId
+                                      ? "text-indigo-300"
+                                      : "text-gray-300"
+                                  } `}
+                                >
+                                  {getUserRank(ambassador?.userId)}
+                                </span>
+                              </span>
+                            </div>
+                            <div>
+                              <h3
+                                className={`text-base sm:text-lg font-medium ${
+                                  CurrentUser.id === ambassador.userId
+                                    ? "text-indigo-400"
+                                    : "text-gray-100"
+                                } `}
+                              >
+                                {userAmbassador?.name}
+                              </h3>
+                              <span className="text-sm text-gray-400">
+                                {ambassador.token}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-lg sm:text-xl font-semibold text-indigo-400">
+                              {ambassador.contingents.length}
+                            </div>
+                            <div className="text-sm text-gray-400">
+                              Contingents
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       ) : (
-
-        <div className='p-48 text-4xl'>
+        <div className="p-48 text-4xl">
           <p>You are not ambassador. Become an ambassador to see this page.</p>
         </div>
-      )
-      }
+      )}
     </div>
   );
 }
