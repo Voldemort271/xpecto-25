@@ -5,6 +5,7 @@ import Marquee from "@/components/common/scrollable-marquee";
 import AboutIITMandi from "@/components/home/about-iitmd";
 import MerchPromo from "@/components/home/merch-promo";
 import AmbassadorPromo from "@/components/home/ambassador-promo";
+import Countdown from "@/components/common/countdown";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
       </Marquee>
       <MerchPromo />
       <AmbassadorPromo />
+      {new Date().getTime() < new Date("2025-03-29").getTime() && <Countdown />}
     </div>
   );
 };
