@@ -94,7 +94,6 @@ export const workshopRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.slug);
       return workshop ?? null;
     }),
   })

@@ -88,7 +88,6 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
     }
 
     if (foundTeamName) {
-      console.log(foundTeamName);
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
@@ -102,7 +101,6 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       return;
     }
     if (foundTeamUsers) {
-      console.log(foundTeamUsers);
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>

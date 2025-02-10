@@ -94,7 +94,6 @@ export const competitionRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.slug);
       return competition ?? null;
     }),
 

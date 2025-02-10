@@ -5,7 +5,6 @@ export const inviteRouter = createTRPCRouter({
   searchInvite: publicProcedure
     .input(z.object({ token: z.string() }))
     .query(async ({ ctx, input }) => {
-      console.log(input.token);
       const invite = await ctx.db.inviteToken.findUnique({
         where: {
           token: input.token,
