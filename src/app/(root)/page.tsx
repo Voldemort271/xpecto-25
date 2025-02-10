@@ -8,10 +8,26 @@ const Home = () => {
   return (
     <div className="flex h-full w-full flex-col items-center bg-neutral-900">
       <HomeScreen />
-      <Marquee />
+      <Marquee speed={5}>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+        architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
+        laboriosam magnam neque, perferendis praesentium provident quia,
+        reprehenderit repudiandae sit voluptatem. Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Asperiores aut debitis dolor ea eveniet ex
+        facere facilis inventore ipsum laborum laudantium, numquam odio porro
+        provident quae qui velit voluptas voluptatum!
+      </Marquee>
       <AboutXpecto />
       <AboutIITMandi />
-      <Marquee />
+      <Marquee>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+        architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
+        laboriosam magnam neque, perferendis praesentium provident quia,
+        reprehenderit repudiandae sit voluptatem. Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Asperiores aut debitis dolor ea eveniet ex
+        facere facilis inventore ipsum laborum laudantium, numquam odio porro
+        provident quae qui velit voluptas voluptatum!
+      </Marquee>
       hihihi
     </div>
   );
