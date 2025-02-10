@@ -36,7 +36,7 @@ const ExposDetailsView = ({ data }: Props) => {
       <div className="pointer-events-none absolute left-0 top-0 -z-10 h-full w-full bg-gradient-to-tl from-neutral-950/[0.7] to-transparent"></div>
       <div className="py-5">
         <Link
-          href={"/public"}
+          href={"/"}
           className="cursor-none text-lg font-light uppercase text-amber-50/[0.7]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

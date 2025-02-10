@@ -7,7 +7,7 @@ export const eventRouter = createTRPCRouter({
     .input(
       z.object({
         verified: z.boolean(),
-        paymentId: z.string(),
+        paymentId: z.string().optional(),
         userId: z.string(),
         regPlanId: z.string(),
         eventId: z.string(),
@@ -19,49 +19,54 @@ export const eventRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { verified, paymentId, userId, regPlanId, eventId, POC } = input;
 
-      await ctx.db.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          regEvents: {
-            create: {
-              paymentId: paymentId,
-              plan: {
-                connect: {
-                  id: regPlanId,
-                },
-              },
-              verified: verified,
-              paymentProof: input.paymentProof,
-              event: {
-                connect: {
-                  id: eventId,
-                },
-              },
-            },
-          },
-        },
-      });
-
-      if (POC) {
+      try {
         await ctx.db.user.update({
           where: {
             id: userId,
           },
           data: {
-            POC: {
-              connect: {
-                token: POC,
+            regEvents: {
+              create: {
+                paymentId: paymentId,
+                plan: {
+                  connect: {
+                    id: regPlanId,
+                  },
+                },
+                verified: verified,
+                paymentProof: input.paymentProof,
+                event: {
+                  connect: {
+                    id: eventId,
+                  },
+                },
               },
             },
           },
         });
+  
+        if (POC) {
+          await ctx.db.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              POC: {
+                connect: {
+                  token: POC,
+                },
+              },
+            },
+          });
+        }
+  
+        if (!verified) await sendPaymentVerifyingEmail(input.email);
+  
+        return true;
       }
-
-      if (!verified) await sendPaymentVerifyingEmail(input.email);
-
-      return true;
+      catch (e) {
+        throw new Error("Payment ID already exists");
+      }
     }),
 
   searchEvents: publicProcedure

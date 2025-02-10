@@ -47,7 +47,7 @@ const ApprovalPage = () => {
     error,
     isLoading,
   } = api.registration.getUnverifiedRegistrations.useQuery(
-    CurrentUser?.clerkId ?? "",
+    CurrentUser?.id ?? "",
   );
 
   const [selectedReg, setSelectedReg] = useState<
@@ -70,7 +70,7 @@ const ApprovalPage = () => {
         onSuccess: (e) => {
           setSelectedReg(null);
           utils.registration.getUnverifiedRegistrations.setData(
-            CurrentUser?.clerkId ?? "",
+            CurrentUser?.id ?? "",
             (prevReg) => {
               return prevReg?.filter((reg) => reg.id !== e.id);
             },
@@ -88,7 +88,7 @@ const ApprovalPage = () => {
         onSuccess: (e) => {
           setSelectedReg(null);
           utils.registration.getUnverifiedRegistrations.setData(
-            CurrentUser?.clerkId ?? "",
+            CurrentUser?.id ?? "",
             (prevReg) => {
               return prevReg?.filter((reg) => reg.id !== e.id);
             },

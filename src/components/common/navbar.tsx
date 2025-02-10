@@ -60,9 +60,9 @@ const DystopianNav = () => {
                 href={`/profile`}
                 text={[
                   "welcome back",
-                  CurrentUser?.name ?? "user",
-                  "welcome back",
-                  CurrentUser?.name ?? "user",
+                  CurrentUser?.name ?? "unknown user",
+                  "view profile",
+                  CurrentUser?.name ?? "unknown user",
                 ]}
               />
             </div>

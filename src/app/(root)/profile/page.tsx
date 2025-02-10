@@ -61,7 +61,6 @@ const Page = () => {
       setCurrentUser({
         name: "",
         email: "",
-        clerkId: "",
         college_name: "",
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -108,14 +107,14 @@ const Page = () => {
         &lt;&lt; go back
       </div>
       <div className="border-2 border-amber-50/[0.5] bg-neutral-950 p-12 md:min-w-[600px] lg:min-w-[1000px]">
-        {CurrentUser && CurrentUser.clerkId !== "" && (
+        {CurrentUser && CurrentUser.id !== "" && (
           <div>
-            <div className="flex items-center gap-2.5">
-              <div className="text-6xl font-medium uppercase">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2.5">
+              <div className="text-4xl font-medium uppercase sm:text-6xl">
                 {CurrentUser.name}
               </div>
               <div
-                className={`text-lg ${sharetech.className} rounded-full bg-neutral-600 px-5 uppercase tracking-tight`}
+                className={`mb-2.5 w-fit text-lg sm:mb-0 ${sharetech.className} rounded-full bg-neutral-600 px-5 uppercase tracking-tight`}
               >
                 {CurrentUser.role}
               </div>
@@ -124,10 +123,10 @@ const Page = () => {
               <div className="mb-2 text-sm text-neutral-600">
                 Account created on {CurrentUser.createdAt.toLocaleDateString()}
               </div>
-              <div className="mb-1 text-xl font-medium">
-                Institution name: {CurrentUser.college_name}
+              <div className="mb-1 text-lg font-medium sm:text-xl">
+                Institution: {CurrentUser.college_name}
               </div>
-              <div className="mb-1 text-xl font-medium">
+              <div className="mb-1 text-lg font-medium sm:text-xl">
                 Email:{" "}
                 <Link
                   href={`mailto:${CurrentUser.email}`}
@@ -140,10 +139,21 @@ const Page = () => {
                 </Link>
               </div>
             </div>
+            <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-5">
+              <button
+                disabled={CurrentUser?.id === ""}
+                onClick={handleSignOut}
+                className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-xl font-normal uppercase text-red-300 sm:text-2xl"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                Sign Out
+              </button>
+              {CurrentUser.role === "ambassador" ? (
             {CurrentUser.role === "ambassador" ? (
               <div className="sm:flex items-start gap-5">
                 <div className="space-y-1">
-                  <div className="bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300">
+                  <div className="bg-emerald-500/[0.1] px-5 py-2 text-xl font-normal uppercase text-green-300 sm:text-2xl">
                     Ambassador Token: {ambassador?.token ?? "none"}
                   </div>
                   <div
@@ -185,6 +195,26 @@ const Page = () => {
             </button>
           </div>
         )}
+      </div>
+      <div
+        className={`flex w-full justify-end gap-2.5 ${sharetech.className} tracking-tight`}
+      >
+        <div
+          className="w-fit cursor-none bg-sky-500/[0.1] px-5 py-1 text-base font-light uppercase text-indigo-300 backdrop-blur-2xl"
+          onClick={() => router.push("/legal/terms")}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          terms of service
+        </div>
+        <div
+          className="w-fit cursor-none bg-sky-500/[0.1] px-5 py-1 text-base font-light uppercase text-indigo-300 backdrop-blur-2xl"
+          onClick={() => router.push("/legal/privacy")}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          privacy policy
+        </div>
       </div>
     </div>
   );

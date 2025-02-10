@@ -30,7 +30,6 @@ model Member {
 // We can use the prize money field to detect an organiser register
 model User {
   id           String  @id @default(cuid())
-  clerkId      String  @unique
   email        String  @unique
   name         String
   college_name String  @default("Individual")
@@ -153,8 +152,8 @@ model Registration {
   userId       String
   planId       String
   eventId      String
-  paymentId    String
-  paymentProof String // Contains link to the payment proof image
+  paymentId    String?   @unique 
+  paymentProof String // Contains paymentId to the payment proof image
   verified     Boolean  @default(false)
   createdAt    DateTime @default(now())
 

@@ -1,42 +1,47 @@
-# Xpecto '25 Development Website
+# Xpecto '25 - Official Website
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`. Learn about the file and
-folder structure in the docs.
+Welcome to the official website of **Xpecto '25**, the grand annual fest of IIT Mandi! This is your one-stop destination
+for all event details, schedules, and registrations.
 
-## Run the website
+## About Xpecto '25
 
-### Live link: [Xpecto '25](https://xpecto-25.vercel.app/)
+Xpecto is one of the most anticipated cultural, technical, and sports festivals in the Himalayan region. It brings
+together students, artists, and enthusiasts from across the country to celebrate talent, innovation, and creativity.
 
-### Local Development:
+## Visit the Website
 
-1. Clone the repo
-2. Run the following commands:
+[Click here to explore Xpecto '25](https://www.xpecto.org/)
 
-```bash 
-pnpm i
-pnpm dev
-```
+## What You Can Do on This Website
 
-## Tech used
+- **View Event Schedule** - Stay updated with all performances, competitions, and workshops.
+- **Register for Events** - Sign up and participate in various activities.
+- **Check Competition Results** - See live updates on winners and rankings.
+- **Become a Campus Ambassador** - Promote our fest in your institution, and receive exciting perks in return.
+- **Announcements** - Get real-time updates and important information.
 
-- [Next.js 15](https://nextjs.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Motion](https://motion.dev)
-- [GSAP](https://gsap.com)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [three.js](https://threejs.org/)
-- [tRPC](https://trpc.io)
-- [Clerk](https://clerk.dev)
+## How to Use the Website
 
-## Contribution guidelines
+1. Open the website using the link above.
+2. Navigate through the menu to explore different sections.
+3. Click on an event to learn more about it and register.
+4. Stay tuned for real-time updates and announcements.
 
-- Name your commits meaningfully.
-- Submit a pull request after you've done your changes.
-- Format your code properly.
-- We probably won't need to use the `start-database.sh` file given here, so it's best not to bother about that.
-- The `DATABASE_URL` environment variable is commented out for now, but we will need to use that later. Take a took
-  at the `env.js` file to learn about how the environment variables are validated here.
-- Backend guys are encouraged to learn a bit about tRPC and how it can be used to make the backend simpler, as we've
-  used it here.
-- Frontend people, y'all got tons of different libraries to learn about now, so best to get started! 
+## Get Involved
+
+Want to be part of this amazing event? Here’s how you can contribute:
+
+- **Join as a Volunteer** - Help in organizing and managing different aspects of the fest.
+- **Partner with Us** - Collaborate with Xpecto '25 as a sponsor or media partner.
+- **Spread the Word** - Follow us on social media and share with your friends.
+
+## Contact Us
+
+Have questions or need assistance? Reach out to us!
+
+- **Email:** [tech@xpecto.org](mailto:tech@xpecto.org)
+- **Social Media:** Follow us on [Instagram](https://instagram.com/tech.xpecto/) for live updates.
+
+---
+We can't wait to welcome you to **Xpecto '25** – The Greatest Fest in the Himalayas! 🎊
+

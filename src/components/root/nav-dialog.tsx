@@ -3,10 +3,9 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { Inter } from "next/font/google";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { navElements, sleep } from "@/lib/utils";
+import { navElements } from "@/lib/utils";
 import CustomToast from "@/components/root/custom-toast";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -23,35 +22,22 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
   const router = useRouter();
   const [override, setOverride] = useState(false);
 
-  const handleSubmit = async (e: FormData) => {
-    console.log(e);
-    if (override) {
-      toast.custom(
-        (t) => (
-          <CustomToast variant="warning" metadata={t}>
-            Proceeding to authorization screen. Please standby.
-          </CustomToast>
-        ),
-        { duration: 1000, position: "top-right" },
-      );
-      router.push("/sign-in");
+  const handleWarp = (location: string) => {
+    toast.custom(
+      (t) => (
+        <CustomToast variant="warning" metadata={t}>
+          {override
+            ? "Proceeding to auth screen. Please standby."
+            : `Warping to ${location}. Please standby.`}
+        </CustomToast>
+      ),
+      { duration: 1000, position: "top-right" },
+    );
+    setTimeout(() => {
+      router.push(location);
       setToggle(!toggle);
-    } else {
-      if (e.get("location")) {
-        toast.custom(
-          (t) => (
-            <CustomToast variant="warning" metadata={t}>
-              Warping [{e.get("name") ? e.get("name")?.toString() : "Subject"}]
-              to {e.get("location")?.toString()}. Please standby.
-            </CustomToast>
-          ),
-          { duration: 1000, position: "top-right" },
-        );
-        await sleep(1000);
-        router.push(e.get("location")?.toString() ?? "/");
-        setToggle(!toggle);
-      }
-    }
+    }, 10);
+    setOverride(false);
   };
 
   return (
@@ -83,7 +69,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
           travel technology. Please select the appropriate options and submit to
           warp to your destination. Brought to you by Xpecto &apos;25.
         </div>
-        <form className="flex w-full flex-col gap-2" action={handleSubmit}>
+        <div className="flex w-full flex-col gap-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="name" className="text-slate-700">
               Name
@@ -102,79 +88,51 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
             <div className="w-32 shrink-0 text-sm font-medium text-slate-700">
               Select destination
             </div>
-            <div className="grid w-full grid-cols-2 gap-2">
+            <div className="grid w-full grid-cols-2 gap-1">
               {navElements.map((el, i) => (
-                <div className="flex items-center gap-2" key={i}>
-                  <Input
-                    type="radio"
-                    name="location"
-                    value={`/${el !== "Home" ? el.toLowerCase() : ""}`}
-                    id={el}
-                    className="h-4 w-4 cursor-pointer align-middle"
-                    disabled={override}
-                  />
-                  <Label
-                    htmlFor={el}
-                    className={
-                      override
-                        ? "cursor-not-allowed text-slate-500"
-                        : "cursor-pointer text-slate-800"
-                    }
-                  >
-                    {el}
-                  </Label>
+                <div
+                  onClick={() =>
+                    handleWarp(`/${el !== "Home" ? el.toLowerCase() : ""}`)
+                  }
+                  key={i}
+                  className={
+                    override
+                      ? "cursor-not-allowed text-sm font-medium text-slate-500"
+                      : "cursor-pointer text-sm font-medium text-slate-800 underline hover:text-slate-600"
+                  }
+                >
+                  {el}
                 </div>
               ))}
             </div>
           </div>
           <div className="mt-2 flex items-center justify-start gap-2">
-            <Input
-              type="checkbox"
-              name="override"
-              id="override"
-              className="h-4 w-4 align-middle"
-              checked={override}
-              onChange={(e) => setOverride(e.target.checked)}
-            />
-            <Label
-              htmlFor="override"
-              className={override ? "text-red-600" : "text-slate-700"}
+            <div
+              onClick={() => {
+                setOverride(true);
+                handleWarp("/sign-in");
+              }}
+              className={
+                override
+                  ? "cursor-pointer text-sm font-medium text-red-600"
+                  : "cursor-pointer text-sm font-medium text-slate-700 hover:underline"
+              }
             >
-              Safety protocols: {override ? "Overridden" : "Intact"}
-            </Label>
+              &gt;&gt; Login
+            </div>
           </div>
-          <div className="mb-2 text-left text-xs font-medium text-slate-600">
-            Checking this option will take you to the authorization screen.
+          <div className="-mt-1 mb-2 text-left text-xs font-medium text-slate-400">
+            Clicking this option will take you to the authorization screen.
             Proceed with caution.
           </div>
-          <div className="flex w-full justify-between gap-5">
-            <div className="space-x-5">
-              <Button
-                type="reset"
-                onClick={() => {
-                  setOverride(false);
-                  setToggle(false);
-                }}
-                className="mt-2 w-fit border border-slate-400/[0.5] bg-slate-200 px-5 py-2 text-red-500 hover:bg-slate-300"
-              >
-                Abort
-              </Button>
-              <Button
-                type="submit"
-                className="mt-2 w-fit bg-gradient-to-b from-blue-500 to-blue-600 px-5 py-2 text-amber-50 shadow-md shadow-neutral-900/[0.3]"
-              >
-                Submit
-              </Button>
-            </div>
-            <Link
-              href={"/team"}
-              onClick={() => setToggle(false)}
-              className="self-end text-sm text-indigo-500 underline"
-            >
-              View credits
-            </Link>
-          </div>
-        </form>
+          <Link
+            href={"/team"}
+            onClick={() => setToggle(false)}
+            className="self-end text-sm text-indigo-500 underline"
+          >
+            View credits
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

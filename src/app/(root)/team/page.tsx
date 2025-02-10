@@ -11,6 +11,7 @@ const TeamPage = () => {
   const [index, setIndex] = useState(0);
 
   return (
+    // TODO: Write router to fetch data dynamically from db
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
       <TeamCarouselContainer data={teamData[index]}>
         <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
