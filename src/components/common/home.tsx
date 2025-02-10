@@ -11,11 +11,11 @@ const HomeScreen = () => {
   return (
     <div className="relative z-0 h-screen w-full overflow-clip bg-neutral-900">
       <Image
-        src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/transparent-bg_md7je0.png`} //Changed this from {BgImage}
+        src={`https://res.cloudinary.com/diqdg481x/image/upload/v1739200155/images/glitch.jpg`}
         alt={"transparent bg"}
         width={1920} //Added  a sample width and height as it was showing an error without it
         height={1080}
-        className="absolute left-0 top-0 -z-20 h-full w-full object-cover object-bottom"
+        className="absolute left-0 top-0 -z-20 h-full w-full object-cover object-bottom opacity-50"
       />
       <div className="absolute left-0 top-0 -z-10 h-full w-full bg-gradient-to-b from-neutral-900/[0.1] from-80% to-neutral-900" />
       <motion.div
