@@ -65,9 +65,14 @@ const HomeScreen = () => {
         >
           <ClickToStart />
         </motion.div>
-        <div className="translate-y-12 text-lg font-extralight uppercase text-amber-50/[0.3]">
-          scroll down
-        </div>
+        <motion.div
+          className="absolute -bottom-24 left-1/2 hidden w-full -translate-x-1/2 -translate-y-1/2 text-center text-9xl font-extralight uppercase text-amber-50/[0.5] sm:block"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 7 }}
+        >
+          scroll&nbsp;down
+        </motion.div>
       </div>
     </div>
   );
