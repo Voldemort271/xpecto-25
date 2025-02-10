@@ -124,7 +124,7 @@ const Page = () => {
                 Account created on {CurrentUser.createdAt.toLocaleDateString()}
               </div>
               <div className="mb-1 text-lg font-medium sm:text-xl">
-                Institution name: {CurrentUser.college_name}
+                Institution: {CurrentUser.college_name}
               </div>
               <div className="mb-1 text-lg font-medium sm:text-xl">
                 Email:{" "}

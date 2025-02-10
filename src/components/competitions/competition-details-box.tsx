@@ -126,16 +126,20 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                         <div
                           className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                         >
+                          {/**This is a reminder. This marquee is not for registering for a particular event offline. Rather clicking it
+                           * opens a dialog box to register for the offline event. You do reg for that plan and it  
+                           * works for all offline events. Hence, I am changing this marquee to look non event specific. DON't make it event specific again. 
+                           */}
                           <MarqueeContainer
                             text={[
-                              `register for ${comp.competitionDetails.name} - offline event`,
+                              `register for XPECTO membership - pass to all offline events`,
                               CurrentUser?.email === ""
                                 ? "login required to register"
-                                : `register for ${comp.competitionDetails.name} - offline event`,
-                              `register for  ${comp.competitionDetails.name} - offline event`,
+                                : `register for XPECTO membership - pass to all offline events`,
+                              `register for  XPECTO membership - pass to all offline events`,
                               CurrentUser?.email === ""
                                 ? "login required to register"
-                                : `register for ${comp.competitionDetails.name} - offline event`,
+                                : `register for XPECTO membership - pass to all offline events`,
                             ]}
                           />
                         </div>
