@@ -60,7 +60,6 @@ export const expoRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.slug);
       return expo ?? null;
     }),
 });

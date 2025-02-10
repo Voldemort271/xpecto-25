@@ -63,7 +63,6 @@ export const proniteRouter = createTRPCRouter({
           },
         },
       });
-      console.log(input.slug);
       return pronites ?? null;
     }),
 });

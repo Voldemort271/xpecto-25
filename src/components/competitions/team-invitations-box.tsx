@@ -70,7 +70,6 @@ const InvitationBox = ({ compId }: { compId: string }) => {
         },
       );
     } catch (e) {
-      console.log(e);
       toast.custom(
         (t) => (
           <CustomToast variant="error" metadata={t}>
@@ -105,7 +104,6 @@ const InvitationBox = ({ compId }: { compId: string }) => {
         },
       );
     } catch (e) {
-      console.log(e);
       toast.custom(
         (t) => (
           <CustomToast variant="error" metadata={t}>

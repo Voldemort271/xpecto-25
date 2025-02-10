@@ -91,8 +91,6 @@ const Page = () => {
           position: "top-center",
         },
       );
-      // toast.error(`Error signing out`);
-      console.log(error);
     }
   };
 

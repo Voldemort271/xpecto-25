@@ -101,7 +101,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
           console for more details.
         </CustomToast>
       ));
-      console.log(`Error fetching Event:`, error);
     } finally {
       setLoading(false);
     }

@@ -20,7 +20,6 @@ export default function RootLayout({
   }, [pathname, setIsHovered]);
 
   return (
-    // TODO: Clear all console.logs
     <CursorProvider>
       <div
         className={`relative h-screen w-screen cursor-none bg-neutral-900 text-amber-50 ${handjet.className} tracking-widest`}

@@ -91,7 +91,6 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     POC?: string,
   ) => {
     if (!CurrentUser) return;
-    console.log(POC);
     userAddToEvent.mutate(
       {
         paymentId: paymentId,
