@@ -9,7 +9,7 @@ import styles from "@/styles/home.module.css";
 
 const HomeScreen = () => {
   return (
-    <div className="relative z-0 h-screen w-full overflow-clip bg-neutral-900">
+    <div className="relative z-0 h-[95vh] w-full overflow-clip bg-neutral-900">
       <Image
         src={`https://res.cloudinary.com/diqdg481x/image/upload/v1739200155/images/glitch.jpg`}
         alt={"transparent bg"}
