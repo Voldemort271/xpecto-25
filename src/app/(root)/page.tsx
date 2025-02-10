@@ -4,6 +4,7 @@ import AboutXpecto from "@/components/home/about-xpecto";
 import Marquee from "@/components/common/scrollable-marquee";
 import AboutIITMandi from "@/components/home/about-iitmd";
 import MerchPromo from "@/components/home/merch-promo";
+import AmbassadorPromo from "@/components/home/ambassador-promo";
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
         laboriosam magnam neque.
       </Marquee>
       <MerchPromo />
+      <AmbassadorPromo />
     </div>
   );
 };

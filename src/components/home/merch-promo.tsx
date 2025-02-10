@@ -18,7 +18,7 @@ const MerchPromo = () => {
         {/* TODO: Change img to an edited merch mockup when ready */}
         <Image
           src={`https://res.cloudinary.com/diqdg481x/image/upload/v1739200155/images/glitch.jpg`}
-          alt={"transparent bg"}
+          alt={"Glitchy bg"}
           width={800}
           height={800}
           className="absolute left-0 top-0 -z-20 h-full w-full object-cover object-bottom opacity-30 hue-rotate-180"
