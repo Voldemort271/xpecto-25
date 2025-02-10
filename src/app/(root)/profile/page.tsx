@@ -140,17 +140,8 @@ const Page = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex items-start gap-5">
-              <button
-                disabled={CurrentUser?.clerkId === ""}
-                onClick={handleSignOut}
-                className="w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-red-300"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                Sign Out
-              </button>
-              {CurrentUser.role === "ambassador" ? (
+            {CurrentUser.role === "ambassador" ? (
+              <div className="sm:flex items-start gap-5">
                 <div className="space-y-1">
                   <div className="bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300">
                     Ambassador Token: {ambassador?.token ?? "none"}
@@ -161,19 +152,37 @@ const Page = () => {
                     Current score: {ambassador?.contingents.length}
                   </div>
                 </div>
-              ) : (
-                //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
-                //TODO: Shift this to home page after it has been redesigned
                 <button
                   className="w-fit cursor-none bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
-                  onClick={() => router.push("/ambassador")}
+                  onClick={() => router.push("/team/leaderboard")}
                 >
-                  Register as campus ambassador
+                  Leaderboard
                 </button>
-              )}
-            </div>
+              </div>
+            ) : (
+              //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
+              //TODO: Shift this to home page after it has been redesigned
+              <button
+                className="w-fit cursor-none bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={() => router.push("/ambassador")}
+              >
+                Register as campus ambassador
+              </button>
+            )}
+
+            <button
+              disabled={CurrentUser?.clerkId === ""}
+              onClick={handleSignOut}
+              className="mt-4 w-fit cursor-none bg-red-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-red-300"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              Sign Out
+            </button>
           </div>
         )}
       </div>

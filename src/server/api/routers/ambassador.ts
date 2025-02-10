@@ -47,4 +47,19 @@ export const ambassadorRouter = createTRPCRouter({
 
       return reg ? true : false;
     }),
+
+  getTopAmbassadors: publicProcedure
+    .query(async ({ ctx }) => {
+      const ambassadors = await ctx.db.ambassador.findMany({
+        include: {
+          contingents: true,
+        },
+      });
+
+      const topAmbassadors = ambassadors
+        .sort((a, b) => b.contingents.length - a.contingents.length)
+        .slice(0, 5);
+
+      return topAmbassadors;
+    }),
 });

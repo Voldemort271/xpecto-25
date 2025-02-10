@@ -121,7 +121,6 @@ const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
                                       {reg.name} - ₹{reg.price}
                                     </div>
                                     <div className="text-sm font-bold text-gray-600">
-                                      {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
                                       {reg.labelling}
                                     </div>
                                     <div className="text-sm text-gray-600">
