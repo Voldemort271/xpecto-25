@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
+import StaggeredText from "@/components/home/staggered-text";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -22,8 +23,11 @@ const AmbassadorPromo = () => {
         alt={"Ambassador background"}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-center opacity-30"
       />
-      <div className="max-w-screen-lg text-5xl font-bold uppercase sm:text-7xl">
+      <div className="block max-w-screen-lg text-5xl font-bold uppercase sm:text-7xl md:hidden">
         become a campus ambassador
+      </div>
+      <div className="hidden md:block">
+        <StaggeredText>become a campus ambassador</StaggeredText>
       </div>
       <div
         className={`${shareTech.className} max-w-screen-lg pb-5 text-lg font-bold tracking-tight`}

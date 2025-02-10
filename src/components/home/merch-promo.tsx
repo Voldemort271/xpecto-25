@@ -6,6 +6,7 @@ import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import MerchCard from "@/components/home/merch-card";
+import { motion } from "motion/react";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -23,17 +24,25 @@ const MerchPromo = () => {
           height={800}
           className="absolute left-0 top-0 -z-20 h-full w-full object-cover object-bottom opacity-30 hue-rotate-180"
         />
-        <div className="text-5xl font-bold uppercase sm:text-7xl">
+        <motion.div
+          initial={{ opacity: 0, translateY: 50 }}
+          whileInView={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.2 }}
+          className="text-5xl font-bold uppercase sm:text-7xl"
+        >
           exciting new merchandise
-        </div>
-        <div
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, translateY: 50 }}
+          whileInView={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.2, delay: 0.2 }}
           className={`${shareTech.className} mb-5 text-base tracking-tight md:text-lg`}
         >
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
           asperiores autem dolores doloribus, eligendi excepturi exercitationem
           explicabo facilis illum, ipsam labore magni molestias nobis non qui
           repellat similique sint velit!
-        </div>
+        </motion.div>
         {/* TODO: Replace link when merch store is active */}
         <Link
           href={"https://www.iitmandi.ac.in/"}
