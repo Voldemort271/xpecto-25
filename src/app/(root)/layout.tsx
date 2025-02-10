@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <CursorProvider>
       <div
-        className={`relative h-screen w-screen cursor-none bg-neutral-900 text-amber-50 ${handjet.className} tracking-widest`}
+        className={`relative min-h-screen w-screen cursor-none bg-neutral-900 text-amber-50 ${handjet.className} tracking-widest`}
       >
         <DystopianCursor />
         <div className="fixed left-0 top-0 z-40 w-screen">
