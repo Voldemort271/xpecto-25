@@ -9,9 +9,9 @@ import { Label } from "@/components/ui/label";
 import MarqueeContainer from "@/components/common/marquee-container";
 import RegisterDialog from "@/components/common/registration-dialog";
 //import CreateTeamDialog from "@/components/(dystopian)/competitions/create-team-dialog";
-import MissionBrief from "@/components/competitions/mission-briefing";
 //import CompTeamBox from "@/components/(dystopian)/competitions/competition-team-box";
 import { api } from "@/trpc/react";
+import WorkshopBrief from "@/components/workshops/workshop-briefing";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -75,7 +75,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
               {work.workshopDetails.description}
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
-              <MissionBrief />
+              <WorkshopBrief data={work} />
               {isRegistrationLoading && (
                 <div className="loading h-full w-full border-2 border-amber-50"></div>
               )}

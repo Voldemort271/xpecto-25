@@ -1,28 +1,33 @@
 import React from "react";
 import MarqueeContainer from "@/components/common/marquee-container";
+import { WorkshopWithDetails } from "@/app/types";
 
-const details = [
-  { name: "Bounty", content: "200.00 INR" },
-  { name: "Extraction point", content: "My mom house" },
-  { name: "Squad strength", content: "3 - 6" },
-  { name: "zero hour", content: "12/23/33 34:55 pm" },
-  { name: "initiation fee", content: "2.00 INR" },
-];
+interface Props {
+  data: WorkshopWithDetails;
+}
 
-const MissionBrief = () => {
+const WorkshopBrief = ({ data }: Props) => {
+  const details = [
+    { name: "Extraction point", content: data.workshopDetails.venue },
+    {
+      name: "zero hour",
+      content: data.workshopDetails.begin_time.toLocaleString(),
+    },
+  ];
+
   return (
     <div className="relative w-full overflow-scroll overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full">
       <div className="sticky left-0 top-0 z-10 flex h-8 w-full flex-col justify-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-lg font-extralight uppercase text-amber-50">
         <MarqueeContainer
           text={[
             "mission briefing",
-            "untitled event",
+            data.workshopDetails.name,
             "more details",
-            "untitled event",
+            data.workshopDetails.name,
             "mission briefing",
-            "untitled event",
+            data.workshopDetails.name,
             "more details",
-            "untitled event",
+            data.workshopDetails.name,
           ]}
           delay={-1}
         />
@@ -44,20 +49,8 @@ const MissionBrief = () => {
           </div>
         ))}
       </div>
-      <div className="relative flex h-12 w-full flex-col justify-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl font-normal uppercase text-neutral-900">
-        <MarqueeContainer
-          text={[
-            "view intel brief",
-            "untitled event",
-            "view intel brief",
-            "untitled event",
-          ]}
-          href={"/"}
-          delay={-2}
-        />
-      </div>
     </div>
   );
 };
 
-export default MissionBrief;
+export default WorkshopBrief;
