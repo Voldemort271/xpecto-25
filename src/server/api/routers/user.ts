@@ -195,7 +195,7 @@ export const userRouter = createTRPCRouter({
       });
       return user;
     }),
-
+    
   uploadImageToFolder: publicProcedure
     .input(z.object({ base64: z.string(), folderName: z.string() })) // Expect a Base64 image
     .mutation(async ({ input }) => {
