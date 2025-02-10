@@ -3,6 +3,7 @@ import HomeScreen from "@/components/common/home";
 import AboutXpecto from "@/components/home/about-xpecto";
 import Marquee from "@/components/common/scrollable-marquee";
 import AboutIITMandi from "@/components/home/about-iitmd";
+import MerchPromo from "@/components/home/merch-promo";
 
 const Home = () => {
   return (
@@ -20,7 +21,7 @@ const Home = () => {
         architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
         laboriosam magnam neque.
       </Marquee>
-      hihihi
+      <MerchPromo />
     </div>
   );
 };
