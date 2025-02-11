@@ -1,6 +1,16 @@
-import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
+"use client"
+
+import { AuthenticateWithRedirectCallback, useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function SSOCallback() {
+  const router = useRouter();
+  
+    const user = useUser();
+    if (user.isSignedIn) {
+      router.push("/");
+      return <div>Already signed in</div>
+    }
   // Handle the redirect flow by rendering the
   // prebuilt AuthenticateWithRedirectCallback component.
   // This is the final step in the custom OAuth flow.

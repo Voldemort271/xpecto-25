@@ -8,8 +8,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import MarqueeContainer from "@/components/common/marquee-container";
 import RegisterDialog from "@/components/common/registration-dialog";
-import MissionBrief from "@/components/competitions/mission-briefing";
 import { api } from "@/trpc/react";
+import WorkshopBrief from "@/components/workshops/workshop-briefing";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -255,11 +255,10 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
               )}
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
-              <MissionBrief />
+              <WorkshopBrief data={work} />
               {isRegistrationLoading && (
                 <div className="loading h-full w-full border-2 border-amber-50"></div>
               )}
-              {/* {regStatus && <CompTeamBox regTeam={regTeam} comp={comp} />} */}
             </div>
           </div>
         </div>

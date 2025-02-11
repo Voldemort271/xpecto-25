@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import MarqueeContainer from "@/components/common/marquee-container";
 import RegisterDialog from "@/components/common/registration-dialog";
 import CreateTeamDialog from "@/components/competitions/create-team-dialog";
-import MissionBrief from "@/components/competitions/mission-briefing";
+import CompetitionBrief from "@/components/competitions/competition-briefing";
 import CompTeamBox from "@/components/competitions/competition-team-box";
 import { api } from "@/trpc/react";
 
@@ -23,7 +23,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
 
-  const { data: plan, isLoading: isRegistrationLoading } =
+  const { data: plan, isLoading } =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -127,8 +127,8 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                           className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                         >
                           {/**This is a reminder. This marquee is not for registering for a particular event offline. Rather clicking it
-                           * opens a dialog box to register for the offline event. You do reg for that plan and it  
-                           * works for all offline events. Hence, I am changing this marquee to look non event specific. DON't make it event specific again. 
+                           * opens a dialog box to register for the offline event. You do reg for that plan and it
+                           * works for all offline events. Hence, I am changing this marquee to look non event specific. DON't make it event specific again.
                            */}
                           <MarqueeContainer
                             text={[
@@ -270,8 +270,8 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
               )}
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
-              <MissionBrief />
-              {isRegistrationLoading && (
+              <CompetitionBrief data={comp} />
+              {isLoading && (
                 <div className="loading h-full w-full border-2 border-amber-50"></div>
               )}
               {regStatus && plan.verified && (

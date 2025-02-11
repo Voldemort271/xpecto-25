@@ -1,6 +1,6 @@
 "use client";
 
-import { useSignIn, useSignUp } from "@clerk/nextjs";
+import { useSignIn, useSignUp, useUser } from "@clerk/nextjs";
 import React, { type FormEvent } from "react";
 import type { OAuthStrategy } from "@clerk/types";
 import MarqueeContainer from "@/components/common/marquee-container";
@@ -23,7 +23,14 @@ const SignupPage = () => {
   const [code, setCode] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
+  
   const router = useRouter();
+
+  const user = useUser();
+  if (user.isSignedIn) {
+    router.push("/");
+    return <div>Already signed in</div>
+  }
 
   if (!isLoaded && !signUp) return null;
   if (!signIn) return null;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSignIn } from "@clerk/nextjs";
+import { useSignIn, useUser } from "@clerk/nextjs";
 import React, { type FormEvent } from "react";
 import type {
   EmailCodeFactor,
@@ -25,6 +25,12 @@ const SigninPage = () => {
   const [email, setEmail] = React.useState("");
   const [code, setCode] = React.useState("");
   const router = useRouter();
+
+  const user = useUser();
+  if (user.isSignedIn) {
+    router.push("/");
+    return <div>Already signed in</div>
+  }
 
   if (!isLoaded && !signIn) return null;
 
