@@ -5,6 +5,7 @@ import { Award, Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
+import Link from "next/link";
 
 export default function LeaderboardPage() {
   const { data: sortedAmbassadors, isLoading } =
@@ -44,19 +45,24 @@ export default function LeaderboardPage() {
 
   return (
     <div>
-      {CurrentUser && CurrentUser.role === "ambassador" ? (
-        <div className="p-6 bg-[#161616]">
+      {CurrentUser ? (
+        <div className="bg-[#161616] p-6">
           <div className="mx-auto max-w-7xl space-y-8">
             {/* Hero Section */}
             <div className="mt-32 space-y-4 text-center lg:mt-24">
-              <h1 className="text-4xl sm:text-5xl font-bold">
+              <h1 className="text-4xl font-bold sm:text-5xl">
                 Campus Ambassador Leaderboard
               </h1>
               <p className="text-md">
                 Track your performance and compete with other ambassadors
               </p>
             </div>
-
+            {CurrentUser.role !== "ambassador" && (
+              <div className="text-center text-lg text-gray-300">
+                You are not an ambassador. Become one to compete. <Link href={'/ambassador'} className="underline">Click here to
+                become a campus ambassador</Link>
+              </div>
+            )}
             {/* Current User Stats */}
             <div className="grid gap-6 md:grid-cols-3">
               <Card className="flex items-center space-x-4 p-6">
@@ -81,7 +87,9 @@ export default function LeaderboardPage() {
                 <CircleUser className="h-12 w-12" />
                 <div>
                   <p className="text-lg font-medium">Ambassador Status</p>
-                  <h2 className="text-lg font-semibold">{currentUserAmbassador?.tier.toLocaleUpperCase()}</h2>
+                  <h2 className="text-lg font-semibold">
+                    {currentUserAmbassador?.tier.toLocaleUpperCase()}
+                  </h2>
                 </div>
               </Card>
             </div>
@@ -124,12 +132,12 @@ export default function LeaderboardPage() {
             )}
 
             {/* Global Leaderboard */}
-            <div className="py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
+            <div className="px-3 py-8 sm:px-6 sm:py-12 lg:px-8">
               <div className="mx-auto max-w-7xl">
                 {/* Header */}
-                <div className="flex flex-col items-center justify-center mb-6 sm:mb-10">
-                  <div className="flex items-center mb-2 sm:mb-4">
-                    <Users className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-400 mr-2 sm:mr-3" />
+                <div className="mb-6 flex flex-col items-center justify-center sm:mb-10">
+                  <div className="mb-2 flex items-center sm:mb-4">
+                    <Users className="mr-2 h-6 w-6 text-indigo-400 sm:mr-3 sm:h-8 sm:w-8" />
                     <h1 className="text-3xl font-bold text-gray-100">
                       Ambassador Rankings
                     </h1>
@@ -137,7 +145,7 @@ export default function LeaderboardPage() {
                 </div>
 
                 {/* Top 3 Podium */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-10">
+                <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-10 sm:grid-cols-3 sm:gap-4">
                   {sortedAmbassadors?.slice(0, 3).map((ambassador) => {
                     const userAmbassador = ambassador.user;
                     return (
@@ -152,7 +160,7 @@ export default function LeaderboardPage() {
                         }`}
                       >
                         <div
-                          className={`rounded-xl border bg-gray-800 p-4 sm:p-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
+                          className={`rounded-xl border bg-gray-800 p-4 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-6 ${
                             CurrentUser.id === ambassador.userId
                               ? "border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]"
                               : "border-gray-700"
@@ -163,7 +171,7 @@ export default function LeaderboardPage() {
                           </div>
                           <div className="mt-3 text-center">
                             <h3
-                              className={`mb-2 text-lg sm:text-xl font-semibold ${
+                              className={`mb-2 text-lg font-semibold sm:text-xl ${
                                 CurrentUser.id === ambassador.userId
                                   ? "text-indigo-400"
                                   : "text-gray-100"
@@ -174,7 +182,7 @@ export default function LeaderboardPage() {
                             <span className="rounded-full border border-gray-600 bg-gray-700 px-3 py-1 text-sm text-gray-300">
                               {ambassador.token}
                             </span>
-                            <div className=" mt-3 sm:mt-4">
+                            <div className="mt-3 sm:mt-4">
                               <div className="text-2xl font-bold text-indigo-400">
                                 {ambassador.contingents.length}
                               </div>
@@ -206,7 +214,7 @@ export default function LeaderboardPage() {
                           <div className="flex items-center space-x-3 sm:space-x-4">
                             <div className="flex-shrink-0">
                               <span
-                                className={`inline-flex h-8 sm:h-10 w-8 sm:w-10 items-center justify-center rounded-full border ${
+                                className={`inline-flex h-8 w-8 items-center justify-center rounded-full border sm:h-10 sm:w-10 ${
                                   CurrentUser.id === ambassador.userId
                                     ? "border-indigo-500 bg-indigo-900/50"
                                     : "border-gray-600 bg-gray-700"
@@ -225,7 +233,7 @@ export default function LeaderboardPage() {
                             </div>
                             <div>
                               <h3
-                                className={`text-base sm:text-lg font-medium ${
+                                className={`text-base font-medium sm:text-lg ${
                                   CurrentUser.id === ambassador.userId
                                     ? "text-indigo-400"
                                     : "text-gray-100"
@@ -239,7 +247,7 @@ export default function LeaderboardPage() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-lg sm:text-xl font-semibold text-indigo-400">
+                            <div className="text-lg font-semibold text-indigo-400 sm:text-xl">
                               {ambassador.contingents.length}
                             </div>
                             <div className="text-sm text-gray-400">
@@ -257,7 +265,7 @@ export default function LeaderboardPage() {
         </div>
       ) : (
         <div className="p-48 text-4xl">
-          <p>You are not ambassador. Become an ambassador to see this page.</p>
+          <p>Loading...</p>
         </div>
       )}
     </div>

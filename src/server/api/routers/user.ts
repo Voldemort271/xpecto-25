@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { getCollFromEmail } from "@/lib/utils";
 import cloudinary from "@/lib/cloudinary";
-import { createClerkClient } from '@clerk/nextjs/server'
+import { createClerkClient } from "@clerk/nextjs/server";
 
 const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
@@ -27,15 +27,13 @@ export const userRouter = createTRPCRouter({
             return "";
           });
 
-        //TODO: Add registration to all competitions if college is IIT Mandi. Similarly, when a competition is added, add its reg to all IIT Mandi users.
-        //TODO: The above can also be achieved by making registration directly go to handleSuccess in the register dialog content if the CurrentUser college name is IITMD
-        //TODO: Do any one of the above
-
+        const colName = getCollFromEmail(input.email, csv);
         return ctx.db.user.create({
           data: {
             name: input.name,
             email: input.email,
-            college_name: getCollFromEmail(input.email, csv),
+            college_name: colName,
+            accomodation: colName === "Indian Institute of Technology, Mandi",
           },
         });
       } else {
@@ -44,20 +42,19 @@ export const userRouter = createTRPCRouter({
     }),
 
   addToClerk: publicProcedure
-  .input(z.object({ clerkId: z.string(), dbId: z.string() }))
-  .mutation(async ({ ctx, input }) => {
-    try {
-      const updatedUser = await clerk.users.updateUser(input.clerkId, {
-        externalId: input.dbId,
-      });
+    .input(z.object({ clerkId: z.string(), dbId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const updatedUser = await clerk.users.updateUser(input.clerkId, {
+          externalId: input.dbId,
+        });
 
-      return { success: true, updatedUser };
-    } catch (error) {
-      console.error("Failed to update externalId:", error);
-      throw new Error("Failed to update externalId");
-    }
-
-  }),
+        return { success: true, updatedUser };
+      } catch (error) {
+        console.error("Failed to update externalId:", error);
+        throw new Error("Failed to update externalId");
+      }
+    }),
 
   getUserTeams: publicProcedure
     .input(z.object({ userId: z.string() }))
@@ -195,7 +192,7 @@ export const userRouter = createTRPCRouter({
       });
       return user;
     }),
-    
+
   uploadImageToFolder: publicProcedure
     .input(z.object({ base64: z.string(), folderName: z.string() })) // Expect a Base64 image
     .mutation(async ({ input }) => {
