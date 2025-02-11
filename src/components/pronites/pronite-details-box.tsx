@@ -60,7 +60,7 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
       <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
         <Image
           src={
-            pronite.proniteDetails.cover ??
+            // pronite.proniteDetails.cover ??
             `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
           }
           alt={pronite.proniteDetails.name}

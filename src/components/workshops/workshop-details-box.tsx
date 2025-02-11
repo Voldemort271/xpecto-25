@@ -61,7 +61,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
       <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
         <Image
           src={
-            work.workshopDetails.cover ??
+            // work.workshopDetails.cover ??
             `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
           }
           alt={work.workshopDetails.name}
