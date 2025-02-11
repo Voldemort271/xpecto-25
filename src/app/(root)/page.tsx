@@ -5,6 +5,7 @@ import Marquee from "@/components/common/scrollable-marquee";
 import AboutIITMandi from "@/components/home/about-iitmd";
 import MerchPromo from "@/components/home/merch-promo";
 import Footer from "@/components/home/footer";
+import MarqueeContainer from "@/components/common/marquee-container";
 
 const Home = () => {
   return (
@@ -26,6 +27,11 @@ const Home = () => {
       </Marquee>
       <MerchPromo />
       <Footer />
+      <div className="flex h-32 w-full flex-col justify-center overflow-hidden whitespace-nowrap bg-neutral-950 text-9xl font-extrabold uppercase text-neutral-900">
+        <MarqueeContainer
+          text={["xpecto '25", "32 to 56 march 2025", "iit mandi"]}
+        />
+      </div>
     </div>
   );
 };

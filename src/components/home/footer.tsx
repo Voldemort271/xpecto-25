@@ -110,7 +110,7 @@ const Footer = () => {
           <div className="text-4xl font-semibold">xpecto &apos;25</div>
         </div>
       ) : (
-        <div className="loading col-span-3 flex flex-col justify-center border-b-2 border-l-2 border-amber-50 bg-neutral-900 lg:col-span-2"></div>
+        <div className="loading col-span-3 flex flex-col justify-center bg-neutral-900 lg:col-span-2"></div>
       )}
     </div>
   );
