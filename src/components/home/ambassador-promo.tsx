@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useContext } from "react";
-import Image from "next/image";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
@@ -13,16 +12,7 @@ const AmbassadorPromo = () => {
   const { setIsHovered } = useContext(CursorContext);
 
   return (
-    <div className="relative z-0 w-full space-y-2.5 bg-gradient-to-r from-amber-50 to-amber-50/[0.3] px-5 py-36 text-neutral-900 sm:px-12">
-      <Image
-        src={
-          "https://res.cloudinary.com/diqdg481x/image/upload/v1739214344/images/byyegxxonyqiuiioikvr.jpg"
-        }
-        width={1920}
-        height={800}
-        alt={"Ambassador background"}
-        className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-center opacity-30"
-      />
+    <div className="w-full space-y-2.5 px-5 py-36 text-neutral-900 sm:px-12">
       <div className="block max-w-screen-lg text-5xl font-bold uppercase sm:text-7xl md:hidden">
         become a campus ambassador
       </div>
