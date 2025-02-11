@@ -11,11 +11,13 @@ const Home = () => {
   return (
     <div className="flex h-full w-full flex-col items-center bg-neutral-900">
       <HomeScreen />
+      {/* TODO: Change text */}
       <Marquee speed={5}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
         architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
         laboriosam magnam neque.
       </Marquee>
+      {/* TODO: Add featured events section */}
       <AboutXpecto />
       <AboutIITMandi />
       <Marquee>
