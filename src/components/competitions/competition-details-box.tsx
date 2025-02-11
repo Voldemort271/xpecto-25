@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useCurrentUser } from "@/lib/utils";
 import type { CompetitionWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
@@ -17,14 +17,13 @@ import { useRouter } from "next/navigation";
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
+  const router = useRouter();
+  
   const { CurrentUser } = useCurrentUser();
-
   const { setIsHovered } = useContext(CursorContext);
-
+  
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
-
-  const router = useRouter();
 
   const { data: plan, isLoading } =
     api.registration.checkUserRegisteration.useQuery(

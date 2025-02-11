@@ -9,12 +9,14 @@ import { Label } from "@/components/ui/label";
 import MarqueeContainer from "@/components/common/marquee-container";
 import RegisterDialog from "@/components/common/registration-dialog";
 import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
-  const { CurrentUser } = useCurrentUser();
+  const router = useRouter();
 
+  const { CurrentUser } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
 
   const [regPrice, setRegPrice] = useState(0);
@@ -31,8 +33,6 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
       },
     );
 
-  const { data: offlinePlans } = api.event.getOfflinePlans.useQuery();
-
   const regStatus = !!plan;
   const offlineEvent = pronite?.proniteDetails.venue !== "online";
   const { data: offlineReg } = api.registration.checkUserRegisteration.useQuery(
@@ -46,14 +46,9 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
   );
 
   useEffect(() => {
-    if (offlineEvent && !CurrentUser?.accomodation) {
-      setRegPrice(offlinePlans?.regPlans[0]?.price ?? 0);
-      setRegPlanId(offlinePlans?.regPlans[0]?.id ?? "");
-    } else {
-      setRegPrice(pronite?.proniteDetails.regPlans[0]?.price ?? 0);
-      setRegPlanId(pronite?.proniteDetails.regPlans[0]?.id ?? "");
-    }
-  }, [pronite, offlinePlans, offlineEvent, CurrentUser]);
+    setRegPrice(pronite?.proniteDetails.regPlans[0]?.price ?? 0);
+    setRegPlanId(pronite?.proniteDetails.regPlans[0]?.id ?? "");
+  }, [pronite]);
 
   return (
     <>
@@ -88,11 +83,7 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
               {regStatus ? (
-                plan.verified ? (
-                  <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
-                    Your payment is being verified right now
-                  </div>
-                ) : (
+                !plan.verified && (
                   <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                     Your payment is being verified right now
                   </div>
@@ -101,6 +92,35 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
                 <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                   Your payment is being verified right now
                 </div>
+              ) : offlineEvent && !CurrentUser?.accomodation ? (
+                <button
+                  className="w-full cursor-none overflow-clip"
+                  disabled={CurrentUser?.email === ""}
+                  onMouseEnter={() => {
+                    if (CurrentUser?.email !== "") setIsHovered(true);
+                  }}
+                  onMouseLeave={() => setIsHovered(false)}
+                  onClick={() => {
+                    router.push("/membership");
+                  }}
+                >
+                  <div
+                    className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                  >
+                    <MarqueeContainer
+                      text={[
+                        `register for XPECTO membership - pass to all offline events`,
+                        CurrentUser?.email === ""
+                          ? "login required to register"
+                          : `register for XPECTO membership - pass to all offline events`,
+                        `register for  XPECTO membership - pass to all offline events`,
+                        CurrentUser?.email === ""
+                          ? "login required to register"
+                          : `register for XPECTO membership - pass to all offline events`,
+                      ]}
+                    />
+                  </div>
+                </button>
               ) : (
                 <RegisterDialog
                   trigger={
@@ -112,144 +132,75 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
                       }}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      {offlineEvent && !CurrentUser?.accomodation ? (
-                        <div
-                          className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-                        >
-                          <MarqueeContainer
-                            text={[
-                              `register for XPECTO membership - pass to all offline events`,
-                              CurrentUser?.email === ""
-                                ? "login required to register"
-                                : `register for XPECTO membership - pass to all offline events`,
-                              `register for  XPECTO membership - pass to all offline events`,
-                              CurrentUser?.email === ""
-                                ? "login required to register"
-                                : `register for XPECTO membership - pass to all offline events`,
-                            ]}
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-                        >
-                          <MarqueeContainer
-                            text={[
-                              `register for ${pronite.proniteDetails.name}`,
-                              CurrentUser?.email === ""
-                                ? "login required to register"
-                                : `register for ${pronite.proniteDetails.name}`,
-                              `register for ${pronite.proniteDetails.name}`,
-                              CurrentUser?.email === ""
-                                ? "login required to register"
-                                : `register for ${pronite.proniteDetails.name}`,
-                            ]}
-                          />
-                        </div>
-                      )}
+                      <div
+                        className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                      >
+                        <MarqueeContainer
+                          text={[
+                            `register for ${pronite.proniteDetails.name}`,
+                            CurrentUser?.email === ""
+                              ? "login required to register"
+                              : `register for ${pronite.proniteDetails.name}`,
+                            `register for ${pronite.proniteDetails.name}`,
+                            CurrentUser?.email === ""
+                              ? "login required to register"
+                              : `register for ${pronite.proniteDetails.name}`,
+                          ]}
+                        />
+                      </div>
                     </button>
                   }
                   content={
-                    offlineEvent && !CurrentUser?.accomodation ? (
-                      <RadioGroup
-                        onValueChange={(e) => {
-                          setRegPlanId(e.split(" ")[1]!);
-                          setRegPrice(parseInt(e.split(" ")[0]!));
-                        }}
-                        defaultValue={
-                          (offlinePlans?.regPlans[0]?.price.toString() ?? "") +
-                          " " +
-                          (offlinePlans?.regPlans[0]?.id ?? "")
-                        }
-                      >
-                        {offlinePlans?.regPlans.map((reg) => {
-                          return (
-                            <div
+                    <RadioGroup
+                      onValueChange={(e) => {
+                        setRegPlanId(e.split(" ")[1]!);
+                        setRegPrice(parseInt(e.split(" ")[0]!));
+                      }}
+                      defaultValue={
+                        (pronite.proniteDetails.regPlans[0]?.price.toString() ??
+                          "") +
+                        " " +
+                        (pronite.proniteDetails.regPlans[0]?.id ?? "")
+                      }
+                    >
+                      {pronite.proniteDetails.regPlans.map((reg) => {
+                        return (
+                          <div
+                            key={reg.id}
+                            className="mb-2 flex items-center gap-2 px-5"
+                          >
+                            <RadioGroupItem
+                              className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
+                              value={reg.price.toString() + " " + reg.id}
                               key={reg.id}
-                              className="mb-2 flex items-center gap-2 px-5"
+                            />
+                            <Label
+                              htmlFor={reg.id}
+                              className="flex w-full flex-col p-2"
                             >
-                              <RadioGroupItem
-                                className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
-                                value={reg.price.toString() + " " + reg.id}
-                                key={reg.id}
-                              />
-                              <Label
-                                htmlFor={reg.id}
-                                className="flex w-full flex-col p-2"
+                              <div className="flex items-center gap-2">
+                                <div className="text-xl font-normal uppercase">
+                                  {reg.name} - ₹{reg.price}
+                                </div>
+                                <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
+                                  {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
+                                  {reg.labelling}
+                                </div>
+                              </div>
+                              <div
+                                className={`${sharetech.className} mt-1 text-base tracking-tight`}
                               >
-                                <div className="flex items-center gap-2">
-                                  <div className="text-xl font-normal uppercase">
-                                    {reg.name} - ₹{reg.price}
-                                  </div>
-                                  <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
-                                    {reg.labelling}
-                                  </div>
-                                </div>
-                                <div
-                                  className={`${sharetech.className} mt-1 text-base tracking-tight`}
-                                >
-                                  {reg.description}
-                                </div>
-                              </Label>
-                            </div>
-                          );
-                        })}
-                      </RadioGroup>
-                    ) : (
-                      <RadioGroup
-                        onValueChange={(e) => {
-                          setRegPlanId(e.split(" ")[1]!);
-                          setRegPrice(parseInt(e.split(" ")[0]!));
-                        }}
-                        defaultValue={
-                          (pronite.proniteDetails.regPlans[0]?.price.toString() ??
-                            "") +
-                          " " +
-                          (pronite.proniteDetails.regPlans[0]?.id ?? "")
-                        }
-                      >
-                        {pronite.proniteDetails.regPlans.map((reg) => {
-                          return (
-                            <div
-                              key={reg.id}
-                              className="mb-2 flex items-center gap-2 px-5"
-                            >
-                              <RadioGroupItem
-                                className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
-                                value={reg.price.toString() + " " + reg.id}
-                                key={reg.id}
-                              />
-                              <Label
-                                htmlFor={reg.id}
-                                className="flex w-full flex-col p-2"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <div className="text-xl font-normal uppercase">
-                                    {reg.name} - ₹{reg.price}
-                                  </div>
-                                  <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
-                                    {reg.labelling}
-                                  </div>
-                                </div>
-                                <div
-                                  className={`${sharetech.className} mt-1 text-base tracking-tight`}
-                                >
-                                  {reg.description}
-                                </div>
-                              </Label>
-                            </div>
-                          );
-                        })}
-                      </RadioGroup>
-                    )
+                                {reg.description}
+                              </div>
+                            </Label>
+                          </div>
+                        );
+                      })}
+                    </RadioGroup>
                   }
                   price={regPrice}
                   regPlanId={regPlanId}
-                  eventId={
-                    offlineEvent && !CurrentUser?.accomodation
-                      ? (offlinePlans?.id ?? "")
-                      : pronite.proniteDetails.id
-                  }
+                  eventId={pronite.proniteDetails.id}
                 />
               )}
             </div>
