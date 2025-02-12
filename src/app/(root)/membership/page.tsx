@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { Share_Tech } from "next/font/google";
 import PaymentBox from "@/components/common/payment-box";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import Link from "next/link";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -20,15 +21,16 @@ const Page = () => {
   const { data: offlinePlans } = api.event.getOfflinePlans.useQuery();
   offlinePlans?.regPlans.sort((a, b) => a.price - b.price);
 
-  const { data: offlineReg, isLoading } = api.registration.checkUserRegisteration.useQuery(
-    {
-      userId: CurrentUser?.id ?? "",
-      eventId: "universaleve",
-    },
-    {
-      enabled: !!CurrentUser,
-    },
-  );
+  const { data: offlineReg, isLoading } =
+    api.registration.checkUserRegisteration.useQuery(
+      {
+        userId: CurrentUser?.id ?? "",
+        eventId: "universaleve",
+      },
+      {
+        enabled: !!CurrentUser,
+      },
+    );
 
   useEffect(() => {
     setRegPrice(offlinePlans?.regPlans[0]?.price ?? 0);
@@ -47,10 +49,10 @@ const Page = () => {
         ) : isLoading ? (
           <div>Loading...</div>
         ) : offlineReg && !offlineReg.verified ? (
-            <div className="flex w-full h-full items-center justify-center">
-          <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
-            Your payment is being verified right now
-          </div>
+          <div className="flex h-full w-full items-center justify-center">
+            <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
+              Your payment is being verified right now
+            </div>
           </div>
         ) : (
           <div className="flex w-full flex-col items-center gap-8">
@@ -127,7 +129,12 @@ const Page = () => {
         )
       ) : (
         //TODO: Put a good loader here
-        <div>Loading</div>
+        <div className="m-5 h-full border-2 border-amber-50/[0.7] p-5 uppercase">
+          You need to be logged in to access this site. <br />
+          <Link href={"/"} className="cursor-pointer hover:underline">
+            go to home
+          </Link>
+        </div>
       )}
     </div>
   );
