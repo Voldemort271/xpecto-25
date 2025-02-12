@@ -17,9 +17,7 @@ model Member {
   role      Role
   org       Org?
   image     String
-  desc      String
   email     String?
-  contact   BigInt?
   linkedin  String?
   instagram String?
 
