@@ -3,6 +3,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { getCollFromEmail } from "@/lib/utils";
 import cloudinary from "@/lib/cloudinary";
 import { createClerkClient } from "@clerk/nextjs/server";
+import { env } from "@/env";
 
 const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
@@ -20,7 +21,7 @@ export const userRouter = createTRPCRouter({
       });
 
       if (!existingUser) {
-        const csv = await fetch(`https://xpecto.org/allUnivs.csv`)
+        const csv = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/allUnivs.csv`)
           .then((res) => res.text())
           .catch((err) => {
             console.error("Error fetching allUnivs.csv:", err);
