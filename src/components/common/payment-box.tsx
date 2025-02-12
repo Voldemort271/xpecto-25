@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { DialogClose, DialogContent, DialogTitle } from "../ui/dialog";
 import MarqueeContainer from "./marquee-container";
 import styles from "@/styles/reg-dialog.module.css";
 import { Handjet, Share_Tech } from "next/font/google";
@@ -279,7 +273,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   return (
     <DialogContent
-      className={`max-w-[800px] border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 ${handjet.className} tracking-widest`}
+      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} tracking-widest`}
     >
       <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer

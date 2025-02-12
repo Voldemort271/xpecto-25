@@ -5,6 +5,7 @@ import { api } from "@/trpc/react";
 import React from "react";
 import Link from "next/link";
 import PlansSection from "@/components/(test)/plans-section";
+import Footer from "@/components/home/footer";
 
 const Page = () => {
   const { CurrentUser } = useCurrentUser();
@@ -51,6 +52,7 @@ const Page = () => {
           </Link>
         </div>
       )}
+      <Footer />
     </div>
   );
 };
