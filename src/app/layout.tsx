@@ -8,6 +8,7 @@ import React from "react";
 import { Toaster } from "sonner";
 import TardisNav from "@/components/root/navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpecto.org/"),
@@ -33,6 +34,7 @@ export default function RootLayout({
           <Toaster />
         </ClerkProvider>
         <SpeedInsights />
+        <Analytics />
         <div className="staticBg"></div>
         <div
           className="fixed -right-20 bottom-16 z-50 hidden w-48 sm:block"
