@@ -18,10 +18,10 @@ const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const router = useRouter();
-  
+
   const { CurrentUser } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
-  
+
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
 
@@ -58,8 +58,8 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   );
 
   useEffect(() => {
-      setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
-      setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
+    setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
+    setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
   }, [comp]);
 
   //TODO: Add loader when team is being fetched. (basically add a loader when the user is being checked for registration status).
@@ -117,7 +117,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                   }}
                   onMouseLeave={() => setIsHovered(false)}
                   onClick={() => {
-                    router.push("/membership");
+                    router.push("/memberships");
                   }}
                 >
                   <div

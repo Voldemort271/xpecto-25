@@ -47,8 +47,8 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
   );
 
   useEffect(() => {
-      setRegPrice(work?.workshopDetails.regPlans[0]?.price ?? 0);
-      setRegPlanId(work?.workshopDetails.regPlans[0]?.id ?? "");
+    setRegPrice(work?.workshopDetails.regPlans[0]?.price ?? 0);
+    setRegPlanId(work?.workshopDetails.regPlans[0]?.id ?? "");
   }, [work]);
 
   return (
@@ -102,7 +102,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
                   }}
                   onMouseLeave={() => setIsHovered(false)}
                   onClick={() => {
-                    router.push("/membership");
+                    router.push("/memberships");
                   }}
                 >
                   <div

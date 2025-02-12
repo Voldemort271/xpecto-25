@@ -4,10 +4,7 @@ import type { ProniteWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
 import { CursorContext } from "@/context/cursor-context";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import MarqueeContainer from "@/components/common/marquee-container";
-import RegisterDialog from "@/components/common/registration-dialog";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
 
@@ -92,116 +89,119 @@ const ProniteDetailsBox = ({ pronite }: { pronite: ProniteWithDetails }) => {
                 <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                   Your payment is being verified right now
                 </div>
-              ) : offlineEvent && !CurrentUser?.accomodation && (
-                <button
-                  className="w-full cursor-none overflow-clip"
-                  disabled={CurrentUser?.email === ""}
-                  onMouseEnter={() => {
-                    if (CurrentUser?.email !== "") setIsHovered(true);
-                  }}
-                  onMouseLeave={() => setIsHovered(false)}
-                  onClick={() => {
-                    router.push("/membership");
-                  }}
-                >
-                  <div
-                    className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+              ) : (
+                offlineEvent &&
+                !CurrentUser?.accomodation && (
+                  <button
+                    className="w-full cursor-none overflow-clip"
+                    disabled={CurrentUser?.email === ""}
+                    onMouseEnter={() => {
+                      if (CurrentUser?.email !== "") setIsHovered(true);
+                    }}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onClick={() => {
+                      router.push("/memberships");
+                    }}
                   >
-                    <MarqueeContainer
-                      text={[
-                        `register for XPECTO membership - pass to all offline events`,
-                        CurrentUser?.email === ""
-                          ? "login required to register"
-                          : `register for XPECTO membership - pass to all offline events`,
-                        `register for  XPECTO membership - pass to all offline events`,
-                        CurrentUser?.email === ""
-                          ? "login required to register"
-                          : `register for XPECTO membership - pass to all offline events`,
-                      ]}
-                    />
-                  </div>
-                </button>
-              // ) : (
-                // <RegisterDialog
-                //   trigger={
-                //     <button
-                //       className="w-full cursor-none overflow-clip"
-                //       disabled={CurrentUser?.email === ""}
-                //       onMouseEnter={() => {
-                //         if (CurrentUser?.email !== "") setIsHovered(true);
-                //       }}
-                //       onMouseLeave={() => setIsHovered(false)}
-                //     >
-                //       <div
-                //         className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-                //       >
-                //         <MarqueeContainer
-                //           text={[
-                //             `register for ${pronite.proniteDetails.name}`,
-                //             CurrentUser?.email === ""
-                //               ? "login required to register"
-                //               : `register for ${pronite.proniteDetails.name}`,
-                //             `register for ${pronite.proniteDetails.name}`,
-                //             CurrentUser?.email === ""
-                //               ? "login required to register"
-                //               : `register for ${pronite.proniteDetails.name}`,
-                //           ]}
-                //         />
-                //       </div>
-                //     </button>
-                //   }
-                //   content={
-                //     <RadioGroup
-                //       onValueChange={(e) => {
-                //         setRegPlanId(e.split(" ")[1]!);
-                //         setRegPrice(parseInt(e.split(" ")[0]!));
-                //       }}
-                //       defaultValue={
-                //         (pronite.proniteDetails.regPlans[0]?.price.toString() ??
-                //           "") +
-                //         " " +
-                //         (pronite.proniteDetails.regPlans[0]?.id ?? "")
-                //       }
-                //     >
-                //       {pronite.proniteDetails.regPlans.map((reg) => {
-                //         return (
-                //           <div
-                //             key={reg.id}
-                //             className="mb-2 flex items-center gap-2 px-5"
-                //           >
-                //             <RadioGroupItem
-                //               className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
-                //               value={reg.price.toString() + " " + reg.id}
-                //               key={reg.id}
-                //             />
-                //             <Label
-                //               htmlFor={reg.id}
-                //               className="flex w-full flex-col p-2"
-                //             >
-                //               <div className="flex items-center gap-2">
-                //                 <div className="text-xl font-normal uppercase">
-                //                   {reg.name} - ₹{reg.price}
-                //                 </div>
-                //                 <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
-                //                   {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
-                //                   {reg.labelling}
-                //                 </div>
-                //               </div>
-                //               <div
-                //                 className={`${sharetech.className} mt-1 text-base tracking-tight`}
-                //               >
-                //                 {reg.description}
-                //               </div>
-                //             </Label>
-                //           </div>
-                //         );
-                //       })}
-                //     </RadioGroup>
-                //   }
-                //   price={regPrice}
-                //   regPlanId={regPlanId}
-                //   eventId={pronite.proniteDetails.id}
-                // />
+                    <div
+                      className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                    >
+                      <MarqueeContainer
+                        text={[
+                          `register for XPECTO membership - pass to all offline events`,
+                          CurrentUser?.email === ""
+                            ? "login required to register"
+                            : `register for XPECTO membership - pass to all offline events`,
+                          `register for  XPECTO membership - pass to all offline events`,
+                          CurrentUser?.email === ""
+                            ? "login required to register"
+                            : `register for XPECTO membership - pass to all offline events`,
+                        ]}
+                      />
+                    </div>
+                  </button>
+                  // ) : (
+                  // <RegisterDialog
+                  //   trigger={
+                  //     <button
+                  //       className="w-full cursor-none overflow-clip"
+                  //       disabled={CurrentUser?.email === ""}
+                  //       onMouseEnter={() => {
+                  //         if (CurrentUser?.email !== "") setIsHovered(true);
+                  //       }}
+                  //       onMouseLeave={() => setIsHovered(false)}
+                  //     >
+                  //       <div
+                  //         className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                  //       >
+                  //         <MarqueeContainer
+                  //           text={[
+                  //             `register for ${pronite.proniteDetails.name}`,
+                  //             CurrentUser?.email === ""
+                  //               ? "login required to register"
+                  //               : `register for ${pronite.proniteDetails.name}`,
+                  //             `register for ${pronite.proniteDetails.name}`,
+                  //             CurrentUser?.email === ""
+                  //               ? "login required to register"
+                  //               : `register for ${pronite.proniteDetails.name}`,
+                  //           ]}
+                  //         />
+                  //       </div>
+                  //     </button>
+                  //   }
+                  //   content={
+                  //     <RadioGroup
+                  //       onValueChange={(e) => {
+                  //         setRegPlanId(e.split(" ")[1]!);
+                  //         setRegPrice(parseInt(e.split(" ")[0]!));
+                  //       }}
+                  //       defaultValue={
+                  //         (pronite.proniteDetails.regPlans[0]?.price.toString() ??
+                  //           "") +
+                  //         " " +
+                  //         (pronite.proniteDetails.regPlans[0]?.id ?? "")
+                  //       }
+                  //     >
+                  //       {pronite.proniteDetails.regPlans.map((reg) => {
+                  //         return (
+                  //           <div
+                  //             key={reg.id}
+                  //             className="mb-2 flex items-center gap-2 px-5"
+                  //           >
+                  //             <RadioGroupItem
+                  //               className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
+                  //               value={reg.price.toString() + " " + reg.id}
+                  //               key={reg.id}
+                  //             />
+                  //             <Label
+                  //               htmlFor={reg.id}
+                  //               className="flex w-full flex-col p-2"
+                  //             >
+                  //               <div className="flex items-center gap-2">
+                  //                 <div className="text-xl font-normal uppercase">
+                  //                   {reg.name} - ₹{reg.price}
+                  //                 </div>
+                  //                 <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
+                  //                   {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
+                  //                   {reg.labelling}
+                  //                 </div>
+                  //               </div>
+                  //               <div
+                  //                 className={`${sharetech.className} mt-1 text-base tracking-tight`}
+                  //               >
+                  //                 {reg.description}
+                  //               </div>
+                  //             </Label>
+                  //           </div>
+                  //         );
+                  //       })}
+                  //     </RadioGroup>
+                  //   }
+                  //   price={regPrice}
+                  //   regPlanId={regPlanId}
+                  //   eventId={pronite.proniteDetails.id}
+                  // />
+                )
               )}
             </div>
           </div>
