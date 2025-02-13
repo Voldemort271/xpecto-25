@@ -27,8 +27,12 @@ const Page = () => {
     <div>
       {CurrentUser?.accomodation ? (
         <div className="pt-32">
-          You have an active plan
-          {/*//TODO: Add what plan user purchased here. (If IIT Mandi student, say so)*/}
+          {CurrentUser.college_name ===
+          "Indian Institute of Technology, Mandi" ? (
+            <div>You are an IIT Mandi Student</div>
+          ) : (
+            <div>You have purchased {offlineReg?.plan.name} membership.</div>
+          )}
         </div>
       ) : isLoading ? (
         <div className="pt-32">Loading...</div>

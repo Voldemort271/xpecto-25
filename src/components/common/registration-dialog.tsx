@@ -60,7 +60,6 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
               duration: 1000,
             },
           );
-          //TODO: Add sleep here if u think that pop up is not visible at all
           window.location.reload();
         },
         onError: () => {

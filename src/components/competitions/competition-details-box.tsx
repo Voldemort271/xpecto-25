@@ -199,7 +199,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                                   {reg.name} - ₹{reg.price}
                                 </div>
                                 <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
-                                  {/* //TODO: Make labelling as a border wrapper. So that it looks premium */}
                                   {reg.labelling}
                                 </div>
                               </div>

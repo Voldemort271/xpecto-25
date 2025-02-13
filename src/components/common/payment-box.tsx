@@ -124,7 +124,6 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               },
             );
           }
-          //TODO: Add sleep here if u think that pop up is not visible at all
           window.location.reload();
         },
         onError: () => {

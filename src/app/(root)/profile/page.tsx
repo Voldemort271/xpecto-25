@@ -160,8 +160,6 @@ const Page = () => {
                 </button>
               </div>
             ) : (
-              //TODO: Add a leaderboard for ambassadors here which also shows rank and number & list of contingents brought by the current user.
-              //TODO: Shift this to home page after it has been redesigned
               <button
                 className="w-fit cursor-none bg-emerald-500/[0.1] px-5 py-2 text-2xl font-normal uppercase text-green-300"
                 onMouseEnter={() => setIsHovered(true)}

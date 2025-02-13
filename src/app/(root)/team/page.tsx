@@ -12,7 +12,7 @@ const TeamPage = () => {
 
   const { data: teamData, isLoading } = api.team.getMembers.useQuery();
 
-  //TODO: Loaders all over the code everywhere required wherever useQuery or useMutation were used. Super annoying.
+  //TODO: Loaders needed all over the code everywhere required wherever useQuery or useMutation were used. Super annoying.
 
   return isLoading ? (
     <div>Loading</div>

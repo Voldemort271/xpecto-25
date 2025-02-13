@@ -202,7 +202,6 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
                 placeholder="Enter team name"
               />
             </div>
-            {/* //TODO: Idk, maybe something can go here ig */}
           </div>
           {invitees.length > 0 && (
             <div className="flex flex-row flex-wrap gap-5">
