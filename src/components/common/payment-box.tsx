@@ -37,6 +37,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
   const [token, setToken] = useState("");
   const [isUploading, setIsUploading] = useState(false); //TODO: Use this to show a loading spinner while sending the image
 
+
   const uploadImage = api.user.uploadImageToFolder.useMutation();
   const userAddToEvent = api.event.addUserToEvent.useMutation();
 

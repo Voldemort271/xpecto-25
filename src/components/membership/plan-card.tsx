@@ -6,10 +6,13 @@ import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PaymentBox from "@/components/common/payment-box";
+import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const PlanCard = ({ data }: { data: RegistrationLevel }) => {
+
   const { setIsHovered } = useContext(CursorContext);
 
   return (
@@ -30,22 +33,33 @@ const PlanCard = ({ data }: { data: RegistrationLevel }) => {
       >
         {data.description}
       </div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <div
-            className="absolute bottom-12 left-12 flex h-12 w-fit cursor-none flex-col justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            buy plan
-          </div>
-        </DialogTrigger>
-        <PaymentBox
-          regPlanId={data.id}
-          price={data.price}
-          eventId={"universaleve"}
-        />
-      </Dialog>
+      {useUser().isSignedIn ? (
+        <Dialog>
+          <DialogTrigger asChild>
+            <div
+              className="absolute bottom-12 left-12 flex h-12 w-fit cursor-none flex-col justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              buy plan
+            </div>
+          </DialogTrigger>
+          <PaymentBox
+            regPlanId={data.id}
+            price={data.price}
+            eventId={"universaleve"}
+          />
+        </Dialog>
+      ) : (
+        <Link
+          href={"/sign-in"}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="absolute bottom-12 left-12 flex h-12 w-fit cursor-none flex-col justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
+        >
+          buy plan
+        </Link>
+      )}
     </div>
   );
 };

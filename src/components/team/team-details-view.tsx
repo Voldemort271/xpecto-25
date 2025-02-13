@@ -2,7 +2,6 @@
 
 import React, { useContext } from "react";
 import BgImg from "../../../public/images/background-teams.png";
-import { type TeamData } from "@/app/types";
 import Image from "next/image";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
@@ -12,6 +11,7 @@ import PixelInsta from "@/components/svg/insta";
 import PixelPhone from "@/components/svg/phone";
 import PixelLinkedin from "@/components/svg/linkedin";
 import { motion } from "motion/react";
+import { Member } from "@prisma/client";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ const keyframes = {
 };
 
 interface Props {
-  data?: TeamData;
+  data?: Member;
 }
 
 const TeamDetailsView = ({ data }: Props) => {
@@ -76,7 +76,7 @@ const TeamDetailsView = ({ data }: Props) => {
             delay: 0.25,
           }}
         >
-          {data?.desc ?? "No details provided for selected player."}
+          {/* {data?.desc ?? "No details provided for selected player."} */}
         </motion.div>
         <div className="mb-5 h-[2px] w-full bg-amber-50/[0.5] backdrop-blur-2xl"></div>
         <motion.div

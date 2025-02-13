@@ -1,11 +1,11 @@
 import React, { type ReactNode } from "react";
 import Image from "next/image";
 import MarqueeContainer from "@/components/common/marquee-container";
-import type { TeamData } from "@/app/types";
+import { type Member, Role } from "@prisma/client";
 
 interface Props {
   children: ReactNode;
-  data?: TeamData;
+  data?: Member;
 }
 
 const TeamCarouselContainer = ({ children, data }: Props) => {
@@ -42,15 +42,15 @@ const TeamCarouselContainer = ({ children, data }: Props) => {
               data
                 ? [
                     data.name,
-                    data.role === "convenor" || data.role === "co-convenor"
+                    data.role === Role.Convenor || data.role === Role.CoConvenor
                       ? data.role
                       : data.org + " " + data.role,
                     data.name,
-                    data.role === "convenor" || data.role === "co-convenor"
+                    data.role === Role.Convenor || data.role === Role.CoConvenor
                       ? data.role
                       : data.org + " " + data.role,
                     data.name,
-                    data.role === "convenor" || data.role === "co-convenor"
+                    data.role === Role.Convenor || data.role === Role.CoConvenor
                       ? data.role
                       : data.org + " " + data.role,
                   ]

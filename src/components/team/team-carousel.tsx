@@ -13,10 +13,10 @@ import React, {
   useState,
 } from "react";
 import Image from "next/image";
-import { type TeamData } from "@/app/types";
+import type { Member } from "@prisma/client";
 
 interface Props {
-  data: TeamData[];
+  data: Member[];
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
 }

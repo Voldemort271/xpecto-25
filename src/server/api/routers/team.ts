@@ -151,4 +151,11 @@ export const teamRouter = createTRPCRouter({
 
       return team;
     }),
+
+
+    getMembers: publicProcedure
+    .query(async ({ ctx }) => {
+      const members = await ctx.db.member.findMany();
+      return members;
+    })
 });
