@@ -16,7 +16,7 @@ const ClickToStart = () => {
   return (
     <div className="relative mt-5 flex w-full flex-col items-center justify-center">
       <motion.div
-        className="w-full px-12 py-5 text-xl font-light"
+        className="w-full px-12 py-5 pb-2 text-2xl font-normal sm:pb-5"
         initial={{ opacity: 1 }}
         variants={{
           blink: {
