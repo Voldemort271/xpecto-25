@@ -41,6 +41,39 @@ const TeamDetailsContainer = ({ setIndex, children }: Props) => {
           >
             navigate realm
           </motion.div>
+
+          <motion.div
+            className="text-lg font-light uppercase text-amber-50/[0.7] transition-all hover:font-light md:font-extralight"
+            onClick={() => setIndex((prev) => prev - 1)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            variants={keyframes}
+            animate="flicker"
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+              repeat: 1,
+              delay: 0.5,
+            }}
+          >
+            #prev
+          </motion.div>
+          <motion.div
+            className="text-lg font-light uppercase text-amber-50/[0.7] transition-all hover:font-light md:font-extralight"
+            onClick={() => setIndex((prev) => prev + 1)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            variants={keyframes}
+            animate="flicker"
+            transition={{
+              duration: 1,
+              ease: "easeInOut",
+              repeat: 1,
+              delay: 0.5,
+            }}
+          >
+            #next
+          </motion.div>
           {[0, 1, 2, 3, 4].map((el) => (
             <motion.div
               className="text-lg font-light uppercase text-amber-50/[0.7] transition-all hover:font-light md:font-extralight"
