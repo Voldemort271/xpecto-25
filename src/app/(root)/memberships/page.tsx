@@ -37,7 +37,7 @@ const Page = () => {
       ) : isLoading ? (
         <div className="pt-32">Loading...</div>
       ) : offlineReg && !offlineReg.verified ? (
-        <div className="flex h-full w-full items-center justify-center pt-32">
+        <div className="flex h-screen w-full items-center justify-center pt-32">
           <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
             Your payment is being verified right now
           </div>

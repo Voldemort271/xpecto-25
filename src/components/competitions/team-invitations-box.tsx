@@ -1,12 +1,14 @@
 import { useCurrentUser } from "@/lib/utils";
 import { api } from "@/trpc/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
+import { CursorContext } from "@/context/cursor-context";
 
 const InvitationBox = ({ compId }: { compId: string }) => {
   const { CurrentUser } = useCurrentUser();
+  const { setIsHovered } = useContext(CursorContext);
   const { data: userInvites } = api.invite.getUserInvites.useQuery(
     {
       userId: CurrentUser?.id ?? "",
@@ -118,31 +120,38 @@ const InvitationBox = ({ compId }: { compId: string }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 text-lg font-bold">
+    <div className="flex flex-col gap-2.5 p-5 text-lg font-bold">
       {myInvites?.map((invitee) => (
         <div
-          className="flex w-full items-center justify-evenly"
           key={invitee.team.id}
+          className="flex flex-col bg-amber-50/[0.3] px-5 py-2.5 text-amber-50"
         >
-          <div className="flex p-2">{invitee.team.name}</div>
-          <div className="flex gap-2">
-            <Button
-              className="bg-green-500 hover:bg-green-200"
-              onClick={() =>
-                handleAcceptInvite({
-                  teamId: invitee.teamId,
-                  token: invitee.token,
-                })
-              }
-            >
-              Accept
-            </Button>
-            <Button
-              className="bg-red-500 hover:bg-red-200"
-              onClick={() => handleRejectInvite({ token: invitee.token })}
-            >
-              Reject
-            </Button>
+          <div className="mb-2.5 flex flex-wrap justify-between gap-5 text-2xl font-normal uppercase sm:mb-0">
+            {invitee.team.name}
+
+            <div className="flex gap-2">
+              <Button
+                className="cursor-none rounded-none bg-green-500 px-5 py-2 text-xl font-normal uppercase"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={() =>
+                  handleAcceptInvite({
+                    teamId: invitee.teamId,
+                    token: invitee.token,
+                  })
+                }
+              >
+                Accept
+              </Button>
+              <Button
+                className="cursor-none rounded-none bg-red-500 px-5 py-2 text-xl font-normal uppercase"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={() => handleRejectInvite({ token: invitee.token })}
+              >
+                Reject
+              </Button>
+            </div>
           </div>
         </div>
       ))}
