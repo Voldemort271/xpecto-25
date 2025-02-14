@@ -13,10 +13,10 @@ import { Analytics } from "@vercel/analytics/react";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpecto.org/"),
   title: "Xpecto '25 | IIT Mandi",
-  description: "Blah blah here",
+  description: "The technical festival of IIT Mandi. 29 to 31 March.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
-// TODO: Add favicon, opengraph and metadata
+// TODO: Add opengraph
 
 export default function RootLayout({
   children,
