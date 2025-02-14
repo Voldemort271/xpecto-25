@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { Jacquard_24 } from "next/font/google";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 const jacquard = Jacquard_24({ weight: "400", subsets: ["latin"] });
 
@@ -12,9 +15,11 @@ const NewspaperNavbar = () => {
       <div className="absolute left-12 top-5 hidden w-full max-w-64 text-base leading-4 xl:block">
         Issue #25, 32 to 56 March 2025 <br /> Twenty-second reprint <br />
         <br className="hidden lg:block" />{" "}
-        <span className="text-xl leading-4">
-          Login to our website to view previous reprints
-        </span>
+        {!useUser().isSignedIn && (
+          <Link href={"/sign-in"} className="text-xl leading-4">
+            Login to our website to view previous reprints
+          </Link>
+        )}
         <br /> I don&apos;t know what else to put here cause lowkey I&apos;m
         just a chill guy
       </div>
