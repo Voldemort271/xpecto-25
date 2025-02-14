@@ -27,11 +27,9 @@ const Footer = () => {
   }, [targetDate]);
 
   const formatTime = (ms: number) => {
-    const seconds = Math.floor((ms / 1000) % 60);
-    const minutes = Math.floor((ms / 1000 / 60) % 60);
-    const hours = Math.floor(ms / (1000 * 60 * 60));
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
 
-    return { hours, minutes, seconds };
+    return { days };
   };
 
   return (
@@ -95,6 +93,27 @@ const Footer = () => {
               privacy policy
             </Link>
           </div>
+          <div className="pt-5 text-2xl uppercase">contact us</div>
+          <div className="grid grid-cols-1 text-xl font-light uppercase text-neutral-300">
+            <Link
+              href={`mailto:tech@xpecto.org`}
+              target={"_blank"}
+              className="cursor-none hover:underline"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              developer team
+            </Link>
+            <Link
+              href={`mailto:info@xpecto.org`}
+              target={"_blank"}
+              className="cursor-none hover:underline"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              help desk
+            </Link>
+          </div>
         </div>
         <div className="col-span-3 -mb-5 mt-12 text-center text-sm font-light uppercase text-neutral-600">
           copyright &copy; 2025, xpecto, iit mandi.
@@ -103,8 +122,7 @@ const Footer = () => {
       {timeLeft ? (
         <div className="col-span-6 flex flex-col items-center justify-center border-2 border-amber-50 px-12 py-12 uppercase text-neutral-900 sm:col-span-3 sm:border-t-0 sm:py-24 lg:col-span-2">
           <div className="text-center text-7xl font-semibold leading-[0.7] xl:text-8xl xl:leading-[0.5]">
-            {formatTime(timeLeft).hours}:{formatTime(timeLeft).minutes}:
-            {formatTime(timeLeft).seconds}{" "}
+            {formatTime(timeLeft).days} days{" "}
             <span className="text-5xl xl:text-6xl">to go</span>
           </div>
           <div className="text-4xl font-semibold">xpecto &apos;25</div>

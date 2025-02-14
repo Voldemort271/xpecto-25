@@ -12,18 +12,15 @@ const Home = () => {
     <div className="flex h-full w-full flex-col items-center bg-neutral-900">
       <HomeScreen />
       {/* TODO: Change text */}
-      <Marquee speed={5}>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-        architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
-        laboriosam magnam neque.
-      </Marquee>
+      <div className="flex h-32 w-full flex-col justify-center overflow-hidden whitespace-nowrap border-y-2 border-amber-50 bg-neutral-950 text-9xl font-extrabold uppercase text-amber-50/[0.8]">
+        <MarqueeContainer text={["29 to 31 march", "iit mandi techfest"]} />
+      </div>
       {/* TODO: Add featured events section */}
       <AboutXpecto />
       <AboutIITMandi />
-      <Marquee>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-        architecto, cum delectus eaque eligendi eos est eveniet explicabo fugiat
-        laboriosam magnam neque.
+      <Marquee speed={10}>
+        xperience xpecto | weave through the glitch | xperience xpecto | weave
+        through the glitch |
       </Marquee>
       <MerchPromo />
       <Footer />
