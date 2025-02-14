@@ -37,7 +37,7 @@ const ProniteDetailsContainer = ({
         {children}
         <div className="z-0 grid min-w-72 grid-cols-2 p-2.5 pb-12 sm:p-5">
           <motion.div
-            className="col-span-2 text-2xl font-light uppercase text-amber-50/[0.8]"
+            className="col-span-2 text-2xl font-light uppercase text-amber-50"
             variants={keyframes}
             animate="flicker"
             transition={{
