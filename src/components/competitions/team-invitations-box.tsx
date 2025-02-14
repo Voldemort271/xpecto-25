@@ -129,7 +129,7 @@ const InvitationBox = ({ compId }: { compId: string }) => {
           <div className="mb-2.5 flex flex-wrap justify-between gap-5 text-2xl font-normal uppercase sm:mb-0">
             {invitee.team.name}
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button
                 className="cursor-none rounded-none bg-green-500 px-5 py-2 text-xl font-normal uppercase"
                 onMouseEnter={() => setIsHovered(true)}
