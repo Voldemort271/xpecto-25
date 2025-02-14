@@ -75,8 +75,10 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
               <div className="relative h-full max-h-[400px] w-full border-2 border-amber-50 lg:max-h-[500px]">
                 <Image
                   src={el.image}
+                  width={500}
+                  height={800}
                   alt={"Volunteer pic"}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full bg-neutral-950 object-cover"
                 />
               </div>
             </CarouselItem>
@@ -100,8 +102,10 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
             >
               <Image
                 src={el.image}
+                width={500}
+                height={800}
                 alt={"Volunteer pic"}
-                className="h-full w-full border-2 border-amber-50 object-cover"
+                className="h-full w-full border-2 border-amber-50 bg-neutral-900 object-cover"
               />
             </CarouselItem>
           ))}
