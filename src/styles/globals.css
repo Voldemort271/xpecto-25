@@ -230,3 +230,58 @@ tr, td {
 	background-image: url('../../public/images/img.png');
 	animation: 100ms linear infinite noise;
 }
+
+.visible-scrollbar,
+.invisible-scrollbar,
+.mostly-customized-scrollbar {
+  display: block;
+  width: 10em;
+  overflow: auto;
+  height: 2em;
+  padding: 1em;
+  margin: 1em auto;
+  outline: 2px dashed cornflowerblue;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Demonstrate a "mostly customized" scrollbar
+ * (won't be visible otherwise if width/height is specified) */
+ .mostly-customized-scrollbar::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	background: transparent;
+	transition: 0.3s ease-in-out;
+  }
+  
+  .mostly-customized-scrollbar:hover::-webkit-scrollbar {
+	background: rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Scroll thumb */
+  .mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 10px;
+	transition: background 0.3s ease-in-out;
+  }
+  
+  .mostly-customized-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Optional: Add a subtle glitch effect */
+  @keyframes glitch {
+	0% { transform: translateX(0); }
+	20% { transform: translateX(-2px); }
+	40% { transform: translateX(2px); }
+	60% { transform: translateX(-2px); }
+	80% { transform: translateX(2px); }
+	100% { transform: translateX(0); }
+  }
+  
+  .mostly-customized-scrollbar::-webkit-scrollbar-thumb:active {
+	animation: glitch 0.2s steps(2, end);
+  }
+  

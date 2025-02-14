@@ -25,7 +25,7 @@ const Home = () => {
       <Footer />
       <div className="flex h-32 w-full flex-col justify-center overflow-hidden whitespace-nowrap bg-neutral-950 text-9xl font-extrabold uppercase text-neutral-900">
         <MarqueeContainer
-          text={["xpecto '25", "32 to 56 march 2025", "iit mandi"]}
+          text={["xpecto '25", "29 to 31 march 2025", "iit mandi"]}
         />
       </div>
     </div>

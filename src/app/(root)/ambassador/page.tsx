@@ -31,18 +31,20 @@ const Page = () => {
   return (
     <div>
       <div className="h-32"></div>
-      {CurrentUser &&
-        CurrentUser.id !== "" &&
-        CurrentUser.role !== "ambassador" && (
-          <div>
-            Put the content of campus ambassador here. Content guys job. Also
-            put how its mostly resposibility of ambassador to make the user
-            write its code
+      {CurrentUser && CurrentUser.id !== "" && (
+        <div>
+          Put the content of campus ambassador here. Content guys job. Also put
+          how its mostly resposibility of ambassador to make the user write its
+          code
+          {CurrentUser.role !== "ambassador" ? (
             <button className="border-2 p-2" onClick={handleSubmit}>
               Click here to become a campus ambassador
             </button>
-          </div>
-        )}
+          ) : (
+            <div> You are already a campus ambassador</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

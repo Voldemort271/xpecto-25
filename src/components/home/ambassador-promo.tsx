@@ -5,11 +5,13 @@ import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import StaggeredText from "@/components/home/staggered-text";
+import { useCurrentUser } from "@/lib/utils";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const AmbassadorPromo = () => {
   const { setIsHovered } = useContext(CursorContext);
+  const {CurrentUser} = useCurrentUser();
 
   return (
     <div className="w-full space-y-2.5 px-5 py-36 text-neutral-900 sm:px-12">
@@ -31,7 +33,7 @@ const AmbassadorPromo = () => {
         tenetur ullam, voluptates.
       </div>
       <Link
-        href={"/ambassador"}
+        href={`${(CurrentUser && CurrentUser.id !== "") ? "/ambassador" : "/sign-in"}`}
         className="w-fit cursor-none border-2 border-amber-50 bg-neutral-950/[0.9] px-5 py-2 text-2xl font-normal uppercase text-amber-50 backdrop-blur-2xl"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

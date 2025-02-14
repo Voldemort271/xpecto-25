@@ -273,7 +273,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   return (
     <DialogContent
-      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} tracking-widest`}
+      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} tracking-widest overflow-y-clip`}
     >
       <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer
@@ -299,7 +299,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               className="font-bold uppercase text-amber-50"
               htmlFor="image"
             >
-              Upload image (max 1MB)*
+              Upload image (max 1MB) of payment*
             </label>
             <div className={styles.inputContainer}>
               <input
