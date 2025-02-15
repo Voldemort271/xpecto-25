@@ -70,6 +70,10 @@ const TermsPage = () => {
             site’s accuracy, availability, or security. We are not responsible
             for: Any data loss or security breaches. Third-party service
             failures. Any damages arising from your use of the website.
+            Additionally, we do not take responsibility for: Payments that may
+            be delayed, stuck, or not processed. Registrations that fail to
+            reach us due to technical or other issues. By using this website,
+            you acknowledge and accept these terms.
           </p>
           <div className="text-xl">6. Termination</div>
           <p className="mb-2">
