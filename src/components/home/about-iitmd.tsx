@@ -15,7 +15,6 @@ const AboutIITMandi = () => {
 
   return (
     <div className="relative z-0 flex w-full flex-row justify-center border-t-2 border-amber-50/[0.3] py-24">
-      {/* TODO: Revise all image alts */}
       <Image
         src={
           "https://res.cloudinary.com/diqdg481x/image/upload/v1739198119/images/iitmandi.jpg"
