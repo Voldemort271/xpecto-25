@@ -30,6 +30,7 @@ model User {
   id           String  @id @default(cuid())
   email        String  @unique
   name         String
+  contact      String @default("") //TODO: Make this field compulsory if necessary
   college_name String  @default("Individual")
   role         String  @default("participant")
   POCId        String?
@@ -38,14 +39,46 @@ model User {
   teamLeader Team[]        @relation("teamLeader")
   invites    InviteToken[]
 
-  teams     Team[]
-  regEvents Registration[]
+  teams       Team[]
+  regEvents   Registration[]
+  merchOrders MerchOrder[]
 
   ambassador Ambassador?
   POC        Ambassador? @relation("POC", fields: [POCId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Merch {
+  id    String @id @default(cuid())
+  name  String
+  price Int
+  desc  String
+  image String
+  stock Int
+
+  orders MerchOrder[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MerchOrder {
+  id           String   @id @default(cuid())
+  userId       String
+  merchId      String
+  quantity     Int
+  totalPrice   Int
+  size         Size
+  verified     Boolean  @default(false)
+  paymentId    String   @unique
+  paymentProof String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id])
+  merch Merch @relation(fields: [merchId], references: [id])
 }
 
 model Ambassador {
@@ -150,7 +183,7 @@ model Registration {
   userId       String
   planId       String
   eventId      String
-  paymentId    String?   @unique 
+  paymentId    String?  @unique
   paymentProof String // Contains paymentId to the payment proof image
   verified     Boolean  @default(false)
   createdAt    DateTime @default(now())
@@ -222,6 +255,14 @@ enum Tag {
   Blockchain
   DataStructures
   Algorithms
+}
+
+enum Size {
+  S
+  M
+  L
+  XL
+  XXL
 }
 
 enum Org {
