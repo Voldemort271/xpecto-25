@@ -34,6 +34,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     role: "",
     POCId: null,
     accomodation: false,
+    contact: "",
   });
   const { user: clerkUser, isLoaded } = useUser();
 
