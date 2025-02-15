@@ -26,6 +26,7 @@ const SignupPage = () => {
   const [lastName, setLastName] = React.useState("");
   const [contact, setContact] = React.useState("");
   const [givingPhoneNum, setGivingPhoneNum] = React.useState(true);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const { setCurrentUser } = useCurrentUser();
 
@@ -55,6 +56,7 @@ const SignupPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (!isLoaded && !signUp) return null;
 
     try {
@@ -343,6 +345,7 @@ const SignupPage = () => {
                   <button
                     type="submit"
                     className="bg-amber-50/[0.7] px-5 py-2.5 text-2xl font-normal uppercase text-neutral-900"
+                    disabled={isSubmitting}
                   >
                     Continue
                   </button>
