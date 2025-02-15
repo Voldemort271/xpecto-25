@@ -143,6 +143,7 @@ export const registrationtRouter = createTRPCRouter({
         },
         include: {
           user: true,
+          event: true,
         },
       });
 
@@ -159,7 +160,7 @@ export const registrationtRouter = createTRPCRouter({
         });
       }
 
-      await sendPaymentRejectionEmail(reg.user.email, input.reason);
+      await sendPaymentRejectionEmail(reg.user.email, input.reason, reg.event.name);
 
       await cloudinary.uploader.destroy(reg.paymentProof);
 

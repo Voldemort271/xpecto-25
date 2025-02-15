@@ -14,10 +14,11 @@ export const eventRouter = createTRPCRouter({
         paymentProof: z.string(),
         email: z.string(),
         POC: z.string().optional(),
+        price: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { verified, paymentId, userId, regPlanId, eventId, POC } = input;
+      const { verified, paymentId, userId, regPlanId, eventId, POC, price } = input;
 
       try {
         await ctx.db.user.update({
@@ -60,7 +61,7 @@ export const eventRouter = createTRPCRouter({
           });
         }
   
-        if (!verified) await sendPaymentVerifyingEmail(input.email);
+        if (!verified) await sendPaymentVerifyingEmail(input.email, input.paymentId ?? "free", price);
   
         return true;
       }

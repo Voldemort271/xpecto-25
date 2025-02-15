@@ -93,6 +93,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         email: CurrentUser.email,
         verified: verified,
         POC: POC,
+        price: price
       },
       {
         onSuccess: () => {
