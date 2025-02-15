@@ -54,7 +54,7 @@ const TardisNav = () => {
               src={Tardis}
               width={200}
               height={200} //Added a sample width and height
-              alt={"Tardis lol"}
+              alt={"Tardis"}
               className="transition-all"
             />
           </motion.div>

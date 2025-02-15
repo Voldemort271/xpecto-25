@@ -12,7 +12,7 @@ const CompetitionsHeader = () => {
         src={`https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg`} //Changed the source of the background image
         width={300}
         height={300} //Added sample width and height coz it was giving an error
-        alt={"Bg Image"}
+        alt={"Background img"}
         className="absolute left-0 top-0 h-full w-full object-cover object-center opacity-50"
       />
       <motion.div

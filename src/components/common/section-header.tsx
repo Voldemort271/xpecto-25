@@ -11,7 +11,7 @@ const SectionHeader = ({ title, children }: Props) => {
     <div className="relative z-0 flex min-h-96 w-full flex-col items-center justify-center border-y-2 border-amber-50 p-12">
       <Image
         src={`https://res.cloudinary.com/diqdg481x/image/upload/v1739200155/images/glitch.jpg`}
-        alt={"transparent bg"}
+        alt={"Section header background"}
         width={300}
         height={300}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-bottom opacity-50"
