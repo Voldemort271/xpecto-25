@@ -77,7 +77,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
           height={1080}
           className="sticky top-0 h-96 w-full shrink border-2 border-t-0 border-amber-50 object-cover md:h-screen md:w-[300px] md:border-l-0 md:border-t-2 lg:w-[400px]"
         />
-        <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)] overflow-clip">
+        <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)] overflow-x-clip">
           <div className="space-y-5 overflow-scroll overscroll-none p-12 md:pt-44">
             <div className="-mb-2.5 flex flex-wrap gap-2.5">
               <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">

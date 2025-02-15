@@ -53,6 +53,8 @@ const InvitationBox = ({ compId }: { compId: string }) => {
               setMyInvites(
                 myInvites.filter((invite) => invite.token !== token),
               );
+              //TODO: replace window.location.reload with router.reload and router.refresh as per need (u need to check that its working everywhere)
+              window.location.reload();
             } else {
               if (!e) {
                 toast.custom(
