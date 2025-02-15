@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import { Input } from "../ui/input";
 import Image from "next/image";
+import Loader from "./loader";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -35,8 +36,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [transactionID, setTransactionID] = useState("");
   const [token, setToken] = useState("");
-  const [isUploading, setIsUploading] = useState(false); //TODO: Use this to show a loading spinner while sending the image
-
+  const [loading, setLoading] = useState(false);
 
   const uploadImage = api.user.uploadImageToFolder.useMutation();
   const userAddToEvent = api.event.addUserToEvent.useMutation();
@@ -124,6 +124,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               },
             );
           }
+          setLoading(false);
           window.location.reload();
         },
         onError: () => {
@@ -142,6 +143,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               duration: 6000,
             },
           );
+          setLoading(false);
         },
       },
     );
@@ -149,7 +151,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    //TODO: Someone just convert all the alerts to toasts throughout the doc.
+    setLoading(true);
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -195,8 +197,6 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         return;
       }
     }
-
-    setIsUploading(true);
 
     try {
       uploadImage.mutate(
@@ -244,6 +244,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
                 position: "top-center",
               },
             );
+            setLoading(false);
           },
         },
       );
@@ -266,14 +267,13 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
           position: "top-center",
         },
       );
-    } finally {
-      setIsUploading(false);
+      setLoading(false);
     }
   };
 
   return (
     <DialogContent
-      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} tracking-widest overflow-y-clip`}
+      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} overflow-y-clip tracking-widest`}
     >
       <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer
@@ -284,6 +284,9 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
           ]}
         />
       </DialogTitle>
+      {loading && (
+        <Loader loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`} />
+      )}
       <div className={`p-4 ${shareTech.className} tracking-tight`}>
         <DialogClose asChild>
           <button
@@ -293,6 +296,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
             &lt;&lt; cancel payment
           </button>
         </DialogClose>
+
         <form className="border-2 p-5">
           <div className="mb-5 flex flex-col gap-1 text-base sm:text-lg">
             <label
@@ -351,35 +355,27 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               </>
             )}
           </div>
-          {isUploading ? (
-            <div
-              className={`py-5 text-2xl font-light uppercase text-amber-200 ${handjet.className} tracking-wider`}
-            >
-              uploading image...
+          <div className="mb-4">
+            <div className={`py-4 text-xl font-normal uppercase`}>
+              Pay: <span className="text-4xl">₹{price}</span>
             </div>
-          ) : (
-            <div className="mb-4">
-              <div className={`py-4 text-xl font-normal uppercase`}>
-                Pay: <span className="text-4xl">₹{price}</span>
-              </div>
-              <label className="mb-2 text-lg font-bold uppercase text-amber-50">
-                Scan to Pay via UPI
-              </label>
-              <Image
-                src="/images/merchant_qr.png"
-                alt="QR Code"
-                className="mx-auto mb-2 block h-32 w-32"
-                width={100}
-                height={100}
-              />
-              <p className="text-center text-amber-50">
-                Bank Details: <br />
-                Account Name: Your Account Name <br />
-                Account Number: 1234567890 <br />
-                IFSC Code: ABCD0123456
-              </p>
-            </div>
-          )}
+            <label className="mb-2 text-lg font-bold uppercase text-amber-50">
+              Scan to Pay via UPI
+            </label>
+            <Image
+              src="/images/merchant_qr.png"
+              alt="QR Code"
+              className="mx-auto mb-2 block h-32 w-32"
+              width={100}
+              height={100}
+            />
+            <p className="text-center text-amber-50">
+              Bank Details: <br />
+              Account Name: Your Account Name <br />
+              Account Number: 1234567890 <br />
+              IFSC Code: ABCD0123456
+            </p>
+          </div>
           <button
             type="submit"
             onClick={handleSubmit}

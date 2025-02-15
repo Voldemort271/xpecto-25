@@ -7,6 +7,11 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
+
+  .glitch_side_text {
+    position: relative;
+    letter-spacing: 0.1em;
+  }
   
   .loading_effect {
     animation: loading-pulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite,

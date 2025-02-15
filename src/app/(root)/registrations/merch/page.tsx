@@ -1,10 +1,9 @@
+import Loader from '@/components/common/loader'
 import React from 'react'
 
 const Merch = () => {
   return (
-    <div>
-      
-    </div>
+    <Loader loadingText='Page not made yet'/>
   )
 }
 
