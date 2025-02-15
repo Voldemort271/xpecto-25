@@ -1,7 +1,7 @@
 "use client";
 
 import { useSignIn, useUser } from "@clerk/nextjs";
-import React, { type FormEvent } from "react";
+import React, { useEffect, type FormEvent } from "react";
 import type {
   EmailCodeFactor,
   OAuthStrategy,
@@ -27,10 +27,15 @@ const SigninPage = () => {
   const router = useRouter();
 
   const user = useUser();
-  if (user.isSignedIn) {
-    router.push("/");
-    return <div>Already signed in</div>
-  }
+  useEffect(() => {
+      if (user.isSignedIn) {
+        router.push("/");
+      }
+    }, [user.isSignedIn, router]);
+  
+    if (user.isSignedIn) {
+      return <div>Already signed in</div>;
+    }
 
   if (!isLoaded && !signIn) return null;
 

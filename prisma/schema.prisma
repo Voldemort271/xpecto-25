@@ -30,7 +30,7 @@ model User {
   id           String  @id @default(cuid())
   email        String  @unique
   name         String
-  contact      String @default("") //TODO: Make this field compulsory if necessary
+  contact      String @default("")
   college_name String  @default("Individual")
   role         String  @default("participant")
   POCId        String?

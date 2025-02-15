@@ -13,6 +13,7 @@ export const userRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1),
         email: z.string().email(),
+        contact: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -34,6 +35,7 @@ export const userRouter = createTRPCRouter({
             name: input.name,
             email: input.email,
             college_name: colName,
+            contact: input.contact,
             accomodation: colName === "Indian Institute of Technology, Mandi",
           },
         });

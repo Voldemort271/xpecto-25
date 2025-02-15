@@ -12,6 +12,30 @@ import { usePathname } from "next/navigation";
 import type { User } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
 
+// This is the context that will be used to store the user data taken that I can't take through clerk before main registration
+// interface ExtraRegistrationDetailsContextProps {
+//   phoneNumber: string;
+//   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
+// }
+
+// const ExtraRegistrationDetailsContext = createContext<ExtraRegistrationDetailsContextProps>({
+//   phoneNumber: "",
+//   setPhoneNumber: () => void 0,
+// });
+
+// export const ExtraRegistrationDetailsProvider = ({ children }: {children: ReactNode}) => {
+//   const [phoneNumber, setPhoneNumber] = useState("");
+
+//   return (
+//     <ExtraRegistrationDetailsContext.Provider value={{ phoneNumber, setPhoneNumber }}>
+//       {children}
+//     </ExtraRegistrationDetailsContext.Provider>
+//   );
+// };
+
+// export const useExtraRegistrationDetails = () => useContext(ExtraRegistrationDetailsContext);
+
+// This is the context that will be used to store the user data taken from Clerk and merge the extra data with clerk data in db
 interface SharedContextProps {
   CurrentUser?: User;
   setCurrentUser?: React.Dispatch<React.SetStateAction<User>>;
@@ -20,6 +44,7 @@ interface SharedContextProps {
 export const SharedContext = createContext<SharedContextProps | undefined>(
   undefined,
 );
+
 
 const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   const url = usePathname();
@@ -44,6 +69,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
   const clerkIdUpdateMutation = api.user.addToClerk.useMutation();
   const clerkIdUpdateMutationRef = useRef(clerkIdUpdateMutation); // Use a ref to store the mutation function
 
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (!isLoaded || !clerkUser) {
@@ -52,6 +78,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
         const userData = {
           name: clerkUser.fullName!,
           email: clerkUser.primaryEmailAddress!.emailAddress,
+          contact: currentUser.contact,
         };
         if (!userData.name || !userData.email) {
           console.error("Missing user data:", userData);
@@ -93,7 +120,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     fetchUserData().catch((error) =>
       console.error("Error in fetchUserData:", error),
     );
-  }, [clerkUser, isLoaded, url]);
+  }, [clerkUser, isLoaded, url, currentUser.contact]);
 
   return (
     <SharedContext.Provider
