@@ -7,6 +7,8 @@ import Logo from "public/logo.png";
 import Link from "next/link";
 import { navElements } from "@/lib/utils";
 import { CursorContext } from "@/context/cursor-context";
+import Phone from "@/components/svg/phone";
+import Insta from "@/components/svg/insta";
 
 const Footer = () => {
   const { setIsHovered } = useContext(CursorContext);
@@ -115,8 +117,28 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <div className="col-span-3 -mb-5 mt-12 text-center text-sm font-light uppercase text-neutral-600">
+        <div className="col-span-3 -mb-5 mt-12 flex flex-col items-center gap-2.5 text-center text-sm font-light uppercase text-neutral-600">
           copyright &copy; 2025, xpecto, iit mandi.
+          <div className="flex w-fit gap-5">
+            <Link
+              href={"/"}
+              target="_blank"
+              className="cursor-none hover:underline"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <Phone size={24} color={"#fffbebdd"} />
+            </Link>
+            <Link
+              href={"/"}
+              target="_blank"
+              className="cursor-none hover:underline"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <Insta size={24} color={"#fffbebdd"} />
+            </Link>
+          </div>
         </div>
       </div>
       {timeLeft ? (
