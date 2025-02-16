@@ -12,39 +12,66 @@ import { Handjet, Share_Tech } from "next/font/google";
 import MarqueeContainer from "@/components/common/marquee-container";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
+import type { CompetitionWithDetails, TeamWithFullDetails } from "@/app/types";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
+const FinalizeTeamDialog = ({ regTeam, comp}: { regTeam: TeamWithFullDetails, comp: CompetitionWithDetails }) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const { CurrentUser } = useCurrentUser();
-  const removeUserFromTeamMutation = api.user.deleteUserFromTeam.useMutation();
-  const handleUserTeamDelete = ({ teamId }: { teamId: string }) => {
+  const finalizeTeamMutation = api.team.finalizeTeam.useMutation();
+  const handleFinalizeTeam = ({
+    teamId,
+    minSize,
+    maxSize,
+    currentSize,
+  }: {
+    teamId: string;
+    minSize: number;
+    maxSize: number;
+    currentSize: number;
+  }) => {
     if (!CurrentUser) {
       return;
     }
     try {
-      removeUserFromTeamMutation.mutate(
+      finalizeTeamMutation.mutate(
         {
-          userId: CurrentUser.id,
-          teamId: teamId,
+          teamId,
+          minSize,
+          maxSize,
+          currentSize,
         },
         {
           onSuccess: () => {
-            // toast.success("Left the team successfully");
             toast.custom(
               (t) => (
                 <CustomToast variant={"success"} metadata={t}>
-                  Left the team successfully
+                  Team finalized successfully.
                 </CustomToast>
               ),
               {
+                duration: 5000,
                 position: "top-center",
               },
             );
             window.location.reload();
+          },
+          onError: (error) => {
+            console.error(error);
+            toast.custom(
+              (t) => (
+                <CustomToast variant={"error"} metadata={t}>
+                  {error.message}
+                </CustomToast>
+              ),
+              {
+                duration: 5000,
+                position: "top-center",
+              },
+            );
           },
         },
       );
@@ -53,7 +80,7 @@ const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-            Failed to delete user. Please try again.
+            Some error occurred. Please try again later.
           </CustomToast>
         ),
         {
@@ -66,11 +93,11 @@ const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
     <Dialog>
       <DialogTrigger asChild>
         <button
-          className="cursor-none bg-red-500 px-5 py-2 text-2xl font-normal uppercase"
+          className="cursor-none bg-blue-500 px-5 py-2 text-2xl font-normal uppercase"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          leave team
+          finalize
         </button>
       </DialogTrigger>
       <DialogContent
@@ -80,25 +107,32 @@ const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
           <MarqueeContainer
             text={[
               "confirm choice",
-              "leave team",
+              "finalize team",
               "confirm choice",
-              "leave team",
+              "finalize team",
             ]}
           />
         </DialogTitle>
         <div
           className={`${sharetech.className} w-full p-5 text-lg tracking-tight`}
         >
-          Are you sure? This action is irreversible, and you will leave this
-          team with immediate effect.
+          Are you sure? This action is irreversible, and your team will be
+          finalized.
         </div>
         <div className="flex justify-end">
           <button
             type="submit"
-            onClick={() => handleUserTeamDelete({ teamId: regTeamId })}
+            onClick={() =>{
+              handleFinalizeTeam({
+                teamId: regTeam.id,
+                minSize: comp.min_team_size ?? 1,
+                maxSize: comp.max_team_size ?? 5,
+                currentSize: regTeam.team_members.length,
+              })}
+            }
             className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
           >
-            leave team
+            finalize team
           </button>
         </div>
       </DialogContent>
@@ -106,4 +140,4 @@ const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
   );
 };
 
-export default LeaveTeamDialog;
+export default FinalizeTeamDialog;

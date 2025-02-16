@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import crypto from "crypto";
 import { error } from "console";
+import { TRPCError } from "@trpc/server";
 
 export const teamRouter = createTRPCRouter({
   findTeamByNameComp: publicProcedure
@@ -149,6 +150,28 @@ export const teamRouter = createTRPCRouter({
         },
       });
 
+      return team;
+    }),
+
+    finalizeTeam: publicProcedure
+    .input( z.object({
+      teamId: z.string(),
+      minSize: z.number(),
+      maxSize: z.number(),
+      currentSize: z.number(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      if (input.minSize > input.currentSize || input.maxSize < input.currentSize) {
+        throw new TRPCError({code:"INTERNAL_SERVER_ERROR", message : "Your Squad does not seem to respect squad strength"});
+      }
+      const team = await ctx.db.team.update({
+        where: {
+          id: input.teamId,
+        },
+        data: {
+          finalized: true,
+        },
+      });
       return team;
     }),
 

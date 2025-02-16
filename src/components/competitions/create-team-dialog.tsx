@@ -38,7 +38,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery);
-    }, 500);
+    }, 750);
 
     return () => clearTimeout(timer);
   }, [searchQuery]);

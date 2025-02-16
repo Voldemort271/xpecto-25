@@ -76,6 +76,13 @@ export interface TeamWithFullDetails extends Team {
   invitations: InviteToken[];
 }
 
+export interface EventWithSpecialDetails extends EventDetails {
+  competition?: Competition;
+  pronite?: Pronite;
+  workshop?: Workshops;
+  expo?: Expos;
+}
+
 export interface EventWithPlans extends EventDetails {
   regPlans: RegistrationLevel[];
 }

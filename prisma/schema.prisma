@@ -100,6 +100,7 @@ model Team {
   prize_money Int    @default(0)
   ranking     Int?
   submissions String // Contains link to location of submission
+  finalized   Boolean @default(false)
 
   leader   User   @relation("teamLeader", fields: [leaderId], references: [id])
   leaderId String

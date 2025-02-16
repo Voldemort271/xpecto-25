@@ -54,11 +54,6 @@ const getHref = (event: Event) => {
   } else if (event.workshops) {
     return `/workshops/${event.slug}`;
   }
-  toast.custom((t) => (
-    <CustomToast variant={"error"} metadata={t}>
-      Requested event not found. Please try with a different keyword.
-    </CustomToast>
-  ));
   return "#";
 };
 

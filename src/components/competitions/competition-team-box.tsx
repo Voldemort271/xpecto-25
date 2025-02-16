@@ -7,6 +7,7 @@ import TeammateBox from "./teammate-box";
 import InvitationBox from "./team-invitations-box";
 import { motion } from "motion/react";
 import MarqueeContainer from "@/components/common/marquee-container";
+import FinalizeTeamDialog from "./finalize-team-dialog";
 
 const CompTeamBox = ({
   regTeam,
@@ -37,15 +38,20 @@ const CompTeamBox = ({
           </motion.div>
           <div className="flex h-full flex-col">
             <TeammateBox regTeam={regTeam} />
-            <div className="flex flex-col justify-end gap-5 p-5 pt-0 sm:flex-row">
-              <LeaveTeamDialog regTeam={regTeam} />
-              {CurrentUser?.id === regTeam.leaderId && (
-                <InviteTeammatesDialog
-                  regTeam={regTeam}
-                  compId={comp?.id ?? ""}
-                />
-              )}
-            </div>
+            {!regTeam.finalized && (
+              <div className="flex flex-col justify-end gap-5 p-5 pt-0 sm:flex-row">
+                {CurrentUser?.id === regTeam.leaderId && (
+                  <FinalizeTeamDialog regTeam={regTeam} comp={comp} />
+                )}
+                <LeaveTeamDialog regTeamId={regTeam.id} />
+                {CurrentUser?.id === regTeam.leaderId && (
+                  <InviteTeammatesDialog
+                    regTeam={regTeam}
+                    compId={comp?.id ?? ""}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </>
       ) : (
