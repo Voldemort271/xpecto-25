@@ -93,7 +93,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         email: CurrentUser.email,
         verified: verified,
         POC: POC,
-        price: price
+        price: price,
       },
       {
         onSuccess: () => {
@@ -286,7 +286,9 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         />
       </DialogTitle>
       {loading && (
-        <Loader loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`} />
+        <Loader
+          loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
+        />
       )}
       <div className={`p-4 ${shareTech.className} tracking-tight`}>
         <DialogClose asChild>
@@ -351,7 +353,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
                 />
                 <div className="mt-2 text-neutral-400">
                   (You are supposed to give the token of the ambassador you have
-                  been referred from.)
+                  been referred from. (for the sake of special goodies))
                 </div>
               </>
             )}
