@@ -45,6 +45,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         paymentProof: "",
         email: CurrentUser.email,
         verified: true,
+        price: 0,
       },
       {
         onSuccess: () => {
