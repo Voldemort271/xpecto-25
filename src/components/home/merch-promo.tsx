@@ -38,10 +38,9 @@ const MerchPromo = () => {
           transition={{ duration: 0.2, delay: 0.2 }}
           className={`${shareTech.className} mb-5 text-base tracking-tight md:text-lg`}
         >
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-          asperiores autem dolores doloribus, eligendi excepturi exercitationem
-          explicabo facilis illum, ipsam labore magni molestias nobis non qui
-          repellat similique sint velit!
+          While we can’t bend time, our collection makes sure you look
+          effortlessly stylish in any timeline. Grab your favorites before they
+          vanish into the void of time!
         </motion.div>
         {/* TODO: Replace link when merch store is active */}
         <Link
@@ -51,7 +50,7 @@ const MerchPromo = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          Visit website
+          go to store
         </Link>
       </div>
       <MerchCard />
