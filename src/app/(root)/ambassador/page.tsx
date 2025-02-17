@@ -35,6 +35,10 @@ const CAPage = () => {
       router.push("/sign-in");
       return;
     }
+    if (CurrentUser.role === "ambassador") {
+      router.push("/profile");
+      return;
+    }
     const token =
       CurrentUser?.name.slice(0, 4) +
       CurrentUser?.id.slice(-4) +
@@ -102,7 +106,7 @@ const CAPage = () => {
         <div className="flex flex-col items-center border border-amber-50 bg-neutral-950 p-5 py-12">
           <div className="text-6xl font-semibold uppercase">premium</div>
           <div className="text-2xl font-normal uppercase text-neutral-500">
-            12 - 16 invited
+            16 - 23 invited
           </div>
           <ul
             className={`list-decimal pt-5 ${sharetech.className} text-lg tracking-tight`}
@@ -131,9 +135,9 @@ const CAPage = () => {
           </ul>
         </div>
         <div className="flex flex-col items-center border border-amber-50 bg-neutral-950 p-5 py-12">
-          <div className="text-6xl font-semibold uppercase">premium</div>
+          <div className="text-6xl font-semibold uppercase">gold</div>
           <div className="text-2xl font-normal uppercase text-neutral-500">
-            12 - 16 invited
+            32+ invited
           </div>
           <ul
             className={`list-decimal pt-5 ${sharetech.className} text-lg tracking-tight`}
