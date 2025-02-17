@@ -9,13 +9,21 @@ export const memberRouter = createTRPCRouter({
   }),
 
   getFirstMemberByOrg: publicProcedure
-    .input(z.object({ org: z.nativeEnum(Org).optional() })) // Replace with your actual enum values
+    .input(z.object({ org: z.nativeEnum(Org).optional() })) 
     .query(async ({ ctx, input }) => {
+      const members = await ctx.db.member.findMany();
       const member = await ctx.db.member.findFirst({
         where: {
           org: input.org,
         },
       });
-      return member;
+      if (!member) {
+        throw new Error("Member not found");
+      }
+
+      const index = members.findIndex(m => m.id === member.id);
+
+      return { member, index };
+
     }),
 });
