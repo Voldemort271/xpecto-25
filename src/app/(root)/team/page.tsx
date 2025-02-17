@@ -11,7 +11,7 @@ import MarqueeContainer from "@/components/common/marquee-container";
 const TeamPage = () => {
   const [index, setIndex] = useState(0);
 
-  const { data: teamData, isLoading } = api.team.getMembers.useQuery();
+  const { data: teamData, isLoading } = api.member.getMembers.useQuery();
 
   //TODO: Loaders needed all over the code everywhere required wherever useQuery or useMutation were used. Super annoying.
 
