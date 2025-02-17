@@ -1,6 +1,6 @@
 import React from "react";
 import MarqueeContainer from "@/components/common/marquee-container";
-import { WorkshopWithDetails } from "@/app/types";
+import type { WorkshopWithDetails } from "@/app/types";
 
 interface Props {
   data: WorkshopWithDetails;
@@ -11,12 +11,13 @@ const WorkshopBrief = ({ data }: Props) => {
     { name: "Extraction point", content: data.workshopDetails.venue },
     {
       name: "zero hour",
-      content: data.workshopDetails.begin_time.toLocaleString(),
+      // content: data.workshopDetails.begin_time.toLocaleString(),
+      content: `TBD`,
     },
   ];
 
   return (
-    <div className="relative w-full overflow-scroll overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full">
+    <div className="relative w-full overflow-auto overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full">
       <div className="sticky left-0 top-0 z-10 flex h-8 w-full flex-col justify-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-lg font-extralight uppercase text-amber-50">
         <MarqueeContainer
           text={[
