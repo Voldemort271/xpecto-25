@@ -366,7 +366,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               Scan to Pay via UPI
             </label>
             <Image
-              src="/images/merchant_qr.png"
+              src="/images/bank_qr.jpeg"
               alt="QR Code"
               className="mx-auto mb-2 block h-32 w-32"
               width={100}
@@ -374,9 +374,10 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
             />
             <p className="text-center text-amber-50">
               Bank Details: <br />
-              Account Name: Your Account Name <br />
-              Account Number: 1234567890 <br />
-              IFSC Code: ABCD0123456
+              Account Name: Space Technology and Astronomy Club <br />
+              Account Number: 7315000100034536 <br />
+              IFSC Code: PUNB0731500 <br />
+              Branch Name: IIT Kamand, Tehsil Sadar, Mandi Himachal Pradesh
             </p>
           </div>
           <button

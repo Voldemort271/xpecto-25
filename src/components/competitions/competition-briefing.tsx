@@ -12,24 +12,27 @@ const CompetitionBrief = ({ data }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const details = [
-    { name: "Bounty", content: `INR ${data.prizepool}` },
+    // { name: "Bounty", content: `INR ${data.prizepool}` },
+    { name: "Bounty", content: `TBD` },
     { name: "Extraction point", content: data.competitionDetails.venue },
     {
       name: "Squad strength",
-      content: `${data.min_team_size} - ${data.max_team_size}`,
+      content: data.min_team_size === data.max_team_size ? `${data.max_team_size}` : `${data.min_team_size} - ${data.max_team_size}`,
     },
     {
       name: "zero hour",
-      content: data.competitionDetails.begin_time.toLocaleString(),
+      // content: data.competitionDetails.begin_time.toLocaleString(),
+      content: `TBD`,
     },
-    {
-      name: "initiation fee",
-      content: `INR ${data.competitionDetails.regPlans[0]?.price ?? 0.0}`,
-    },
+    // This one is useless, so I commented it out
+    // {
+    //   name: "initiation fee",
+    //   content: `INR ${data.competitionDetails.regPlans[0]?.price ?? 0.0}`,
+    // },
   ];
 
   return (
-    <div className="relative w-full overflow-scroll overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full">
+    <div className="relative w-full overflow-auto overscroll-none border-2 border-amber-50 bg-neutral-900 md:h-full">
       <div className="sticky left-0 top-0 z-10 flex h-8 w-full flex-col justify-center overflow-clip border-b-2 border-amber-50 bg-neutral-900 text-lg font-extralight uppercase text-amber-50">
         <MarqueeContainer
           text={[
@@ -76,7 +79,7 @@ const CompetitionBrief = ({ data }: Props) => {
           </Link>
         </div>
       </div>
-      <div className="relative flex h-12 w-full flex-col justify-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl font-normal uppercase text-neutral-900">
+      {/* <div className="relative flex h-12 w-full flex-col justify-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl font-normal uppercase text-neutral-900">
         <MarqueeContainer
           text={[
             "view intel brief",
@@ -87,7 +90,7 @@ const CompetitionBrief = ({ data }: Props) => {
           href={data.rulebook ?? "/"}
           delay={-2}
         />
-      </div>
+      </div> */}
     </div>
   );
 };
