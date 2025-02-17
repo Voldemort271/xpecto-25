@@ -58,8 +58,19 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   );
 
   useEffect(() => {
-    setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
-    setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
+    let flag = false;
+    for (let i = 0; i < comp?.competitionDetails.regPlans.length; i++) {
+      if (comp?.competitionDetails.regPlans[i]?.price === 0) {
+        setRegPrice(0);
+        setRegPlanId(comp?.competitionDetails.regPlans[i]?.id ?? "");
+        flag = true;
+        break;
+      }
+    }
+    if (!flag) {
+      setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
+      setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
+    }
   }, [comp]);
 
   //TODO: Add loader when team is being fetched. (basically add a loader when the user is being checked for registration status).
@@ -77,7 +88,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
           height={1080}
           className="sticky top-0 h-96 w-full shrink border-2 border-t-0 border-amber-50 object-cover md:h-screen md:w-[300px] md:border-l-0 md:border-t-2 lg:w-[400px]"
         />
-        <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)] overflow-x-clip">
+        <div className="relative shrink-0 overflow-x-clip md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
           <div className="space-y-5 overflow-scroll overscroll-none p-12 md:pt-44">
             <div className="-mb-2.5 flex flex-wrap gap-2.5">
               <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
@@ -180,6 +191,20 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                       }
                     >
                       {comp.competitionDetails.regPlans.map((reg) => {
+                        if (
+                          CurrentUser &&
+                          CurrentUser.id !== "" &&
+                          CurrentUser.accomodation &&
+                          reg.price !== 0
+                        )
+                          return null;
+                        if (
+                          (!CurrentUser ||
+                            CurrentUser.id === "" ||
+                            !CurrentUser.accomodation) &&
+                          reg.price === 0
+                        )
+                          return null;
                         return (
                           <div
                             key={reg.id}
