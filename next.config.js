@@ -7,7 +7,7 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
-    domains: ["res.cloudinary.com", "dummyimage.com"],
+    domains: ["res.cloudinary.com", "dummyimage.com", "upload.wikimedia.org"],
   },
 };
 

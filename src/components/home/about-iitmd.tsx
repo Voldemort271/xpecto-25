@@ -3,7 +3,6 @@
 import React, { useContext } from "react";
 import StaggeredText from "@/components/home/staggered-text";
 import Image from "next/image";
-import StaticImg from "public/images/img.png";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
@@ -53,9 +52,13 @@ const AboutIITMandi = () => {
           </Link>
         </div>
         <Image
-          src={StaticImg}
-          alt={"Placeholder"}
-          className="w-[300px] object-cover lg:w-[400px]"
+          src={
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Snow_North_IIT_Mandi_Himachal_Feb19_D72_9387.jpg/640px-Snow_North_IIT_Mandi_Himachal_Feb19_D72_9387.jpg"
+          }
+          width={600}
+          height={600}
+          alt={"Snow in college"}
+          className="aspect-square w-[300px] border-2 border-amber-50 object-cover lg:w-[400px]"
         />
       </div>
     </div>

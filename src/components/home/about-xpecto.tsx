@@ -1,7 +1,6 @@
 import React from "react";
 import StaggeredText from "@/components/home/staggered-text";
 import Image from "next/image";
-import StaticImg from "public/images/img.png";
 import { Share_Tech } from "next/font/google";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -34,9 +33,13 @@ const AboutXpecto = () => {
           </div>
         </div>
         <Image
-          src={StaticImg}
+          src={
+            "https://res.cloudinary.com/diqdg481x/image/upload/v1739812760/Asset_12_lt5nmf.png"
+          }
+          width={600}
+          height={600}
           alt={"Placeholder"}
-          className="w-[300px] object-cover lg:w-[400px]"
+          className="aspect-square w-[300px] object-contain lg:w-[400px]"
         />
       </div>
     </div>
