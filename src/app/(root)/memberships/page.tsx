@@ -8,12 +8,12 @@ import Footer from "@/components/home/footer";
 import Loader from "@/components/common/loader";
 
 const Page = () => {
-  const { CurrentUser } = useCurrentUser();
+  const { CurrentUser, isLoading: isLoadingUser } = useCurrentUser();
 
   const { data: offlinePlans, isLoading: isLoadingPlans } = api.event.getOfflinePlans.useQuery();
   offlinePlans?.regPlans.sort((a, b) => a.price - b.price);
 
-  const { data: offlineReg } =
+  const { data: offlineReg, isLoading: isLoadingOfflineReg } =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -24,8 +24,8 @@ const Page = () => {
       },
     );
     
-    if (isLoadingPlans) {
-      return <Loader loadingText="Loading Memberships ..." />;
+    if (isLoadingPlans || isLoadingOfflineReg || isLoadingUser) {
+      return <Loader loadingText="Loading Plans ..." />;
     }
 
   return (

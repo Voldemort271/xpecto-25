@@ -15,6 +15,7 @@ const Home = () => {
         <MarqueeContainer text={["29 to 31 march", "iit mandi techfest"]} />
       </div>
       {/* TODO: Add featured events section */}
+      {/**TODO: Change all the cloudinary dummy images to true images "to be sent by the design team after 500 yrs" */}
       <AboutXpecto />
       <AboutIITMandi />
       <Marquee speed={10}>

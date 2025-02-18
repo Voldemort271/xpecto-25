@@ -14,30 +14,9 @@ const TeamPage = () => {
 
   const { data: teamData, isLoading } = api.member.getMembers.useQuery();
 
-  //TODO: Loaders needed all over the code everywhere required wherever useQuery or useMutation were used. Super annoying.
 
   return isLoading ? (
-    // <div className="loading relative z-0 h-screen w-screen bg-neutral-900">
-    //   <div className="absolute left-1/2 top-1/2 flex h-16 w-screen -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-clip border-2 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50">
-    //     <MarqueeContainer
-    //       text={[
-    //         "Loading",
-    //         "hang in there",
-    //         "loading squad",
-    //         "hang in there",
-    //         "Loading",
-    //         "hang in there",
-    //         "loading squad",
-    //         "hang in there",
-    //         "Loading",
-    //         "hang in there",
-    //         "loading squad",
-    //         "hang in there",
-    //       ]}
-    //     />
-    //   </div>
-    // </div>
-    <Loader loadingText="Loading Team ..." />
+    <Loader loadingText="Loading Squad ..." />
   ) : (
     teamData && (
       <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">

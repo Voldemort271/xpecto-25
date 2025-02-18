@@ -37,7 +37,7 @@ const TitleSponsor = () => {
         animate={{ display: inView ? "none" : "block" }}
         transition={{ duration: 0, delay: 2.5 }}
       ></motion.div>
-      <div className="relative grid h-full w-full grid-cols-[48px_auto_48px] overflow-clip overflow-y-scroll overscroll-none bg-neutral-900 md:grid-cols-[64px_auto_64px]">
+      <div className="relative grid h-full w-full grid-cols-[48px_auto_48px] overflow-clip overflow-y-auto overscroll-none bg-neutral-900 md:grid-cols-[64px_auto_64px]">
         <div className="relative overflow-clip">
           <div className="top-0 flex h-12 w-[100vh] -translate-x-[calc(50%-24px)] translate-y-[calc(50vh-24px)] -rotate-90 flex-col justify-center overflow-clip border-2 border-r-0 border-t-0 border-amber-50 bg-neutral-900 text-2xl font-light uppercase md:h-16 md:-translate-x-[calc(50%-32px)] md:translate-y-[calc(50vh-32px)] md:text-3xl">
             <MarqueeContainer

@@ -31,8 +31,7 @@ export async function sendPaymentVerifyingEmail(
   amount: number,
 ) {
   try {
-    //TODO: someone can just enhance the html by adding the competition name in here in email. Also add logo of xpecto for pfp in email. For universal event specifically put in just xpecto. No event name
-    //TODO: If possible add all the details of registeration here so that this email serves as a proof of what was sent by user to us
+    {/**TODO: go to google account of no-reply#xpecto.org and add xpecto pfp there. (Shubham bro plz) */}
     const { data } = await resend.emails.send({
       from: "XPECTO <no-reply@xpecto.org>",
       to: [email],
