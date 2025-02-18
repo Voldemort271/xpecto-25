@@ -6,6 +6,7 @@ import CompetitionsCarouselContainer from "@/components/competitions/competition
 import CompetitionsCarousel from "@/components/competitions/competitions-carousel";
 import CompetitionDetailsContainer from "@/components/competitions/competition-details-container";
 import CompetitionDetailsView from "@/components/competitions/competition-details-view";
+import Loader from "@/components/common/loader";
 
 const TeamPage = () => {
   const { data: competitions, isLoading } =
@@ -16,7 +17,7 @@ const TeamPage = () => {
   return (
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
       {isLoading || !competitions || !competitions[index] ? (
-        <div className="loading h-full w-full border-2 border-amber-50 bg-neutral-900"></div>
+        <Loader loadingText="Loading Competitions ..." />
       ) : (
         <CompetitionsCarouselContainer data={competitions[index]}>
           <CompetitionsCarousel

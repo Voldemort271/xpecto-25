@@ -13,6 +13,7 @@ import CompetitionBrief from "@/components/competitions/competition-briefing";
 import CompTeamBox from "@/components/competitions/competition-team-box";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
+import Loader from "../common/loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -25,7 +26,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
 
-  const { data: plan, isLoading } =
+  const { data: plan, isLoading : loadingPlan} =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -35,7 +36,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
         enabled: !!CurrentUser && !!comp,
       },
     );
-  const { data: regTeam } = api.team.findTeamOfUser.useQuery(
+  const { data: regTeam, isLoading : loadingRegTeam } = api.team.findTeamOfUser.useQuery(
     {
       userId: CurrentUser?.id ?? "",
       competitionId: comp?.id ?? "",
@@ -47,7 +48,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
 
   const regStatus = !!plan;
   const offlineEvent = comp?.competitionDetails.venue !== "online";
-  const { data: offlineReg } = api.registration.checkUserRegisteration.useQuery(
+  const { data: offlineReg, isLoading : loadingOfflineReg } = api.registration.checkUserRegisteration.useQuery(
     {
       userId: CurrentUser?.id ?? "",
       eventId: "universaleve",
@@ -63,6 +64,10 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   }, [comp]);
 
   //TODO: Add loader when team is being fetched. (basically add a loader when the user is being checked for registration status).
+  // if(loadingOfflineReg || loadingRegTeam || loadingPlan) {
+  //   return <Loader />
+  // }
+
 
   return (
     <>
@@ -221,9 +226,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <CompetitionBrief data={comp} />
-              {isLoading && (
-                <div className="loading h-full w-full border-2 border-amber-50"></div>
-              )}
               {regStatus && plan.verified && (
                 <CompTeamBox regTeam={regTeam} comp={comp} />
               )}

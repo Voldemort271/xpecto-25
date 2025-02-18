@@ -9,6 +9,7 @@ import { api } from "@/trpc/react";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
 import Link from "next/link";
+import Loader from "@/components/common/loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -19,14 +20,23 @@ const Page = () => {
 
   const { CurrentUser, setCurrentUser } = useCurrentUser();
 
-  const { data: ambassador } = api.ambassador.getAmbassador.useQuery({
-    userId: CurrentUser?.id ?? "",
-  });
+  const { data: ambassador, isLoading } = api.ambassador.getAmbassador.useQuery(
+    {
+      userId: CurrentUser?.id ?? "",
+    },
+  );
+
+  if (isLoading) {
+    return (
+      <div className="absolute left-0 top-0">
+        <Loader loadingText="Loading Profile ..." />
+      </div>
+    );
+  }
 
   const handleSignOut = async () => {
     try {
       if (!CurrentUser) {
-        // toast.error("No user data found");
         toast.custom(
           (t) => (
             <CustomToast variant={"error"} metadata={t}>
@@ -41,7 +51,6 @@ const Page = () => {
         router.push("/sign-up");
       }
       if (!setCurrentUser) {
-        // toast.error("No setter function found");
         toast.custom(
           (t) => (
             <CustomToast variant={"error"} metadata={t}>
@@ -70,7 +79,6 @@ const Page = () => {
         accomodation: false,
         contact: "",
       });
-      // toast.error("Signed Out Successfully");
       toast.custom(
         (t) => (
           <CustomToast variant={"info"} metadata={t}>

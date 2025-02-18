@@ -8,9 +8,14 @@ import MarqueeContainer from "@/components/common/marquee-container";
 import { motion } from "motion/react";
 import PlatinumSponsor from "@/components/sponsors/platinum-sponsor";
 import GenericSponsor from "@/components/sponsors/generic-sponsor";
+import Loader from "@/components/common/loader";
 
 const Page = () => {
-  const allSponsors = api.sponsor.getSponsor.useQuery({ id: "" }).data; // id="" fetches all spons
+  const { data: allSponsors, isLoading } = api.sponsor.getSponsor.useQuery({ id: "" });
+
+  if (isLoading || !allSponsors) {
+    return <Loader loadingText="Loading Sponsors ..." />;
+  }
 
   return (
     <div className="w-full bg-neutral-900">

@@ -6,6 +6,7 @@ import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
+import Loader from "@/components/common/loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -57,7 +58,7 @@ const ApprovalPage = () => {
   const verifyPayment = api.registration.verifyRegistration.useMutation();
   const rejectPayment = api.registration.rejectRegistration.useMutation();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
   if (error) return <div>Error: {error.message}</div>;
 
   //TODO: Some good guy add a loader on the page while handleAccept or handleReject functions are running so that its clear to finance team that they are running and they donot spam the buttons

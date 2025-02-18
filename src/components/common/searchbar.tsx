@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
+import Loader from "./loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -76,7 +77,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
   // Use useQuery to fetch competitions based on searchQuery
 
   // Use useQuery to fetch competitions based on searchQuery
-  const { data: searchResults = [], refetch } = api.event.searchEvents.useQuery(
+  const {
+    data: searchResults = [],
+    refetch,
+  } = api.event.searchEvents.useQuery(
     { query: searchQuery },
     {
       enabled: !!searchQuery,
@@ -132,6 +136,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
       );
     });
   }, [searchResults, registeredEvents, showRegistered, showUnregistered]);
+
 
   return (
     <motion.div

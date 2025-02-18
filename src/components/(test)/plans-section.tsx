@@ -4,6 +4,7 @@ import { useCurrentUser } from "@/lib/utils";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
 import PlanCard from "@/components/membership/plan-card";
+import Loader from "../common/loader";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ const PlansSection = () => {
   const { data: offlinePlans } = api.event.getOfflinePlans.useQuery();
   offlinePlans?.regPlans.sort((a, b) => a.price - b.price);
 
-  const { data: offlineReg, isLoading } =
+  const { data: offlineReg } =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -27,10 +28,10 @@ const PlansSection = () => {
       },
     );
 
-  useEffect(() => {
-    setRegPrice(offlinePlans?.regPlans[0]?.price ?? 0);
-    setRegPlanId(offlinePlans?.regPlans[0]?.id ?? "");
-  }, [offlinePlans]);
+    useEffect(() => {
+      setRegPrice(offlinePlans?.regPlans[0]?.price ?? 0);
+      setRegPlanId(offlinePlans?.regPlans[0]?.id ?? "");
+    }, [offlinePlans]);
 
   return (
     <div className="grid w-full grid-cols-3 bg-neutral-900">
