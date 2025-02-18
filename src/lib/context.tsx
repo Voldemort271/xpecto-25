@@ -12,34 +12,11 @@ import { usePathname } from "next/navigation";
 import type { User } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
 
-// This is the context that will be used to store the user data taken that I can't take through clerk before main registration
-// interface ExtraRegistrationDetailsContextProps {
-//   phoneNumber: string;
-//   setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
-// }
-
-// const ExtraRegistrationDetailsContext = createContext<ExtraRegistrationDetailsContextProps>({
-//   phoneNumber: "",
-//   setPhoneNumber: () => void 0,
-// });
-
-// export const ExtraRegistrationDetailsProvider = ({ children }: {children: ReactNode}) => {
-//   const [phoneNumber, setPhoneNumber] = useState("");
-
-//   return (
-//     <ExtraRegistrationDetailsContext.Provider value={{ phoneNumber, setPhoneNumber }}>
-//       {children}
-//     </ExtraRegistrationDetailsContext.Provider>
-//   );
-// };
-
-// export const useExtraRegistrationDetails = () => useContext(ExtraRegistrationDetailsContext);
-
 // This is the context that will be used to store the user data taken from Clerk and merge the extra data with clerk data in db
 interface SharedContextProps {
   CurrentUser?: User;
   setCurrentUser?: React.Dispatch<React.SetStateAction<User>>;
-  isLoading: Boolean;
+  isLoading: boolean;
 }
 
 export const SharedContext = createContext<SharedContextProps | undefined>(
