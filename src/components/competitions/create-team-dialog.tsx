@@ -23,6 +23,7 @@ import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
+import Loader from "../common/loader";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -43,7 +44,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const { data: searchResults } = api.user.searchCompUsers.useQuery({
+  const { data: searchResults, isLoading : isLoadingSearchResults } = api.user.searchCompUsers.useQuery({
     query: debouncedQuery,
     invitees: CurrentUser
       ? [...invitees.map((user) => user.id), CurrentUser.id]
@@ -60,11 +61,11 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
 
   const createTeamMutation = api.team.createTeam.useMutation();
 
-  const { data: foundTeamName } = api.team.findTeamByNameComp.useQuery({
+  const { data: foundTeamName, isLoading : isLoadingFoundTeamName } = api.team.findTeamByNameComp.useQuery({
     name: teamName,
     competitionId: competitionId,
   });
-  const { data: foundTeamUsers } = api.team.findTeamByUsers.useQuery({
+  const { data: foundTeamUsers, isLoading : isLoadingFoundTeamUsers } = api.team.findTeamByUsers.useQuery({
     users: CurrentUser
       ? [...invitees.map((user) => user.id), CurrentUser.id]
       : [],
@@ -150,6 +151,10 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
       },
     );
   };
+
+  if(isLoadingSearchResults || isLoadingFoundTeamName || isLoadingFoundTeamUsers) {
+    return <Loader loadingText="Loading ..." />
+  }
 
   return (
     <Dialog>

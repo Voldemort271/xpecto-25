@@ -5,9 +5,9 @@ import { Handjet } from "next/font/google";
 
 const handjet = Handjet({ subsets: ["latin"] });
 
-const Loader = ({loadingText} : {loadingText: string}) => {
+const Loader = ({loadingText} : {loadingText?: string}) => {
   return (
-      <div className="fixed w-full h-full bg-opacity-85 bg-black z-50 flex flex-col items-center justify-center overflow-hidden">
+      <div className="fixed w-full h-full bg-opacity-85  z-50 flex flex-col items-center justify-center overflow-hidden">
         <div className= {`${styles.glitch_container} ${handjet.className}`}>
           <div 
             className={`text-7xl ${styles.glitch_text} ${styles.loading_effect}`} 
