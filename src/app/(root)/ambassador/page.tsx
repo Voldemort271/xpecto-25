@@ -12,11 +12,12 @@ import { Share_Tech } from "next/font/google";
 import StaggeredText from "@/components/home/staggered-text";
 import Image from "next/image";
 import Footer from "@/components/home/footer";
+import Loader from "@/components/common/loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const CAPage = () => {
-  const { CurrentUser } = useCurrentUser();
+  const { CurrentUser, isLoading } = useCurrentUser();
   const router = useRouter();
   const { setIsHovered } = useContext(CursorContext);
 
@@ -52,6 +53,11 @@ const CAPage = () => {
       },
     );
   };
+
+  if (isLoading) {
+    return <Loader />
+  }
+
   return (
     <div>
       <SectionHeader title={"Campus Ambassador"}>

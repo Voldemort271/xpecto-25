@@ -6,7 +6,6 @@ import TeamCarousel from "@/components/team/team-carousel";
 import TeamDetailsContainer from "@/components/team/team-details-container";
 import TeamDetailsView from "@/components/team/team-details-view";
 import { api } from "@/trpc/react";
-import MarqueeContainer from "@/components/common/marquee-container";
 import Loader from "@/components/common/loader";
 
 const TeamPage = () => {
@@ -14,7 +13,7 @@ const TeamPage = () => {
 
   const { data: teamData, isLoading } = api.member.getMembers.useQuery();
 
-
+  {/**TODO: Need to make this page responsive. */}
   return isLoading ? (
     <Loader loadingText="Loading Squad ..." />
   ) : (
