@@ -56,7 +56,7 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
   }, [pos, setIndex]);
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center px-5 lg:px-12">
+    <div className="relative flex h-full w-screen flex-col items-center justify-center overflow-x-clip px-5 lg:px-12">
       <Carousel
         setApi={setApiDesktop}
         opts={{
@@ -92,7 +92,7 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
           loop: true,
         }}
         orientation="horizontal"
-        className="flex h-full w-full flex-col items-center justify-center py-5 md:hidden"
+        className="flex h-full w-screen flex-col items-center justify-center py-5 md:hidden"
       >
         <CarouselContent className="h-full">
           {data.map((el, index) => (

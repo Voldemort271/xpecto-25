@@ -13,12 +13,14 @@ const TeamPage = () => {
 
   const { data: teamData, isLoading } = api.member.getMembers.useQuery();
 
-  {/**TODO: Need to make this page responsive. */}
+  {
+    /**TODO: Need to make this page responsive. */
+  }
   return isLoading ? (
     <Loader loadingText="Loading Squad ..." />
   ) : (
     teamData && (
-      <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
+      <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip overflow-x-scroll bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
         <TeamCarouselContainer data={teamData[index]}>
           <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
         </TeamCarouselContainer>
