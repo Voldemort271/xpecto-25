@@ -16,8 +16,6 @@ const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const universalEvent = "universaleve";
 
-//TODO: Update Bank details and QR code
-
 interface PaymentBoxProps {
   regPlanId: string;
   eventId: string;
@@ -286,9 +284,11 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         />
       </DialogTitle>
       {loading && (
-        <Loader
-          loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
-        />
+        <div className="fixed z-50 h-full w-full bg-black">
+          <Loader
+            loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
+          />
+        </div>
       )}
       <div className={`p-4 ${shareTech.className} tracking-tight`}>
         <DialogClose asChild>

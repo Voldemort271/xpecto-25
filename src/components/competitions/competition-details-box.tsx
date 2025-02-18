@@ -13,7 +13,6 @@ import CompetitionBrief from "@/components/competitions/competition-briefing";
 import CompTeamBox from "@/components/competitions/competition-team-box";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
-import Loader from "../common/loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -36,7 +35,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
         enabled: !!CurrentUser && !!comp,
       },
     );
-  const { data: regTeam, isLoading : loadingRegTeam } = api.team.findTeamOfUser.useQuery(
+  const { data: regTeam } = api.team.findTeamOfUser.useQuery(
     {
       userId: CurrentUser?.id ?? "",
       competitionId: comp?.id ?? "",
@@ -74,11 +73,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
     }
   }, [comp]);
 
-  //TODO: Add loader when team is being fetched. (basically add a loader when the user is being checked for registration status).
-  // if(loadingOfflineReg || loadingRegTeam || loadingPlan) {
-  //   return <Loader />
-  // }
-
 
   return (
     <>
@@ -113,7 +107,22 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
               {comp.competitionDetails.description}
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
-              {regStatus ? (
+              {
+                loadingPlan ? (
+                  <div
+                  className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                >
+                  <MarqueeContainer
+                    text={[
+                      "Fetching Status ", 
+                      "Fetching Status ",
+                      "Fetching Status ", 
+                      "Fetching Status "
+                    ]}
+                  />
+                </div>
+                ) :
+              (regStatus ? (
                 plan.verified ? (
                   !regTeam && <CreateTeamDialog competitionId={comp.id} />
                 ) : (
@@ -121,6 +130,19 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                     Your payment is being verified right now
                   </div>
                 )
+              ) : loadingOfflineReg ? (
+                <div
+                className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+              >
+                <MarqueeContainer
+                  text={[
+                    "Fetching Status ", 
+                    "Fetching Status ",
+                    "Fetching Status ", 
+                    "Fetching Status "
+                  ]}
+                />
+              </div>
               ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
                 <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                   Your payment is being verified right now
@@ -248,7 +270,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                   regPlanId={regPlanId}
                   eventId={comp.competitionDetails.id}
                 />
-              )}
+              ))}
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <CompetitionBrief data={comp} />

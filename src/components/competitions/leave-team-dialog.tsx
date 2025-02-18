@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,11 +17,15 @@ const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
+  const [leavingTeam, setLeavingTeam] = useState(false);
+
   const { setIsHovered } = useContext(CursorContext);
 
   const { CurrentUser } = useCurrentUser();
+
   const removeUserFromTeamMutation = api.user.deleteUserFromTeam.useMutation();
   const handleUserTeamDelete = ({ teamId }: { teamId: string }) => {
+    setLeavingTeam(true);
     if (!CurrentUser) {
       return;
     }
@@ -97,6 +101,7 @@ const LeaveTeamDialog = ({ regTeamId }: { regTeamId: string }) => {
             type="submit"
             onClick={() => handleUserTeamDelete({ teamId: regTeamId })}
             className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
+            disabled={leavingTeam}
           >
             leave team
           </button>

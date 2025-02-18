@@ -23,7 +23,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
 
-  const { data: plan, isLoading: isRegistrationLoading } =
+  const { data: plan, isLoading: loadingPlan } =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -83,7 +83,20 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
               {work.workshopDetails.description}
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
-              {regStatus ? (
+              {loadingPlan ? (
+                <div
+                  className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                >
+                  <MarqueeContainer
+                    text={[
+                      "Fetching Results",
+                      "Fetching Results",
+                      "Fetching Results",
+                      "Fetching Results",
+                    ]}
+                  />
+                </div>
+              ) : regStatus ? (
                 !plan.verified && (
                   <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                     Your payment is being verified right now
@@ -206,9 +219,6 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <WorkshopBrief data={work} />
-              {isRegistrationLoading && (
-                <div className="loading h-full w-full border-2 border-amber-50"></div>
-              )}
             </div>
           </div>
         </div>

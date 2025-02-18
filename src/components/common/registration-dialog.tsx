@@ -90,7 +90,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         <PaymentBox regPlanId={regPlanId} eventId={eventId} price={price} setPaying={setPaying} />
       ) : (
         <DialogContent
-          className={`max-h-[600px] max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 ${handjet.className} tracking-widest`}
+          className={`max-h-[600px] max-w-[800px] overflow-y-auto border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 ${handjet.className} tracking-widest`}
         >
           <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
             <MarqueeContainer

@@ -38,6 +38,7 @@ const InviteTeammatesDialog = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [invitees, setInvitees] = useState<User[]>([]);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,6 +76,7 @@ const InviteTeammatesDialog = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setSending(true);
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -214,7 +216,7 @@ const InviteTeammatesDialog = ({
           <button
             type="submit"
             onClick={handleSubmit}
-            disabled={invitees.length === 0}
+            disabled={invitees.length === 0 || sending}
             className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
           >
             Send invitations
