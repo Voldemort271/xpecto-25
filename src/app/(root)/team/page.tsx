@@ -13,9 +13,6 @@ const TeamPage = () => {
 
   const { data: teamData, isLoading } = api.member.getMembers.useQuery();
 
-  {
-    /**TODO: Need to make this page responsive. */
-  }
   return isLoading ? (
     <Loader loadingText="Loading Squad ..." />
   ) : (

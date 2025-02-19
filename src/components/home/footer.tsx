@@ -121,7 +121,7 @@ const Footer = ({ onClick }: { onClick?: () => void }) => {
           copyright &copy; 2025, xpecto, iit mandi.
           <div className="flex w-fit gap-5">
             <Link
-              href={"/"}
+              href={"https://chat.whatsapp.com/D8vO8lFMw4zFJYPYNy5qM8"}
               target="_blank"
               className="cursor-none hover:underline"
               onMouseEnter={() => setIsHovered(true)}
@@ -130,7 +130,7 @@ const Footer = ({ onClick }: { onClick?: () => void }) => {
               <Phone size={24} color={"#fffbebdd"} />
             </Link>
             <Link
-              href={"/"}
+              href={"https://www.instagram.com/tech.xpecto/"}
               target="_blank"
               className="cursor-none hover:underline"
               onMouseEnter={() => setIsHovered(true)}
