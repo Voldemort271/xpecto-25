@@ -31,12 +31,12 @@ const Page = () => {
   return (
     <div>
       {CurrentUser?.accomodation ? (
-        <div className="pt-32">
+        <div className="pt-32 w-full h-screen flex items-center justify-center">
           {CurrentUser.college_name ===
           "Indian Institute of Technology, Mandi" ? (
-            <div>You are an IIT Mandi Student</div>
+            <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">You are an IIT Mandi Student</div>
           ) : (
-            <div>You have purchased {offlineReg?.plan.name} membership.</div>
+            <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">You have purchased {offlineReg?.plan.name} membership.</div>
           )}
         </div>
       ) : offlineReg && !offlineReg.verified ? (

@@ -29,6 +29,7 @@ export const navElements = [
   "Expos",
   "Pronites",
   "Sponsors",
+  "Memberships"
 ];
 
 export const profileSidebarElements = [
