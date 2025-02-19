@@ -56,7 +56,7 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
   }, [pos, setIndex]);
 
   return (
-    <div className="relative flex h-full w-screen flex-col items-center justify-center overflow-x-clip px-5 lg:px-12">
+    <div className="relative flex h-full w-screen flex-col items-center justify-center overflow-x-clip px-5 md:w-full lg:px-12">
       <Carousel
         setApi={setApiDesktop}
         opts={{
