@@ -12,8 +12,7 @@ const CompetitionBrief = ({ data }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const details = [
-    // { name: "Bounty", content: `INR ${data.prizepool}` },
-    { name: "Bounty", content: `TBD` },
+    { name: "Bounty Worth", content: `INR ${data.prizepool}` },
     { name: "Extraction point", content: data.competitionDetails.venue },
     {
       name: "Squad strength",
@@ -24,7 +23,7 @@ const CompetitionBrief = ({ data }: Props) => {
       // content: data.competitionDetails.begin_time.toLocaleString(),
       content: `TBD`,
     },
-    // This one is useless, so I commented it out
+    // TODO: Show initiation fee when available only (i.e., only for online events)
     // {
     //   name: "initiation fee",
     //   content: `INR ${data.competitionDetails.regPlans[0]?.price ?? 0.0}`,
