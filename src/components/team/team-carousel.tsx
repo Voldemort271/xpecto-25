@@ -105,7 +105,7 @@ const TeamCarousel = ({ data, index, setIndex }: Props) => {
                 width={500}
                 height={800}
                 alt={"Volunteer pic"}
-                className="h-full w-full border-2 border-amber-50 bg-neutral-900 object-cover"
+                className="h-full w-full border-2 border-amber-50 bg-neutral-900 object-contain"
               />
             </CarouselItem>
           ))}
