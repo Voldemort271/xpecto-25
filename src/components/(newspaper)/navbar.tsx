@@ -16,7 +16,7 @@ const NewspaperNavbar = () => {
         Issue #25, 32 to 56 March 2025 <br /> Twenty-second reprint <br />
         <br className="hidden lg:block" />{" "}
         {!useUser().isSignedIn && (
-          <Link href={"/sign-in"} className="text-xl leading-4">
+          <Link href={"/sign-up"} className="text-xl leading-4">
             Login to our website to view previous reprints
           </Link>
         )}

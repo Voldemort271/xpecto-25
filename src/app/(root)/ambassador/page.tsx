@@ -33,7 +33,7 @@ const CAPage = () => {
         ),
         { position: "top-center" },
       );
-      router.push("/sign-in");
+      router.push("/sign-up");
       return;
     }
     if (CurrentUser.role === "ambassador") {

@@ -48,7 +48,7 @@ const Page = () => {
           },
         );
 
-        router.push("/sign-up");
+        router.push("/sign-in");
       }
       if (!setCurrentUser) {
         toast.custom(

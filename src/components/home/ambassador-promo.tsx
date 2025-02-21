@@ -44,7 +44,7 @@ const AmbassadorPromo = ({ onClick }: { onClick?: () => void }) => {
       ) : (
         <Link
           href={
-            CurrentUser && CurrentUser.id !== "" ? "/ambassador" : "/sign-in"
+            CurrentUser && CurrentUser.id !== "" ? "/ambassador" : "/sign-up"
           }
           className="w-fit cursor-none border-2 border-amber-50 bg-neutral-950/[0.9] px-5 py-2 text-2xl font-normal uppercase text-amber-50 backdrop-blur-2xl"
           onMouseEnter={() => setIsHovered(true)}

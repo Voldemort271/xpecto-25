@@ -98,7 +98,7 @@ const DystopianNav = () => {
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
-                href={`/sign-in`}
+                href={`/sign-up`}
                 text={[
                   "login to be cool",
                   "cool stuff i promise",

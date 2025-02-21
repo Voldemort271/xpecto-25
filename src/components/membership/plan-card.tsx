@@ -52,7 +52,7 @@ const PlanCard = ({ data }: { data: RegistrationLevel }) => {
         </Dialog>
       ) : (
         <Link
-          href={"/sign-in"}
+          href={"/sign-up"}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className="absolute bottom-12 left-12 flex h-12 w-fit cursor-none flex-col justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
