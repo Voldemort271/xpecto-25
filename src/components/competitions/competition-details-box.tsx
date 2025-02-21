@@ -25,7 +25,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
 
-  const { data: plan, isLoading : loadingPlan} =
+  const { data: plan, isLoading: loadingPlan } =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -47,15 +47,16 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
 
   const regStatus = !!plan;
   const offlineEvent = comp?.competitionDetails.venue !== "online";
-  const { data: offlineReg, isLoading : loadingOfflineReg } = api.registration.checkUserRegisteration.useQuery(
-    {
-      userId: CurrentUser?.id ?? "",
-      eventId: "universaleve",
-    },
-    {
-      enabled: !!CurrentUser,
-    },
-  );
+  const { data: offlineReg, isLoading: loadingOfflineReg } =
+    api.registration.checkUserRegisteration.useQuery(
+      {
+        userId: CurrentUser?.id ?? "",
+        eventId: "universaleve",
+      },
+      {
+        enabled: !!CurrentUser,
+      },
+    );
 
   useEffect(() => {
     let flag = false;
@@ -72,7 +73,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
       setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
     }
   }, [comp]);
-
 
   return (
     <>
@@ -98,7 +98,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                 ml/ai
               </div>
             </div>
-            <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
+            <div className="text-4xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
               {comp.competitionDetails.name}
             </div>
             <div
@@ -107,22 +107,20 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
               {comp.competitionDetails.description}
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
-              {
-                loadingPlan ? (
-                  <div
+              {loadingPlan ? (
+                <div
                   className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                 >
                   <MarqueeContainer
                     text={[
-                      "Fetching Status ", 
                       "Fetching Status ",
-                      "Fetching Status ", 
-                      "Fetching Status "
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
                     ]}
                   />
                 </div>
-                ) :
-              (regStatus ? (
+              ) : regStatus ? (
                 plan.verified ? (
                   !regTeam && <CreateTeamDialog competitionId={comp.id} />
                 ) : (
@@ -132,17 +130,19 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                 )
               ) : loadingOfflineReg ? (
                 <div
-                className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-              >
-                <MarqueeContainer
-                  text={[
-                    "Fetching Status ", 
-                    "Fetching Status ",
-                    "Fetching Status ", 
-                    "Fetching Status "
-                  ]}
-                />
-              </div>
+                  className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                >
+                  <MarqueeContainer
+                    text={[
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
+                    ]}
+                  />
+                  width={600}
+                  height={800}{" "}
+                </div>
               ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
                 <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                   Your payment is being verified right now
@@ -270,7 +270,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                   regPlanId={regPlanId}
                   eventId={comp.competitionDetails.id}
                 />
-              ))}
+              )}
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <CompetitionBrief data={comp} />
