@@ -272,7 +272,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   return (
     <DialogContent
-      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} overflow-y-clip tracking-widest`}
+      className={`left-0 top-0 z-50 h-screen max-h-[800px] w-screen max-w-screen-sm -translate-x-0 -translate-y-0 overflow-y-scroll bg-neutral-900 px-0 text-amber-50 ${handjet.className}`}
     >
       <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer
@@ -290,7 +290,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
           />
         </div>
       )}
-      <div className={`p-4 ${shareTech.className} tracking-tight`}>
+      <div className={`sm:p-4 ${shareTech.className} tracking-tight`}>
         <DialogClose asChild>
           <button
             className={`bg-red-400/[0.1] px-5 py-2 text-xl font-light uppercase text-red-200 ${handjet.className} tracking-wider`}
@@ -300,7 +300,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
           </button>
         </DialogClose>
 
-        <form className="border-2 p-5">
+        <form className="border-amber-50 p-2 sm:border-2 md:p-5">
           <div className="mb-5 flex flex-col gap-1 text-base sm:text-lg">
             <label
               className="font-bold uppercase text-amber-50"
