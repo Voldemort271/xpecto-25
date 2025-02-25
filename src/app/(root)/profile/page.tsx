@@ -30,7 +30,7 @@ const Page = () => {
   const [phoneNumber, setPhoneNumber] = useState(CurrentUser?.contact?.replace(/\D/g, "") ?? "");
   const [collegeName, setCollegeName] = useState(CurrentUser?.college_name ?? "");
 
-  const { mutate: updateUser, isLoading: isUpdating } = api.user.updateUser.useMutation({
+  const { mutate: updateUser, isPending: isUpdating } = api.user.updateUser.useMutation({
     onSuccess: (updatedUser) => {
       if (setCurrentUser) {
         setCurrentUser(updatedUser);
