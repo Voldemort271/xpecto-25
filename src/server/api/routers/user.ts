@@ -44,6 +44,28 @@ export const userRouter = createTRPCRouter({
       }
     }),
 
+  updateUser: publicProcedure // You can change to privateProcedure if authentication is required
+    .input(
+      z.object({
+        userId: z.string(),
+        contact: z.string().optional(), // Allow optional updates
+        college_name: z.string().optional(), // Allow optional updates
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId, contact, college_name } = input;
+
+      const updatedUser = await ctx.db.user.update({
+        where: { id: userId },
+        data: {
+          contact: contact, // Update contact if provided
+          college_name: college_name, // Update college_name if provided
+        },
+      });
+
+      return updatedUser;
+    }),
+
   addToClerk: publicProcedure
     .input(z.object({ clerkId: z.string(), dbId: z.string() }))
     .mutation(async ({ ctx, input }) => {

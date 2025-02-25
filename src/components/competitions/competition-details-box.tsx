@@ -89,17 +89,25 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
         />
         <div className="relative shrink-0 overflow-x-clip md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
           <div className="space-y-5 overflow-auto overscroll-none p-12 md:pt-44">
-            <div className="-mb-2.5 flex flex-wrap gap-2.5">
-              {/* //TODO: Add tags for the competition, pronites, expos, workshops dynamically */}
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                programming
-              </div>
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                ml/ai
-              </div>
-            </div>
             <div className="text-4xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
               {comp.competitionDetails.name}
+            </div>
+            <div className="-mb-2.5 flex flex-wrap gap-2.5">
+              {comp.competitionDetails.tags &&
+              comp.competitionDetails.tags.length > 0 ? (
+                comp.competitionDetails.tags.map((tag) => (
+                  <div
+                    key={tag}
+                    className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50"
+                  >
+                    {tag.toLowerCase()}
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
+                  No tags available
+                </div>
+              )}
             </div>
             <div
               className={`${sharetech.className} max-w-screen-lg text-base tracking-tight text-amber-50 lg:text-lg`}

@@ -52,17 +52,24 @@ const TeamDetailsView = ({ data }: Props) => {
             ease: "linear",
           }}
         >
+          {data?.competitionDetails.tags &&
+          data.competitionDetails.tags.length > 0 ? (
+            data.competitionDetails.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
+              >
+                {tag}
+              </span>
+            ))
+          ) : (
+            <span className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase">
+              No tags available
+            </span>
+          )}
           <span className="mr-5 text-6xl font-bold sm:text-7xl md:text-6xl lg:text-8xl">
             {data?.competitionDetails.name ?? "unknown event"}
           </span>
-          {data?.competitionDetails.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
-            >
-              {tag}
-            </span>
-          ))}
         </motion.div>
         <motion.div
           className={`py-5 text-lg tracking-tight text-amber-50 ${shareTech.className} max-w-screen-sm`}
