@@ -103,7 +103,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
     } finally {
       setLoading(false);
     }
-  }, 750);
+  }, 400);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;

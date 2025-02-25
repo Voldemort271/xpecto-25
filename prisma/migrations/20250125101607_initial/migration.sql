@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Tag" AS ENUM ('ML', 'AI', 'WebDev', 'AppDev', 'GameDev', 'Heuristics', 'Robotics', 'IoT', 'Blockchain', 'DataStructures', 'Algorithms', 'Programming', 'Coding');
+CREATE TYPE "Tag" AS ENUM ('ML', 'AI', 'WebDev', 'AppDev', 'GameDev', 'Heuristics', 'Robotics', 'IoT', 'Blockchain', 'DataStructures', 'Algorithms', 'Programming', 'Coding', 'Cybersecurity', 'CTF' , 'ReverseEngineering' );
 
 -- CreateTable
 CREATE TABLE "User" (
