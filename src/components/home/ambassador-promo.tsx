@@ -24,13 +24,13 @@ const AmbassadorPromo = ({ onClick }: { onClick?: () => void }) => {
       <div
         className={`${shareTech.className} max-w-screen-lg pb-5 text-lg font-bold tracking-tight`}
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A at est
-        incidunt ipsum iste labore nulla pariatur quia reiciendis totam! Cum
-        doloribus eos possimus temporibus vero voluptate. Dicta, enim, facere.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-        fugiat incidunt ipsa reiciendis sapiente? Dignissimos distinctio earum
-        eos, impedit ipsam nobis numquam, possimus provident quam quis sunt
-        tenetur ullam, voluptates.
+        The Campus Ambassador (CA) Program offers you a great opportunity to
+        represent Xpecto at your college, ensuring maximum participation while
+        gaining invaluable leadership and event management experience. The
+        program comes with exclusive perks — get special access to premium
+        events, build a network with industry experts, and earn certificates
+        that add weight to your professional profile. Join the Xpecto Campus
+        Ambassador Program today!
       </div>
       {onClick ? (
         <div
