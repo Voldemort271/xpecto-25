@@ -20,14 +20,19 @@ export function useCurrentUser() {
   return context;
 }
 
+export const convertTitleCaseToSpaces = (str: string) => {
+  return str.replace(/([a-z])([A-Z])/g, "$1 $2");
+};
+
+
 export const navElements = [
   "Home",
   "Team",
   "Competitions",
   "About",
-  "Workshops",
-  "Expos",
-  "Pronites",
+  // "Workshops",
+  // "Expos",
+  // "Pronites",
   "Sponsors",
   "Memberships"
 ];

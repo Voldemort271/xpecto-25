@@ -8,6 +8,7 @@ import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
+import { convertTitleCaseToSpaces } from "@/lib/utils";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -44,7 +45,7 @@ const TeamDetailsView = ({ data }: Props) => {
           &lt;&lt; back to launchpad
         </Link>
         <motion.div
-          className="flex flex-wrap items-baseline gap-2.5 uppercase"
+          className="flex flex-wrap items-baseline gap-2.5 uppercase py-4"
           variants={keyframes}
           animate="flicker"
           transition={{
@@ -59,7 +60,7 @@ const TeamDetailsView = ({ data }: Props) => {
                 key={tag}
                 className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
               >
-                {tag}
+                {convertTitleCaseToSpaces(tag)}
               </span>
             ))
           ) : (
@@ -67,6 +68,16 @@ const TeamDetailsView = ({ data }: Props) => {
               No tags available
             </span>
           )}
+          </motion.div>
+          <motion.div
+          className="flex flex-wrap items-baseline gap-2.5 uppercase"
+          variants={keyframes}
+          animate="flicker"
+          transition={{
+            duration: 0.5,
+            ease: "linear",
+          }}
+        >
           <span className="mr-5 text-6xl font-bold sm:text-7xl md:text-6xl lg:text-8xl">
             {data?.competitionDetails.name ?? "unknown event"}
           </span>

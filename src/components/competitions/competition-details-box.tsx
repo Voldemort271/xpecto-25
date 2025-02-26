@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useCurrentUser } from "@/lib/utils";
+import { convertTitleCaseToSpaces, useCurrentUser } from "@/lib/utils";
 import type { CompetitionWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
@@ -100,7 +100,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                     key={tag}
                     className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50"
                   >
-                    {tag.toLowerCase()}
+                    {convertTitleCaseToSpaces(tag)}
                   </div>
                 ))
               ) : (
