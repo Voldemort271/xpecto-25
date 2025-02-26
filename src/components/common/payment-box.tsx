@@ -150,7 +150,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -198,6 +198,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
     }
 
     try {
+      setLoading(true);
       uploadImage.mutate(
         { base64: image, folderName: "payments" },
         {
