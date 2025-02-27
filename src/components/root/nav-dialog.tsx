@@ -110,7 +110,7 @@ const NavDialog = ({ toggle, setToggle }: Props) => {
             <div
               onClick={() => {
                 setOverride(true);
-                handleWarp("/sign-in");
+                handleWarp("/sign-up");
               }}
               className={
                 override

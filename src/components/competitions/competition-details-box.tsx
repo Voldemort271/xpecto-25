@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useCurrentUser } from "@/lib/utils";
+import { convertTitleCaseToSpaces, useCurrentUser } from "@/lib/utils";
 import type { CompetitionWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   const [regPrice, setRegPrice] = useState(0);
   const [regPlanId, setRegPlanId] = useState("");
 
-  const { data: plan, isLoading } =
+  const { data: plan, isLoading: loadingPlan } =
     api.registration.checkUserRegisteration.useQuery(
       {
         userId: CurrentUser?.id ?? "",
@@ -47,22 +47,32 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
 
   const regStatus = !!plan;
   const offlineEvent = comp?.competitionDetails.venue !== "online";
-  const { data: offlineReg } = api.registration.checkUserRegisteration.useQuery(
-    {
-      userId: CurrentUser?.id ?? "",
-      eventId: "universaleve",
-    },
-    {
-      enabled: !!CurrentUser,
-    },
-  );
+  const { data: offlineReg, isLoading: loadingOfflineReg } =
+    api.registration.checkUserRegisteration.useQuery(
+      {
+        userId: CurrentUser?.id ?? "",
+        eventId: "universaleve",
+      },
+      {
+        enabled: !!CurrentUser,
+      },
+    );
 
   useEffect(() => {
-    setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
-    setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
+    let flag = false;
+    for (let i = 0; i < comp?.competitionDetails.regPlans.length; i++) {
+      if (comp?.competitionDetails.regPlans[i]?.price === 0) {
+        setRegPrice(0);
+        setRegPlanId(comp?.competitionDetails.regPlans[i]?.id ?? "");
+        flag = true;
+        break;
+      }
+    }
+    if (!flag) {
+      setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
+      setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
+    }
   }, [comp]);
-
-  //TODO: Add loader when team is being fetched. (basically add a loader when the user is being checked for registration status).
 
   return (
     <>
@@ -77,18 +87,27 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
           height={1080}
           className="sticky top-0 h-96 w-full shrink border-2 border-t-0 border-amber-50 object-cover md:h-screen md:w-[300px] md:border-l-0 md:border-t-2 lg:w-[400px]"
         />
-        <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)] overflow-x-clip">
-          <div className="space-y-5 overflow-scroll overscroll-none p-12 md:pt-44">
-            <div className="-mb-2.5 flex flex-wrap gap-2.5">
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                programming
-              </div>
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                ml/ai
-              </div>
-            </div>
-            <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
+        <div className="relative shrink-0 overflow-x-clip md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
+          <div className="space-y-5 overflow-auto overscroll-none p-12 md:pt-44">
+            <div className="text-4xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
               {comp.competitionDetails.name}
+            </div>
+            <div className="-mb-2.5 flex flex-wrap gap-2.5">
+              {comp.competitionDetails.tags &&
+              comp.competitionDetails.tags.length > 0 ? (
+                comp.competitionDetails.tags.map((tag) => (
+                  <div
+                    key={tag}
+                    className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50"
+                  >
+                    {convertTitleCaseToSpaces(tag)}
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
+                  No tags available
+                </div>
+              )}
             </div>
             <div
               className={`${sharetech.className} max-w-screen-lg text-base tracking-tight text-amber-50 lg:text-lg`}
@@ -96,7 +115,20 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
               {comp.competitionDetails.description}
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
-              {regStatus ? (
+              {loadingPlan ? (
+                <div
+                  className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                >
+                  <MarqueeContainer
+                    text={[
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
+                    ]}
+                  />
+                </div>
+              ) : regStatus ? (
                 plan.verified ? (
                   !regTeam && <CreateTeamDialog competitionId={comp.id} />
                 ) : (
@@ -104,6 +136,21 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                     Your payment is being verified right now
                   </div>
                 )
+              ) : loadingOfflineReg ? (
+                <div
+                  className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
+                >
+                  <MarqueeContainer
+                    text={[
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
+                      "Fetching Status ",
+                    ]}
+                  />
+                  width={600}
+                  height={800}{" "}
+                </div>
               ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
                 <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
                   Your payment is being verified right now
@@ -180,6 +227,20 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
                       }
                     >
                       {comp.competitionDetails.regPlans.map((reg) => {
+                        if (
+                          CurrentUser &&
+                          CurrentUser.id !== "" &&
+                          CurrentUser.accomodation &&
+                          reg.price !== 0
+                        )
+                          return null;
+                        if (
+                          (!CurrentUser ||
+                            CurrentUser.id === "" ||
+                            !CurrentUser.accomodation) &&
+                          reg.price === 0
+                        )
+                          return null;
                         return (
                           <div
                             key={reg.id}
@@ -221,9 +282,6 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
             </div>
             <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 pt-12 xl:grid-cols-[50%_auto]">
               <CompetitionBrief data={comp} />
-              {isLoading && (
-                <div className="loading h-full w-full border-2 border-amber-50"></div>
-              )}
               {regStatus && plan.verified && (
                 <CompTeamBox regTeam={regTeam} comp={comp} />
               )}

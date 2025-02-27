@@ -23,6 +23,7 @@ import { CursorContext } from "@/context/cursor-context";
 import { Handjet, Share_Tech } from "next/font/google";
 import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
+import Loader from "../common/loader";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
@@ -34,6 +35,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
   const [teamName, setTeamName] = useState("");
   const { CurrentUser } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
+  const [creatingTeam, setCreatingTeam] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,13 +45,14 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const { data: searchResults } = api.user.searchCompUsers.useQuery({
-    query: debouncedQuery,
-    invitees: CurrentUser
-      ? [...invitees.map((user) => user.id), CurrentUser.id]
-      : [],
-    competitionId: competitionId,
-  });
+  const { data: searchResults, isLoading: loadingSearchResults } =
+    api.user.searchCompUsers.useQuery({
+      query: debouncedQuery,
+      invitees: CurrentUser
+        ? [...invitees.map((user) => user.id), CurrentUser.id]
+        : [],
+      competitionId: competitionId,
+    });
 
   const addUserToInvitees = (user: User) => {
     setInvitees([...invitees, user]);
@@ -73,6 +76,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setCreatingTeam(true);
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -211,7 +215,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
               {invitees.map((user) => {
                 return (
                   <div
-                    className={`flex max-w-80 flex-col flex-wrap bg-amber-50/[0.3] px-5 py-2 ${sharetech.className} cursor-pointer text-lg tracking-tight`}
+                    className={`flex max-w-80 flex-col flex-wrap bg-amber-50/[0.3] px-5 py-2 ${sharetech.className} cursor-pointer border-2 text-lg tracking-tight hover:border-2 hover:border-red-300`}
                     key={user.id}
                     onClick={() => deleteUserFromInvitees(user.id)}
                   >
@@ -231,7 +235,7 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
             </Label>
             <Popover
               open={
-                searchQuery !== "" && searchResults && searchResults.length > 0
+                searchQuery !== "" && (loadingSearchResults || !!searchResults)
               }
             >
               <PopoverTrigger asChild>
@@ -249,16 +253,26 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
                 onOpenAutoFocus={(e) => e.preventDefault()}
                 className={`${sharetech.className} w-full rounded-none border-2 border-amber-50/[0.5] bg-neutral-900 text-lg tracking-tight text-amber-50`}
               >
-                {searchResults?.map((user) => (
-                  <div
-                    className="flex w-full min-w-80 cursor-pointer flex-col border-y-2 border-amber-50/[0.5] p-2"
-                    key={user.id}
-                    onClick={() => addUserToInvitees(user)}
-                  >
-                    <div className="text-base">{user.name}</div>
-                    <div className="text-sm">{user.email}</div>
+                {loadingSearchResults ? (
+                  <div className="flex w-full min-w-80 cursor-pointer flex-col border-y-2 border-amber-50/[0.5] p-2">
+                    <div className="text-base">Loading ...</div>
                   </div>
-                ))}
+                ) : searchResults?.length ? (
+                  searchResults?.map((user) => (
+                    <div
+                      className="flex w-full min-w-80 cursor-pointer flex-col border-y-2 border-amber-50/[0.5] p-2"
+                      key={user.id}
+                      onClick={() => addUserToInvitees(user)}
+                    >
+                      <div className="text-base">{user.name}</div>
+                      <div className="text-sm">{user.email}</div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex w-full min-w-80 cursor-pointer flex-col border-y-2 border-amber-50/[0.5] p-2">
+                    <div className="text-base">No Results Found</div>
+                  </div>
+                )}
               </PopoverContent>
             </Popover>
           </div>
@@ -267,10 +281,10 @@ const CreateTeamDialog = ({ competitionId }: { competitionId: string }) => {
           <button
             type="submit"
             onClick={handleSubmit}
-            disabled={teamName === ""}
+            disabled={teamName === "" || creatingTeam}
             className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
           >
-            Send invitations
+            {invitees.length ? "Send Invitations" : "Create Team"}
           </button>
         </DialogFooter>
       </DialogContent>

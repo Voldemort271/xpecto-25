@@ -5,6 +5,7 @@ import { api } from "@/trpc/react";
 import React, { use } from "react";
 import ExposHeader from "@/components/expos/expos-header";
 import { Handjet } from "next/font/google";
+import Loader from "@/components/common/loader";
 
 const handjet = Handjet({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ const Page = ({ params }: { params: Promise<{ expo: string }> }) => {
         </div>
         <div className="relative h-full w-full bg-neutral-900">
           {isLoading && (
-            <div className="loading flex h-screen w-screen flex-col justify-center bg-neutral-900"></div>
+            <Loader />
           )}
           {expo && (
             <div className="flex w-screen flex-col items-center justify-center gap-12 xl:flex-row">

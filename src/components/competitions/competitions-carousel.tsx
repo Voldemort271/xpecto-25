@@ -81,6 +81,8 @@ const CompetitionsCarousel = ({ data, index, setIndex }: Props) => {
                       : el.competitionDetails.cover
                   }
                   alt={el.competitionDetails.name}
+                  width={600}
+                  height={800}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -110,6 +112,8 @@ const CompetitionsCarousel = ({ data, index, setIndex }: Props) => {
                     : el.competitionDetails.cover
                 }
                 alt={el.competitionDetails.name}
+                width={600}
+                height={800}
                 className="h-full w-full border-2 border-amber-50 object-cover"
               />
             </CarouselItem>

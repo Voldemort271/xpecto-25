@@ -1,7 +1,7 @@
 "use client";
 
 import { useSignIn, useSignUp, useUser } from "@clerk/nextjs";
-import React, { useEffect, type FormEvent } from "react";
+import React, { type FormEvent, useEffect } from "react";
 import type { OAuthStrategy } from "@clerk/types";
 import MarqueeContainer from "@/components/common/marquee-container";
 import GoogleLogo from "@/components/(auth)/google";
@@ -177,7 +177,7 @@ const SignupPage = () => {
         />
       </div>
       {givingPhoneNum && (
-        <div className="relative w-full">
+        <div className="relative flex w-screen flex-col justify-between space-y-5 md:w-[600px]">
           <div className="mt-5 flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
             <Label
               htmlFor="contact"
@@ -185,6 +185,7 @@ const SignupPage = () => {
             >
               Contact
             </Label>
+
             <div className="${sharetech.className} max-w-sm rounded-none border-2 border-y-4 border-amber-50 px-2 text-lg tracking-tight text-amber-50">
               +91
             </div>
@@ -199,19 +200,15 @@ const SignupPage = () => {
           </div>
           <div className="flex w-full flex-col items-end justify-between sm:flex-row sm:gap-2.5">
             <div
-              className={`${sharetech.className} p-5 tracking-tight text-amber-50/[0.5]`}
-            >
-              Enter your phone number correctly.
-            </div>
-            <button
               onClick={() => {
-                if (setCurrentUser) setCurrentUser((u) => ({ ...u, contact: "" }));
+                if (setCurrentUser)
+                  setCurrentUser((u) => ({ ...u, contact: "" }));
                 setGivingPhoneNum(false);
               }}
-              className="bg-amber-50/[0.7] px-5 py-2.5 text-2xl font-normal uppercase text-neutral-900"
+              className={`${sharetech.className} cursor-pointer p-5 tracking-tight text-sky-500 hover:underline`}
             >
-              Skip
-            </button>
+              Skip step
+            </div>
             <button
               onClick={handlePhoneNumberEntry}
               className="bg-amber-50/[0.7] px-5 py-2.5 text-2xl font-normal uppercase text-neutral-900"
@@ -223,7 +220,7 @@ const SignupPage = () => {
       )}
       {!givingPhoneNum && (
         <>
-          {/**TODO: Need a back button here */}
+          {/**TODO: Need a back button here as per design to go back to the mobile num screen */}
           <div className="grid w-full grid-cols-1 gap-5 p-5 sm:grid-cols-2">
             <button
               onClick={() => signUpWith("oauth_google")}

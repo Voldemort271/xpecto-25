@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { useCurrentUser } from "@/lib/utils";
 import Link from "next/link";
+import Loader from "@/components/common/loader";
 
 export default function LeaderboardPage() {
   const { data: sortedAmbassadors, isLoading } =
@@ -27,7 +28,7 @@ export default function LeaderboardPage() {
   const currentUserRank = getUserRank(CurrentUser?.id ?? "");
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader loadingText="Loading Leaderboard ..." />;
   }
 
   const RankIcon = ({ rank }: { rank: number }) => {

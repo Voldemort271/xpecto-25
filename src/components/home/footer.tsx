@@ -10,7 +10,7 @@ import { CursorContext } from "@/context/cursor-context";
 import Phone from "@/components/svg/phone";
 import Insta from "@/components/svg/insta";
 
-const Footer = () => {
+const Footer = ({ onClick }: { onClick?: () => void }) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const targetDate = new Date("2025-03-29").getTime();
@@ -46,7 +46,7 @@ const Footer = () => {
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-center opacity-30"
       />
       <div className="col-span-6 border-2 border-amber-50 sm:border-b-0">
-        <AmbassadorPromo />
+        <AmbassadorPromo onClick={onClick} />
       </div>
 
       <div className="col-span-6 grid grid-cols-3 gap-5 border-t-0 border-amber-50 bg-neutral-950 px-12 py-24 sm:col-span-3 sm:border-t-2 lg:col-span-4">
@@ -121,7 +121,7 @@ const Footer = () => {
           copyright &copy; 2025, xpecto, iit mandi.
           <div className="flex w-fit gap-5">
             <Link
-              href={"/"}
+              href={"https://chat.whatsapp.com/D8vO8lFMw4zFJYPYNy5qM8"}
               target="_blank"
               className="cursor-none hover:underline"
               onMouseEnter={() => setIsHovered(true)}
@@ -130,7 +130,7 @@ const Footer = () => {
               <Phone size={24} color={"#fffbebdd"} />
             </Link>
             <Link
-              href={"/"}
+              href={"https://www.instagram.com/tech.xpecto/"}
               target="_blank"
               className="cursor-none hover:underline"
               onMouseEnter={() => setIsHovered(true)}

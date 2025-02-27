@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,7 @@ const handjet = Handjet({ subsets: ["latin"] });
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const FinalizeTeamDialog = ({ regTeam, comp}: { regTeam: TeamWithFullDetails, comp: CompetitionWithDetails }) => {
+  const [finalizing, setFinalizing] = useState(false);
   const { setIsHovered } = useContext(CursorContext);
 
   const { CurrentUser } = useCurrentUser();
@@ -33,6 +34,7 @@ const FinalizeTeamDialog = ({ regTeam, comp}: { regTeam: TeamWithFullDetails, co
     maxSize: number;
     currentSize: number;
   }) => {
+    setFinalizing(true);
     if (!CurrentUser) {
       return;
     }
@@ -130,6 +132,7 @@ const FinalizeTeamDialog = ({ regTeam, comp}: { regTeam: TeamWithFullDetails, co
                 currentSize: regTeam.team_members.length,
               })}
             }
+            disabled={finalizing}
             className="bg-amber-50/[0.7] px-5 py-2 text-2xl font-normal uppercase text-neutral-900"
           >
             finalize team

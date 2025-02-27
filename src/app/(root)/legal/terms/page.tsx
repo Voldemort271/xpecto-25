@@ -28,7 +28,6 @@ const TermsPage = () => {
         <div className="mb-5 text-xl font-semibold tracking-tight text-neutral-600">
           Effective date: {new Date("2-9-2025").toLocaleDateString()}
         </div>
-        {/* TODO: Change mail to info@xpecto.org */}
         <div className="w-full md:w-[600px] lg:w-[1000px]">
           <div className="text-xl">1. Acceptance of Terms</div>
           <p className="mb-2">
@@ -89,13 +88,13 @@ const TermsPage = () => {
           <p className="mb-2">
             For any questions, contact us at:{" "}
             <Link
-              href={"mailto:technical_secretary@students.iitmandi.ac.in"}
+              href={"mailto:info@xpecto.org"}
               target={"_blank"}
               className="cursor-none underline"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              technical_secretary@students.iitmandi.ac.in
+              info@xpecto.org
             </Link>
           </p>
         </div>

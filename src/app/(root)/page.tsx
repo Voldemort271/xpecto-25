@@ -15,6 +15,10 @@ const Home = () => {
         <MarqueeContainer text={["29 to 31 march", "iit mandi techfest"]} />
       </div>
       {/* TODO: Add featured events section */}
+      {/**TODO: Change all the cloudinary dummy images to true images "to be sent by the design team after 500 yrs" */}
+      {/**TODO: Need someone to replace all the lorem ipsums */}
+      {/**TODO: Try registering via google by account which has no first Name or last Name. Customize that clerk website which opens */}
+      {/**TODO: The fetching profile marquee looks bugged. Fix it someone. please. */}
       <AboutXpecto />
       <AboutIITMandi />
       <Marquee speed={10}>

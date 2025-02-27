@@ -8,6 +8,7 @@ import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
+import { convertTitleCaseToSpaces } from "@/lib/utils";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -44,6 +45,31 @@ const TeamDetailsView = ({ data }: Props) => {
           &lt;&lt; back to launchpad
         </Link>
         <motion.div
+          className="flex flex-wrap items-baseline gap-2.5 uppercase py-4"
+          variants={keyframes}
+          animate="flicker"
+          transition={{
+            duration: 0.5,
+            ease: "linear",
+          }}
+        >
+          {data?.competitionDetails.tags &&
+          data.competitionDetails.tags.length > 0 ? (
+            data.competitionDetails.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
+              >
+                {convertTitleCaseToSpaces(tag)}
+              </span>
+            ))
+          ) : (
+            <span className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase">
+              No tags available
+            </span>
+          )}
+          </motion.div>
+          <motion.div
           className="flex flex-wrap items-baseline gap-2.5 uppercase"
           variants={keyframes}
           animate="flicker"
@@ -55,14 +81,6 @@ const TeamDetailsView = ({ data }: Props) => {
           <span className="mr-5 text-6xl font-bold sm:text-7xl md:text-6xl lg:text-8xl">
             {data?.competitionDetails.name ?? "unknown event"}
           </span>
-          {data?.competitionDetails.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
-            >
-              {tag}
-            </span>
-          ))}
         </motion.div>
         <motion.div
           className={`py-5 text-lg tracking-tight text-amber-50 ${shareTech.className} max-w-screen-sm`}

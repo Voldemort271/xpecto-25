@@ -8,7 +8,6 @@ import { CursorContext } from "@/context/cursor-context";
 import { Share_Tech } from "next/font/google";
 import PixelEmail from "@/components/svg/mail";
 import PixelInsta from "@/components/svg/insta";
-import PixelPhone from "@/components/svg/phone";
 import PixelLinkedin from "@/components/svg/linkedin";
 import { motion } from "motion/react";
 import { Member } from "@prisma/client";
@@ -89,10 +88,39 @@ const TeamDetailsView = ({ data }: Props) => {
             delay: 0.5,
           }}
         >
-          <PixelPhone size={32} color={"#fffbeb"} />
-          <PixelInsta size={32} color={"#fffbeb"} />
-          <PixelEmail size={32} color={"#fffbeb"} />
-          <PixelLinkedin size={32} color={"#fffbeb"} />
+          {data?.instagram && (
+            <Link
+              href={data?.instagram}
+              target="_blank"
+              className="cursor-none"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <PixelInsta size={32} color={"#fffbeb"} />
+            </Link>
+          )}
+          {data?.email && (
+            <Link
+              href={`mailto:${data?.email}`}
+              target="_blank"
+              className="cursor-none"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <PixelEmail size={32} color={"#fffbeb"} />
+            </Link>
+          )}
+          {data?.linkedin && (
+            <Link
+              href={data?.linkedin}
+              target="_blank"
+              className="cursor-none"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <PixelLinkedin size={32} color={"#fffbeb"} />
+            </Link>
+          )}
         </motion.div>
       </div>
     </div>

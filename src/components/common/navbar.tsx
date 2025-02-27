@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
-  const { CurrentUser } = useCurrentUser();
+  const { CurrentUser, isLoading } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
   const path = usePathname();
   const animationDelay = path === "/" ? 6 : 0;
@@ -48,7 +48,25 @@ const DystopianNav = () => {
       </motion.div>
 
       <div className="hidden h-full w-full grid-cols-6 grid-rows-2 sm:grid">
-        {CurrentUser?.id !== "" ? (
+        {isLoading ? (
+          <motion.div
+            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
+            initial={{ translateY: -100 }}
+            animate={{ translateY: 0 }}
+            transition={{ duration: 0.5, delay: animationDelay + 0.5 }}
+          >
+            <div className="flex h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
+              <MarqueeContainer
+                text={[
+                  "Fetching Profile",
+                  "Fetching Profile",
+                  "Fetching Profile",
+                  "Fetching Profile",
+                ]}
+              />
+            </div>
+          </motion.div>
+        ) : CurrentUser && CurrentUser.id !== "" ? (
           <motion.div
             className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
             initial={{ translateY: -100 }}
@@ -60,9 +78,9 @@ const DystopianNav = () => {
                 href={`/profile`}
                 text={[
                   "welcome back",
-                  CurrentUser?.name ?? "unknown user",
+                  CurrentUser.name ?? "unknown user",
                   "view profile",
-                  CurrentUser?.name ?? "unknown user",
+                  CurrentUser.name ?? "unknown user",
                 ]}
               />
             </div>
@@ -80,7 +98,7 @@ const DystopianNav = () => {
           >
             <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
               <MarqueeContainer
-                href={`/sign-in`}
+                href={`/sign-up`}
                 text={[
                   "login to be cool",
                   "cool stuff i promise",

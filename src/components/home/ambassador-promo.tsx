@@ -9,9 +9,9 @@ import { useCurrentUser } from "@/lib/utils";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const AmbassadorPromo = () => {
+const AmbassadorPromo = ({ onClick }: { onClick?: () => void }) => {
   const { setIsHovered } = useContext(CursorContext);
-  const {CurrentUser} = useCurrentUser();
+  const { CurrentUser } = useCurrentUser();
 
   return (
     <div className="w-full space-y-2.5 px-5 py-36 text-neutral-900 sm:px-12">
@@ -24,22 +24,35 @@ const AmbassadorPromo = () => {
       <div
         className={`${shareTech.className} max-w-screen-lg pb-5 text-lg font-bold tracking-tight`}
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A at est
-        incidunt ipsum iste labore nulla pariatur quia reiciendis totam! Cum
-        doloribus eos possimus temporibus vero voluptate. Dicta, enim, facere.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-        fugiat incidunt ipsa reiciendis sapiente? Dignissimos distinctio earum
-        eos, impedit ipsam nobis numquam, possimus provident quam quis sunt
-        tenetur ullam, voluptates.
+        The Campus Ambassador (CA) Program offers you a great opportunity to
+        represent Xpecto at your college, ensuring maximum participation while
+        gaining invaluable leadership and event management experience. The
+        program comes with exclusive perks — get special access to premium
+        events, build a network with industry experts, and earn certificates
+        that add weight to your professional profile. Join the Xpecto Campus
+        Ambassador Program today!
       </div>
-      <Link
-        href={`${(CurrentUser && CurrentUser.id !== "") ? "/ambassador" : "/sign-in"}`}
-        className="w-fit cursor-none border-2 border-amber-50 bg-neutral-950/[0.9] px-5 py-2 text-2xl font-normal uppercase text-amber-50 backdrop-blur-2xl"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        Become an ambassador
-      </Link>
+      {onClick ? (
+        <div
+          className="w-fit cursor-none border-2 border-amber-50 bg-neutral-950/[0.9] px-5 py-2 text-2xl font-normal uppercase text-amber-50 backdrop-blur-2xl"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={onClick}
+        >
+          Become an ambassador
+        </div>
+      ) : (
+        <Link
+          href={
+            CurrentUser && CurrentUser.id !== "" ? "/ambassador" : "/sign-up"
+          }
+          className="w-fit cursor-none border-2 border-amber-50 bg-neutral-950/[0.9] px-5 py-2 text-2xl font-normal uppercase text-amber-50 backdrop-blur-2xl"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          Become an ambassador
+        </Link>
+      )}
     </div>
   );
 };

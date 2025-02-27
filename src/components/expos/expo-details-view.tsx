@@ -8,6 +8,7 @@ import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
+import { convertTitleCaseToSpaces } from "@/lib/utils";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -52,17 +53,27 @@ const ExposDetailsView = ({ data }: Props) => {
             ease: "linear",
           }}
         >
-          <span className="mr-5 text-6xl font-bold sm:text-7xl md:text-6xl lg:text-8xl">
-            {data?.exposDetails.name ?? "unknown event"}
-          </span>
           {data?.exposDetails.tags.map((tag) => (
             <span
               key={tag}
               className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
             >
-              {tag}
+              {convertTitleCaseToSpaces(tag)}
             </span>
           ))}
+        </motion.div>
+        <motion.div
+          className="flex flex-wrap items-baseline gap-2.5 uppercase"
+          variants={keyframes}
+          animate="flicker"
+          transition={{
+            duration: 0.5,
+            ease: "linear",
+          }}
+        >
+          <span className="mr-5 text-6xl font-bold sm:text-7xl md:text-6xl lg:text-8xl">
+            {data?.exposDetails.name ?? "unknown event"}
+          </span>
         </motion.div>
         <motion.div
           className={`py-5 text-lg tracking-tight text-amber-50 ${shareTech.className} max-w-screen-sm`}

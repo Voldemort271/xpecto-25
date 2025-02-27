@@ -91,10 +91,7 @@ export const eventRouter = createTRPCRouter({
           competition: true,
           expos: true,
           pronite: true,
-          regPlans: true,
-          sponsors: true,
           workshops: true,
-          registrations: true,
         },
       });
 

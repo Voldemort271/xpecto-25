@@ -16,8 +16,6 @@ const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const universalEvent = "universaleve";
 
-//TODO: Update Bank details and QR code
-
 interface PaymentBoxProps {
   regPlanId: string;
   eventId: string;
@@ -152,7 +150,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -200,6 +198,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
     }
 
     try {
+      setLoading(true);
       uploadImage.mutate(
         { base64: image, folderName: "payments" },
         {
@@ -274,7 +273,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   return (
     <DialogContent
-      className={`max-h-screen w-screen max-w-[800px] overflow-y-scroll border-2 border-amber-50/[0.7] bg-neutral-900 p-0 text-amber-50 sm:left-0 sm:top-0 sm:translate-x-0 sm:translate-y-0 ${handjet.className} overflow-y-clip tracking-widest`}
+      className={`left-0 top-0 z-50 h-screen max-h-[800px] w-screen max-w-screen-sm -translate-x-0 -translate-y-0 overflow-y-scroll bg-neutral-900 px-0 text-amber-50 ${handjet.className}`}
     >
       <DialogTitle className="relative z-10 flex h-12 w-full cursor-none items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">
         <MarqueeContainer
@@ -286,11 +285,13 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         />
       </DialogTitle>
       {loading && (
-        <Loader
-          loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
-        />
+        <div className="fixed z-50 h-full w-full bg-black">
+          <Loader
+            loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
+          />
+        </div>
       )}
-      <div className={`p-4 ${shareTech.className} tracking-tight`}>
+      <div className={`sm:p-4 ${shareTech.className} tracking-tight`}>
         <DialogClose asChild>
           <button
             className={`bg-red-400/[0.1] px-5 py-2 text-xl font-light uppercase text-red-200 ${handjet.className} tracking-wider`}
@@ -300,7 +301,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
           </button>
         </DialogClose>
 
-        <form className="border-2 p-5">
+        <form className="border-amber-50 p-2 sm:border-2 md:p-5">
           <div className="mb-5 flex flex-col gap-1 text-base sm:text-lg">
             <label
               className="font-bold uppercase text-amber-50"
@@ -366,7 +367,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               Scan to Pay via UPI
             </label>
             <Image
-              src="/images/merchant_qr.png"
+              src="/images/bank_qr.jpeg"
               alt="QR Code"
               className="mx-auto mb-2 block h-32 w-32"
               width={100}
@@ -374,9 +375,10 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
             />
             <p className="text-center text-amber-50">
               Bank Details: <br />
-              Account Name: Your Account Name <br />
-              Account Number: 1234567890 <br />
-              IFSC Code: ABCD0123456
+              Account Name: Space Technology and Astronomy Club <br />
+              Account Number: 7315000100034536 <br />
+              IFSC Code: PUNB0731500 <br />
+              Branch Name: IIT Kamand, Tehsil Sadar, Mandi Himachal Pradesh
             </p>
           </div>
           <button

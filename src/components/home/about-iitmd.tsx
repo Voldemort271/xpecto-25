@@ -3,7 +3,6 @@
 import React, { useContext } from "react";
 import StaggeredText from "@/components/home/staggered-text";
 import Image from "next/image";
-import StaticImg from "public/images/img.png";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
@@ -30,17 +29,17 @@ const AboutIITMandi = () => {
           <div
             className={`mb-5 max-w-screen-sm ${shareTech.className} mt-2 text-base leading-normal tracking-tight lg:text-lg`}
           >
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias
-            assumenda ea eligendi expedita laboriosam magnam minus mollitia
-            necessitatibus nemo nesciunt nisi optio perspiciatis provident
-            quasi, quia quod temporibus vero. Lorem ipsum dolor sit amet,
-            consectetur adipisicing elit. Amet consequuntur cum eligendi
-            explicabo, facilis in incidunt labore libero, nam nemo neque officia
-            quis quisquam ratione reiciendis reprehenderit saepe, sequi?
-            Obcaecati! Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            A assumenda debitis eligendi facere neque pariatur placeat provident
-            quas totam! Dolore laboriosam officia ullam? Aperiam distinctio id,
-            illum molestiae quis soluta!
+            IIT Mandi, nestled in the serene Kamand Valley of Himachal Pradesh,
+            is a hub of innovation and academic excellence set against a
+            breathtaking Himalayan backdrop. Our campus seamlessly integrates
+            modern infrastructure with nature, providing an environment that
+            inspires creativity and intellectual growth.
+            <br />
+            We&apos;re shaping the future through advanced research in areas
+            like artificial intelligence, robotics, and sustainable development.
+            Beyond academics, our vibrant student community, cultural diversity,
+            and entrepreneurial spirit make it a place where ideas flourish and
+            leaders emerge.
           </div>
           <Link
             href={"https://www.iitmandi.ac.in/"}
@@ -53,9 +52,13 @@ const AboutIITMandi = () => {
           </Link>
         </div>
         <Image
-          src={StaticImg}
-          alt={"Placeholder"}
-          className="w-[300px] object-cover lg:w-[400px]"
+          src={
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Snow_North_IIT_Mandi_Himachal_Feb19_D72_9387.jpg/640px-Snow_North_IIT_Mandi_Himachal_Feb19_D72_9387.jpg"
+          }
+          width={600}
+          height={600}
+          alt={"Snow in college"}
+          className="aspect-square w-[300px] border-2 border-amber-50 object-cover lg:w-[400px]"
         />
       </div>
     </div>

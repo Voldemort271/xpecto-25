@@ -5,9 +5,11 @@ import React, {
   type ReactNode,
   type SetStateAction,
   useContext,
+  useEffect,
 } from "react";
 import { motion } from "motion/react";
 import { CursorContext } from "@/context/cursor-context";
+import { api } from "@/trpc/react";
 
 interface Props {
   index: number;
@@ -23,6 +25,12 @@ const keyframes = {
 
 const TeamDetailsContainer = ({ setIndex, children }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
+
+  const { data, isLoading } = api.member.getFirstMemberByOrg.useQuery({});
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="h-full w-full bg-neutral-900 md:pt-16">
