@@ -86,7 +86,7 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
         paymentProof: paymentProof,
         verified: verified,
         price: quantity * price,
-        quantity: parseInt(quantity),
+        quantity: quantity,
         size: size,
       },
       {
