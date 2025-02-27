@@ -10,6 +10,7 @@ const Page = () => {
   const { CurrentUser } = useCurrentUser();
 
   const { data: offlinePlans } = api.event.getOfflinePlans.useQuery();
+  
   offlinePlans?.regPlans.sort((a, b) => a.price - b.price);
 
   const { data: offlineReg, isLoading } =

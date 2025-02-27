@@ -11,6 +11,8 @@ import { workshopRouter } from "./routers/workshop";
 import { sponsorRouter } from "./routers/sponsor";
 import { registrationtRouter } from "./routers/registration";
 import { ambassadorRouter } from "./routers/ambassador";
+import { merchRouter } from "./routers/merch";
+import { merchOrderRouter } from "./routers/merchorder";
 /**
  * This is the primary router for your server.
  *
@@ -28,6 +30,8 @@ export const appRouter = createTRPCRouter({
   sponsor: sponsorRouter,
   registration: registrationtRouter,
   ambassador: ambassadorRouter,
+  merch: merchRouter,
+  merchOrder:merchOrderRouter
 });
 
 // export type definition of API

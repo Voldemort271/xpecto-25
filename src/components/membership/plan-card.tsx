@@ -12,7 +12,6 @@ import Link from "next/link";
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const PlanCard = ({ data }: { data: RegistrationLevel }) => {
-
   const { setIsHovered } = useContext(CursorContext);
 
   return (
