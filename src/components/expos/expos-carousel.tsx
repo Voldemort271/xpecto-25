@@ -13,7 +13,7 @@ import React, {
   useState,
 } from "react";
 import Image from "next/image";
-import { ExpoWithDetails } from "@/app/types";
+import type { ExpoWithDetails } from "@/app/types";
 import StaticImg from "../../../public/images/img.png";
 
 interface Props {
@@ -82,6 +82,8 @@ const ExposCarousel = ({ data, index, setIndex }: Props) => {
                   }
                   alt={el.exposDetails.name}
                   className="h-full w-full object-cover"
+                  width={600}
+                  height={800}
                 />
               </div>
             </CarouselItem>
@@ -111,6 +113,8 @@ const ExposCarousel = ({ data, index, setIndex }: Props) => {
                 }
                 alt={el.exposDetails.name}
                 className="h-full w-full border-2 border-amber-50 object-cover"
+                width={600}
+                height={800}
               />
             </CarouselItem>
           ))}

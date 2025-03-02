@@ -78,10 +78,7 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
     <>
       <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
         <Image
-          src={
-            // comp.competitionDetails.cover ??
-            `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
-          }
+          src={comp.competitionDetails.cover}
           alt={comp.competitionDetails.name}
           width={500}
           height={1080}

@@ -221,6 +221,7 @@ enum Tag {
   Robotics
   Piloting
   IoT
+  IOT
   Blockchain
   DataStructures
   Algorithms
@@ -254,7 +255,7 @@ enum Tag {
   FluidMechanics
   MechanicalDesign
   InterviewPrep
-  hackathon
+  Hackathon
   Simulation
   Healthcare
   BioEngineering
@@ -263,6 +264,19 @@ enum Tag {
   CAD
   EngineeringDesign
   Aerodynamics
+  Counselling
+  Startup
+  OpenMic
+  Games
+  Electronics
+  VR
+  Projects
+  Clubs
+  SustainableDevelopment
+  Racing
+  Memento
+  Drones
+
 }
 
 enum Size {

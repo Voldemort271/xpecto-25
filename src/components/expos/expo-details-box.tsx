@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useCurrentUser } from "@/lib/utils";
+import { convertTitleCaseToSpaces, useCurrentUser } from "@/lib/utils";
 import type { ExpoWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
@@ -51,10 +51,7 @@ const ExpoDetailsBox = ({ expo }: { expo: ExpoWithDetails }) => {
     <>
       <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
         <Image
-          src={
-            // expo.exposDetails.cover ??
-            `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
-          }
+          src={expo.exposDetails.cover}
           alt={expo.exposDetails.name}
           width={500}
           height={1080}
@@ -63,9 +60,14 @@ const ExpoDetailsBox = ({ expo }: { expo: ExpoWithDetails }) => {
         <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
           <div className="space-y-5 overflow-auto overscroll-none p-12 md:pt-44">
             <div className="-mb-2.5 flex flex-wrap gap-2.5">
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                expo
-              </div>
+              {expo?.exposDetails.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
+                >
+                  {convertTitleCaseToSpaces(tag)}
+                </span>
+              ))}
             </div>
             <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
               {expo.exposDetails.name}
