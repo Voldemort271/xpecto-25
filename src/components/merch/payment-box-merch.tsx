@@ -327,13 +327,14 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
               Scan to Pay via UPI
             </label>
             <Image
-              src="/images/merchant_qr.png"
+              src="/images/bank_qr.jpeg"
               alt="QR Code"
               className="mx-auto mb-2 block h-32 w-32"
               width={100}
               height={100}
             />
             <p className="text-center text-amber-50">
+              UPI ID : 8628963924m@pnb <br />
               Bank Details: <br />
               Account Name: Your Account Name <br />
               Account Number: 1234567890 <br />

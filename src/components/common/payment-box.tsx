@@ -367,13 +367,14 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               Scan to Pay via UPI
             </label>
             <Image
-              src="/images/bank_qr.jpeg"
+              src="/images/bank_qr.jpg"
               alt="QR Code"
               className="mx-auto mb-2 block h-32 w-32"
-              width={100}
-              height={100}
+              width={200}
+              height={200}
             />
             <p className="text-center text-amber-50">
+              UPI ID : 8628963924m@pnb <br />
               Bank Details: <br />
               Account Name: Space Technology and Astronomy Club <br />
               Account Number: 7315000100034536 <br />
