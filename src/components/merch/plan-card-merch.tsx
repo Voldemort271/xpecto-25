@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useState } from "react";
 import MerchPaymentBox from "./payment-box-merch";
 import Image from "next/image";
+import shirt from "public/images/tshirt.jpeg";
+import hoodie from "public/images/hoodie.jpeg";
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const MerchPlanCard = ({ data }: { data: Merch }) => {
@@ -26,7 +28,12 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
         {data.name}
       </div>
       <div>
-        <Image src={data.image} alt={`merchImage`} height={200} width={200} />
+        <Image
+          src={data.name == "t-shirt" ? shirt : hoodie}
+          alt={`merchImage`}
+          height={400}
+          width={400}
+        />
       </div>
       <div className="text-2xl font-light uppercase text-neutral-600 line-through">
         ₹{data.price + 500}

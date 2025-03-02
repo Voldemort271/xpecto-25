@@ -44,7 +44,7 @@ const MerchPromo = () => {
         </motion.div>
         {/* TODO: Replace link when merch store is active */}
         <Link
-          href={"https://www.iitmandi.ac.in/"}
+          href={"/merch"}
           target={"_blank"}
           className="w-fit cursor-none border-2 border-amber-50 bg-amber-50/[0.7] px-5 py-1 text-2xl font-normal uppercase text-neutral-900 backdrop-blur-2xl"
           onMouseEnter={() => setIsHovered(true)}
