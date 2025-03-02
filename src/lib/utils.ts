@@ -31,7 +31,7 @@ export const navElements = [
   "Competitions",
   "About",
   // "Workshops",
-  // "Expos",
+  "Expos",
   // "Pronites",
   "Sponsors",
   "Memberships"

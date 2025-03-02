@@ -5,14 +5,10 @@ export const expoRouter = createTRPCRouter({
   createExpo: publicProcedure
     .input(
       z.object({
-        // max_capacity: z.number(),
-        // ticket_price: z.number(),
         begin_time: z.date(),
         description: z.string(),
         venue: z.string(),
-        end_time: z.null(),
         name: z.string(),
-        exposDetails: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -30,8 +26,6 @@ export const expoRouter = createTRPCRouter({
       return ctx.db.expos.create({
         data: {
           exposDetailsId: eventDetails.id,
-          // max_capacity: input.max_capacity,
-          // ticket_price: input.ticket_price,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
