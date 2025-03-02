@@ -219,6 +219,7 @@ enum Tag {
   GameDev
   Heuristics
   Robotics
+  Piloting
   IoT
   Blockchain
   DataStructures
@@ -226,6 +227,42 @@ enum Tag {
   Cybersecurity
   CTF
   ReverseEngineering
+  Quiz
+  Identification
+  DataScience
+  StructuralEngineering
+  DisasterManagement
+  Infrastructure
+  Entrepreneurship
+  Startups
+  Astronomy
+  ScienceCommunication
+  CompetitiveProgramming
+  Coding
+  AR
+  PuzzleSolving
+  Automation
+  PathPlanning
+  SpaceTech
+  Engineering
+  Matlab
+  BrainGames
+  TeamSport
+  Entertainment
+  Photography
+  StructuralStability
+  FluidMechanics
+  MechanicalDesign
+  InterviewPrep
+  hackathon
+  Simulation
+  Healthcare
+  BioEngineering
+  Sensors
+  Mechanics
+  CAD
+  EngineeringDesign
+  Aerodynamics
 }
 
 enum Size {
