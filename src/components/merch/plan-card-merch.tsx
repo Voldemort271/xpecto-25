@@ -16,74 +16,66 @@ const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const MerchPlanCard = ({ data }: { data: Merch }) => {
   const { setIsHovered } = useContext(CursorContext);
-  const [selectedSize, setSelectedSize] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [selectedSize, setSelectedSize] = useState<string>($Enums.Size.S);
+  const [quantity, setQuantity] = useState("");
 
   return (
     <div
-      className="relative z-0 col-span-3 flex flex-col items-center justify-start border-x border-amber-50 px-5 py-12 md:col-span-1"
+      className="relative z-0 col-span-3 flex flex-col items-center justify-start  px-5 py-12 md:col-span-1"
       style={{ width: "40rem" }}
     >
-      <div className="text-7xl font-semibold uppercase text-amber-300">
+      <div className="text-7xl font-semibold uppercase text-amber-50">
         {data.name}
       </div>
-      <div>
+      <div className="py-2">
         <Image
           src={data.name == "t-shirt" ? shirt : hoodie}
           alt={`merchImage`}
-          height={400}
-          width={400}
+          height={500}
+          width={500}
+          className="rounded-lg"
         />
       </div>
       <div className="text-2xl font-light uppercase text-neutral-600 line-through">
         ₹{data.price + 500}
       </div>
-      <div className="w-full bg-green-700/[0.1] px-5 py-2.5 text-center text-4xl font-normal uppercase text-green-400">
+      <div className="w-full bg-green-700/[0.1] px-5 py-2.5 mb-5 text-center text-4xl font-normal uppercase text-green-400">
         ₹{data.price}
       </div>
-      <div
-        className={`whitespace-pre-wrap py-5 ${shareTech.className} pb-20 text-lg tracking-tight`}
-      >
-        {data.desc}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <div>
-          <div>
-            <span
-              className={`whitespace-pre-wrap py-5 ${shareTech.className} mr-10 pb-20 text-lg tracking-tight`}
+      <div className="flex flex-row w-full">
+        <div className="flex gap-2 w-full border-2">
+          <div className="flex items-center justify-center w-full">
+            <label
+              className={`p-2 text-lg font-bold uppercase block text-center align-middle text-amber-50 ${shareTech.className} tracking-tight px-3`}
             >
               Size
-            </span>
+            </label>
             <select
-              style={{ color: "black" }}
               value={selectedSize}
               onChange={(e) => setSelectedSize(e.target.value)}
+              className={`block w-full text-neutral-800 h-full bg-amber-50 text-2xl text-center ${shareTech.className} tracking-tight`}
             >
               {Object.keys($Enums.Size).map((a, i) => (
-                <option key={i}>{a}</option>
+                <option key={i} className="bg-amber-50 text-neutral-800">{a}</option>
               ))}
             </select>
           </div>
-          <span>
-            <span
-              className={`whitespace-pre-wrap py-5 ${shareTech.className} mr-2.5 pb-20 text-lg tracking-tight`}
+          <div className="flex items-center justify-center w-full gap-2">
+            <label
+              className={`p-2 text-lg font-bold uppercase text-amber-50 ${shareTech.className} tracking-tight`}
             >
               Quantity
-            </span>
+            </label>
             <input
               placeholder="0"
               id="size"
               style={{ color: "black" }}
               type="text"
               value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              onChange={(e) => setQuantity(e.target.value)}
+              className={`${shareTech.className} tracking-tight block w-full text-neutral-800 h-full bg-amber-50 text-2xl text-center`}
             />
-          </span>
+          </div>
         </div>
       </div>
       {useUser().isSignedIn ? (
@@ -104,7 +96,7 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
             merchId={data.id}
             eventId={"universaleve"}
             size={selectedSize}
-            quantity={quantity}
+            quantity={quantity && quantity !== "" ? parseInt(quantity) : 0}
           />
         </Dialog>
       ) : (
@@ -113,12 +105,17 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
             href={"/sign-in"}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
+            className="justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline w-full"
           >
             buy
           </Link>
         </div>
       )}
+      <div
+        className={`whitespace-pre-wrap py-5 ${shareTech.className} text-lg tracking-tight w-full`}
+      >
+        {data.desc}
+      </div>
     </div>
   );
 };
