@@ -11,7 +11,6 @@ const MerchCard = () => {
   }
   return (
     <div className="relative z-0 col-span-4 h-full min-h-96 w-full overflow-clip border border-amber-50 sm:col-span-2 md:col-span-1">
-      hii
       {
         <Image
           src={shirt}
