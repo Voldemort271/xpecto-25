@@ -19,8 +19,6 @@ import Loader from "@/components/common/loader";
 const Page = () => {
   const { CurrentUser } = useCurrentUser();
 
-  return <Loader />;
-
   const { data: merch } = api.merch.getMerch.useQuery();
   console.log(CurrentUser);
   console.log("Merch", merch);
@@ -28,7 +26,7 @@ const Page = () => {
   return (
     <>
       <div className="relative flex justify-evenly bg-neutral-900">
-        <div className="relative z-0 col-span-3 flex min-h-96 flex-col,. items-center justify-center border-2 border-amber-50 px-12 py-24 uppercase text-amber-50">
+        <div className="flex-col,. relative z-0 col-span-3 flex min-h-96 items-center justify-center border-2 border-amber-50 px-12 py-24 uppercase text-amber-50">
           <Image
             src={
               "https://res.cloudinary.com/diqdg481x/image/upload/v1739198119/images/iitmandi.jpg"
@@ -43,7 +41,7 @@ const Page = () => {
           <div className="text-2xl font-normal"></div>
         </div>
         <div className="flex justify-evenly overflow-y-scroll">
-          <div className="m-20 flex flex-row items-center justify-evenly w-full">
+          <div className="m-20 flex w-full flex-row items-center justify-evenly">
             {merch?.map((m, i) => <MerchPlanCard data={m} key={i} />)}
           </div>
         </div>
