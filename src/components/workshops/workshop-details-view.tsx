@@ -44,7 +44,7 @@ const WorkshopDetailsView = ({ data }: Props) => {
           &lt;&lt; back to launchpad
         </Link>
         <motion.div
-          className="flex flex-wrap items-baseline gap-2.5 uppercase"
+          className="flex flex-wrap items-baseline gap-2.5 uppercase py-4"
           variants={keyframes}
           animate="flicker"
           transition={{

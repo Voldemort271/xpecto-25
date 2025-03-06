@@ -260,9 +260,11 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
         />
       </DialogTitle>
       {loading && (
-        <Loader
-          loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
-        />
+        <div className="fixed z-50 h-full w-full bg-black">
+          <Loader
+            loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
+          />
+        </div>
       )}
       <div className={`p-4 ${shareTech.className} tracking-tight`}>
         <DialogClose asChild>
@@ -327,7 +329,7 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
               Scan to Pay via UPI
             </label>
             <Image
-              src="/images/bank_qr.jpeg"
+              src="/images/bank_qr.jpg"
               alt="QR Code"
               className="mx-auto mb-2 block h-32 w-32"
               width={100}
