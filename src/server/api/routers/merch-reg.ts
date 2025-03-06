@@ -127,9 +127,9 @@ export const merchRegistrationRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const acceptableUsers = process.env.ADMINS?.split(", ");
 
-      // if (!acceptableUsers?.includes(input)) {
-      //   return [];
-      // }
+      if (!acceptableUsers?.includes(input)) {
+        return [];
+      }
 
       const merch = await ctx.db.merchOrder.findMany({
         where: {
