@@ -19,7 +19,7 @@ const merchOrderInput = z.object({
 
 
 
-export const registrationRouter = createTRPCRouter({
+export const merchRegistrationRouter = createTRPCRouter({
   // Existing procedures...
 
   createMerchOrder: publicProcedure
@@ -122,6 +122,26 @@ export const registrationRouter = createTRPCRouter({
       return order;
     }),
     
+    getUnverifiedMerch: publicProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const acceptableUsers = process.env.ADMINS?.split(", ");
+
+      // if (!acceptableUsers?.includes(input)) {
+      //   return [];
+      // }
+
+      const merch = await ctx.db.merchOrder.findMany({
+        where: {
+          verified: false,
+        },
+        include: {
+          merch:true
+        },
+      });
+
+      return merch;
+    }),
 
    
   
