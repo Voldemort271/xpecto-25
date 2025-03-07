@@ -12,20 +12,22 @@ const CompetitionBrief = ({ data }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const details = [
-    { name: "Bounty Worth", content: `INR ${data.prizepool}` },
-    { name: "Extraction point", content: data.competitionDetails.venue },
+    { name: "Prize pool", content: `INR ${data.prizepool}` },
+    { name: "Venue", content: data.competitionDetails.venue },
     {
-      name: "Squad strength",
-      content: data.min_team_size === data.max_team_size ? `${data.max_team_size}` : `${data.min_team_size} - ${data.max_team_size}`,
+      name: "Team size",
+      content:
+        data.min_team_size === data.max_team_size
+          ? `${data.max_team_size}`
+          : `${data.min_team_size} - ${data.max_team_size}`,
     },
     {
-      name: "zero hour",
-      // content: data.competitionDetails.begin_time.toLocaleString(),
-      content: `TBD`,
+      name: "Start time",
+      content: data.competitionDetails.begin_time.toLocaleString(),
     },
     // TODO: Show initiation fee when available only (i.e., only for online events)
     // {
-    //   name: "initiation fee",
+    //   name: "entry fee",
     //   content: `INR ${data.competitionDetails.regPlans[0]?.price ?? 0.0}`,
     // },
   ];
