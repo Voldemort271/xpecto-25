@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import DystopianNav from "@/components/common/navbar";
 import { Handjet } from "next/font/google";
 import { CursorContext, CursorProvider } from "@/context/cursor-context";
 import DystopianCursor from "@/components/common/cursor";
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const ClientNav = dynamic(() => import("@/components/common/navbar"), {
+  ssr: false,
+});
 
 const handjet = Handjet({ subsets: ["latin"] });
 
@@ -26,7 +30,7 @@ export default function RootLayout({
       >
         <DystopianCursor />
         <div className="fixed left-0 top-0 z-40 w-screen">
-          <DystopianNav />
+          <ClientNav />
         </div>
         {children}
       </div>
