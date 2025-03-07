@@ -55,7 +55,7 @@ const ProniteDetailsContainer = ({
             )
             .map((el, i) => (
               <motion.div
-                className="pr-2.5 text-lg font-light uppercase text-amber-50/[0.7] transition-all hover:font-light md:font-extralight"
+                className="pr-2.5 text-lg font-normal uppercase text-amber-50 transition-all hover:font-light md:font-extralight"
                 key={i}
                 onClick={() =>
                   setIndex((prev) => (prev < 2 ? prev + i : prev - 2 + i))
