@@ -9,9 +9,14 @@ import { motion } from "motion/react";
 import PlatinumSponsor from "@/components/sponsors/platinum-sponsor";
 import GenericSponsor from "@/components/sponsors/generic-sponsor";
 import Loader from "@/components/common/loader";
+import { sponData } from "@/lib/sponsor-data";
 
-const Page = () => {
-  const { data: allSponsors, isLoading } = api.sponsor.getSponsor.useQuery({ id: "" });
+const SponsorsPage = () => {
+  const { data: allSponsors, isLoading } = api.sponsor.getSponsor.useQuery({
+    id: "",
+  });
+
+  const platSpons = sponData.filter((e) => e.tier === "platinum");
 
   if (isLoading || !allSponsors) {
     return <Loader loadingText="Loading Sponsors ..." />;
@@ -41,8 +46,17 @@ const Page = () => {
         />
       </motion.div>
       <div className="grid w-full grid-cols-1 gap-12 p-5 pt-24 sm:grid-cols-2 md:p-12 lg:grid-cols-3 lg:p-24">
-        {Array.from({ length: 5 }, (v, i) => i).map((el) => (
-          <PlatinumSponsor key={el} delay={(el % 3) * 0.1} />
+        {platSpons.map((el, i) => (
+          <PlatinumSponsor
+            key={i}
+            delay={(i % 3) * 0.1}
+            name={el.name}
+            img={el.img}
+            desc={el.desc}
+            link={el.link}
+            title={el.title}
+            tier={el.tier}
+          />
         ))}
       </div>
       <div className="h-1 w-full bg-amber-50/[0.5]"></div>
@@ -60,4 +74,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default SponsorsPage;

@@ -6,14 +6,15 @@ import Image from "next/image";
 import { Share_Tech } from "next/font/google";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
+import { type Sponsor } from "@/lib/sponsor-data";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-interface Props {
+interface Props extends Sponsor {
   delay: number;
 }
 
-const PlatinumSponsor = ({ delay }: Props) => {
+const PlatinumSponsor = ({ name, img, desc, link, delay, title }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref);
   const { setIsHovered } = useContext(CursorContext);
@@ -36,34 +37,27 @@ const PlatinumSponsor = ({ delay }: Props) => {
         transition={{ delay: 0.5 + delay }}
       ></motion.div>
       <Image
-        src={
-          "https://res.cloudinary.com/diqdg481x/image/upload/v1737737277/background_eqguit.jpg"
-        }
+        src={img}
         width={800}
         height={800}
-        alt={"Brand"}
+        alt={name}
         className="absolute left-0 top-0 -z-10 h-full w-full object-cover opacity-30"
       />
       <div className="flex h-full w-full flex-col items-start justify-start p-5 py-12">
         <div className="mb-2.5 flex flex-row flex-wrap justify-end gap-2.5">
           <div className="rounded-full bg-neutral-600 px-3 py-1 text-sm font-light uppercase text-amber-50">
-            electronics
-          </div>
-          <div className="rounded-full bg-neutral-600 px-3 py-1 text-sm font-light uppercase text-amber-50">
-            gaming
+            {title}
           </div>
         </div>
         <div className="mb-2 text-4xl font-semibold uppercase text-amber-50 md:text-5xl">
-          sample<span className="font-extralight">&reg;</span>
+          {name}
+          <span className="font-extralight">&reg;</span>
         </div>
         <div className={`mb-5 text-base ${sharetech.className} tracking-tight`}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
-          culpa harum ratione voluptas. Dolorem itaque magnam nemo suscipit
-          vitae! Animi delectus dolore exercitationem iste, nihil nostrum
-          praesentium quo reiciendis repellat.
+          {desc}
         </div>
         <Link
-          href={"/public"}
+          href={link}
           target={"_blank"}
           className="cursor-none border-2 border-amber-50 bg-amber-50/[0.5] px-5 py-1 text-xl font-normal uppercase text-neutral-900 backdrop-blur-2xl"
           onMouseEnter={() => setIsHovered(true)}
