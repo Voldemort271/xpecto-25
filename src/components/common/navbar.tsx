@@ -48,67 +48,91 @@ const DystopianNav = () => {
       </motion.div>
 
       <div className="hidden h-full w-full grid-cols-6 grid-rows-2 sm:grid">
-        {isLoading ? (
-          <motion.div
-            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
-            initial={{ translateY: -100 }}
-            animate={{ translateY: 0 }}
-            transition={{ duration: 0.5, delay: animationDelay + 0.5 }}
-          >
-            <div className="flex h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
+        <div className="col-span-6 flex h-full w-full">
+          {isLoading ? (
+            <motion.div
+              className={`relative z-10 flex h-full w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50/[0.5]`}
+              initial={{ translateY: -100 }}
+              animate={{ translateY: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: animationDelay + 0.5,
+                ease: "linear",
+              }}
+            >
               <MarqueeContainer
                 text={[
-                  "Fetching Profile",
-                  "Fetching Profile",
-                  "Fetching Profile",
-                  "Fetching Profile",
+                  "fetching profile",
+                  "please wait",
+                  "fetching profile",
+                  "please wait",
+                  "fetching profile",
+                  "please wait",
                 ]}
               />
-            </div>
-          </motion.div>
-        ) : CurrentUser && CurrentUser.id !== "" ? (
-          <motion.div
-            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
-            initial={{ translateY: -100 }}
-            animate={{ translateY: 0 }}
-            transition={{ duration: 0.5, delay: animationDelay + 0.5 }}
-          >
-            <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
-              <MarqueeContainer
+            </motion.div>
+          ) : CurrentUser && CurrentUser.id !== "" ? (
+            <>
+              <motion.div
+                className={`relative z-10 flex h-full w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50/[0.5]`}
+                initial={{ translateY: -100 }}
+                animate={{ translateY: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: animationDelay + 0.5,
+                  ease: "linear",
+                }}
+              >
+                <MarqueeContainer
+                  text={[
+                    "welcome back",
+                    CurrentUser.name ?? "unknown user",
+                    "enjoy your xperience",
+                    CurrentUser.name ?? "unknown user",
+                  ]}
+                />
+              </motion.div>
+              <Link
                 href={`/profile`}
-                text={[
-                  "welcome back",
-                  CurrentUser.name ?? "unknown user",
-                  "view profile",
-                  CurrentUser.name ?? "unknown user",
-                ]}
-              />
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            className={`relative z-10 col-span-6 flex w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-[#8B8981]`}
-            initial={{ translateY: -100 }}
-            animate={{ translateY: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: animationDelay + 0.5,
-              ease: "linear",
-            }}
-          >
-            <div className="absolute left-0 top-1/2 h-full w-full cursor-none flex-col items-center justify-center text-4xl font-normal uppercase text-neutral-900">
-              <MarqueeContainer
+                className="flex h-full cursor-none items-center justify-center bg-amber-50 px-12 text-4xl font-normal uppercase text-neutral-900"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                profile
+              </Link>
+            </>
+          ) : (
+            <>
+              <motion.div
+                className={`relative z-10 flex h-full w-full items-center justify-center overflow-clip border-2 border-l-0 border-amber-50 bg-neutral-900 text-4xl font-normal uppercase text-amber-50/[0.5]`}
+                initial={{ translateY: -100 }}
+                animate={{ translateY: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: animationDelay + 0.5,
+                  ease: "linear",
+                }}
+              >
+                <MarqueeContainer
+                  text={[
+                    "login to be cool",
+                    "cool stuff i promise",
+                    "please trust me",
+                    "login to xperience xpecto",
+                  ]}
+                />
+              </motion.div>
+              <Link
                 href={`/sign-up`}
-                text={[
-                  "login to be cool",
-                  "cool stuff i promise",
-                  "please trust me",
-                  "login to xperience xpecto",
-                ]}
-              />
-            </div>
-          </motion.div>
-        )}
+                className="flex h-full cursor-none items-center justify-center bg-amber-50 px-12 text-4xl font-normal uppercase text-neutral-900"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                login
+              </Link>
+            </>
+          )}
+        </div>
         {(path.includes("/competitions") ||
           path.includes("/expos") ||
           path.includes("/pronites") ||
