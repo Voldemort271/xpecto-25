@@ -55,7 +55,7 @@ const CAPage = () => {
   };
 
   if (isLoading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -63,10 +63,10 @@ const CAPage = () => {
       <SectionHeader title={"Campus Ambassador"}>
         promote our fest and get exciting perks
       </SectionHeader>
-      <div className="p-12">
+      <div className="p-6 md:p-12">
         {CurrentUser && CurrentUser.role !== "ambassador" ? (
           <button
-            className="w-full cursor-none bg-green-400/[0.1] px-12 py-5 text-center text-xl font-normal uppercase text-emerald-300 transition-all hover:bg-green-400/[0.3]"
+            className="w-full cursor-none bg-green-400/[0.1] px-6 py-4 text-center text-lg font-normal uppercase text-emerald-300 transition-all hover:bg-green-400/[0.3] md:px-12 md:py-5 md:text-xl"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={handleSubmit}
@@ -74,15 +74,17 @@ const CAPage = () => {
             Click here to become a campus ambassador
           </button>
         ) : (
-          <div className="w-full bg-green-400/[0.1] px-12 py-5 text-center text-xl font-normal uppercase text-emerald-300">
+          <div className="w-full bg-green-400/[0.1] px-6 py-4 text-center text-lg font-normal uppercase text-emerald-300 md:px-12 md:py-5 md:text-xl">
             You are already a campus ambassador.
           </div>
         )}
       </div>
-      <div className={`mx-auto flex max-w-screen-2xl flex-row gap-5 p-12`}>
+      <div className="mx-auto flex max-w-screen-2xl flex-col items-center gap-6 p-6 md:flex-row md:gap-10 md:p-12">
         <div>
           <StaggeredText>About the program</StaggeredText>
-          <div className={` ${sharetech.className} text-lg tracking-tight`}>
+          <div
+            className={` ${sharetech.className} text-base tracking-tight md:text-lg`}
+          >
             The Campus Ambassador (CA) Program is a unique opportunity for
             students to represent and promote IIT Mandi’s biggest tech fest,
             Xpecto, in their colleges. As a CA, you will be the bridge between
@@ -102,58 +104,64 @@ const CAPage = () => {
           src={
             "https://res.cloudinary.com/diqdg481x/image/upload/v1739198961/images/iitmandi_negative.jpg"
           }
-          width={600}
-          height={600}
+          width={400}
+          height={400}
           alt={"Campus ambassador pic"}
-          className="aspect-square w-[400px] shrink-0 object-cover"
+          className="aspect-square w-full max-w-[400px] shrink-0 object-cover"
         />
       </div>
-      <div className="grid w-full grid-cols-3">
-        <div className="flex flex-col items-center border border-amber-50 bg-neutral-950 p-5 py-12">
-          <div className="text-6xl font-semibold uppercase">premium</div>
-          <div className="text-2xl font-normal uppercase text-neutral-500">
-            16 - 23 invited
-          </div>
-          <ul
-            className={`list-decimal pt-5 ${sharetech.className} text-lg tracking-tight`}
+      <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 md:p-12 lg:grid-cols-3">
+        {[
+          {
+            tier: "premium",
+            range: "16 - 23 invited",
+            benefits: [
+              "3-Day Food Pass",
+              "Hospitality Kit (includes a travel brochure, campus map, and wristband)",
+              "Exciting Merchandise & Special Pronites Access",
+              "Upgrade for ₹299: Get an Exclusive Xpecto T-Shirt",
+            ],
+          },
+          {
+            tier: "silver",
+            range: "24 - 31 invited",
+            benefits: [
+              "Includes all Premium Membership benefits plus:",
+              "Official Xpecto T-Shirt",
+              "1 Exclusive Workshop from our curated catalog",
+              "IIT Mandi Goodies & Fest Merchandise",
+            ],
+          },
+          {
+            tier: "gold",
+            range: "32+ invited",
+            benefits: [
+              "Includes all Silver Membership benefits plus:",
+              "2 Exclusive Workshops for deeper learning",
+              "IIT Mandi's Exclusive Merchandise & Goodies",
+              "Networking Session with IIT Mandi final-year students",
+            ],
+          },
+        ].map(({ tier, range, benefits }) => (
+          <div
+            key={tier}
+            className="flex flex-col items-center border border-amber-50 bg-neutral-950 p-6 py-8"
           >
-            <li>3-Day Food Pass</li>
-            <li>
-              Hospitality Kit (includes a travel brochure, campus map, and
-              wristband)
-            </li>
-            <li>Exciting Merchandise & Special Pronites Access</li>
-            <li>Upgrade for ₹299: Get an Exclusive Xpecto T-Shirt</li>
-          </ul>
-        </div>
-        <div className="flex flex-col items-center border border-amber-50 bg-neutral-950 p-5 py-12">
-          <div className="text-6xl font-semibold uppercase">silver</div>
-          <div className="text-2xl font-normal uppercase text-neutral-500">
-            24 - 31 invited
+            <div className="text-4xl font-semibold uppercase md:text-6xl">
+              {tier}
+            </div>
+            <div className="text-lg font-normal uppercase text-neutral-500 md:text-2xl">
+              {range}
+            </div>
+            <ul
+              className={`list-disc pt-4 ${sharetech.className} text-center text-base tracking-tight md:text-lg`}
+            >
+              {benefits.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
           </div>
-          <ul
-            className={`list-decimal pt-5 ${sharetech.className} text-lg tracking-tight`}
-          >
-            Includes all Premium Membership benefits plus:
-            <li>Official Xpecto T-Shirt</li>
-            <li>1 Exclusive Workshop from our curated catalog</li>
-            <li>IIT Mandi Goodies & Fest Merchandise</li>
-          </ul>
-        </div>
-        <div className="flex flex-col items-center border border-amber-50 bg-neutral-950 p-5 py-12">
-          <div className="text-6xl font-semibold uppercase">gold</div>
-          <div className="text-2xl font-normal uppercase text-neutral-500">
-            32+ invited
-          </div>
-          <ul
-            className={`list-decimal pt-5 ${sharetech.className} text-lg tracking-tight`}
-          >
-            Includes all Silver Membership benefits plus:
-            <li>2 Exclusive Workshops for deeper learning</li>
-            <li>IIT Mandi&apos;s Exclusive Merchandise & Goodies</li>
-            <li>Networking Session with IIT Mandi final-year students</li>
-          </ul>
-        </div>
+        ))}
       </div>
       <Footer onClick={handleSubmit} />
     </div>
