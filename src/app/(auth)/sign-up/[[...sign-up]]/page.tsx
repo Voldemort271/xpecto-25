@@ -218,6 +218,7 @@ const SignupPage = () => {
           </div>
         </div>
       )}
+
       {!givingPhoneNum && (
         <>
           {/**TODO: Need a back button here as per design to go back to the mobile num screen */}
@@ -303,7 +304,7 @@ const SignupPage = () => {
                 <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
                   <Label
                     htmlFor="lastName"
-                    className="text-2xl font-normal uppercase text-amber-50"
+                    className="mr-1.5 text-2xl font-normal uppercase text-amber-50"
                   >
                     Last Name
                   </Label>
@@ -319,7 +320,7 @@ const SignupPage = () => {
                 <div className="flex w-full flex-col items-start justify-center px-5 sm:flex-row sm:items-center sm:gap-2.5">
                   <Label
                     htmlFor="email"
-                    className="text-2xl font-normal uppercase text-amber-50"
+                    className="mr-12 text-2xl font-normal uppercase text-amber-50"
                   >
                     Email
                   </Label>
@@ -332,20 +333,30 @@ const SignupPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="flex w-full flex-col items-end justify-between sm:flex-row sm:gap-2.5">
-                  <div
-                    className={`${sharetech.className} p-5 tracking-tight text-amber-50/[0.5]`}
-                  >
-                    Preferably use your institute email ID. You will receive a
-                    verification code to sign in to your account.
+                <div className="flex w-full flex-row">
+                  <div>
+                    <button
+                      onClick={() => setGivingPhoneNum(true)}
+                      className="bg-amber-50/[0.7] px-5 py-2.5 text-2xl font-normal uppercase text-neutral-900"
+                    >
+                      Back
+                    </button>
                   </div>
-                  <button
-                    type="submit"
-                    className="bg-amber-50/[0.7] px-5 py-2.5 text-2xl font-normal uppercase text-neutral-900"
-                    disabled={isSubmitting}
-                  >
-                    Continue
-                  </button>
+                  <div className="flex w-full flex-col items-end justify-between sm:flex-row sm:gap-2.5">
+                    <div
+                      className={`${sharetech.className} ml-4 tracking-tight text-amber-50/[0.5]`}
+                    >
+                      Preferably use your institute email ID. You will receive a
+                      verification code to sign in to your account.
+                    </div>
+                    <button
+                      type="submit"
+                      className="bg-amber-50/[0.7] px-5 py-2.5 text-2xl font-normal uppercase text-neutral-900"
+                      disabled={isSubmitting}
+                    >
+                      Continue
+                    </button>
+                  </div>
                 </div>
               </form>
             )}
