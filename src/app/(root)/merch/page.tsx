@@ -316,7 +316,7 @@ const Page = () => {
               </DialogContent>
             </Dialog>
             <Image
-              src={`https://res.cloudinary.com/diqdg481x/image/upload/v1741430780/lzhkhwp4ehawu8h4f12v.png`}
+              src={`https://res.cloudinary.com/diqdg481x/image/upload/v1741457501/jyhxzwti4jvlui216cnw.png`}
               height={200}
               width={200}
               alt={`comboIMG`}
