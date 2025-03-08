@@ -79,6 +79,15 @@ export const sponData: Sponsor[] = [
     desc: "Riot Games, established in 2006, is an American video game developer and publisher renowned for titles like League of Legends and Valorant.",
     tier: "platinum",
   },
+
+  {
+    name: "vrkaa",
+    title: "e-sports partner",
+    website: "https://vrkaa.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741429961/spon_logos/hcgguu2nbzh79rvhiil7.jpg",
+    desc: "",
+    tier: "platinum",
+  },
   {
     name: "finlatics",
     title: "course partner",
