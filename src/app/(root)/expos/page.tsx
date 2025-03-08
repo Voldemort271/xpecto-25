@@ -18,7 +18,12 @@ const ExposPage = () => {
       {isLoading || !expos || !expos[index] ? (
         <Loader loadingText="Loading Expos ..." />
       ) : (
-        <ExposCarouselContainer data={expos[index]}>
+        <ExposCarouselContainer
+          data={expos[index]}
+          index={index}
+          setIndex={setIndex}
+          length={expos.length}
+        >
           <ExposCarousel data={expos} index={index} setIndex={setIndex} />
         </ExposCarouselContainer>
       )}

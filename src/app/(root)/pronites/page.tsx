@@ -18,10 +18,19 @@ const PronitesPage = () => {
 
   return (
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-      <PronitesCarouselContainer data={pronites[index]}>
+      <PronitesCarouselContainer
+        data={pronites[index]}
+        index={index}
+        setIndex={setIndex}
+        length={pronites.length}
+      >
         <PronitesCarousel data={pronites} index={index} setIndex={setIndex} />
       </PronitesCarouselContainer>
-      <ProniteDetailsContainer data={pronites} index={index} setIndex={setIndex}>
+      <ProniteDetailsContainer
+        data={pronites}
+        index={index}
+        setIndex={setIndex}
+      >
         <ProniteDetailsView data={pronites[index]} key={index} />
       </ProniteDetailsContainer>
     </div>

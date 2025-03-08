@@ -18,10 +18,19 @@ const WorkshopsPage = () => {
 
   return (
     <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-      <WorkshopsCarouselContainer data={workshops[index]}>
+      <WorkshopsCarouselContainer
+        data={workshops[index]}
+        index={index}
+        setIndex={setIndex}
+        length={workshops.length}
+      >
         <WorkshopsCarousel data={workshops} index={index} setIndex={setIndex} />
       </WorkshopsCarouselContainer>
-      <WorkshopDetailsContainer data={workshops} index={index} setIndex={setIndex}>
+      <WorkshopDetailsContainer
+        data={workshops}
+        index={index}
+        setIndex={setIndex}
+      >
         <WorkshopDetailsView data={workshops[index]} key={index} />
       </WorkshopDetailsContainer>
     </div>

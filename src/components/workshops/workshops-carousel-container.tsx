@@ -1,15 +1,33 @@
-import React, { type ReactNode } from "react";
+import React, {
+  Dispatch,
+  type ReactNode,
+  SetStateAction,
+  useContext,
+} from "react";
 import Image from "next/image";
 import MarqueeContainer from "@/components/common/marquee-container";
 import type { WorkshopWithDetails } from "@/app/types";
 import BgImage from "../../../public/images/background.jpg";
+import { CursorContext } from "@/context/cursor-context";
+import { ChevronsDown, ChevronsUp } from "lucide-react";
 
 interface Props {
   children: ReactNode;
   data?: WorkshopWithDetails;
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
+  length: number;
 }
 
-const WorkshopsCarouselContainer = ({ children, data }: Props) => {
+const WorkshopsCarouselContainer = ({
+  children,
+  data,
+  index,
+  setIndex,
+  length,
+}: Props) => {
+  const { setIsHovered } = useContext(CursorContext);
+
   return (
     <div className="relative z-0 grid h-full w-full grid-rows-[56px_auto_56px] bg-neutral-900 pt-[126px] md:grid-cols-[64px_auto_64px] md:grid-rows-1 md:pt-0 lg:grid-cols-[56px_auto_56px]">
       <Image
@@ -66,6 +84,22 @@ const WorkshopsCarouselContainer = ({ children, data }: Props) => {
             }
           />
         </div>
+      </div>
+      <div
+        className="absolute left-1/2 top-40 z-40 flex h-12 w-12 -translate-x-1/2 cursor-none items-center justify-center border-2 border-amber-50 bg-neutral-950 text-amber-50"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => setIndex((index + length - 1) % length)}
+      >
+        <ChevronsUp size={24} />
+      </div>
+      <div
+        className="absolute bottom-5 left-1/2 z-40 flex h-12 w-12 -translate-x-1/2 cursor-none items-center justify-center border-2 border-amber-50 bg-neutral-950 text-amber-50"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => setIndex((index + 1) % length)}
+      >
+        <ChevronsDown size={24} />
       </div>
     </div>
   );

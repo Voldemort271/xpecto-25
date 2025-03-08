@@ -19,7 +19,12 @@ const TeamPage = () => {
       {isLoading || !competitions || !competitions[index] ? (
         <Loader loadingText="Loading Competitions ..." />
       ) : (
-        <CompetitionsCarouselContainer data={competitions[index]}>
+        <CompetitionsCarouselContainer
+          data={competitions[index]}
+          index={index}
+          setIndex={setIndex}
+          length={competitions.length}
+        >
           <CompetitionsCarousel
             data={competitions}
             index={index}
