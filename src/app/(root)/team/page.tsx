@@ -18,7 +18,12 @@ const TeamPage = () => {
   ) : (
     teamData && (
       <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip overflow-x-scroll bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-        <TeamCarouselContainer data={teamData[index]}>
+        <TeamCarouselContainer
+          data={teamData[index]}
+          index={index}
+          setIndex={setIndex}
+          length={teamData.length}
+        >
           <TeamCarousel data={teamData} index={index} setIndex={setIndex} />
         </TeamCarouselContainer>
         <TeamDetailsContainer index={index} setIndex={setIndex}>
