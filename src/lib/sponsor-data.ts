@@ -99,7 +99,7 @@ export const sponData: Sponsor[] = [
     name: "noticebard",
     title: "media partner",
     website: "https://noticebard.com/",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741431326/spon_logos/boib1b5elxjld18wvjxd.png",
     desc:
       "NoticeBard is an online platform that publishes educational and professional opportunities for students" +
       " across various fields in India.",
@@ -109,7 +109,7 @@ export const sponData: Sponsor[] = [
     name: "rigbetel labs",
     title: "",
     website: "https://www.rigbetellabs.com/",
-    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741430003/spon_logos/zjhxrilffqdgzfqmdu2c.jpg",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741431216/spon_logos/vphwsgxav5holfbbxa4l.png",
     desc: "",
     tier: "platinum",
   },

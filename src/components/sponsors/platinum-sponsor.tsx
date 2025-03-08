@@ -46,7 +46,7 @@ const PlatinumSponsor = ({
       <Link
         href={website}
         target={"_blank"}
-        className="flex h-full w-full cursor-none flex-col items-center justify-start p-5 py-12"
+        className="flex h-full w-full cursor-none flex-col items-center justify-center p-5 py-12"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -58,7 +58,7 @@ const PlatinumSponsor = ({
           width={800}
           height={800}
           alt={name}
-          className="mb-2.5 max-h-36 w-full object-contain"
+          className="mb-2.5 max-h-32 w-full max-w-56 object-contain"
         />
         <div className="mb-2.5 rounded-full bg-neutral-600 px-5 py-1 text-lg font-light uppercase text-amber-50">
           {title}
