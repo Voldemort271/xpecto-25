@@ -93,7 +93,6 @@ export const merchOrderRouter = createTRPCRouter({
           expos: true,
           pronite: true,
           regPlans: true,
-          sponsors: true,
           workshops: true,
           registrations: true,
         },

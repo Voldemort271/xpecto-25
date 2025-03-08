@@ -15,17 +15,18 @@ const TeamPage = () => {
   if (isLoading || !expos || !expos[index]) {
     return <Loader loadingText="Loading Test Page ..." />;
   }
+  return <Loader loadingText="Loading Test Page ..." />;
 
-  return (
-    <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
-      <ExposCarouselContainer data={expos[index]}>
-        <ExposCarousel data={expos} index={index} setIndex={setIndex} />
-      </ExposCarouselContainer>
-      <ExpoDetailsContainer data={expos} index={index} setIndex={setIndex}>
-        <ExpoDetailsView data={expos[index]} key={index} />
-      </ExpoDetailsContainer>
-    </div>
-  );
+  // return (
+  //   <div className="grid min-h-screen w-screen grid-rows-[600px_auto] overflow-clip bg-neutral-900 md:grid-cols-[400px_auto] md:grid-rows-1 lg:grid-cols-[600px_auto]">
+  //     <ExposCarouselContainer data={expos[index]}>
+  //       <ExposCarousel data={expos} index={index} setIndex={setIndex} />
+  //     </ExposCarouselContainer>
+  //     <ExpoDetailsContainer data={expos} index={index} setIndex={setIndex}>
+  //       <ExpoDetailsView data={expos[index]} key={index} />
+  //     </ExpoDetailsContainer>
+  //   </div>
+  // );
 };
 
 export default TeamPage;
