@@ -10,22 +10,25 @@ export const sponsorRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-        logo: z.string(),
-        eventIds: z.array(z.string()),
+        title: z.string(),
+        logo: z.string().optional(),
+        website: z.string(),
+        // eventIds: z.array(z.string()),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { name, logo, eventIds } = input;
+      const { name, logo, title, website } = input;
       return await ctx.db.sponsor.create({
         data: {
           name: name,
-          logo: logo,
-          tier: "",
-          events: {
-            connect: eventIds.map((ele) => {
-              return { id: ele };
-            }),
-          },
+          logo: logo ?? "",
+          title: title,
+          website: website,
+          // events: {
+          //   connect: eventIds.map((ele) => {
+          //     return { id: ele };
+          //   }),
+          // },
         },
       });
     }),
@@ -39,9 +42,9 @@ export const sponsorRouter = createTRPCRouter({
             contains: input.id,
           },
         },
-        include: {
-          events: true,
-        },
+        // include: {
+        //   events: true,
+        // },
       });
     }),
 
@@ -55,9 +58,9 @@ export const sponsorRouter = createTRPCRouter({
             mode: "insensitive",
           },
         },
-        include: {
-          events: true,
-        },
+        // include: {
+        //   events: true,
+        // },
       });
     }),
 });
