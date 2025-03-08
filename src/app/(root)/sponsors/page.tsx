@@ -51,9 +51,9 @@ const SponsorsPage = () => {
             key={i}
             delay={(i % 3) * 0.1}
             name={el.name}
-            img={el.img}
+            logo={el.logo}
             desc={el.desc}
-            link={el.link}
+            website={el.website}
             title={el.title}
             tier={el.tier}
           />

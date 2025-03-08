@@ -14,7 +14,14 @@ interface Props extends Sponsor {
   delay: number;
 }
 
-const PlatinumSponsor = ({ name, img, desc, link, delay, title }: Props) => {
+const PlatinumSponsor = ({
+  name,
+  logo,
+  desc,
+  website,
+  delay,
+  title,
+}: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref);
   const { setIsHovered } = useContext(CursorContext);
@@ -37,7 +44,7 @@ const PlatinumSponsor = ({ name, img, desc, link, delay, title }: Props) => {
         transition={{ delay: 0.5 + delay }}
       ></motion.div>
       <Image
-        src={img}
+        src={logo}
         width={800}
         height={800}
         alt={name}
@@ -57,7 +64,7 @@ const PlatinumSponsor = ({ name, img, desc, link, delay, title }: Props) => {
           {desc}
         </div>
         <Link
-          href={link}
+          href={website}
           target={"_blank"}
           className="cursor-none border-2 border-amber-50 bg-amber-50/[0.5] px-5 py-1 text-xl font-normal uppercase text-neutral-900 backdrop-blur-2xl"
           onMouseEnter={() => setIsHovered(true)}
