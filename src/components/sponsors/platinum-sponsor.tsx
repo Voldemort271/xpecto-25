@@ -28,7 +28,7 @@ const PlatinumSponsor = ({
 
   return (
     <div
-      className="relative z-0 w-full overflow-clip border-2 border-amber-50"
+      className="relative z-0 w-full overflow-clip border-2 border-amber-50 bg-neutral-950"
       ref={ref}
     >
       <motion.div
@@ -43,36 +43,27 @@ const PlatinumSponsor = ({
         animate={{ display: inView ? "none" : "block" }}
         transition={{ delay: 0.5 + delay }}
       ></motion.div>
-      <Image
-        src={logo}
-        width={800}
-        height={800}
-        alt={name}
-        className="absolute left-0 top-0 -z-10 h-full w-full object-cover opacity-30"
-      />
-      <div className="flex h-full w-full flex-col items-start justify-start p-5 py-12">
-        <div className="mb-2.5 flex flex-row flex-wrap justify-end gap-2.5">
-          <div className="rounded-full bg-neutral-600 px-3 py-1 text-sm font-light uppercase text-amber-50">
-            {title}
-          </div>
-        </div>
-        <div className="mb-2 text-4xl font-semibold uppercase text-amber-50 md:text-5xl">
+      <Link
+        href={website}
+        target={"_blank"}
+        className="flex h-full w-full cursor-none flex-col items-center justify-start p-5 py-12"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="mb-2.5 text-lg font-light uppercase text-amber-50">
           {name}
-          <span className="font-extralight">&reg;</span>
         </div>
-        <div className={`mb-5 text-base ${sharetech.className} tracking-tight`}>
-          {desc}
+        <Image
+          src={logo}
+          width={800}
+          height={800}
+          alt={name}
+          className="mb-2.5 max-h-36 w-full object-contain"
+        />
+        <div className="mb-2.5 rounded-full bg-neutral-600 px-5 py-1 text-lg font-light uppercase text-amber-50">
+          {title}
         </div>
-        <Link
-          href={website}
-          target={"_blank"}
-          className="cursor-none border-2 border-amber-50 bg-amber-50/[0.5] px-5 py-1 text-xl font-normal uppercase text-neutral-900 backdrop-blur-2xl"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          visit page
-        </Link>
-      </div>
+      </Link>
     </div>
   );
 };
