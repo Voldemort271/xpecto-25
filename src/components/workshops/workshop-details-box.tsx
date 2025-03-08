@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useCurrentUser } from "@/lib/utils";
+import { convertTitleCaseToSpaces, useCurrentUser } from "@/lib/utils";
 import type { WorkshopWithDetails } from "@/app/types";
 import { Share_Tech } from "next/font/google";
 import Image from "next/image";
@@ -67,12 +67,14 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
         <div className="relative shrink-0 md:h-screen md:w-full md:max-w-[calc(100vw-364px)] lg:max-w-[calc(100vw-464px)]">
           <div className="space-y-5 overflow-auto overscroll-none p-12 md:pt-44">
             <div className="-mb-2.5 flex flex-wrap gap-2.5">
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                programming
-              </div>
-              <div className="rounded-full bg-neutral-600 px-5 py-1 text-base uppercase text-amber-50">
-                ml/ai
-              </div>
+              {work?.workshopDetails.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
+                >
+                  {convertTitleCaseToSpaces(tag)}
+                </span>
+              ))}
             </div>
             <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
               {work.workshopDetails.name}
@@ -83,7 +85,8 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
               {work.workshopDetails.description}
             </div>
             <div className="relative h-12 w-full bg-neutral-900">
-              {loadingPlan ? (
+              {loadingPlan ||
+              work.workshopDetails.description === "coming soon" ? (
                 <div
                   className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                 >

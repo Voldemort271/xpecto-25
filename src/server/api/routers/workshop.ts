@@ -6,23 +6,19 @@ export const workshopRouter = createTRPCRouter({
   createWorkshop: publicProcedure
     .input(
       z.object({
-        // max_capacity: z.number(),
-        // ticket_price: z.number(),
         begin_time: z.date() ,
         description:z.string(),
         venue:z.string(),
         end_time:z.null(),
         name:z.string(),
-        workshopDetails:z.string(),
-        // regPlans: z
-        //   .object({
-        //     id: z.string(),
-        //     name: z.string(),
-        //     description: z.string(),
-        //     price: z.string(),
-        //     labelling: z.string(),
-        //   })
-        //   .array(),
+        regPlans: z
+          .object({
+            name: z.string(),
+            description: z.string(),
+            price: z.string(),
+            labelling: z.string(),
+          })
+          .array(),
       }),
     )
     .mutation(async ({ ctx, input })=> {
@@ -37,24 +33,22 @@ export const workshopRouter = createTRPCRouter({
             venue:input.venue,
             slug: input.name.toLowerCase().replace(/ /g, "-"),
             cover: "",
-            // regPlans: {
-            //     createMany: {
-            //       data: input.regPlans.map((regPlan) => ({
-            //         name: regPlan.name,
-            //         description: regPlan.description,
-            //         price: parseInt(regPlan.price),
-            //         labelling: regPlan.labelling,
-            //       })),
-            //     },
-            //   },
+            regPlans: {
+                createMany: {
+                  data: input.regPlans.map((regPlan) => ({
+                    name: regPlan.name,
+                    description: regPlan.description,
+                    price: parseInt(regPlan.price),
+                    labelling: regPlan.labelling,
+                  })),
+                },
+              },
           }
 
         });
         return ctx.db.workshops.create({
           data: {
             workshopDetailsId:eventDetails.id,
-            // max_capacity: input.max_capacity,
-            // ticket_price: input.ticket_price,
             createdAt: new Date(), 
             updatedAt: new Date(), 
           },

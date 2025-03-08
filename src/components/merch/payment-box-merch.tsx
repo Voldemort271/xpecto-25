@@ -17,7 +17,6 @@ const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const universalEvent = "universaleve";
 
-//TODO: Update Bank details and QR code
 
 interface PaymentBoxProps {
   merchId: string;

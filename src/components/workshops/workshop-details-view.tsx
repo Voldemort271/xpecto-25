@@ -8,6 +8,7 @@ import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import { Share_Tech } from "next/font/google";
 import { motion } from "motion/react";
+import { convertTitleCaseToSpaces } from "@/lib/utils";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -57,7 +58,7 @@ const WorkshopDetailsView = ({ data }: Props) => {
               key={tag}
               className="rounded-full bg-neutral-600 px-4 text-lg font-light uppercase"
             >
-              {tag}
+              {convertTitleCaseToSpaces(tag)}
             </span>
           ))}
         </motion.div>

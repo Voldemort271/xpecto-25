@@ -3,6 +3,7 @@ import MarqueeContainer from "@/components/common/marquee-container";
 import { type CompetitionWithDetails } from "@/app/types";
 import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
+import { formatDuration, getLowestPrice } from "@/lib/utils";
 
 interface Props {
   data: CompetitionWithDetails;
@@ -12,7 +13,7 @@ const CompetitionBrief = ({ data }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const details = [
-    { name: "Prize pool", content: `INR ${data.prizepool}` },
+    { name: "Prize pool", content: `₹${data.prizepool.toLocaleString('en-IN')}` },
     { name: "Venue", content: data.competitionDetails.venue },
     {
       name: "Team size",
@@ -22,14 +23,24 @@ const CompetitionBrief = ({ data }: Props) => {
           : `${data.min_team_size} - ${data.max_team_size}`,
     },
     {
-      name: "Start time",
+      name: "duration",
+      content: formatDuration(
+        data.competitionDetails.begin_time,
+        data.competitionDetails.end_time,
+      ),
+    },
+    {
+      name: "zero hour",
       content: data.competitionDetails.begin_time.toLocaleString(),
     },
-    // TODO: Show initiation fee when available only (i.e., only for online events)
-    // {
-    //   name: "entry fee",
-    //   content: `INR ${data.competitionDetails.regPlans[0]?.price ?? 0.0}`,
-    // },
+    {
+      name: "final hour",
+      content: data.competitionDetails.end_time.toLocaleString(),
+    },
+    {
+      name: "Entry fee",
+      content: getLowestPrice(data.competitionDetails.regPlans),
+    },
   ];
 
   return (

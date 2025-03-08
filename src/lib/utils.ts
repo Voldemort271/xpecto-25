@@ -24,13 +24,36 @@ export const convertTitleCaseToSpaces = (str: string) => {
   return str.replace(/([a-z])([A-Z])/g, "$1 $2");
 };
 
+// Helper function to format duration
+export const formatDuration = (start: Date, end: Date) => {
+  const durationMs = end.getTime() - start.getTime();
+  const durationHours = durationMs / (1000 * 60 * 60);
+  const durationDays = durationHours / 24;
+  const durationWeeks = durationDays / 7;
+
+  if (durationWeeks >= 1) {
+    return `${Math.floor(durationWeeks)} week${Math.floor(durationWeeks) > 1 ? 's' : ''}`;
+  } else if (durationDays >= 1) {
+    return `${Math.floor(durationDays)} day${Math.floor(durationDays) > 1 ? 's' : ''}`;
+  } else {
+    return `${Math.floor(durationHours)} hour${Math.floor(durationHours) > 1 ? 's' : ''}`;
+  }
+};
+
+// Helper function to get the lowest price from registration plans
+export const getLowestPrice = (regPlans: { price: number }[]) => {
+  const prices = regPlans.map((plan) => plan.price);
+  const lowestPrice = Math.min(...prices);
+  return lowestPrice === 0 ? "free" : `₹${lowestPrice}`;
+};
+
 
 export const navElements = [
   "Home",
   "Team",
   "Competitions",
   "About",
-  // "Workshops",
+  "Workshops",
   "Expos",
   // "Pronites",
   "Sponsors",

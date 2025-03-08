@@ -1,18 +1,30 @@
 import React from "react";
 import MarqueeContainer from "@/components/common/marquee-container";
 import type { WorkshopWithDetails } from "@/app/types";
+import { formatDuration, getLowestPrice } from "@/lib/utils";
 
 interface Props {
   data: WorkshopWithDetails;
 }
 
+
+
+
 const WorkshopBrief = ({ data }: Props) => {
   const details = [
+    { name: "Entry fee", content: getLowestPrice(data.workshopDetails.regPlans)},
     { name: "Extraction point", content: data.workshopDetails.venue },
     {
       name: "zero hour",
-      // content: data.workshopDetails.begin_time.toLocaleString(),
-      content: `TBD`,
+      content: data.workshopDetails.begin_time.toLocaleString(),
+    },
+    {
+      name: "final hour",
+      content: data.workshopDetails.end_time.toLocaleString(),
+    },
+    {
+      name: "duration",
+      content: formatDuration(data.workshopDetails.begin_time, data.workshopDetails.end_time),
     },
   ];
 

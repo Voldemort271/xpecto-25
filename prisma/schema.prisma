@@ -276,7 +276,11 @@ enum Tag {
   Racing
   Memento
   Drones
-
+  StockInvestment
+  Investment
+  FinanceManagement
+  Civil
+  Astrax
 }
 
 enum Size {
