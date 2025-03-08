@@ -223,7 +223,7 @@ export async function sendMerchPaymentRejectionEmail(
           <p>Dear Participant,</p>
           <p>
             Thank you for attempting to purchase merchandise of XPECTO’25, IIT Mandi
-            Unfortunately, it appears that your payment for the merchandise (name: {merchName}) faced a ‘Glitch’ due to
+            Unfortunately, it appears that your payment for the merchandise {merchName} faced a ‘Glitch’ due to
             which your transaction remains incomplete.
           </p>
           <p>{reason}</p>
@@ -260,7 +260,7 @@ export async function sendMerchConfirmationEmail(
         <div>
           <p>Greetings,</p>
           <p>Thank you for purchasing merchandise from XPECTO’25, IIT Mandi.</p>
-          <p>Your payment has been successfully verified, and your order for the merchandise (name: {merchName}) is confirmed.🎉</p>
+          <p>Your payment has been successfully verified, and your order for the merchandise {merchName} is confirmed.🎉</p>
           (
             <p>
               Since you chose the red pill, you are all set to explore the

@@ -47,19 +47,18 @@ const ApprovalPage = () => {
     data: regs,
     error,
     isLoading,
-  } = api.merchRegistration.getUnverifiedMerch.useQuery(CurrentUser?.id ?? "");
+  } = api.merch.getUnverifiedMerch.useQuery(CurrentUser?.id ?? "");
 
   const [selectedReg, setSelectedReg] = useState<
     NonNullable<typeof regs>[number] | null
   >(null);
 
-  const verifyPayment = api.merchRegistration.verifyMerchOrder.useMutation();
-  const rejectPayment = api.merchRegistration.rejectMerchOrder.useMutation();
+  const verifyPayment = api.merch.verifyMerchOrder.useMutation();
+  const rejectPayment = api.merch.rejectMerchOrder.useMutation();
 
   if (isLoading) return <Loader />;
   if (error) return <div>Error: {error.message}</div>;
 
-  //TODO: (Optional) Some good guy add a loader on the page while handleAccept or handleReject functions are running so that its clear to finance team that they are running and they donot spam the buttons
 
   const handleAccept = () => {
     if (!selectedReg) return;
@@ -68,7 +67,7 @@ const ApprovalPage = () => {
       {
         onSuccess: (e) => {
           setSelectedReg(null);
-          utils.merchRegistration.getUnverifiedMerch.setData(
+          utils.merch.getUnverifiedMerch.setData(
             CurrentUser?.id ?? "",
             (prevReg) => {
               return prevReg?.filter((reg) => reg.id !== e.id);
@@ -86,7 +85,7 @@ const ApprovalPage = () => {
       {
         onSuccess: (e) => {
           setSelectedReg(null);
-          utils.merchRegistration.getUnverifiedMerch.setData(
+          utils.merch.getUnverifiedMerch.setData(
             CurrentUser?.id ?? "",
             (prevReg) => {
               return e.success
@@ -114,23 +113,26 @@ const ApprovalPage = () => {
             >
               <div className="details-container w-full">
                 <p className="text-xl">
-                  <strong>Name:</strong> {reg.merch.name}
+                  <strong>Name:</strong>{" "}
+                  {(reg.merch as Array<{ name: string }>)
+                    .map((m) => m.name)
+                    .join(", ")}
                 </p>
                 <div className="text-2xl">
                   <strong className="text-lg">Transaction ID:</strong>{" "}
                   {reg.paymentId}
                 </div>
                 <div className="text-2xl">
-                  Plan:
+                  Price:
                   <strong className="ml-2">
-                    {reg.merch.name.toUpperCase()} - Rs. {reg.merch.price}
+                    {`Rs. ${reg.totalPrice}`}
                   </strong>
                 </div>
                 <p>
                   <strong>Quantity:</strong> {reg.quantity}
                 </p>
                 <p>
-                  <strong>Size:</strong> {reg.size}
+                  <strong>Size:</strong> {(reg.sizes as Array<string>).map((s) => s.toString()).join(', ')}
                 </p>
                 <div className="mt-4 flex flex-col items-center gap-4">
                   <button

@@ -10,27 +10,22 @@ import { Input } from "../ui/input";
 import Image from "next/image";
 import MarqueeContainer from "../common/marquee-container";
 import Loader from "../common/loader";
-import { Size } from "@prisma/client";
 
 const handjet = Handjet({ subsets: ["latin"] });
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const universalEvent = "universaleve";
-
-
 interface PaymentBoxProps {
-  merchId: string;
-  eventId: string;
+  merchIds: string[];
   price: number;
-  size: string;
+  sizes: string[];
   quantity: number;
   setPaying?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
   price,
-  merchId,
-  size,
+  merchIds,
+  sizes,
   quantity,
   setPaying,
 }) => {
@@ -39,19 +34,24 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [transactionID, setTransactionID] = useState("");
   const [loading, setLoading] = useState(false);
-
+  
+  const { data: outOfStock } = api.merch.checkMerchStock.useQuery({
+    merchIds: merchIds,
+    quantity: quantity,
+  });
   const uploadImage = api.user.uploadImageToFolder.useMutation();
-  const merchOrder = api.merchOrder.updateMerchOrder.useMutation();
+  const merchOrder = api.merch.updateMerchOrder.useMutation();
+  
 
   const handleTransactionIDChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setTransactionID(e.target.value);
   };
-
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
-
+    
     const file = e.target.files[0];
     if (file && file.size <= 1048576) {
       // 1MB = 1048576 bytes
@@ -73,7 +73,7 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
   const createMerch = (
     paymentProof: string,
     verified: boolean,
-    merchId: string,
+    merchIds: string[],
     paymentId: string,
   ) => {
     if (!CurrentUser) return;
@@ -81,12 +81,12 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
       {
         paymentId: paymentId,
         userId: CurrentUser.id,
-        merchId: merchId,
+        merchIds: merchIds,
         paymentProof: paymentProof,
         verified: verified,
         price: quantity * price,
         quantity: quantity,
-        size: size,
+        sizes: sizes,
       },
       {
         onSuccess: () => {
@@ -145,7 +145,6 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -175,56 +174,78 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
       return;
     }
 
-    try {
-      uploadImage.mutate(
-        { base64: image, folderName: "payments" },
+    if (quantity === 0){
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+            Please select a quantity.
+          </CustomToast>
+        ),
         {
-          onSuccess: (e) => {
-            if (!e.publicId) {
+          position: "top-center",
+          duration: 3000,
+        },
+      );
+      return;
+    }
+    
+    try {
+      if (outOfStock && outOfStock.outOfStock.length === 0) {
+        setLoading(true);
+        uploadImage.mutate(
+          { base64: image, folderName: "merchPayments" },
+          {
+            onSuccess: (e) => {
+              if (!e.publicId) {
+                toast.custom(
+                  (t) => (
+                    <CustomToast variant={"error"} metadata={t}>
+                      Error uploading image. Please try again.
+                    </CustomToast>
+                  ),
+                  {
+                    position: "top-center",
+                    duration: 3000,
+                  },
+                );
+                return;
+              }
               toast.custom(
                 (t) => (
-                  <CustomToast variant={"error"} metadata={t}>
-                    Error uploading image. Please try again.
+                  <CustomToast variant={"success"} metadata={t}>
+                    Image uploaded successfully!
                   </CustomToast>
                 ),
                 {
                   position: "top-center",
-                  duration: 3000,
                 },
               );
-              return;
-            }
-            toast.custom(
-              (t) => (
-                <CustomToast variant={"success"} metadata={t}>
-                  Image uploaded successfully!
-                </CustomToast>
-              ),
-              {
-                position: "top-center",
-              },
-            );
-            setImage(e.url ?? null); // Show the final uploaded image
-            setSelectedFile(null); // Reset file selection};
-            createMerch(e.publicId, false, merchId, transactionID);
+              setImage(e.url ?? null); // Show the final uploaded image
+              setSelectedFile(null); // Reset file selection};
+              createMerch(e.publicId, false, merchIds, transactionID);
+            },
+            onError: (e) => {
+              console.error("Error uploading image:", e);
+              toast.custom(
+                (t) => (
+                  <CustomToast variant={"error"} metadata={t}>
+                    Error uploading image. Please try again, or check your
+                    console for more information.
+                  </CustomToast>
+                ),
+                {
+                  position: "top-center",
+                },
+              );
+              setLoading(false);
+            },
           },
-          onError: (e) => {
-            console.error("Error uploading image:", e);
-            toast.custom(
-              (t) => (
-                <CustomToast variant={"error"} metadata={t}>
-                  Error uploading image. Please try again, or check your console
-                  for more information.
-                </CustomToast>
-              ),
-              {
-                position: "top-center",
-              },
-            );
-            setLoading(false);
-          },
-        },
-      );
+        );
+      } else {
+        throw new Error(
+          "Some of the merchs are out of stock. Please try again",
+        );
+      }
     } catch (err) {
       const typedErr = err as
         | { errors?: { longMessage: string }[] }
@@ -318,7 +339,7 @@ const MerchPaymentBox: React.FC<PaymentBoxProps> = ({
                 Pay: <span className="text-4xl">₹{quantity * price}</span>
               </div>
               <div className={`mr-3 py-4 text-xl font-normal uppercase`}>
-                Size Selected: <span className="text-4xl">{size}</span>
+                Size Selected: <span className="text-4xl">{sizes.join(', ')}</span>
               </div>
               <div className={`mr-3 py-4 text-xl font-normal uppercase`}>
                 Quantity: <span className="text-4xl">{quantity}</span>

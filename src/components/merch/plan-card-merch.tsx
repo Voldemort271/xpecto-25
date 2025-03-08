@@ -19,21 +19,10 @@ import {
 } from "../ui/carousel";
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
-const pre_order = true;
-
 const MerchPlanCard = ({ data }: { data: Merch }) => {
   const { setIsHovered } = useContext(CursorContext);
   const [selectedSize, setSelectedSize] = useState<string>($Enums.Size.S);
   const [quantity, setQuantity] = useState("");
-  const [selectedCombo, setSelectedCombo] = useState<string[]>([]);
-
-
-  const handleComboChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-    const newCombo = [...selectedCombo];
-    newCombo[index] = e.target.value;
-    setSelectedCombo(newCombo);
-  };
-
 
   return (
     <div
@@ -60,13 +49,11 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      {pre_order && (
         <div className="text-2xl font-light uppercase text-neutral-600 line-through">
-          ₹{data.price}
+          ₹{data.price + 500}
         </div>
-      )}
       <div className="mb-5 w-full bg-green-700/[0.1] px-5 py-2.5 text-center text-4xl font-normal uppercase text-green-400">
-        ₹{data.price - (pre_order ? 100 : 0)}
+        ₹{data.price}
       </div>
       <div className="flex w-full flex-row">
         <div className="flex w-full gap-2 border-2">
@@ -121,9 +108,8 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
           </DialogTrigger>
           <MerchPaymentBox
             price={data.price}
-            merchId={data.id}
-            eventId={"universaleve"}
-            size={selectedSize}
+            merchIds={[data.id]}
+            sizes={[selectedSize]}
             quantity={quantity && quantity !== "" ? parseInt(quantity) : 0}
           />
         </Dialog>

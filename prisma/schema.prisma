@@ -58,7 +58,7 @@ model MerchOrder {
   userId       String
   quantity     Int
   totalPrice   Int
-  size         Size
+  sizes         Size[]
   verified     Boolean  @default(false)
   paymentId    String   @unique
   paymentProof String
