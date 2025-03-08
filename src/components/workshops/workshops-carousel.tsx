@@ -13,7 +13,7 @@ import React, {
   useState,
 } from "react";
 import Image from "next/image";
-import { WorkshopWithDetails } from "@/app/types";
+import type { WorkshopWithDetails } from "@/app/types";
 import StaticImg from "../../../public/images/img.png";
 
 interface Props {
@@ -82,6 +82,8 @@ const WorkshopsCarousel = ({ data, index, setIndex }: Props) => {
                   }
                   alt={el.workshopDetails.name}
                   className="h-full w-full object-cover"
+                  height={600}
+                  width={800}
                 />
               </div>
             </CarouselItem>
@@ -111,6 +113,8 @@ const WorkshopsCarousel = ({ data, index, setIndex }: Props) => {
                 }
                 alt={el.workshopDetails.name}
                 className="h-full w-full border-2 border-amber-50 object-cover"
+                height={600}
+                width={800}
               />
             </CarouselItem>
           ))}

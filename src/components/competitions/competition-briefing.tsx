@@ -61,6 +61,20 @@ const CompetitionBrief = ({ data }: Props) => {
         />
       </div>
       <div className="grid min-h-[348px] w-full grid-cols-1 gap-5 p-5 text-amber-50 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+        <div className="flex w-full flex-col items-center -space-y-1 text-center">
+          <div className={`text-xl font-light uppercase text-amber-400`}>
+            rulebook
+          </div>
+          <Link
+            href={data.rulebook ?? "/"}
+            className={`cursor-none text-2xl font-normal uppercase text-amber-50/[0.8] hover:underline`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            target="_blank"
+          >
+            click to access
+          </Link>
+        </div>
         {details.map((el, i) => (
           <div
             className="flex w-full flex-col items-center -space-y-1 text-center"
@@ -76,11 +90,13 @@ const CompetitionBrief = ({ data }: Props) => {
             </div>
           </div>
         ))}
-        <div className="flex w-full flex-col items-center -space-y-1 text-center">
+      </div>
+      <div className="flex w-full flex-col items-center -space-y-1 text-center">
           <div className={`text-xl font-light uppercase text-amber-400`}>
-            rulebook
+            problem statement
           </div>
-          <Link
+          TBU
+          {/* <Link
             href={data.rulebook ?? "/"}
             className={`cursor-none text-2xl font-normal uppercase text-amber-50/[0.8] hover:underline`}
             onMouseEnter={() => setIsHovered(true)}
@@ -88,9 +104,8 @@ const CompetitionBrief = ({ data }: Props) => {
             target="_blank"
           >
             click to access
-          </Link>
+          </Link> */}
         </div>
-      </div>
       {/* <div className="relative flex h-12 w-full flex-col justify-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl font-normal uppercase text-neutral-900">
         <MarqueeContainer
           text={[

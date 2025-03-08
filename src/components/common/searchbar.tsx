@@ -26,7 +26,6 @@ import { toast } from "sonner";
 import CustomToast from "@/components/root/custom-toast";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
-import Loader from "./loader";
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -74,12 +73,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
       { enabled: !!userId }, // Only fetch if userId is available
     );
 
-  // Use useQuery to fetch competitions based on searchQuery
 
   // Use useQuery to fetch competitions based on searchQuery
   const {
     data: searchResults = [],
     refetch,
+    isLoading,
   } = api.event.searchEvents.useQuery(
     { query: searchQuery },
     {
@@ -90,7 +89,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
 
   // Debounced function to handle input changes
   const debouncedRefetch = debounce(async (query) => {
-    setLoading(true);
     try {
       await refetch();
     } catch (error) {
@@ -106,6 +104,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ userId }) => {
   }, 400);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setLoading(true);
     const value = e.target.value;
     setSearchQuery(value);
     if (value) {

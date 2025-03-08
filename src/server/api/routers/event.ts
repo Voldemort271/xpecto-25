@@ -82,10 +82,13 @@ export const eventRouter = createTRPCRouter({
             {
               name: { contains: query, mode: "insensitive" }, // Filter by event name
             },
-            {
-              description: { contains: query, mode: "insensitive" }, // Filter by event description
-            },
+            // {
+            //   description: { contains: query, mode: "insensitive" }, // Filter by event description
+            // },
           ],
+          NOT: {
+            id: "universaleve",
+          },
         },
         include: {
           competition: true,
