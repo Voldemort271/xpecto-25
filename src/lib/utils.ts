@@ -28,7 +28,11 @@ export const convertTitleCaseToSpaces = (str: string) => {
 export const formatDuration = (start: Date, end: Date) => {
   const durationMs = end.getTime() - start.getTime();
   const durationHours = durationMs / (1000 * 60 * 60);
-  const durationDays = durationHours / 24;
+  
+  const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+  const durationDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  
   const durationWeeks = durationDays / 7;
 
   if (durationWeeks >= 1) {

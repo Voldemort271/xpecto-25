@@ -57,9 +57,6 @@ export const competitionRouter = createTRPCRouter({
           prizepool: input.prizepool,
           teams: undefined,
           updatedAt: new Date(),
-          // levels: input.levels,
-          // problem_statement: input.problem_statement,
-          // rules: input.rules,
         },
       });
     }),

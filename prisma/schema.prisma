@@ -281,6 +281,10 @@ enum Tag {
   FinanceManagement
   Civil
   Astrax
+  RocketLaunch
+  Aerospace
+  SpaceExploration
+  Innovation
 }
 
 enum Size {
