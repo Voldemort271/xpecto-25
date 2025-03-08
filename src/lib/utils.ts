@@ -36,9 +36,9 @@ export const formatDuration = (start: Date, end: Date) => {
   const durationWeeks = durationDays / 7;
 
   if (durationWeeks > 1) {
-    return `${Math.floor(durationWeeks) + 1} week${Math.floor(durationWeeks) > 2 ? 's' : ''}`;
+    return `${Math.floor(durationWeeks) + 1} week${Math.floor(durationWeeks) > 1 ? 's' : ''}`;
   } else if (durationDays > 1) {
-    return `${Math.floor(durationDays)} day${Math.floor(durationDays) > 2 ? 's' : ''}`;
+    return `${Math.floor(durationDays)} day${Math.floor(durationDays) > 1 ? 's' : ''}`;
   } else {
     return `${Math.floor(durationHours)} hour${Math.floor(durationHours) > 1 ? 's' : ''}`;
   }
