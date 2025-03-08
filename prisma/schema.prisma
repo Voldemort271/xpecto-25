@@ -125,11 +125,11 @@ model Competition {
 }
 
 model Sponsor {
-  id     String         @id @default(cuid())
-  name   String
-  tier   String
-  logo   String
-  events EventDetails[] @relation("EventDetailsToSponsor")
+  id      String @id @default(cuid())
+  name    String
+  title   String
+  logo    String
+  website String
 }
 
 model EventDetails {
@@ -150,7 +150,6 @@ model EventDetails {
   registrations Registration[]
   regPlans      RegistrationLevel[]
   workshops     Workshops?
-  sponsors      Sponsor[]           @relation("EventDetailsToSponsor")
 
   @@index([description(ops: raw("gin_trgm_ops"))], map: "idx_eventdetails_description_trgm", type: Gin)
   @@index([name(ops: raw("gin_trgm_ops"))], map: "idx_eventdetails_name_trgm", type: Gin)
@@ -209,6 +208,35 @@ model Pronite {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
   proniteDetails   EventDetails @relation(fields: [proniteDetailsId], references: [id])
+}
+
+enum Size {
+  S
+  M
+  L
+  XL
+  XXL
+}
+
+enum Org {
+  WebDev
+  Design
+  Content
+  Planning
+  Photography
+  Sponsorship
+  Security
+  Publicity
+  Media
+  Hospitality
+  Decoration
+}
+
+enum Role {
+  Convenor
+  CoConvenor
+  Head
+  Mentor
 }
 
 enum Tag {
@@ -285,33 +313,4 @@ enum Tag {
   Aerospace
   SpaceExploration
   Innovation
-}
-
-enum Size {
-  S
-  M
-  L
-  XL
-  XXL
-}
-
-enum Org {
-  WebDev
-  Design
-  Content
-  Planning
-  Photography
-  Sponsorship
-  Security
-  Publicity
-  Media
-  Hospitality
-  Decoration
-}
-
-enum Role {
-  Convenor
-  CoConvenor
-  Head
-  Mentor
 }
