@@ -86,7 +86,7 @@ const WorkshopsCarouselContainer = ({
         </div>
       </div>
       <div
-        className="absolute left-1/2 top-40 z-40 flex h-12 w-12 -translate-x-1/2 cursor-none items-center justify-center border-2 border-amber-50 bg-neutral-950 text-amber-50"
+        className="absolute left-1/2 top-40 z-40 hidden h-12 w-12 -translate-x-1/2 cursor-none items-center justify-center border-2 border-amber-50 bg-neutral-950 text-amber-50 md:flex"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIndex((index + length - 1) % length)}
@@ -94,7 +94,7 @@ const WorkshopsCarouselContainer = ({
         <ChevronsUp size={24} />
       </div>
       <div
-        className="absolute bottom-5 left-1/2 z-40 flex h-12 w-12 -translate-x-1/2 cursor-none items-center justify-center border-2 border-amber-50 bg-neutral-950 text-amber-50"
+        className="absolute bottom-5 left-1/2 z-40 hidden h-12 w-12 -translate-x-1/2 cursor-none items-center justify-center border-2 border-amber-50 bg-neutral-950 text-amber-50 md:flex"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIndex((index + 1) % length)}
