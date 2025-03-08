@@ -31,14 +31,14 @@ export const formatDuration = (start: Date, end: Date) => {
   
   const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
   const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
-  const durationDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  const durationDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   
   const durationWeeks = durationDays / 7;
 
-  if (durationWeeks >= 1) {
-    return `${Math.floor(durationWeeks)} week${Math.floor(durationWeeks) > 1 ? 's' : ''}`;
-  } else if (durationDays >= 1) {
-    return `${Math.floor(durationDays)} day${Math.floor(durationDays) > 1 ? 's' : ''}`;
+  if (durationWeeks > 1) {
+    return `${Math.floor(durationWeeks) + 1} week${Math.floor(durationWeeks) > 2 ? 's' : ''}`;
+  } else if (durationDays > 1) {
+    return `${Math.floor(durationDays)} day${Math.floor(durationDays) > 2 ? 's' : ''}`;
   } else {
     return `${Math.floor(durationHours)} hour${Math.floor(durationHours) > 1 ? 's' : ''}`;
   }
