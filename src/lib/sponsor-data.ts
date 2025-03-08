@@ -64,9 +64,9 @@ export const sponData: Sponsor[] = [
     tier: "platinum",
   },
   {
-    name: "svjn",
+    name: "sjvn",
     title: "",
-    website: "https://svjn.nic.in/",
+    website: "https://sjvn.nic.in/",
     logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741429951/spon_logos/o8iu5k8yednvtigym46n.webp",
     desc: "",
     tier: "platinum",
