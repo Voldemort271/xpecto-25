@@ -150,7 +150,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!CurrentUser) {
       toast.custom(
         (t) => (
@@ -285,7 +285,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
         />
       </DialogTitle>
       {loading && (
-        <div className="fixed z-50 h-full w-full bg-black">
+        <div className="fixed z-50 h-full w-full bg-neutral-950">
           <Loader
             loadingText={`DO NOT CLOSE THIS WINDOW! The page reloads automatically after submission. PLEASE WAIT!`}
           />
