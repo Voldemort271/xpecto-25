@@ -6,6 +6,8 @@ import AboutIITMandi from "@/components/home/about-iitmd";
 import MerchPromo from "@/components/home/merch-promo";
 import Footer from "@/components/home/footer";
 import MarqueeContainer from "@/components/common/marquee-container";
+import GlitchEffect from "@/components/home/featured-events";
+import FetchCompetitions from "@/lib/fetchCompForEvent";
 
 const Home = () => {
   return (
@@ -26,6 +28,8 @@ const Home = () => {
         through the glitch |
       </Marquee>
       <MerchPromo />
+      <GlitchEffect />
+      <FetchCompetitions />
       <Footer />
       <div className="relative flex h-32 w-full flex-col justify-center overflow-hidden whitespace-nowrap bg-neutral-950 text-9xl font-extrabold uppercase text-neutral-900">
         <MarqueeContainer

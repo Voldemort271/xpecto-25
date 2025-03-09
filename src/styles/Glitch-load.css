@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 70vh;
+    background-color: black;
+    color: white;
+    font-size: 5vw; 
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    padding: 2vh;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 2vh;
+    max-width: 90%;
+}
+
+/* ✅ Ensure text scales with screen size */
+.letter {
+    display: block; /* Ensures text can wrap */
+    width: 100%; /* Take up full width of parent */
+    text-align: center; /* Center the text */
+    word-wrap: break-word; /* Force text to break if needed */
+    white-space: normal; /* Ensure multi-line behavior */
+}
+
+
+/* ✅ Make the image even smaller */
+.letter img {
+    max-width: 6vw; /* Reduce the max width */
+    width: 6vw;
+    height: 6vh;
+    border-radius: 1vw;
+    object-fit: contain;
+}
+
+p {
+    all: unset; /* Removes all inherited and default styles */
+    font-size: clamp(2vw, 5vw, 6vw); /* Adjust text size */
+    font-weight: normal; /* Ensure it's not bold */
+    display: block; /* Ensure proper text flow */
+    text-align: center;
+}
+
+/* Arrows Styling */
+.arrow {
+    font-size: 4vw;
+    cursor: pointer;
+    padding: 1vw;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+
+.arrow:hover {
+    transform: scale(1.1);
+}
+
+.left-arrow {
+    position: absolute;
+    left: 5vw;
+}
+
+.right-arrow {
+    position: absolute;
+    right: 5vw;
+}
+
+/* ✅ Adjust layout for smaller screens */
+@media (max-width: 600px) {
+    .content {
+        max-width: 100%;
+    }
+
+    .letter {
+        font-size: 4vw; /* Responsive text size */
+    }
+
+    .letter img {
+        max-width: 15vw; /* Smaller image on small screens */
+        height: 8vh;
+    }
+
+    .arrow {
+        font-size: 3vw;
+    }
+}
