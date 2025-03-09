@@ -29,7 +29,7 @@ const Home = () => {
       </Marquee>
       <MerchPromo />
       <GlitchEffect />
-      <FetchCompetitions />
+      {/* <FetchCompetitions /> */}
       <Footer />
       <div className="relative flex h-32 w-full flex-col justify-center overflow-hidden whitespace-nowrap bg-neutral-950 text-9xl font-extrabold uppercase text-neutral-900">
         <MarqueeContainer

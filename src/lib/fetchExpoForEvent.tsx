@@ -3,49 +3,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import { api } from "@/trpc/react";
 import Loader from "@/components/common/loader";
-
-// ✅ Define TypeScript Type for Expos
-interface Expos {
-  id: string;
-  exposDetails: {
-    name: string;
-    description: string;
-    begin_time: string | null;
-    cover?: string;
-    regPlans?: {
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      labelling: string;
-      createdAt: string;
-      updatedAt: string;
-      eventDetailsId: string;
-    }[];
-  };
-}
+import type { ExpoWithDetails } from "@/app/types";
+import Image from "next/image";
 
 const FetchExpos = () => {
   const { data: expos, isLoading, error } = api.expo.getExpo.useQuery();
-  const [randomExpo, setRandomExpo] = useState<Expos | null>(null);
-  const [latestUpcomingExpo, setLatestUpcomingExpo] = useState<Expos | null>(null);
+  const [randomExpo, setRandomExpo] = useState<ExpoWithDetails | null>(null);
+  const [latestUpcomingExpo, setLatestUpcomingExpo] = useState<ExpoWithDetails | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animate, setAnimate] = useState(false);
-  const upcomingExposRef = useRef<Expos[]>([]);
+  const upcomingExposRef = useRef<ExpoWithDetails[]>([]);
 
   useEffect(() => {
     if (!expos) return;
-
-    const formattedExpos: Expos[] = expos.map((expo: any) => ({
-      id: expo.id,
-      exposDetails: {
-        name: expo.exposDetails?.name || "Unknown",
-        description: expo.exposDetails?.description || "No description available",
-        begin_time: expo.exposDetails?.begin_time ?? null,
-        cover: expo.exposDetails?.cover || "/default-image.jpg",
-        regPlans: expo.exposDetails?.regPlans || [],
-      },
-    }));
 
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
@@ -54,7 +24,7 @@ const FetchExpos = () => {
     twentyDaysLater.setDate(today.getDate() + 20);
     twentyDaysLater.setUTCHours(23, 59, 59, 999);
 
-    const upcomingExpos = formattedExpos.filter((expo) => {
+    const upcomingExpos = expos.filter((expo) => {
       const beginTime = expo.exposDetails.begin_time;
       if (!beginTime) return false;
       const beginDate = new Date(beginTime);
@@ -67,7 +37,7 @@ const FetchExpos = () => {
       setRandomExpo(upcomingExpos[0] ?? null);
     }
 
-    const sortedByDate = [...formattedExpos].sort((a, b) => {
+    const sortedByDate = [...expos].sort((a, b) => {
       const dateA = a.exposDetails.begin_time ? new Date(a.exposDetails.begin_time) : null;
       const dateB = b.exposDetails.begin_time ? new Date(b.exposDetails.begin_time) : null;
       if (!dateA) return 1;
@@ -75,7 +45,7 @@ const FetchExpos = () => {
       return dateA.getTime() - dateB.getTime();
     });
 
-    setLatestUpcomingExpo(sortedByDate.find((expo) => expo.exposDetails.begin_time !== null) || null);
+    setLatestUpcomingExpo(sortedByDate.find((expo) => expo.exposDetails.begin_time !== null) ?? null);
   }, [expos]);
 
   useEffect(() => {
@@ -123,10 +93,12 @@ const FetchExpos = () => {
           <p className="text-lg text-gray-300 text-center w-full">
             {randomExpo.exposDetails.description}
           </p>
-          <img
+          <Image
             src={randomExpo.exposDetails.cover}
             alt={randomExpo.exposDetails.name}
             className="w-full h-48 object-cover rounded-lg mt-4"
+            height={200}
+            width={200}
           />
         </div>
       )}

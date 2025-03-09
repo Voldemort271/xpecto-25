@@ -3,38 +3,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import { api } from "@/trpc/react";
 import Loader from "@/components/common/loader";
+import type { CompetitionWithDetails } from "@/app/types";
+import Image from "next/image";
 
-// ✅ Define TypeScript Type for Competitions
-interface Competition {
-  id: string;
-  competitionDetails: {
-    name: string;
-    description: string;
-    begin_time: string | null;
-    cover?: string;
-    regPlans?: {
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      labelling: string;
-      createdAt: string;
-      updatedAt: string;
-      eventDetailsId: string;
-    }[];
-  };
-}
 
 const FetchCompetitions = () => {
   const { data: competitions, isLoading, error } = api.competition.getCompetitions.useQuery();
 
-  const [randomCompetition, setRandomCompetition] = useState<Competition | null>(null);
-  const [topEnrolledEvents, setTopEnrolledEvents] = useState<Competition[]>([]);
-  const [latestUpcomingEvent, setLatestUpcomingEvent] = useState<Competition | null>(null);
+  const [randomCompetition, setRandomCompetition] = useState<CompetitionWithDetails | null>(null);
+  const [topEnrolledEvents, setTopEnrolledEvents] = useState<CompetitionWithDetails[]>([]);
+  const [latestUpcomingEvent, setLatestUpcomingEvent] = useState<CompetitionWithDetails | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animate, setAnimate] = useState(false);
 
-  const upcomingCompetitionsRef = useRef<Competition[]>([]); // Stores filtered upcoming events
+  const upcomingCompetitionsRef = useRef<CompetitionWithDetails[]>([]); // Stores filtered upcoming events
 
   useEffect(() => {
     if (!competitions) return;
@@ -42,16 +24,16 @@ const FetchCompetitions = () => {
     console.log("Raw Competitions Data:", competitions);
 
     // Format competitions
-    const formattedCompetitions: Competition[] = competitions.map((comp: any) => ({
-      id: comp.id,
-      competitionDetails: {
-        name: comp.competitionDetails?.name || "Unknown",
-        description: comp.competitionDetails?.description || "No description available",
-        begin_time: comp.competitionDetails?.begin_time ?? null,
-        cover: comp.competitionDetails?.cover || "/default-image.jpg",
-        regPlans: comp.competitionDetails?.regPlans || [],
-      },
-    }));
+    // const competitions: CompetitionWithDetails[] = competitions.map((comp) => ({
+    //   id: comp.id,
+    //   competitionDetails: {
+    //     name: comp.competitionDetails?.name || "Unknown",
+    //     description: comp.competitionDetails?.description || "No description available",
+    //     begin_time: comp.competitionDetails?.begin_time ?? null,
+    //     cover: comp.competitionDetails?.cover || "/default-image.jpg",
+    //     regPlans: comp.competitionDetails?.regPlans || [],
+    //   },
+    // }));
 
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
@@ -63,7 +45,7 @@ const FetchCompetitions = () => {
     console.log("Filtering competitions between:", today.toISOString(), "and", twentyDaysLater.toISOString());
 
     // 🎯 Filter upcoming competitions
-    const upcomingCompetitions = formattedCompetitions.filter((comp) => {
+    const upcomingCompetitions = competitions.filter((comp) => {
       const beginTime = comp.competitionDetails.begin_time;
       if (!beginTime) return false;
 
@@ -83,13 +65,13 @@ const FetchCompetitions = () => {
     }
 
     // 🔥 Top 5 Most Enrolled Events
-    const sortedByEnrollments = [...formattedCompetitions].sort(
+    const sortedByEnrollments = [...competitions].sort(
       (a, b) => (b.competitionDetails.regPlans?.length ?? 0) - (a.competitionDetails.regPlans?.length ?? 0)
     );
     setTopEnrolledEvents(sortedByEnrollments.slice(0, 5));
 
     // 🔥 Latest Upcoming Event
-    const sortedByDate = [...formattedCompetitions].sort((a, b) => {
+    const sortedByDate = [...competitions].sort((a, b) => {
       const dateA = a.competitionDetails.begin_time ? new Date(a.competitionDetails.begin_time) : null;
       const dateB = b.competitionDetails.begin_time ? new Date(b.competitionDetails.begin_time) : null;
 
@@ -98,7 +80,7 @@ const FetchCompetitions = () => {
       return dateA.getTime() - dateB.getTime();
     });
 
-    setLatestUpcomingEvent(sortedByDate.find((comp) => comp.competitionDetails.begin_time !== null) || null);
+    setLatestUpcomingEvent(sortedByDate.find((comp) => comp.competitionDetails.begin_time !== null) ?? null);
   }, [competitions]);
 
   // Auto-change random event every 5s
@@ -165,10 +147,12 @@ const FetchCompetitions = () => {
             {randomCompetition.competitionDetails.description}
           </p>
   
-          <img
+          <Image
             src={randomCompetition.competitionDetails.cover}
             alt={randomCompetition.competitionDetails.name}
             className="w-full h-48 object-cover rounded-lg mt-4"
+            height={200}
+            width={200}
           />
         </div>
       )}

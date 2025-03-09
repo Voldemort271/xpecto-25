@@ -11,6 +11,8 @@ import RegisterDialog from "@/components/common/registration-dialog";
 import { api } from "@/trpc/react";
 import WorkshopBrief from "@/components/workshops/workshop-briefing";
 import { useRouter } from "next/navigation";
+import StaticImg from "../../../public/images/img.png";
+
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -56,8 +58,9 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
       <div className="relative flex h-full w-full flex-col items-start overflow-y-scroll overscroll-none bg-neutral-900 md:flex-row">
         <Image
           src={
-            // work.workshopDetails.cover ??
-            `https://res.cloudinary.com/diqdg481x/image/upload/v1737737280/signin_iiaec7.jpg`
+            work.workshopDetails.cover === ""
+              ? StaticImg
+              : work.workshopDetails.cover
           }
           alt={work.workshopDetails.name}
           width={500}

@@ -3,49 +3,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import { api } from "@/trpc/react";
 import Loader from "@/components/common/loader";
+import type { ProniteWithDetails } from "@/app/types";
+import Image from "next/image";
 
-// ✅ Define TypeScript Type for Pronites
-interface Pronite {
-  id: string;
-  proniteDetails: {
-    name: string;
-    description: string;
-    begin_time: string | null;
-    cover?: string;
-    regPlans?: {
-      id: string;
-      name: string;
-      description: string;
-      price: number;
-      labelling: string;
-      createdAt: string;
-      updatedAt: string;
-      eventDetailsId: string;
-    }[];
-  };
-}
 
 const FetchPronites = () => {
   const { data: pronites, isLoading, error } = api.pronite.getPronite.useQuery();
-  const [randomPronite, setRandomPronite] = useState<Pronite | null>(null);
-  const [latestUpcomingPronite, setLatestUpcomingPronite] = useState<Pronite | null>(null);
+  const [randomPronite, setRandomPronite] = useState<ProniteWithDetails | null>(null);
+  const [latestUpcomingPronite, setLatestUpcomingPronite] = useState<ProniteWithDetails | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animate, setAnimate] = useState(false);
-  const upcomingPronitesRef = useRef<Pronite[]>([]);
+  const upcomingPronitesRef = useRef<ProniteWithDetails[]>([]);
 
   useEffect(() => {
     if (!pronites) return;
-
-    const formattedPronites: Pronite[] = pronites.map((pronite: any) => ({
-      id: pronite.id,
-      proniteDetails: {
-        name: pronite.proniteDetails?.name || "Unknown",
-        description: pronite.proniteDetails?.description || "No description available",
-        begin_time: pronite.proniteDetails?.begin_time ?? null,
-        cover: pronite.proniteDetails?.cover || "/default-image.jpg",
-        regPlans: pronite.proniteDetails?.regPlans || [],
-      },
-    }));
 
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
@@ -54,7 +25,7 @@ const FetchPronites = () => {
     twentyDaysLater.setDate(today.getDate() + 20);
     twentyDaysLater.setUTCHours(23, 59, 59, 999);
 
-    const upcomingPronites = formattedPronites.filter((pronite) => {
+    const upcomingPronites = pronites.filter((pronite) => {
       const beginTime = pronite.proniteDetails.begin_time;
       if (!beginTime) return false;
       const beginDate = new Date(beginTime);
@@ -67,7 +38,7 @@ const FetchPronites = () => {
       setRandomPronite(upcomingPronites[0] ?? null);
     }
 
-    const sortedByDate = [...formattedPronites].sort((a, b) => {
+    const sortedByDate = [...pronites].sort((a, b) => {
       const dateA = a.proniteDetails.begin_time ? new Date(a.proniteDetails.begin_time) : null;
       const dateB = b.proniteDetails.begin_time ? new Date(b.proniteDetails.begin_time) : null;
       if (!dateA) return 1;
@@ -75,7 +46,7 @@ const FetchPronites = () => {
       return dateA.getTime() - dateB.getTime();
     });
 
-    setLatestUpcomingPronite(sortedByDate.find((pronite) => pronite.proniteDetails.begin_time !== null) || null);
+    setLatestUpcomingPronite(sortedByDate.find((pronite) => pronite.proniteDetails.begin_time !== null) ?? null);
   }, [pronites]);
 
   useEffect(() => {
@@ -123,10 +94,12 @@ const FetchPronites = () => {
           <p className="text-lg text-gray-300 text-center w-full">
             {randomPronite.proniteDetails.description}
           </p>
-          <img
+          <Image
             src={randomPronite.proniteDetails.cover}
             alt={randomPronite.proniteDetails.name}
             className="w-full h-48 object-cover rounded-lg mt-4"
+            height={200}
+            width={200}
           />
         </div>
       )}
