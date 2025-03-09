@@ -84,7 +84,7 @@ export const sponData: Sponsor[] = [
     name: "vrkaa",
     title: "e-sports partner",
     website: "https://vrkaa.com/",
-    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741429961/spon_logos/hcgguu2nbzh79rvhiil7.jpg",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741504237/spon_logos/hcgguu2nbzh79rvhiil7.png",
     desc: "",
     tier: "platinum",
   },
