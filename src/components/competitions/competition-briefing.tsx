@@ -13,7 +13,10 @@ const CompetitionBrief = ({ data }: Props) => {
   const { setIsHovered } = useContext(CursorContext);
 
   const details = [
-    { name: "Prize pool", content: `₹${data.prizepool.toLocaleString('en-IN')}` },
+    {
+      name: "Prize pool",
+      content: `₹${data.prizepool.toLocaleString("en-IN")}`,
+    },
     { name: "Venue", content: data.competitionDetails.venue },
     {
       name: "Team size",
@@ -23,19 +26,19 @@ const CompetitionBrief = ({ data }: Props) => {
           : `${data.min_team_size} - ${data.max_team_size}`,
     },
     {
-      name: "duration",
-      content: formatDuration(
-        data.competitionDetails.begin_time,
-        data.competitionDetails.end_time,
-      ),
-    },
-    {
       name: "zero hour",
       content: data.competitionDetails.begin_time.toLocaleString(),
     },
     {
       name: "final hour",
       content: data.competitionDetails.end_time.toLocaleString(),
+    },
+    {
+      name: "duration",
+      content: formatDuration(
+        data.competitionDetails.begin_time,
+        data.competitionDetails.end_time,
+      ),
     },
     {
       name: "Entry fee",
@@ -90,13 +93,18 @@ const CompetitionBrief = ({ data }: Props) => {
             </div>
           </div>
         ))}
-      </div>
-      <div className="flex w-full flex-col items-center -space-y-1 text-center">
+        <div className="flex w-full flex-col items-center -space-y-1 text-center">
           <div className={`text-xl font-light uppercase text-amber-400`}>
             problem statement
           </div>
-          TBU
-          {/* <Link
+          <div
+            className={`cursor-none text-2xl font-normal uppercase text-amber-50/[0.8] hover:underline`}
+          >
+            TBU
+          </div>
+        </div>
+      </div>
+      {/* <Link
             href={data.rulebook ?? "/"}
             className={`cursor-none text-2xl font-normal uppercase text-amber-50/[0.8] hover:underline`}
             onMouseEnter={() => setIsHovered(true)}
@@ -105,7 +113,6 @@ const CompetitionBrief = ({ data }: Props) => {
           >
             click to access
           </Link> */}
-        </div>
       {/* <div className="relative flex h-12 w-full flex-col justify-center overflow-clip border-t-2 border-amber-50 bg-amber-50/[0.7] text-2xl font-normal uppercase text-neutral-900">
         <MarqueeContainer
           text={[
