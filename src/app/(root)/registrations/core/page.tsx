@@ -61,8 +61,6 @@ const ApprovalPage = () => {
   if (isLoading) return <Loader />;
   if (error) return <div>Error: {error.message}</div>;
 
-  //TODO: (Optional) Some good guy add a loader on the page while handleAccept or handleReject functions are running so that its clear to finance team that they are running and they donot spam the buttons
-
   const handleAccept = () => {
     if (!selectedReg) return;
     verifyPayment.mutate(

@@ -82,11 +82,11 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
             <div className="text-6xl font-semibold uppercase tracking-wider lg:text-7xl lg:font-bold xl:text-8xl">
               {work.workshopDetails.name}
             </div>
-            <div
-              className={`${sharetech.className} max-w-screen-lg text-base tracking-tight text-amber-50 lg:text-lg`}
+            <pre
+              className={`${sharetech.className} max-w-screen-lg text-wrap text-base tracking-tight text-amber-50 lg:text-lg`}
             >
               {work.workshopDetails.description}
-            </div>
+            </pre>
             <div className="relative h-12 w-full bg-neutral-900">
               {loadingPlan ||
               work.workshopDetails.description === "coming soon" ? (

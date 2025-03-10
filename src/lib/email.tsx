@@ -31,7 +31,6 @@ export async function sendPaymentVerifyingEmail(
   amount: number,
 ) {
   try {
-    {/**TODO: go to google account of no-reply#xpecto.org and add xpecto pfp there. (Shubham bro plz) */}
     const { data } = await resend.emails.send({
       from: "XPECTO <no-reply@xpecto.org>",
       to: [email],

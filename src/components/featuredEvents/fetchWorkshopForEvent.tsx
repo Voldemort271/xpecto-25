@@ -141,7 +141,7 @@ const FetchWorkshops = () => {
             </h2>
 
             <p className="relative w-full text-center text-lg text-gray-300">
-              {upcomingWork.workshopDetails.description}
+              {upcomingWork.workshopDetails.description.slice(0, 150)}...
             </p>
             <div className="absolute flex flex-col items-start bottom-0 p-4 w-full text-xl text-white font-extrabold mt-6">
                 <div className="text-green-300">Starts</div> {new Date(upcomingWork.workshopDetails.begin_time).toLocaleString()}

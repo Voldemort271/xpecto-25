@@ -141,8 +141,6 @@ const SigninPage = () => {
     }
   };
 
-  //TODO: Make sure no one can sign-in directly without using the register page if they donot have an account from before so that no one can avoid giving thier numbers (or alternatively make sign-up as the default landing page when someone comes for registering or do both)
-
   return (
     <main className="relative flex max-w-[800px] flex-col items-center justify-center overflow-clip border-2 border-amber-50/[0.7] bg-neutral-900 md:min-w-[800px]">
       <div className="relative z-10 flex h-12 w-full items-center overflow-clip border-b-2 border-amber-50/[0.7] bg-neutral-900 text-2xl font-normal uppercase tracking-wider text-amber-50">

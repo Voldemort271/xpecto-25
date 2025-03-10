@@ -85,8 +85,8 @@ const WorkshopDetailsView = ({ data }: Props) => {
             delay: 0.25,
           }}
         >
-          {data?.workshopDetails.description ??
-            "No details provided for selected player."}
+          {data?.workshopDetails.description.slice(0, 150) ??
+            "No details provided for selected player."}...
         </motion.div>
         <div className="mb-5 h-[2px] w-full bg-amber-50/[0.5] backdrop-blur-2xl"></div>
         <motion.div

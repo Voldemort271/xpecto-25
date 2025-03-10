@@ -221,7 +221,6 @@ const SignupPage = () => {
 
       {!givingPhoneNum && (
         <>
-          {/**TODO: Need a back button here as per design to go back to the mobile num screen */}
           <div className="grid w-full grid-cols-1 gap-5 p-5 sm:grid-cols-2">
             <button
               onClick={() => signUpWith("oauth_google")}
