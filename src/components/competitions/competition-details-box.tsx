@@ -61,18 +61,28 @@ const CompetitionDetailsBox = ({ comp }: { comp: CompetitionWithDetails }) => {
   useEffect(() => {
     let flag = false;
     for (let i = 0; i < comp?.competitionDetails.regPlans.length; i++) {
-      if (comp?.competitionDetails.regPlans[i]?.price === 0) {
-        setRegPrice(0);
-        setRegPlanId(comp?.competitionDetails.regPlans[i]?.id ?? "");
-        flag = true;
-        break;
-      }
+      if (
+        CurrentUser &&
+        CurrentUser.id !== "" &&
+        CurrentUser.accomodation &&
+        comp?.competitionDetails.regPlans[i]?.price !== 0
+      )
+        continue;
+      if (
+        (!CurrentUser || CurrentUser.id === "" || !CurrentUser.accomodation) &&
+        comp?.competitionDetails.regPlans[i]?.price === 0
+      )
+        continue;
+      setRegPrice(comp?.competitionDetails.regPlans[i]?.price ?? 0);
+      setRegPlanId(comp?.competitionDetails.regPlans[i]?.id ?? "");
+      flag = true;
+      break;
     }
     if (!flag) {
       setRegPrice(comp?.competitionDetails.regPlans[0]?.price ?? 0);
       setRegPlanId(comp?.competitionDetails.regPlans[0]?.id ?? "");
     }
-  }, [comp]);
+  }, [comp, CurrentUser]);
 
   return (
     <>
