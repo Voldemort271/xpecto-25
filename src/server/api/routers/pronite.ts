@@ -65,4 +65,82 @@ export const proniteRouter = createTRPCRouter({
       });
       return pronites ?? null;
     }),
+
+    getPastPronites: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const pastPronites = await ctx.db.pronite.findMany({
+        where: {
+          proniteDetails: {
+            end_time: {
+              lte: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          proniteDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          proniteDetails: {
+            end_time: "desc",
+          },
+        },
+      });
+      return pastPronites;
+    }),
+
+  getUpcomingPronites: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const upcomingPronites = await ctx.db.pronite.findMany({
+        where: {
+          proniteDetails: {
+            begin_time: {
+              gt: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          proniteDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          proniteDetails: {
+            begin_time: "asc",
+          },
+        },
+      });
+      return upcomingPronites;
+    }),
+
+  getOngoingPronites: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const ongoingPronites = await ctx.db.pronite.findMany({
+        where: {
+          proniteDetails: {
+            begin_time: {
+              lte: new Date(input.date),
+            },
+            end_time: {
+              gte: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          proniteDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          proniteDetails: {
+            begin_time: "desc",
+          },
+        },
+      });
+      return ongoingPronites;
+    }),
 });

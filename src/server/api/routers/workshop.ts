@@ -79,4 +79,82 @@ export const workshopRouter = createTRPCRouter({
       });
       return workshop ?? null;
     }),
+
+    getPastWorkshops: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const pastWorkshops = await ctx.db.workshops.findMany({
+        where: {
+          workshopDetails: {
+            end_time: {
+              lte: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          workshopDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          workshopDetails: {
+            end_time: "desc",
+          },
+        },
+      });
+      return pastWorkshops;
+    }),
+
+  getUpcomingWorkshops: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const upcomingWorkshops = await ctx.db.workshops.findMany({
+        where: {
+          workshopDetails: {
+            begin_time: {
+              gt: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          workshopDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          workshopDetails: {
+            begin_time: "asc",
+          },
+        },
+      });
+      return upcomingWorkshops;
+    }),
+
+  getOngoingWorkshops: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const ongoingWorkshops = await ctx.db.workshops.findMany({
+        where: {
+          workshopDetails: {
+            begin_time: {
+              lte: new Date(input.date),
+            },
+            end_time: {
+              gte: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          workshopDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          workshopDetails: {
+            begin_time: "desc",
+          },
+        },
+      });
+      return ongoingWorkshops;
+    }),
 });

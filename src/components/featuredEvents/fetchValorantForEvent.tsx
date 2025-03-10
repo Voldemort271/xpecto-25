@@ -5,9 +5,10 @@ import React from "react";
 const FetchValorantTournament = () => {
   return (
     <div
-      className="relative flex flex-col items-center w-full py-10 bg-cover bg-center"
+      className="relative flex flex-col items-center justify-center h-[80lvh] w-full py-10 bg-cover bg-center"
       style={{ backgroundImage: "url('https://res.cloudinary.com/diqdg481x/image/upload/v1741510741/China_CG_phxcool_fullres_zp7tye.jpg')" }}
     >
+      {/**TODO: Someone needs to add epic animations to this card. It should look dope (add hover animations) Also text inside needs fixing*/}
       <div className="flex flex-col items-center w-4/5 md:w-3/4 lg:w-2/3 bg-black/80 p-6 rounded-lg shadow-lg border border-red-600">
         <h2 className="text-4xl font-bold text-red-500 mb-4 text-center">
           VALORANT CHAMPIONS SHOWDOWN 2025

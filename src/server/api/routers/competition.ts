@@ -94,5 +94,82 @@ export const competitionRouter = createTRPCRouter({
       return competition ?? null;
     }),
 
+  getPastCompetitions: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const pastCompetitions = await ctx.db.competition.findMany({
+        where: {
+          competitionDetails: {
+            end_time: {
+              lte: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          competitionDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          competitionDetails: {
+            end_time: "desc",
+          },
+        },
+      });
+      return pastCompetitions;
+    }),
+
+  getUpcomingCompetitions: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const upcomingCompetitions = await ctx.db.competition.findMany({
+        where: {
+          competitionDetails: {
+            begin_time: {
+              gt: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          competitionDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          competitionDetails: {
+            begin_time: "asc",
+          },
+        },
+      });
+      return upcomingCompetitions;
+    }),
+
+  getOngoingCompetitions: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const ongoingCompetitions = await ctx.db.competition.findMany({
+        where: {
+          competitionDetails: {
+            begin_time: {
+              lte: new Date(input.date),
+            },
+            end_time: {
+              gte: new Date(input.date),
+            },
+          },
+        },
+        include: {
+          competitionDetails: {
+            include: { regPlans: true },
+          },
+        },
+        orderBy: {
+          competitionDetails: {
+            begin_time: "desc",
+          },
+        },
+      });
+      return ongoingCompetitions;
+    }),
     
 });
