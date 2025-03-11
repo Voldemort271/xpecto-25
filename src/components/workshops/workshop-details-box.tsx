@@ -89,7 +89,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
             </pre>
             <div className="relative h-12 w-full bg-neutral-900">
               {loadingPlan ||
-              work.workshopDetails.description === "coming soon" ? (
+              work.workshopDetails.description.toLowerCase().includes("coming soon") ? (
                 <div
                   className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                 >

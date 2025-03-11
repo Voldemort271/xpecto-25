@@ -114,6 +114,12 @@ const ApprovalPage = () => {
                 <p className="text-xl">
                   <strong>Name:</strong> {reg.user.name}
                 </p>
+                <p className="text-xl">
+                  <strong>Email:</strong> {reg.user.email}
+                </p>
+                <p className="text-xl">
+                  <strong>Mobile:</strong> {reg.user.contact}
+                </p>
                 <div className="text-2xl">
                   <strong className="text-lg">Transaction ID:</strong>{" "}
                   {reg.paymentId}
