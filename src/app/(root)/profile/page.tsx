@@ -211,6 +211,7 @@ const Page = () => {
                         title="Please enter only numbers (0-9)"
                       />
                     </div>
+                    {!CurrentUser.college_name && (
                     <div>
                       <label
                         htmlFor="collegeName"
@@ -228,6 +229,7 @@ const Page = () => {
                         required
                       />
                     </div>
+                    )}
                     <div className="flex gap-2">
                       <button
                         type="submit"
