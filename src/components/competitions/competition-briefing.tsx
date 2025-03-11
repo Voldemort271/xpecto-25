@@ -27,11 +27,11 @@ const CompetitionBrief = ({ data }: Props) => {
     },
     {
       name: "zero hour",
-      content: data.competitionDetails.begin_time.toLocaleString(),
+      content: data.competitionDetails.begin_time.toUTCString(),
     },
     {
       name: "final hour",
-      content: data.competitionDetails.end_time.toLocaleString(),
+      content: data.competitionDetails.end_time.toUTCString(),
     },
     {
       name: "duration",
