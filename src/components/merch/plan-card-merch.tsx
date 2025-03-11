@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { $Enums, type Merch } from "@prisma/client";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import { useState } from "react";
 import MerchPaymentBox from "./payment-box-merch";
 import Image from "next/image";
 import {
@@ -17,119 +16,158 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const MerchPlanCard = ({ data }: { data: Merch }) => {
   const { setIsHovered } = useContext(CursorContext);
   const [selectedSize, setSelectedSize] = useState<string>($Enums.Size.S);
   const [quantity, setQuantity] = useState("");
+  const { isSignedIn } = useUser();
 
   return (
-    <div
-      className="relative z-0 col-span-3 flex flex-col items-center justify-start px-5 py-12 md:col-span-1"
-    >
-      <div className="text-5xl font-semibold uppercase text-amber-50 p-4">
-        {data.name}
-      </div>
+    <div className="xs:ml-4 relative z-0 col-span-3 ml-9 p-4 max-sm:ml-2 sm:ml-6 md:col-span-1">
+      <div className="flex h-full flex-col overflow-hidden rounded-lg border-2 border-amber-50/30 bg-black/40 backdrop-blur-sm transition-all duration-300 hover:border-amber-50/70 hover:shadow-lg hover:shadow-amber-50/20">
+        {/* Card Header */}
+        <div className="border-b border-amber-50/20 bg-gradient-to-r from-amber-50/10 to-transparent p-4">
+          <h2 className="text-center text-2xl font-bold uppercase tracking-wider text-amber-50 sm:text-3xl md:text-4xl">
+            {data.name}
+          </h2>
+        </div>
 
-      <Carousel>
-        <CarouselContent className="flex justify-left items-center">
-          {data.images.map((img, i) => (
-            <CarouselItem className="flex justify-center items-center" key={i}>
-              <Image
-                src={img}
-                alt={`merchImage`}
-                height={200}
-                width={200}
-                className="rounded-lg"
-              />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-        <div className="text-2xl font-light uppercase text-neutral-600 line-through">
-          ₹{data.price + 500}
-        </div>
-      <div className="mb-5 w-full bg-green-700/[0.1] px-5 py-2.5 text-center text-4xl font-normal uppercase text-green-400">
-        ₹{data.price}
-      </div>
-      <div className="flex w-full flex-row">
-        <div className="flex w-full gap-2 border-2">
-          <div className="flex w-full items-center justify-center">
-            <label
-              className={`block p-2 text-center align-middle text-lg font-bold uppercase text-amber-50 ${shareTech.className} px-3 tracking-tight`}
-            >
-              Size
-            </label>
-            <select
-              value={selectedSize}
-              onChange={(e) => setSelectedSize(e.target.value)}
-              className={`block h-full w-full bg-amber-50 text-center text-2xl text-neutral-800 ${shareTech.className} tracking-tight`}
-            >
-              {Object.keys($Enums.Size).map((a, i) => (
-                <option key={i} className="bg-amber-50 text-neutral-800">
-                  {a}
-                </option>
-              ))}
-            </select>
+        {/* Card Content */}
+        <div className="flex flex-grow flex-col space-y-4 p-3 sm:space-y-6 sm:p-4">
+          {/* Carousel */}
+          <div className="relative mx-auto w-full max-w-xs px-4 sm:px-6 md:px-10">
+            <Carousel className="w-full">
+              <CarouselContent className="xs:h-44 h-40 sm:h-56 md:h-64">
+                {data.images.map((img, i) => (
+                  <CarouselItem
+                    key={i}
+                    className="flex items-center justify-center"
+                  >
+                    <div className="flex h-full w-full items-center justify-center p-1">
+                      <Image
+                        src={img}
+                        alt={`${data.name} image ${i + 1}`}
+                        height={200}
+                        width={200}
+                        className="max-h-full rounded-md object-contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+
+              {/* Theme-aware Carousel navigation */}
+              <div className="absolute inset-y-0 left-0 flex items-center">
+                <CarouselPrevious className="xs:h-6 xs:w-6 bg-background/80 hover:bg-background border-muted-foreground/20 ml-0.5 h-5 w-5 rounded-full shadow-sm transition-all duration-300 hover:shadow-md dark:text-white sm:h-7 sm:w-7 md:h-8 md:w-8" />
+              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center">
+                <CarouselNext className="xs:h-6 xs:w-6 bg-background/80 hover:bg-background border-muted-foreground/20 mr-0.5 h-5 w-5 rounded-full shadow-sm transition-all duration-300 hover:shadow-md dark:text-white sm:h-7 sm:w-7 md:h-8 md:w-8" />
+              </div>
+            </Carousel>
           </div>
-          <div className="flex w-full items-center justify-center gap-2">
-            <label
-              className={`p-2 text-lg font-bold uppercase text-amber-50 ${shareTech.className} tracking-tight`}
-            >
-              Quantity
-            </label>
-            <input
-              placeholder="0"
-              id="size"
-              style={{ color: "black" }}
-              type="text"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              className={`${shareTech.className} block h-full w-full bg-amber-50 text-center text-2xl tracking-tight text-neutral-800`}
-            />
+
+          {/* Price Section */}
+          <div className="space-y-1 text-center">
+            <div className="text-lg font-light text-neutral-500 line-through sm:text-xl">
+              ₹{data.price + 500}
+            </div>
+            <div className="mx-auto inline-block rounded-md border border-green-500/30 bg-green-700/20 px-3 py-1.5 sm:px-4 sm:py-2">
+              <span className="text-2xl font-semibold text-green-400 sm:text-3xl">
+                ₹{data.price}
+              </span>
+            </div>
           </div>
-        </div>
-      </div>
-      {useUser().isSignedIn ? (
-        <Dialog>
-          <DialogTrigger asChild>
-            <div style={{ marginTop: "2rem" }}>
-              <div
-                className="justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                buy
+
+          {/* Size and Quantity Section */}
+          <div className="mt-auto flex flex-col gap-2 sm:flex-row sm:gap-3">
+            <div className="flex-1 overflow-hidden rounded border border-amber-50/30">
+              <div className="flex flex-col">
+                <label
+                  className={`${shareTech.className} bg-amber-50/10 px-2 py-1 text-center text-xs font-bold uppercase text-amber-50 sm:px-3 sm:text-sm`}
+                >
+                  Size
+                </label>
+                <select
+                  value={selectedSize}
+                  onChange={(e) => setSelectedSize(e.target.value)}
+                  className={`${shareTech.className} w-full appearance-none bg-amber-50 px-2 py-1 text-center text-base text-neutral-800 sm:text-lg`}
+                >
+                  {Object.keys($Enums.Size).map((size) => (
+                    <option key={size} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-          </DialogTrigger>
-          <MerchPaymentBox
-            price={data.price}
-            merchIds={[data.id]}
-            sizes={[selectedSize]}
-            quantity={quantity && quantity !== "" ? parseInt(quantity) : 0}
-          />
-        </Dialog>
-      ) : (
-        <div style={{ marginTop: "2rem" }}>
-          <Link
-            href={"/sign-in"}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="w-full justify-center self-end border-2 border-amber-50 bg-amber-50/[0.7] px-5 text-2xl uppercase text-neutral-900 hover:underline"
-          >
-            buy
-          </Link>
+
+            <div className="flex-1 overflow-hidden rounded border border-amber-50/30">
+              <div className="flex flex-col">
+                <label
+                  className={`${shareTech.className} bg-amber-50/10 px-2 py-1 text-center text-xs font-bold uppercase text-amber-50 sm:px-3 sm:text-sm`}
+                >
+                  Quantity
+                </label>
+                <input
+                  type="text"
+                  placeholder="0"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  className={`${shareTech.className} w-full bg-amber-50 px-2 py-1 text-center text-base text-neutral-800 sm:text-lg`}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      )}
-      {/* <div
-        className={`whitespace-pre-wrap py-5 ${shareTech.className} text-lg tracking-tight w-full`}
-      >
-        {data.desc}
-      </div> */}
+
+        {/* Card Footer */}
+        <div className="p-3 pt-0 sm:p-4">
+          {isSignedIn ? (
+            <Dialog>
+              <DialogTrigger asChild>
+                <button
+                  className="w-full rounded border border-amber-50 bg-gradient-to-r from-amber-50/80 to-amber-50/70 py-1.5 text-lg font-bold uppercase text-neutral-900 transition-all duration-300 hover:from-amber-50/90 hover:to-amber-50/80 hover:shadow-md sm:py-2 sm:text-xl"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  Buy Now
+                </button>
+              </DialogTrigger>
+              <MerchPaymentBox
+                price={data.price}
+                merchIds={[data.id]}
+                sizes={[selectedSize]}
+                quantity={quantity && quantity !== "" ? parseInt(quantity) : 0}
+              />
+            </Dialog>
+          ) : (
+            <Link
+              href="/sign-in"
+              className="block w-full rounded border border-amber-50 bg-gradient-to-r from-amber-50/80 to-amber-50/70 py-1.5 text-center text-lg font-bold uppercase text-neutral-900 transition-all duration-300 hover:from-amber-50/90 hover:to-amber-50/80 hover:shadow-md sm:py-2 sm:text-xl"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              Buy
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// This component would be used to display multiple MerchPlanCards in a grid
+export const MerchGrid = ({ merchItems }: { merchItems: Merch[] }) => {
+  return (
+    <div className="container mx-auto px-2 py-6 sm:px-4 sm:py-8">
+      <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {merchItems.map((item) => (
+          <MerchPlanCard key={item.id} data={item} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -7,6 +7,10 @@ import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import MerchCard from "@/components/home/merch-card";
 import { motion } from "motion/react";
+import merch_1 from "public/images/merch_1.jpeg";
+import merch_2 from "public/images/merch_2.jpeg";
+import merch_3 from "public/images/merch_3.jpeg";
+import merch_4 from "public/images/merch_4.png";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -53,10 +57,10 @@ const MerchPromo = () => {
           go to store
         </Link>
       </div>
-      <MerchCard />
-      <MerchCard />
-      <MerchCard />
-      <MerchCard />
+      <MerchCard merchImage={merch_4} alt="Merch item 4" />
+      <MerchCard merchImage={merch_1} alt="Merch item 1" />
+      <MerchCard merchImage={merch_2} alt="Merch item 2" />
+      <MerchCard merchImage={merch_3} alt="Merch item 3" />
     </div>
   );
 };
