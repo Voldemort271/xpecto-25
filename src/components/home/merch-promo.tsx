@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 import merch_1 from "public/images/merch_1.jpeg";
 import merch_2 from "public/images/merch_2.jpeg";
 import merch_3 from "public/images/merch_3.jpeg";
-import merch_4 from "public/images/merch_4.png";
+import merch_4 from "public/images/merch_4.jpeg";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 

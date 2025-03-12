@@ -46,9 +46,9 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
         {/* Card Content */}
         <div className="flex flex-grow flex-col space-y-4 p-3 sm:space-y-6 sm:p-4">
           {/* Carousel */}
-          <div className="relative mx-auto w-full max-w-sm px-4 sm:px-6 md:px-10">
+          <div className="relative mx-auto w-full max-w-xl px-4 sm:px-6 md:px-8">
             <Carousel className="w-full">
-              <CarouselContent className="xs:h-44 h-40 sm:h-56 md:h-64">
+              <CarouselContent className="xs:h-64 h-56 sm:h-72 md:h-96">
                 {data.images.map((img, i) => (
                   <CarouselItem
                     key={i}
@@ -58,9 +58,10 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
                       <Image
                         src={img}
                         alt={`${data.name} image ${i + 1}`}
-                        height={200}
-                        width={200}
+                        height={500}
+                        width={500}
                         className="max-h-full rounded-md object-contain"
+                        priority
                       />
                     </div>
                   </CarouselItem>
@@ -69,10 +70,10 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
 
               {/* Theme-aware Carousel navigation */}
               <div className="absolute inset-y-0 left-0 flex items-center">
-                <CarouselPrevious className="xs:h-6 xs:w-6 bg-background/80 hover:bg-background border-muted-foreground/20 ml-0.5 h-5 w-5 rounded-full shadow-sm transition-all duration-300 hover:shadow-md dark:text-white sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                <CarouselPrevious className="xs:h-8 xs:w-8 bg-background/80 hover:bg-background border-muted-foreground/20 ml-2 h-7 w-7 rounded-full shadow-sm transition-all duration-300 hover:shadow-md dark:text-white sm:h-9 sm:w-9 md:h-10 md:w-10" />
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center">
-                <CarouselNext className="xs:h-6 xs:w-6 bg-background/80 hover:bg-background border-muted-foreground/20 mr-0.5 h-5 w-5 rounded-full shadow-sm transition-all duration-300 hover:shadow-md dark:text-white sm:h-7 sm:w-7 md:h-8 md:w-8" />
+                <CarouselNext className="xs:h-8 xs:w-8 bg-background/80 hover:bg-background border-muted-foreground/20 mr-2 h-7 w-7 rounded-full shadow-sm transition-all duration-300 hover:shadow-md dark:text-white sm:h-9 sm:w-9 md:h-10 md:w-10" />
               </div>
             </Carousel>
           </div>
@@ -225,7 +226,7 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
 export const MerchGrid = ({ merchItems }: { merchItems: Merch[] }) => {
   return (
     <div className="container mx-auto px-2 py-6 sm:px-4 sm:py-8">
-      <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
         {merchItems.map((item) => (
           <MerchPlanCard key={item.id} data={item} />
         ))}
