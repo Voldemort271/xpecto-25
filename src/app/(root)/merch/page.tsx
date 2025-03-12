@@ -6,6 +6,7 @@ import Image from "next/image";
 import MerchPlanCard from "@/components/merch/plan-card-merch";
 import Loader from "@/components/common/loader";
 import sizeChart from "public/images/size_chart.jpeg";
+import merch_4 from "public/images/merch_4.jpeg";
 import { Share_Tech } from "next/font/google";
 import {
   Dialog,
@@ -96,9 +97,9 @@ const Page = () => {
 
   return (
     <>
-      <div className="relative flex min-h-screen justify-evenly bg-neutral-900">
-        {/* Hero Section */}
-        <div className="relative z-0 col-span-3 flex min-h-96 flex-col items-center justify-center overflow-hidden border-2 border-amber-50 px-12 py-24 uppercase text-amber-50 shadow-xl">
+      <div className="relative flex min-h-screen bg-neutral-900">
+        {/* Hero Section - Responsive Ribbon */}
+        <div className="fixed left-0 top-0 z-10 flex h-screen w-16 flex-col items-center justify-center overflow-hidden border-2 border-amber-50 bg-neutral-900 px-4 py-8 uppercase text-amber-50 shadow-xl sm:w-24 sm:px-6 sm:py-10 md:w-32 md:px-8 md:py-12 lg:w-40 lg:px-10 lg:py-14 xl:w-48">
           <Image
             src={
               "https://res.cloudinary.com/diqdg481x/image/upload/v1739198119/images/iitmandi.jpg"
@@ -108,18 +109,17 @@ const Page = () => {
             alt={"College Pic"}
             className="absolute left-0 top-0 -z-10 h-full w-full object-cover object-center opacity-20 transition-opacity duration-500 hover:opacity-30"
           />
-          <div className="h-16"></div>
-          <div className="animate-fade-in-down text-9xl font-bold tracking-tight">
+          <div className="animate-fade-in-down text-lg font-bold tracking-tight sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
             Merch
           </div>
-          <div className="animate-fade-in-up mt-4 text-2xl font-light opacity-80">
+          <div className="animate-fade-in-up mt-2 hidden text-xs font-light opacity-80 sm:block sm:text-sm md:text-base lg:text-lg">
             Exclusive College Gear
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex flex-col justify-evenly overflow-y-auto px-6 py-12">
-          <div className="mx-auto mt-12 flex h-full w-full max-w-2xl flex-col items-center justify-center gap-12 rounded-xl border-2 border-amber-50/50 bg-neutral-800/50 p-8 shadow-lg backdrop-blur-sm">
+        {/* Main Content - Adjusted with left margin to make room for fixed ribbon */}
+        <div className="ml-20 flex flex-1 flex-col justify-evenly overflow-y-auto px-6 py-12">
+          <div className="mx-auto mt-12 flex h-full w-full max-w-4xl flex-col items-center justify-center gap-12 rounded-xl border-2 border-amber-50/50 bg-neutral-800/50 p-8 shadow-lg backdrop-blur-sm">
             <div className="flex w-full flex-col justify-center gap-4 sm:flex-row">
               {/* Original Combo Box Button */}
               <Dialog>
@@ -164,10 +164,14 @@ const Page = () => {
                 {/* Dialog Content (Shared by Both Buttons) */}
                 <DialogContent className="max-h-[80vh] overflow-y-auto rounded-xl border border-amber-50/20 bg-neutral-900/95 shadow-2xl">
                   <DialogHeader>
-                    <DialogTitle className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}>
+                    <DialogTitle
+                      className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}
+                    >
                       Customize Your Combo
                     </DialogTitle>
-                    <DialogDescription className={`${shareTech.className} text-amber-100/70`}>
+                    <DialogDescription
+                      className={`${shareTech.className} text-amber-100/70`}
+                    >
                       Pick your merch, sizes, and quantity for the best deal.
                     </DialogDescription>
                   </DialogHeader>
@@ -175,7 +179,9 @@ const Page = () => {
                   {/* Size Chart Dialog */}
                   <Dialog>
                     <DialogTrigger asChild>
-                      <button className={`${shareTech.className} absolute right-12 top-6 flex items-center gap-1 rounded-md border border-amber-50/30 bg-amber-50/10 px-2 py-1 text-sm font-medium text-amber-50 transition-all duration-200 hover:bg-amber-50/20`}>
+                      <button
+                        className={`${shareTech.className} absolute right-9 top-6 flex items-center gap-1 rounded-md border border-amber-50/30 bg-amber-50/10 px-2 py-1 text-sm font-medium text-amber-50 transition-all duration-200 hover:bg-amber-50/20 sm:right-12 lg:right-12`}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -196,10 +202,14 @@ const Page = () => {
                     </DialogTrigger>
                     <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto rounded-xl border border-amber-50/20 bg-neutral-900/95 shadow-2xl">
                       <DialogHeader>
-                        <DialogTitle className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}>
+                        <DialogTitle
+                          className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}
+                        >
                           Size Chart
                         </DialogTitle>
-                        <DialogDescription className={`${shareTech.className} text-amber-100/70`}>
+                        <DialogDescription
+                          className={`${shareTech.className} text-amber-100/70`}
+                        >
                           Find your perfect fit with our comprehensive size
                           chart.
                         </DialogDescription>
@@ -215,7 +225,9 @@ const Page = () => {
                         />
                       </div>
 
-                      <div className={` ${shareTech.className} mt-4 space-y-4 text-amber-50/80`}>
+                      <div
+                        className={` ${shareTech.className} mt-4 space-y-4 text-amber-50/80`}
+                      >
                         Please measure yourself carefully before selecting a
                         size
                       </div>
@@ -225,20 +237,28 @@ const Page = () => {
                   {/* Price Summary Card - Visible throughout selection process */}
                   <div className="mb-6 rounded-lg border border-amber-50/10 bg-neutral-800/50 p-4 shadow-inner">
                     <div className="flex justify-between">
-                      <div className={`${shareTech.className} text-sm font-medium text-amber-50/80`}>
+                      <div
+                        className={`${shareTech.className} text-sm font-medium text-amber-50/80`}
+                      >
                         Combo Savings:
                       </div>
-                      <div className="text-sm font-medium text-green-400">
+                      <div
+                        className={`${shareTech.className} text-sm font-medium text-green-400`}
+                      >
                         {selectedMerch1Data && selectedMerch2Data
                           ? `₹${selectedMerch1Data.price + selectedMerch2Data.price - (discountedPrice1 + discountedPrice2)}`
                           : "₹0"}
                       </div>
                     </div>
                     <div className="mt-2 flex justify-between">
-                      <div className={`${shareTech.className} text-lg font-bold text-amber-50`}>
+                      <div
+                        className={`${shareTech.className} text-lg font-bold text-amber-50`}
+                      >
                         Total Price:
                       </div>
-                      <div className="text-xl font-bold text-green-400">
+                      <div
+                        className={`${shareTech.className} text-xl font-bold text-green-400`}
+                      >
                         ₹{netPrice}
                       </div>
                     </div>
@@ -247,7 +267,9 @@ const Page = () => {
                   <div className="grid gap-6 md:grid-cols-2">
                     {/* First Item Selection */}
                     <div className="rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
-                      <h3 className={`${shareTech.className} mb-3 text-center text-lg font-bold uppercase tracking-wide text-amber-50`}>
+                      <h3
+                        className={`${shareTech.className} mb-3 text-center text-lg font-bold uppercase tracking-wide text-amber-50`}
+                      >
                         First Item
                       </h3>
 
@@ -256,16 +278,16 @@ const Page = () => {
                         onChange={(e) =>
                           handleMerchChange(e, setSelectedMerch1)
                         }
-                        className="mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                        className={`${shareTech.className} mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300`}
                       >
-                        <option className={`${shareTech.className}`} value="" disabled>
+                        <option value="" disabled>
                           Select merch
                         </option>
                         {merch?.map((option, i) => (
                           <option
                             key={i}
                             value={option.name}
-                            className={` ${shareTech.className} bg-amber-50 text-neutral-800`}
+                            className="bg-amber-50 text-neutral-800"
                           >
                             {option.name}
                           </option>
@@ -287,7 +309,9 @@ const Page = () => {
                           </div>
 
                           <div className="flex w-full items-center justify-between rounded-md bg-neutral-700/50 px-3 py-1">
-                            <span className={`${shareTech.className} text-sm text-amber-50/80`}>
+                            <span
+                              className={`${shareTech.className} text-sm text-amber-50/80`}
+                            >
                               Original:
                             </span>
                             <span className="text-sm text-neutral-500 line-through">
@@ -303,9 +327,13 @@ const Page = () => {
                             onChange={(e) =>
                               handleSizeChange(e, setSelectedSize1)
                             }
-                            className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                            className={`${shareTech.className} block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300`}
                           >
-                            <option className={`${shareTech.className}`} value="" disabled>
+                            <option
+                              className={`${shareTech.className}`}
+                              value=""
+                              disabled
+                            >
                               Select size
                             </option>
                             {Object.keys($Enums.Size).map((size, i) => (
@@ -324,7 +352,9 @@ const Page = () => {
 
                     {/* Second Item Selection */}
                     <div className="rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
-                      <h3 className={`${shareTech.className} mb-3 text-center text-lg font-bold uppercase tracking-wide text-amber-50`}>
+                      <h3
+                        className={`${shareTech.className} mb-3 text-center text-lg font-bold uppercase tracking-wide text-amber-50`}
+                      >
                         Second Item
                       </h3>
 
@@ -333,9 +363,9 @@ const Page = () => {
                         onChange={(e) =>
                           handleMerchChange(e, setSelectedMerch2)
                         }
-                        className="mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                        className={`${shareTech.className} mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300`}
                       >
-                        <option className={`${shareTech.className}`} value="" disabled>
+                        <option value="" disabled>
                           Select merch
                         </option>
                         {merch?.map((option, i) => (
@@ -364,7 +394,9 @@ const Page = () => {
                           </div>
 
                           <div className="flex w-full items-center justify-between rounded-md bg-neutral-700/50 px-3 py-1">
-                            <span className={`${shareTech.className} text-sm text-amber-50/80`}>
+                            <span
+                              className={`${shareTech.className} text-sm text-amber-50/80`}
+                            >
                               Original:
                             </span>
                             <span className="text-sm text-neutral-500 line-through">
@@ -380,9 +412,13 @@ const Page = () => {
                             onChange={(e) =>
                               handleSizeChange(e, setSelectedSize2)
                             }
-                            className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                            className={`${shareTech.className} block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300`}
                           >
-                            <option className={`${shareTech.className}`} value="" disabled>
+                            <option
+                              className={`${shareTech.className}`}
+                              value=""
+                              disabled
+                            >
                               Select size
                             </option>
                             {Object.keys($Enums.Size).map((size, i) => (
@@ -403,7 +439,9 @@ const Page = () => {
                   {/* Quantity Selector */}
                   <div className="mt-6 rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
                     <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-                      <label className={` ${shareTech.className} text-lg font-bold uppercase tracking-wide text-amber-50`}>
+                      <label
+                        className={` ${shareTech.className} text-lg font-bold uppercase tracking-wide text-amber-50`}
+                      >
                         Quantity
                       </label>
                       <div className="flex w-full max-w-xs items-center rounded-lg bg-neutral-700/50 sm:w-1/2">
@@ -435,10 +473,14 @@ const Page = () => {
                   {/* Order Summary */}
                   {selectedMerch1Data && selectedMerch2Data && (
                     <div className="animate-fade-in mt-6 rounded-lg border border-amber-50/20 bg-gradient-to-r from-amber-900/20 to-neutral-800/30 p-4">
-                      <h3 className={`${shareTech.className} mb-2 text-center text-xl font-bold uppercase tracking-wide text-amber-50`}>
+                      <h3
+                        className={`${shareTech.className} mb-2 text-center text-xl font-bold uppercase tracking-wide text-amber-50`}
+                      >
                         Order Summary
                       </h3>
-                      <div className="space-y-2 divide-y divide-amber-50/10">
+                      <div
+                        className={`${shareTech.className} space-y-2 divide-y divide-amber-50/10`}
+                      >
                         <div className="flex justify-between py-1">
                           <span className="text-amber-50/80">
                             {selectedMerch1} ({selectedSize1})
@@ -482,7 +524,11 @@ const Page = () => {
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                           >
-                            <span className={`${shareTech.className} relative z-10`}>Buy Now</span>
+                            <span
+                              className={`${shareTech.className} relative z-10`}
+                            >
+                              Buy Now
+                            </span>
                             <span className="absolute bottom-0 left-0 h-0 w-full bg-gradient-to-r from-amber-300 to-amber-200 transition-all duration-300 group-hover:h-full"></span>
                           </button>
                         </DialogTrigger>
@@ -504,7 +550,11 @@ const Page = () => {
                         onMouseLeave={() => setIsHovered(false)}
                       >
                         <div className="flex items-center justify-center">
-                          <span className={`${shareTech.className} relative z-10`}>Buy</span>
+                          <span
+                            className={`${shareTech.className} relative z-10`}
+                          >
+                            Buy
+                          </span>
                         </div>
                         <span className="absolute bottom-0 left-0 h-0 w-full bg-gradient-to-r from-amber-300 to-amber-200 transition-all duration-300 group-hover:h-full"></span>
                       </Link>
@@ -517,9 +567,9 @@ const Page = () => {
             {/* Combo Offer Image */}
             <div className="group relative mb-6 flex w-full items-center justify-center overflow-hidden rounded-xl">
               <Image
-                src={`https://res.cloudinary.com/diqdg481x/image/upload/v1741457501/jyhxzwti4jvlui216cnw.png`}
-                height={320}
-                width={320}
+                src={merch_4}
+                height={500}
+                width={500}
                 alt={`Special Combo Offer`}
                 className="z-0 transform rounded-lg shadow-lg transition-transform duration-500 group-hover:scale-110"
               />
