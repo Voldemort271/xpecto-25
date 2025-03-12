@@ -16,7 +16,7 @@ const DystopianNav = () => {
   const { CurrentUser, isLoading } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
   const path = usePathname();
-  const animationDelay = path === "/" ? 6 : 0;
+  const animationDelay = 0;
 
   // Extract userId from CurrentUser
   const loggedInUserId = CurrentUser?.id ?? ""; // Default to empty string if not logged in
