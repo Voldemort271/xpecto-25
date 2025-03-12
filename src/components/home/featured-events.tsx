@@ -3,7 +3,7 @@
 import React from "react";
 import FetchCompetitions from "@/components/featuredEvents/fetchCompForEvent";
 import FetchExpos from "@/components/featuredEvents/fetchExpoForEvent";
-import FetchPronites from "@/components/featuredEvents/fetchProniteForEvent";
+// import FetchPronites from "@/components/featuredEvents/fetchProniteForEvent";
 import FetchWorkshops from "@/components/featuredEvents/fetchWorkshopForEvent";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -30,8 +30,11 @@ const FeaturedEvents = () => {
           <CarouselItem key={index}>{Component}</CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute z-10 bg-neutral-900 text-amber-50 size-20 my-auto ml-6 left-0"/>
-      <CarouselNext className="absolute z-10 bg-neutral-900 text-amber-50 size-20 my-auto mr-6 right-0"/>
+    
+    <CarouselPrevious className="absolute z-10 bg-neutral-900 border border-gray-600 rounded-lg w-28 h-14 shadow-md hover:bg-neutral-700 hover:border-gray-400 hover:shadow-lg active:scale-95 transition-all duration-300 left-6" />
+    <CarouselNext className="absolute z-10 bg-neutral-900 border border-gray-600 rounded-lg w-28 h-14 shadow-md hover:bg-neutral-700 hover:border-gray-400 hover:shadow-lg active:scale-95 transition-all duration-300 right-6" />
+
+
     </Carousel>
   );
 };

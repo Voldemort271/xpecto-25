@@ -8,6 +8,13 @@ import StaticImg from "public/images/img.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatDateToHour } from "../../lib/utils";
+import { motion } from "motion/react";
+
+const keyframes = {
+  flicker: {
+    opacity: [0, 1, 0.3, 0.7, 0.3, 1, 0.3, 1, 0.3, 1, 0.3, 1],
+  },
+};
 
 const FetchExpos = () => {
   const router = useRouter();
@@ -99,6 +106,22 @@ const FetchExpos = () => {
     return () => clearInterval(interval);
   }, [ongoingIndex, ongoingExpos]);
 
+  // This ensures animation is started only when that particular competition is loaded
+  const [aniKeyUp, setAniKeyUp] = useState(0);
+  const [aniKeyOn, setAniKeyOn] = useState(0);
+  const [aniKeyPast, setAniKeyPast] = useState(0);
+  useEffect(()=>{
+    setAniKeyUp(prev => prev+1);
+  }, [upcomingExpo]);
+
+  useEffect(()=>{
+    setAniKeyOn(prev => prev+1);
+  },[ongoingExpo]);
+
+  useEffect(()=>{
+    setAniKeyPast(prev => prev+1);
+  }, [pastExpo]);
+
   //TODO: Add some loader. I have no idea why the given loader is not Expoing. It would be great if it can appear with a glitch animation
 
   if (pastLoading || upcomingLoading || ongoingLoading)
@@ -118,7 +141,7 @@ const FetchExpos = () => {
       </h1>
       <div className="relative h-full w-full justify-center max-lg:flex-col lg:flex">
         {upcomingExpo && (
-          <div
+          <motion.div
             onClick={() =>
               router.push(`/expos/${upcomingExpo.exposDetails.slug}`)
             }
@@ -130,6 +153,9 @@ const FetchExpos = () => {
                 ? "translate-x-5 opacity-50"
                 : "translate-x-0 opacity-100"
             }`}
+            animate="flicker"
+            key={`up-${aniKeyUp}`}
+            variants={keyframes}
           >
             <h1 className="relative mt-8 w-full p-10 text-start text-4xl text-green-300">
               Upcoming
@@ -145,10 +171,10 @@ const FetchExpos = () => {
               <div className="text-green-300">Starts</div>{" "}
               {new Date(upcomingExpo.exposDetails.begin_time).toLocaleString()}
             </div>
-          </div>
+          </motion.div>
         )}
         {ongoingExpo && (
-          <div
+          <motion.div
             onClick={() =>
               router.push(`/expos/${ongoingExpo.exposDetails.slug}`)
             }
@@ -160,6 +186,9 @@ const FetchExpos = () => {
                 ? "translate-x-5 opacity-50"
                 : "translate-x-0 opacity-100"
             }`}
+            animate="flicker"
+            key={`on-${aniKeyOn}`}
+            variants={keyframes}
           >
             <h1 className="mt-8 w-full p-10 text-start text-4xl text-red-300">
               Ongoing
@@ -177,11 +206,11 @@ const FetchExpos = () => {
               <div className="text-red-300">Ends</div>{" "}
               {new Date(ongoingExpo.exposDetails.end_time).toLocaleString()}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {pastExpo && (
-          <div
+          <motion.div
             onClick={() => router.push(`/expos/${pastExpo.exposDetails.slug}`)}
             style={{
               backgroundImage: `url(${typeof pastExpo.exposDetails.cover === "string" && pastExpo.exposDetails.cover !== "" ? pastExpo.exposDetails.cover : StaticImg.src})`,
@@ -191,6 +220,9 @@ const FetchExpos = () => {
                 ? "translate-x-5 opacity-50"
                 : "translate-x-0 opacity-100"
             }`}
+            animate="flicker"
+            key={`past-${aniKeyPast}`}
+            variants={keyframes}
           >
             <h1 className="mt-8 w-full p-10 text-start text-4xl text-blue-300">
               Completed
@@ -206,7 +238,7 @@ const FetchExpos = () => {
               <div className="text-blue-300">Finished on</div>{" "}
               {new Date(pastExpo.exposDetails.end_time).toLocaleString()}
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
     </div>
