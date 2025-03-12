@@ -5,6 +5,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import MerchPlanCard from "@/components/merch/plan-card-merch";
 import Loader from "@/components/common/loader";
+import sizeChart from "public/images/size_chart.jpeg";
+import { Share_Tech } from "next/font/google";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +21,8 @@ import MerchPaymentBox from "@/components/merch/payment-box-merch";
 import { CursorContext } from "@/context/cursor-context";
 import Link from "next/link";
 import { $Enums } from "@prisma/client";
+
+const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const Page = () => {
   const { data: merch, isLoading } = api.merch.getMerch.useQuery();
@@ -160,171 +164,326 @@ const Page = () => {
                 {/* Dialog Content (Shared by Both Buttons) */}
                 <DialogContent className="max-h-[80vh] overflow-y-auto rounded-xl border border-amber-50/20 bg-neutral-900/95 shadow-2xl">
                   <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold tracking-wide text-amber-50">
+                    <DialogTitle className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}>
                       Customize Your Combo
                     </DialogTitle>
-                    <DialogDescription className="text-amber-100/70">
+                    <DialogDescription className={`${shareTech.className} text-amber-100/70`}>
                       Pick your merch, sizes, and quantity for the best deal.
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="flex flex-col gap-6 py-4">
-                    {/* First Merch */}
-                    <div className="flex flex-col gap-3">
-                      <label className="text-lg font-bold uppercase tracking-wide text-amber-50">
-                        First Merch
-                      </label>
+
+                  {/* Size Chart Dialog */}
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button className={`${shareTech.className} absolute right-12 top-6 flex items-center gap-1 rounded-md border border-amber-50/30 bg-amber-50/10 px-2 py-1 text-sm font-medium text-amber-50 transition-all duration-200 hover:bg-amber-50/20`}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <rect width="18" height="18" x="3" y="3" rx="2" />
+                          <path d="M3 9h18" />
+                          <path d="M9 21V9" />
+                        </svg>
+                        Size Chart
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto rounded-xl border border-amber-50/20 bg-neutral-900/95 shadow-2xl">
+                      <DialogHeader>
+                        <DialogTitle className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}>
+                          Size Chart
+                        </DialogTitle>
+                        <DialogDescription className={`${shareTech.className} text-amber-100/70`}>
+                          Find your perfect fit with our comprehensive size
+                          chart.
+                        </DialogDescription>
+                      </DialogHeader>
+
+                      <div className="mt-4 overflow-hidden rounded-lg border border-amber-50/10">
+                        <Image
+                          src={sizeChart}
+                          width={800}
+                          height={600}
+                          alt="Size Chart"
+                          className="w-full"
+                        />
+                      </div>
+
+                      <div className={` ${shareTech.className} mt-4 space-y-4 text-amber-50/80`}>
+                        Please measure yourself carefully before selecting a
+                        size
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  {/* Price Summary Card - Visible throughout selection process */}
+                  <div className="mb-6 rounded-lg border border-amber-50/10 bg-neutral-800/50 p-4 shadow-inner">
+                    <div className="flex justify-between">
+                      <div className={`${shareTech.className} text-sm font-medium text-amber-50/80`}>
+                        Combo Savings:
+                      </div>
+                      <div className="text-sm font-medium text-green-400">
+                        {selectedMerch1Data && selectedMerch2Data
+                          ? `₹${selectedMerch1Data.price + selectedMerch2Data.price - (discountedPrice1 + discountedPrice2)}`
+                          : "₹0"}
+                      </div>
+                    </div>
+                    <div className="mt-2 flex justify-between">
+                      <div className={`${shareTech.className} text-lg font-bold text-amber-50`}>
+                        Total Price:
+                      </div>
+                      <div className="text-xl font-bold text-green-400">
+                        ₹{netPrice}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {/* First Item Selection */}
+                    <div className="rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
+                      <h3 className={`${shareTech.className} mb-3 text-center text-lg font-bold uppercase tracking-wide text-amber-50`}>
+                        First Item
+                      </h3>
+
                       <select
                         value={selectedMerch1}
                         onChange={(e) =>
                           handleMerchChange(e, setSelectedMerch1)
                         }
-                        className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-xl text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                        className="mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
                       >
-                        <option value="" disabled>
-                          Select a merch
+                        <option className={`${shareTech.className}`} value="" disabled>
+                          Select merch
                         </option>
                         {merch?.map((option, i) => (
                           <option
                             key={i}
                             value={option.name}
-                            className="bg-amber-50 text-neutral-800"
+                            className={` ${shareTech.className} bg-amber-50 text-neutral-800`}
                           >
                             {option.name}
                           </option>
                         ))}
                       </select>
-                    </div>
-                    {selectedMerch1Data && (
-                      <div className="animate-fade-in flex flex-col items-center gap-3">
-                        <Image
-                          src={selectedMerch1Data.images[0]?.toString() ?? ""}
-                          height={120}
-                          width={120}
-                          alt={`merchImage1`}
-                          className="transform rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
-                        />
-                        <div className="text-sm text-amber-50">
-                          Original: ₹{selectedMerch1Data.price} |{" "}
-                          <span className="text-green-400">
-                            Discounted: ₹{discountedPrice1}
-                          </span>
-                        </div>
-                        <select
-                          value={selectedSize1}
-                          onChange={(e) =>
-                            handleSizeChange(e, setSelectedSize1)
-                          }
-                          className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-xl text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
-                        >
-                          <option value="" disabled>
-                            Select a size
-                          </option>
-                          {Object.keys($Enums.Size).map((size, i) => (
-                            <option
-                              key={i}
-                              value={size}
-                              className="bg-amber-50 text-neutral-800"
-                            >
-                              {size}
+
+                      {selectedMerch1Data && (
+                        <div className="animate-fade-in flex flex-col items-center gap-3">
+                          <div className="group relative h-32 w-32 overflow-hidden rounded-lg">
+                            <Image
+                              src={
+                                selectedMerch1Data.images[0]?.toString() ?? ""
+                              }
+                              layout="fill"
+                              objectFit="cover"
+                              alt={`${selectedMerch1} preview`}
+                              className="transform transition-transform duration-300 group-hover:scale-110"
+                            />
+                          </div>
+
+                          <div className="flex w-full items-center justify-between rounded-md bg-neutral-700/50 px-3 py-1">
+                            <span className={`${shareTech.className} text-sm text-amber-50/80`}>
+                              Original:
+                            </span>
+                            <span className="text-sm text-neutral-500 line-through">
+                              ₹{selectedMerch1Data.price}
+                            </span>
+                            <span className="text-sm font-medium text-green-400">
+                              ₹{discountedPrice1}
+                            </span>
+                          </div>
+
+                          <select
+                            value={selectedSize1}
+                            onChange={(e) =>
+                              handleSizeChange(e, setSelectedSize1)
+                            }
+                            className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                          >
+                            <option className={`${shareTech.className}`} value="" disabled>
+                              Select size
                             </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                    {/* Second Merch */}
-                    <div className="flex flex-col gap-3">
-                      <label className="text-lg font-bold uppercase tracking-wide text-amber-50">
-                        Second Merch
-                      </label>
+                            {Object.keys($Enums.Size).map((size, i) => (
+                              <option
+                                key={i}
+                                value={size}
+                                className={`${shareTech.className} bg-amber-50 text-neutral-800`}
+                              >
+                                {size}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Second Item Selection */}
+                    <div className="rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
+                      <h3 className={`${shareTech.className} mb-3 text-center text-lg font-bold uppercase tracking-wide text-amber-50`}>
+                        Second Item
+                      </h3>
+
                       <select
                         value={selectedMerch2}
                         onChange={(e) =>
                           handleMerchChange(e, setSelectedMerch2)
                         }
-                        className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-xl text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                        className="mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
                       >
-                        <option value="" disabled>
-                          Select a merch
+                        <option className={`${shareTech.className}`} value="" disabled>
+                          Select merch
                         </option>
                         {merch?.map((option, i) => (
                           <option
                             key={i}
                             value={option.name}
-                            className="bg-amber-50 text-neutral-800"
+                            className={`${shareTech.className} bg-amber-50 text-neutral-800`}
                           >
                             {option.name}
                           </option>
                         ))}
                       </select>
-                    </div>
-                    {selectedMerch2Data && (
-                      <div className="animate-fade-in flex flex-col items-center gap-3">
-                        <Image
-                          src={selectedMerch2Data.images[0]?.toString() ?? ""}
-                          height={120}
-                          width={120}
-                          alt={`merchImage2`}
-                          className="transform rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
-                        />
-                        <div className="text-sm text-amber-50">
-                          Original: ₹{selectedMerch2Data.price} |{" "}
-                          <span className="text-green-400">
-                            Discounted: ₹{discountedPrice2}
-                          </span>
-                        </div>
-                        <select
-                          value={selectedSize2}
-                          onChange={(e) =>
-                            handleSizeChange(e, setSelectedSize2)
-                          }
-                          className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-xl text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
-                        >
-                          <option value="" disabled>
-                            Select a size
-                          </option>
-                          {Object.keys($Enums.Size).map((size, i) => (
-                            <option
-                              key={i}
-                              value={size}
-                              className="bg-amber-50 text-neutral-800"
-                            >
-                              {size}
+
+                      {selectedMerch2Data && (
+                        <div className="animate-fade-in flex flex-col items-center gap-3">
+                          <div className="group relative h-32 w-32 overflow-hidden rounded-lg">
+                            <Image
+                              src={
+                                selectedMerch2Data.images[0]?.toString() ?? ""
+                              }
+                              layout="fill"
+                              objectFit="cover"
+                              alt={`${selectedMerch2} preview`}
+                              className="transform transition-transform duration-300 group-hover:scale-110"
+                            />
+                          </div>
+
+                          <div className="flex w-full items-center justify-between rounded-md bg-neutral-700/50 px-3 py-1">
+                            <span className={`${shareTech.className} text-sm text-amber-50/80`}>
+                              Original:
+                            </span>
+                            <span className="text-sm text-neutral-500 line-through">
+                              ₹{selectedMerch2Data.price}
+                            </span>
+                            <span className="text-sm font-medium text-green-400">
+                              ₹{discountedPrice2}
+                            </span>
+                          </div>
+
+                          <select
+                            value={selectedSize2}
+                            onChange={(e) =>
+                              handleSizeChange(e, setSelectedSize2)
+                            }
+                            className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
+                          >
+                            <option className={`${shareTech.className}`} value="" disabled>
+                              Select size
                             </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                    {/* Quantity */}
-                    <div className="flex items-center gap-3">
-                      <label className="text-lg font-bold uppercase tracking-wide text-amber-50">
+                            {Object.keys($Enums.Size).map((size, i) => (
+                              <option
+                                key={i}
+                                value={size}
+                                className={` ${shareTech.className} bg-amber-50 text-neutral-800`}
+                              >
+                                {size}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Quantity Selector */}
+                  <div className="mt-6 rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
+                    <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                      <label className={` ${shareTech.className} text-lg font-bold uppercase tracking-wide text-amber-50`}>
                         Quantity
                       </label>
-                      <input
-                        type="number"
-                        value={quantity === 0 ? "" : quantity}
-                        onChange={(e) =>
-                          setQuantity(parseInt(e.target.value || "0"))
-                        }
-                        className="block w-full rounded-md bg-amber-50/90 p-2 text-center text-xl text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300"
-                        min="1"
-                      />
+                      <div className="flex w-full max-w-xs items-center rounded-lg bg-neutral-700/50 sm:w-1/2">
+                        <button
+                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                          className="rounded-l-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300"
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          value={quantity === 0 ? "" : quantity}
+                          onChange={(e) =>
+                            setQuantity(parseInt(e.target.value || "0"))
+                          }
+                          className="w-full border-x border-amber-50/10 bg-transparent p-2 text-center text-xl text-amber-50 focus:outline-none"
+                          min="1"
+                        />
+                        <button
+                          onClick={() => setQuantity(quantity + 1)}
+                          className="rounded-r-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-6 text-2xl font-semibold uppercase tracking-wide text-green-400">
-                    Net Price: ₹{netPrice}
-                  </div>
-                  <DialogFooter>
+
+                  {/* Order Summary */}
+                  {selectedMerch1Data && selectedMerch2Data && (
+                    <div className="animate-fade-in mt-6 rounded-lg border border-amber-50/20 bg-gradient-to-r from-amber-900/20 to-neutral-800/30 p-4">
+                      <h3 className={`${shareTech.className} mb-2 text-center text-xl font-bold uppercase tracking-wide text-amber-50`}>
+                        Order Summary
+                      </h3>
+                      <div className="space-y-2 divide-y divide-amber-50/10">
+                        <div className="flex justify-between py-1">
+                          <span className="text-amber-50/80">
+                            {selectedMerch1} ({selectedSize1})
+                          </span>
+                          <span className="text-amber-50">
+                            ₹{discountedPrice1}
+                          </span>
+                        </div>
+                        <div className="flex justify-between py-1">
+                          <span className="text-amber-50/80">
+                            {selectedMerch2} ({selectedSize2})
+                          </span>
+                          <span className="text-amber-50">
+                            ₹{discountedPrice2}
+                          </span>
+                        </div>
+                        <div className="flex justify-between py-1">
+                          <span className="text-amber-50/80">Quantity</span>
+                          <span className="text-amber-50">x{quantity}</span>
+                        </div>
+                        <div className="flex justify-between py-1">
+                          <span className="text-lg font-bold text-amber-50">
+                            Total
+                          </span>
+                          <span className="text-lg font-bold text-green-400">
+                            ₹{netPrice}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <DialogFooter className="mt-6">
                     {user.isSignedIn &&
                     selectedMerch1Data &&
-                    selectedMerch2Data ? ( // Use the user variable here
+                    selectedMerch2Data ? (
                       <Dialog>
                         <DialogTrigger asChild>
                           <button
-                            className="mt-6 w-full rounded-lg border-2 border-amber-50 bg-amber-50/90 px-6 py-3 text-2xl uppercase text-neutral-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-amber-200 hover:shadow-xl active:translate-y-0"
+                            className="group relative w-full overflow-hidden rounded-lg border-2 border-amber-50 bg-amber-50/90 px-6 py-3 text-2xl font-bold uppercase text-neutral-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:translate-y-0"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                           >
-                            Buy Now
+                            <span className={`${shareTech.className} relative z-10`}>Buy Now</span>
+                            <span className="absolute bottom-0 left-0 h-0 w-full bg-gradient-to-r from-amber-300 to-amber-200 transition-all duration-300 group-hover:h-full"></span>
                           </button>
                         </DialogTrigger>
                         <MerchPaymentBox
@@ -340,11 +499,14 @@ const Page = () => {
                     ) : (
                       <Link
                         href={"/sign-in"}
-                        className="mt-6 w-full rounded-lg border-2 border-amber-50 bg-amber-50/90 px-6 py-3 text-2xl uppercase text-neutral-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-amber-200 hover:shadow-xl active:translate-y-0"
+                        className="group relative w-full overflow-hidden rounded-lg border-2 border-amber-50 bg-amber-50/90 px-6 py-3 text-2xl font-bold uppercase text-neutral-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:translate-y-0"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                       >
-                        Buy Now
+                        <div className="flex items-center justify-center">
+                          <span className={`${shareTech.className} relative z-10`}>Buy</span>
+                        </div>
+                        <span className="absolute bottom-0 left-0 h-0 w-full bg-gradient-to-r from-amber-300 to-amber-200 transition-all duration-300 group-hover:h-full"></span>
                       </Link>
                     )}
                   </DialogFooter>

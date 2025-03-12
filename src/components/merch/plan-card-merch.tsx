@@ -4,7 +4,14 @@ import React, { useContext, useState } from "react";
 import { $Enums, type Merch } from "@prisma/client";
 import { Share_Tech } from "next/font/google";
 import { CursorContext } from "@/context/cursor-context";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import sizeChart from "public/images/size_chart.jpeg";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import MerchPaymentBox from "./payment-box-merch";
@@ -23,6 +30,7 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
   const { setIsHovered } = useContext(CursorContext);
   const [selectedSize, setSelectedSize] = useState<string>($Enums.Size.S);
   const [quantity, setQuantity] = useState("");
+  const [sizeChartOpen, setSizeChartOpen] = useState(false);
   const { isSignedIn } = useUser();
 
   return (
@@ -38,7 +46,7 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
         {/* Card Content */}
         <div className="flex flex-grow flex-col space-y-4 p-3 sm:space-y-6 sm:p-4">
           {/* Carousel */}
-          <div className="relative mx-auto w-full max-w-xs px-4 sm:px-6 md:px-10">
+          <div className="relative mx-auto w-full max-w-sm px-4 sm:px-6 md:px-10">
             <Carousel className="w-full">
               <CarouselContent className="xs:h-44 h-40 sm:h-56 md:h-64">
                 {data.images.map((img, i) => (
@@ -85,11 +93,65 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
           <div className="mt-auto flex flex-col gap-2 sm:flex-row sm:gap-3">
             <div className="flex-1 overflow-hidden rounded border border-amber-50/30">
               <div className="flex flex-col">
-                <label
-                  className={`${shareTech.className} bg-amber-50/10 px-2 py-1 text-center text-xs font-bold uppercase text-amber-50 sm:px-3 sm:text-sm`}
-                >
-                  Size
-                </label>
+                <div className="flex items-center justify-between bg-amber-50/10">
+                  <label
+                    className={`${shareTech.className} px-2 py-1 text-center text-xs font-bold uppercase text-amber-50 sm:px-3 sm:text-sm`}
+                  >
+                    Size
+                  </label>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button
+                        className={`${shareTech.className} mr-1 flex items-center space-x-1 rounded border border-amber-50/30 bg-amber-50/20 px-2 py-0.5 text-xs uppercase text-amber-50 transition-all hover:bg-amber-50/30 sm:text-sm`}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                      >
+                        <span>Size Chart</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="h-3 w-3 sm:h-4 sm:w-4"
+                        >
+                          <rect
+                            x="3"
+                            y="3"
+                            width="18"
+                            height="18"
+                            rx="2"
+                            ry="2"
+                          />
+                          <line x1="3" y1="9" x2="21" y2="9" />
+                          <line x1="9" y1="21" x2="9" y2="9" />
+                        </svg>
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl border-amber-50/30 bg-black/90 backdrop-blur-md">
+                      <DialogTitle
+                        className={`${shareTech.className} text-center text-xl font-bold uppercase tracking-wider text-amber-50 sm:text-2xl`}
+                      >
+                        Size Chart
+                      </DialogTitle>
+                      <div className="overflow-hidden rounded-lg border border-amber-50/30 bg-black/60 p-3">
+                        <Image
+                          src={sizeChart}
+                          alt="Size Chart"
+                          width={600}
+                          height={400}
+                          className="mx-auto rounded-md object-contain"
+                        />
+                      </div>
+                      <DialogDescription className="text-center text-sm text-amber-50/70">
+                        Please measure yourself carefully before selecting a
+                        size
+                      </DialogDescription>
+                    </DialogContent>
+                  </Dialog>
+                </div>
                 <select
                   value={selectedSize}
                   onChange={(e) => setSelectedSize(e.target.value)}
