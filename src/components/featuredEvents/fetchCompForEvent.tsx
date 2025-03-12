@@ -8,6 +8,13 @@ import StaticImg from "public/images/img.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatDateToHour } from "../../lib/utils";
+import { motion } from "motion/react";
+
+const keyframes = {
+  flicker: {
+    opacity: [0, 1, 0.3, 0.7, 0.3, 1, 0.3, 1, 0.3, 1, 0.3, 1],
+  },
+};
 
 const FetchCompetitions = () => {
   const router = useRouter();
@@ -106,21 +113,40 @@ const FetchCompetitions = () => {
     return () => clearInterval(interval);
   }, [ongoingIndex, ongoingCompetitions]);
 
+  // This ensures animation is started only when that particular competition is loaded
+  const [aniKeyUp, setAniKeyUp] = useState(0);
+  const [aniKeyOn, setAniKeyOn] = useState(0);
+  const [aniKeyPast, setAniKeyPast] = useState(0);
+  useEffect(() => {
+    setAniKeyUp((prev) => prev + 1);
+  }, [upcomingComp]);
+  useEffect(() => {
+    setAniKeyOn((prev) => prev + 1);
+  }, [ongoingComp]);
+  useEffect(() => {
+    setAniKeyPast((prev) => prev + 1);
+  }, [pastComp]);
+
   //TODO: Add some loader. I have no idea why the given loader is not working. It would be great if it can appear with a glitch animation
 
-  if (pastLoading || upcomingLoading || ongoingLoading) return <div className="bg-black"><Loader /></div>;
+  if (pastLoading || upcomingLoading || ongoingLoading)
+    return (
+      <div className="bg-black">
+        <Loader />
+      </div>
+    );
   if (pastError || upcomingError || ongoingError) {
     return <p className="text-red-500">Error loading competitions</p>;
   }
 
   return (
-    <div className="relative flex lg:h-[70vh] max-lg:h-fit w-full flex-col justify-center border-b-2">
+    <div className="relative flex w-full flex-col justify-center border-b-2 max-lg:h-fit lg:h-[70vh]">
       <h1 className="absolute inset-0 z-20 h-fit p-4 text-center text-7xl font-bold text-amber-100">
         <Link href={`/competitions`}>Competitions</Link>
       </h1>
-      <div className="relative lg:flex max-lg:flex-col h-full w-full justify-center">
+      <div className="relative h-full w-full justify-center max-lg:flex-col lg:flex">
         {upcomingComp && (
-          <div
+          <motion.div
             onClick={() =>
               router.push(
                 `/competitions/${upcomingComp.competitionDetails.slug}`,
@@ -134,6 +160,9 @@ const FetchCompetitions = () => {
                 ? "translate-x-5 opacity-50"
                 : "translate-x-0 opacity-100"
             }`}
+            animate="flicker"
+            key={`up-${aniKeyUp}`}
+            variants={keyframes}
           >
             <h1 className="relative mt-8 w-full p-10 text-start text-4xl text-green-300">
               Upcoming
@@ -145,13 +174,16 @@ const FetchCompetitions = () => {
             <p className="relative w-full text-center text-lg text-gray-300">
               {upcomingComp.competitionDetails.description}
             </p>
-            <div className="absolute flex flex-col items-start bottom-0 p-4 w-full text-xl text-white font-extrabold mt-6">
-                <div className="text-green-300">Starts</div> {new Date(upcomingComp.competitionDetails.begin_time).toLocaleString()}
-              </div>
-          </div>
+            <div className="absolute bottom-0 mt-6 flex w-full flex-col items-start p-4 text-xl font-extrabold text-white">
+              <div className="text-green-300">Starts</div>{" "}
+              {new Date(
+                upcomingComp.competitionDetails.begin_time,
+              ).toLocaleString()}
+            </div>
+          </motion.div>
         )}
         {ongoingComp && (
-          <div
+          <motion.div
             onClick={() =>
               router.push(
                 `/competitions/${ongoingComp.competitionDetails.slug}`,
@@ -165,6 +197,9 @@ const FetchCompetitions = () => {
                 ? "translate-x-5 opacity-50"
                 : "translate-x-0 opacity-100"
             }`}
+            animate="flicker"
+            key={`on-${aniKeyOn}`}
+            variants={keyframes}
           >
             <h1 className="mt-8 w-full p-10 text-start text-4xl text-red-300">
               Ongoing
@@ -176,15 +211,21 @@ const FetchCompetitions = () => {
             <p className="w-full text-center text-lg text-gray-300">
               {ongoingComp.competitionDetails.description}
             </p>
-            <div className="absolute bottom-0 p-4 flex flex-col items-start w-full text-xl text-white font-extrabold mt-6">
-                <div className="text-green-300">Started</div> {new Date(ongoingComp.competitionDetails.begin_time).toLocaleString()}
-                <div className="text-red-300">Ends</div> {new Date(ongoingComp.competitionDetails.end_time).toLocaleString()}
-              </div>
-          </div>
+            <div className="absolute bottom-0 mt-6 flex w-full flex-col items-start p-4 text-xl font-extrabold text-white">
+              <div className="text-green-300">Started</div>{" "}
+              {new Date(
+                ongoingComp.competitionDetails.begin_time,
+              ).toLocaleString()}
+              <div className="text-red-300">Ends</div>{" "}
+              {new Date(
+                ongoingComp.competitionDetails.end_time,
+              ).toLocaleString()}
+            </div>
+          </motion.div>
         )}
 
         {pastComp && (
-          <div
+          <motion.div
             onClick={() =>
               router.push(`/competitions/${pastComp.competitionDetails.slug}`)
             }
@@ -196,6 +237,9 @@ const FetchCompetitions = () => {
                 ? "translate-x-5 opacity-50"
                 : "translate-x-0 opacity-100"
             }`}
+            animate="flicker"
+            key={`past-${aniKeyPast}`}
+            variants={keyframes}
           >
             <h1 className="mt-8 w-full p-10 text-start text-4xl text-blue-300">
               Completed
@@ -207,10 +251,11 @@ const FetchCompetitions = () => {
             <p className="w-full text-center text-lg text-gray-300">
               {pastComp.competitionDetails.description}
             </p>
-            <div className="absolute bottom-0 p-4 flex flex-col items-start w-full text-xl text-white font-extrabold mt-6">
-                <div className="text-blue-300">Finished on</div> {new Date(pastComp.competitionDetails.end_time).toLocaleString()}
-              </div>
-          </div>
+            <div className="absolute bottom-0 mt-6 flex w-full flex-col items-start p-4 text-xl font-extrabold text-white">
+              <div className="text-blue-300">Finished on</div>{" "}
+              {new Date(pastComp.competitionDetails.end_time).toLocaleString()}
+            </div>
+          </motion.div>
         )}
       </div>
     </div>
