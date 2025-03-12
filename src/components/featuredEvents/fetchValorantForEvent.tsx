@@ -6,7 +6,7 @@ import styles from './ValorantButton.module.css';
 const FetchValorantTournament = () => {
   return (
     <div
-      className="relative flex flex-col items-center justify-center h-[95lvh] w-full py-6 bg-cover bg-center"
+      className={`relative flex flex-col items-center justify-center w-full bg-cover bg-center ${styles.backgroundContainer}`}
       style={{ backgroundImage: "url('https://res.cloudinary.com/diqdg481x/image/upload/v1741510741/China_CG_phxcool_fullres_zp7tye.jpg')" }}
     >
       <div className="relative flex flex-col items-center w-[95%] md:w-[90%] lg:w-5/6 bg-black/80 p-4 rounded-lg shadow-2xl border-2 border-[#ff465685] transform transition-all duration-300 hover:scale-105 hover:border-[#FF4655] hover:shadow-[#ff465685] overflow-hidden">
@@ -30,26 +30,16 @@ const FetchValorantTournament = () => {
 
         <div className="flex flex-col items-center mt-12 space-y-1 relative z-10">
           <div className="flex flex-wrap justify-center gap-2 text-xs md:text-sm lg:text-base text-gray-300">
-            <span>📅 <span className={styles.customRed}>27-28 March 2025</span></span>
-            <span>🎯 <span className={styles.customRed}>5v5</span></span>
-            <span>🏆 <span className={styles.customRed}>Prize Pool: ₹60,000</span></span>
-            <span>🌐 <span className={styles.customRed}>Platform: Valorant</span></span>
+            <span>• <span className={styles.customRed}>27-28 March 2025</span></span>
+            <span>• <span className={styles.customRed}>5v5</span></span>
+            <span>• <span className={styles.customRed}>Prize Pool: ₹60,000</span></span>
+            <span>• <span className={styles.customRed}>Platform: Valorant</span></span>
           </div>
           <div className="flex gap-4 mt-3">
-            <a
-              href="https://forms.gle/T543EvxuhqWBdcBy8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.registerButton}
-            >
+            <a href="https://forms.gle/T543EvxuhqWBdcBy8" target="_blank" rel="noopener noreferrer" className={styles.registerButton}>
               Register Now
             </a>
-            <a
-              href="https://discord.gg/zDrHYBSC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.discordButton}
-            >
+            <a href="https://discord.gg/zDrHYBSC" target="_blank" rel="noopener noreferrer" className={styles.discordButton}>
               Join Discord
             </a>
           </div>
