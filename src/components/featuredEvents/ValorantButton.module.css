@@ -35,3 +35,20 @@
   50% { opacity: 1; }
   100% { opacity: 0.7; }
 }
+
+.backgroundContainer {
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 2rem; /* Margin around the inner box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+@media (min-width: 2160) {
+  .backgroundContainer {
+    background-size: calc(100% + 4rem) calc(100% + 4rem); /* Extends 2rem beyond the inner box */
+  }
+}
