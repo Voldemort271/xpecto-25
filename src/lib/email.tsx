@@ -48,7 +48,7 @@ export async function sendPaymentVerifyingEmail(
           </div>
           <p>
             Your payment is currently under verification and will be processed
-            within 72 hours. You will receive a confirmation email once the
+            within 48 buisness hours. You will receive a confirmation email once the
             verification is complete.
           </p>
           <p>
@@ -182,7 +182,7 @@ export async function sendMerchPaymentVerifyingEmail(
           </div>
           <p>
             Your payment is currently under verification and will be processed
-            within 72 hours. You will receive a confirmation email once the
+            within 48 buisness hours. You will receive a confirmation email once the
             verification is complete.
           </p>
           <p>
