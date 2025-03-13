@@ -35,7 +35,7 @@ const TardisNav = () => {
           animate={{ opacity: 1, translateY: 0 }}
           transition={{
             duration: 1,
-            delay: path === "/" ? 6 : 0.5,
+            delay: 0.5,
             ease: "backOut",
           }}
         >
