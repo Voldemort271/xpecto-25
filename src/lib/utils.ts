@@ -46,9 +46,12 @@ export const formatDuration = (start: Date, end: Date) => {
 
 // Helper function to get the lowest price from registration plans
 export const getLowestPrice = (regPlans: { price: number }[]) => {
-  const prices = regPlans.map((plan) => plan.price);
+  const prices = regPlans.filter((plan) => plan.price !== 0).map((plan) => plan.price);
+  if (prices.length === 0) {
+    return "free";
+  }
   const lowestPrice = Math.min(...prices);
-  return lowestPrice === 0 ? "free" : `₹${lowestPrice}`;
+  return `₹${lowestPrice}`;
 };
 
 export const formatDateToHour = (date: Date) => {
