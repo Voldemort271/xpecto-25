@@ -34,7 +34,6 @@ const Page = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedSize1, setSelectedSize1] = useState<string>($Enums.Size.S);
   const [selectedSize2, setSelectedSize2] = useState<string>($Enums.Size.S);
-  const [price, setPrice] = useState<number>(0);
 
   const { setIsHovered } = useContext(CursorContext);
 
@@ -83,7 +82,7 @@ const Page = () => {
   // Add this function to calculate the total price for all items
   function calculateTotalPrice() {
     // Get the total price of all merchandise
-    const totalPrice = merch?.reduce((sum, item) => sum + item.price, 0) || 0;
+    const totalPrice = merch?.reduce((sum, item) => sum + item.price, 0) ?? 0;
 
     // Apply quantity
     return totalPrice * quantity;
