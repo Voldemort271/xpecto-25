@@ -1,41 +1,46 @@
 /* ChessButton.module.css */
 .registerButton {
-    @apply mt-4 px-6 py-3 bg-[#8ABD51] text-white rounded-full font-bold transition-all duration-300;
-    animation: pulse 2s infinite;
-  }
-  
-  .registerButton:hover {
-    animation: none;
-    transform: scale(1.05);
-    background-color: #8ABD51;
-    box-shadow: 0 0 15px 5px #8ABD51, 0 0 25px 10px rgba(177, 250, 21, 0.5);
-    transition: all 0.3s ease;
-  }
-  
-  @keyframes pulse {
-    0% { opacity: 0.7; }
-    50% { opacity: 1; }
-    100% { opacity: 0.7; }
-  }
+	@apply mt-4 px-6 py-3 bg-[#8ABD51] text-white rounded-full font-normal text-lg uppercase transition-all duration-300;
+	animation: pulse 2s infinite;
+}
 
-  .customGreen {
-    color: #8ABD51;
-  }
+.registerButton:hover {
+	animation: none;
+	transform: scale(1.05);
+	background-color: #8ABD51;
+	box-shadow: 0 0 15px 5px #8ABD51, 0 0 25px 10px rgba(177, 250, 21, 0.5);
+	transition: all 0.3s ease;
+}
 
-  .backgroundContainer {
-    background-size: auto 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 2rem; /* Margin around the inner box */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-  }
-  
-  @media (min-width: 2160) {
-    .backgroundContainer {
-      background-size: calc(100% + 4rem) calc(100% + 4rem); /* Extends 2rem beyond the inner box */
-    }
-  }
-  
+@keyframes pulse {
+	0% {
+		opacity: 0.7;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.7;
+	}
+}
+
+.customGreen {
+	color: #8ABD51;
+}
+
+.backgroundContainer {
+	background-size: auto 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 2rem; /* Margin around the inner box */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100%;
+}
+
+@media (min-width: 2160) {
+	.backgroundContainer {
+		background-size: calc(100% + 4rem) calc(100% + 4rem); /* Extends 2rem beyond the inner box */
+	}
+}
