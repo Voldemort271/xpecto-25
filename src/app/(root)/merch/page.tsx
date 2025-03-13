@@ -22,6 +22,7 @@ import MerchPaymentBox from "@/components/merch/payment-box-merch";
 import { CursorContext } from "@/context/cursor-context";
 import Link from "next/link";
 import { $Enums } from "@prisma/client";
+import SizeChart from "@/components/merch/size-chart-dialog";
 
 const shareTech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ const Page = () => {
 
   const [selectedMerch1, setSelectedMerch1] = useState<string>("");
   const [selectedMerch2, setSelectedMerch2] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedSize1, setSelectedSize1] = useState<string>($Enums.Size.S);
   const [selectedSize2, setSelectedSize2] = useState<string>($Enums.Size.S);
@@ -53,7 +55,6 @@ const Page = () => {
 
   const selectedMerch1Data = merch?.find((m) => m.name === selectedMerch1);
   const selectedMerch2Data = merch?.find((m) => m.name === selectedMerch2);
-
 
   useEffect(() => {
     const calculatePrice = () => {
@@ -82,7 +83,11 @@ const Page = () => {
   // Add this function to calculate the total price for all items
   function calculateTotalPrice() {
     // Get the total price of all merchandise
-    const totalPrice = merch?.reduce((sum, item) => sum + item.price, 0) ?? 0;
+    const totalPrice =
+      merch?.reduce(
+        (sum, item) => sum + getDiscountedPrice(item.name, item.price - 25),
+        0,
+      ) ?? 0;
 
     // Apply quantity
     return totalPrice * quantity;
@@ -155,9 +160,7 @@ const Page = () => {
 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <button
-                      className="flex transform items-center gap-3 rounded-lg border-2 border-amber-100 bg-amber-50 p-4 px-6 font-bold text-neutral-900 shadow-md transition-all duration-300 hover:-translate-y-2 hover:bg-amber-200 hover:shadow-xl active:translate-y-0 active:bg-amber-300"
-                    >
+                    <button className="flex transform items-center gap-3 rounded-lg border-2 border-amber-100 bg-amber-50 p-4 px-6 font-bold text-neutral-900 shadow-md transition-all duration-300 hover:-translate-y-2 hover:bg-amber-200 hover:shadow-xl active:translate-y-0 active:bg-amber-300">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6 transition-transform duration-300 group-hover:rotate-12"
@@ -171,6 +174,9 @@ const Page = () => {
                         />
                       </svg>
                       Buy All{" "}
+                      <span className="text-sm font-medium">
+                        (75₹ off Hoodie, 50₹ off T-shirt)
+                      </span>
                     </button>
                   </DialogTrigger>
 
@@ -190,34 +196,24 @@ const Page = () => {
                     </DialogHeader>
 
                     {/* Size Chart Dialog - Keep this from original */}
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <button
-                          className={`${shareTech.className} absolute right-9 top-6 flex items-center gap-1 rounded-md border border-amber-50/30 bg-amber-50/10 px-2 py-1 text-sm font-medium text-amber-50 transition-all duration-200 hover:bg-amber-50/20 sm:right-12 lg:right-12`}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <rect width="18" height="18" x="3" y="3" rx="2" />
-                            <path d="M3 9h18" />
-                            <path d="M9 21V9" />
-                          </svg>
-                          Size Chart
-                        </button>
-                      </DialogTrigger>
-                      {/* Size chart content - keep as in original */}
-                    </Dialog>
+                    <SizeChart />
 
                     {/* Price Summary Card */}
                     <div className="mb-6 rounded-lg border border-amber-50/10 bg-neutral-800/50 p-4 shadow-inner">
+                      <div className="flex justify-between">
+                        <div
+                          className={`${shareTech.className} text-sm font-medium text-amber-50/80`}
+                        >
+                          Combo Savings:
+                        </div>
+                        <div
+                          className={`${shareTech.className} text-sm font-medium text-green-400`}
+                        >
+                          {quantity > 0
+                            ? `₹${merch?.reduce((sum, item) => sum + item.price, 0) * quantity - calculateTotalPrice()}`
+                            : "₹0"}
+                        </div>
+                      </div>
                       <div className="mt-2 flex justify-between">
                         <div
                           className={`${shareTech.className} text-lg font-bold text-amber-50`}
@@ -245,7 +241,11 @@ const Page = () => {
                         onChange={(e) => handleSizeChange(e, setSelectedSize1)}
                         className={`${shareTech.className} mb-4 block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300`}
                       >
-                        <option className={`${shareTech.className}`} value="" disabled>
+                        <option
+                          className={`${shareTech.className}`}
+                          value=""
+                          disabled
+                        >
                           Select size for all items
                         </option>
                         {Object.keys($Enums.Size).map((size, i) => (
@@ -270,21 +270,25 @@ const Page = () => {
                         </label>
                         <div className="flex w-full max-w-xs items-center rounded-lg bg-neutral-700/50 sm:w-1/2">
                           <button
-                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                            className="rounded-l-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300"
+                            onClick={() =>
+                              setQuantity(Math.max(1, quantity - 1))
+                            }
+                            className={`${shareTech.className} rounded-l-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300`}
                           >
                             −
                           </button>
                           <input
                             type="number"
                             value={quantity === 0 ? "" : quantity}
-                            onChange={(e) => setQuantity(parseInt(e.target.value || "0"))}
-                            className="w-full border-x border-amber-50/10 bg-transparent p-2 text-center text-xl text-amber-50 focus:outline-none"
+                            onChange={(e) =>
+                              setQuantity(parseInt(e.target.value || "0"))
+                            }
+                            className={`${shareTech.className} w-full border-x border-amber-50/10 bg-transparent p-2 text-center text-xl text-amber-50 focus:outline-none`}
                             min="1"
                           />
                           <button
                             onClick={() => setQuantity(quantity + 1)}
-                            className="rounded-r-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300"
+                            className={`${shareTech.className} rounded-r-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300`}
                           >
                             +
                           </button>
@@ -299,14 +303,19 @@ const Page = () => {
                       >
                         Order Summary - All Items
                       </h3>
-                      <div className={`${shareTech.className} space-y-2 divide-y divide-amber-50/10`}>
+                      <div
+                        className={`${shareTech.className} space-y-2 divide-y divide-amber-50/10`}
+                      >
                         {merch?.map((item, index) => (
-                          <div key={index} className="flex justify-between py-1">
+                          <div
+                            key={index}
+                            className="flex justify-between py-1"
+                          >
                             <span className="text-amber-50/80">
                               {item.name} ({selectedSize1})
                             </span>
                             <span className="text-amber-50">
-                              ₹{item.price}
+                              ₹{getDiscountedPrice(item.name, item.price - 25)}
                             </span>
                           </div>
                         ))}
@@ -335,7 +344,9 @@ const Page = () => {
                               onMouseEnter={() => setIsHovered(true)}
                               onMouseLeave={() => setIsHovered(false)}
                             >
-                              <span className={`${shareTech.className} relative z-10`}>
+                              <span
+                                className={`${shareTech.className} relative z-10`}
+                              >
                                 Buy All Items
                               </span>
                               <span className="absolute bottom-0 left-0 h-0 w-full bg-gradient-to-r from-amber-300 to-amber-200 transition-all duration-300 group-hover:h-full"></span>
@@ -343,7 +354,7 @@ const Page = () => {
                           </DialogTrigger>
                           <MerchPaymentBox
                             price={calculateTotalPrice() / quantity}
-                            merchIds={merch?.map(item => item.id) || []}
+                            merchIds={merch?.map((item) => item.id) || []}
                             sizes={Array(merch?.length).fill(selectedSize1)}
                             quantity={quantity}
                           />
@@ -356,7 +367,9 @@ const Page = () => {
                           onMouseLeave={() => setIsHovered(false)}
                         >
                           <div className="flex items-center justify-center">
-                            <span className={`${shareTech.className} relative z-10`}>
+                            <span
+                              className={`${shareTech.className} relative z-10`}
+                            >
                               Sign In to Buy
                             </span>
                           </div>
@@ -383,62 +396,7 @@ const Page = () => {
                     </DialogHeader>
 
                     {/* Size Chart Dialog */}
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <button
-                          className={`${shareTech.className} absolute right-9 top-6 flex items-center gap-1 rounded-md border border-amber-50/30 bg-amber-50/10 px-2 py-1 text-sm font-medium text-amber-50 transition-all duration-200 hover:bg-amber-50/20 sm:right-12 lg:right-12`}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <rect width="18" height="18" x="3" y="3" rx="2" />
-                            <path d="M3 9h18" />
-                            <path d="M9 21V9" />
-                          </svg>
-                          Size Chart
-                        </button>
-                      </DialogTrigger>
-                      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto rounded-xl border border-amber-50/20 bg-neutral-900/95 shadow-2xl">
-                        <DialogHeader>
-                          <DialogTitle
-                            className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}
-                          >
-                            Size Chart
-                          </DialogTitle>
-                          <DialogDescription
-                            className={`${shareTech.className} text-amber-100/70`}
-                          >
-                            Find your perfect fit with our comprehensive size
-                            chart.
-                          </DialogDescription>
-                        </DialogHeader>
-
-                        <div className="mt-4 overflow-hidden rounded-lg border border-amber-50/10">
-                          <Image
-                            src={sizeChart}
-                            width={800}
-                            height={600}
-                            alt="Size Chart"
-                            className="w-full"
-                          />
-                        </div>
-
-                        <div
-                          className={` ${shareTech.className} mt-4 space-y-4 text-amber-50/80`}
-                        >
-                          Please measure yourself carefully before selecting a
-                          size
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                    <SizeChart />
 
                     {/* Price Summary Card - Visible throughout selection process */}
                     <div className="mb-6 rounded-lg border border-amber-50/10 bg-neutral-800/50 p-4 shadow-inner">
@@ -452,7 +410,7 @@ const Page = () => {
                           className={`${shareTech.className} text-sm font-medium text-green-400`}
                         >
                           {selectedMerch1Data && selectedMerch2Data
-                            ? `₹${selectedMerch1Data.price + selectedMerch2Data.price - (discountedPrice1 + discountedPrice2)}`
+                            ? `₹${(selectedMerch1Data.price + selectedMerch2Data.price - (discountedPrice1 + discountedPrice2)) * quantity}`
                             : "₹0"}
                         </div>
                       </div>
@@ -469,8 +427,6 @@ const Page = () => {
                         </div>
                       </div>
                     </div>
-
-
 
                     <div className="grid gap-6 md:grid-cols-2">
                       {/* First Item Selection */}
@@ -522,10 +478,14 @@ const Page = () => {
                               >
                                 Original:
                               </span>
-                              <span className="text-sm text-neutral-500 line-through">
+                              <span
+                                className={`${shareTech.className} text-sm text-neutral-500 line-through`}
+                              >
                                 ₹{selectedMerch1Data.price}
                               </span>
-                              <span className="text-sm font-medium text-green-400">
+                              <span
+                                className={`${shareTech.className} text-sm font-medium text-green-400`}
+                              >
                                 ₹{discountedPrice1}
                               </span>
                             </div>
@@ -607,10 +567,14 @@ const Page = () => {
                               >
                                 Original:
                               </span>
-                              <span className="text-sm text-neutral-500 line-through">
+                              <span
+                                className={`${shareTech.className} text-sm text-neutral-500 line-through`}
+                              >
                                 ₹{selectedMerch2Data.price}
                               </span>
-                              <span className="text-sm font-medium text-green-400">
+                              <span
+                                className={`${shareTech.className} text-sm font-medium text-green-400`}
+                              >
                                 ₹{discountedPrice2}
                               </span>
                             </div>
@@ -644,19 +608,20 @@ const Page = () => {
                       </div>
                     </div>
 
-
                     {/* Quantity Selector */}
                     <div className="mt-6 rounded-lg border border-amber-50/10 bg-neutral-800/30 p-4">
                       <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
                         <label
-                          className={` ${shareTech.className} text-lg font-bold uppercase tracking-wide text-amber-50`}
+                          className={`${shareTech.className} text-lg font-bold uppercase tracking-wide text-amber-50`}
                         >
                           Quantity
                         </label>
                         <div className="flex w-full max-w-xs items-center rounded-lg bg-neutral-700/50 sm:w-1/2">
                           <button
-                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                            className="rounded-l-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300"
+                            onClick={() =>
+                              setQuantity(Math.max(1, quantity - 1))
+                            }
+                            className={`${shareTech.className} rounded-l-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300`}
                           >
                             −
                           </button>
@@ -666,12 +631,12 @@ const Page = () => {
                             onChange={(e) =>
                               setQuantity(parseInt(e.target.value || "0"))
                             }
-                            className="w-full border-x border-amber-50/10 bg-transparent p-2 text-center text-xl text-amber-50 focus:outline-none"
+                            className={`${shareTech.className} w-full border-x border-amber-50/10 bg-transparent p-2 text-center text-xl text-amber-50 focus:outline-none`}
                             min="1"
                           />
                           <button
                             onClick={() => setQuantity(quantity + 1)}
-                            className="rounded-r-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300"
+                            className={`${shareTech.className} rounded-r-lg bg-amber-50/80 px-4 py-2 text-xl font-bold text-neutral-900 transition-colors hover:bg-amber-200 active:bg-amber-300`}
                           >
                             +
                           </button>
@@ -726,8 +691,8 @@ const Page = () => {
 
                     <DialogFooter className="mt-6">
                       {user.isSignedIn &&
-                        selectedMerch1Data &&
-                        selectedMerch2Data ? (
+                      selectedMerch1Data &&
+                      selectedMerch2Data ? (
                         <Dialog>
                           <DialogTrigger asChild>
                             <button

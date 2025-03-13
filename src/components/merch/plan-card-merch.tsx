@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
+  DialogHeader,
 } from "@/components/ui/dialog";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
@@ -30,7 +31,6 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
   const { setIsHovered } = useContext(CursorContext);
   const [selectedSize, setSelectedSize] = useState<string>($Enums.Size.S);
   const [quantity, setQuantity] = useState("");
-  const [sizeChartOpen, setSizeChartOpen] = useState(false);
   const { isSignedIn } = useUser();
 
   return (
@@ -107,50 +107,56 @@ const MerchPlanCard = ({ data }: { data: Merch }) => {
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                       >
-                        <span>Size Chart</span>
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="h-3 w-3 sm:h-4 sm:w-4"
-                        >
-                          <rect
-                            x="3"
-                            y="3"
-                            width="18"
-                            height="18"
-                            rx="2"
-                            ry="2"
-                          />
-                          <line x1="3" y1="9" x2="21" y2="9" />
-                          <line x1="9" y1="21" x2="9" y2="9" />
-                        </svg>
-                      </button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl border-amber-50/30 bg-black/90 backdrop-blur-md">
-                      <DialogTitle
-                        className={`${shareTech.className} text-center text-xl font-bold uppercase tracking-wider text-amber-50 sm:text-2xl`}
-                      >
-                        Size Chart
-                      </DialogTitle>
-                      <div className="overflow-hidden rounded-lg border border-amber-50/30 bg-black/60 p-3">
-                        <Image
-                          src={sizeChart}
-                          alt="Size Chart"
-                          width={600}
-                          height={400}
-                          className="mx-auto rounded-md object-contain"
-                        />
-                      </div>
-                      <DialogDescription className="text-center text-sm text-amber-50/70">
-                        Please measure yourself carefully before selecting a
-                        size
-                      </DialogDescription>
-                    </DialogContent>
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+            <line x1="3" y1="9" x2="21" y2="9" />
+            <line x1="9" y1="21" x2="9" y2="9" />
+            <path d="M3 9h18" />
+            <path d="M9 21V9" />
+          </svg>
+          Size Chart
+        </button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto rounded-xl border border-amber-50/20 bg-neutral-900/95 shadow-2xl">
+        <DialogHeader>
+          <DialogTitle
+            className={`${shareTech.className} text-2xl font-bold tracking-wide text-amber-50`}
+          >
+            Size Chart
+          </DialogTitle>
+          <DialogDescription
+            className={`${shareTech.className} text-amber-100/70`}
+          >
+            Find your perfect fit with our comprehensive size chart.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4 overflow-hidden rounded-lg border border-amber-50/10">
+          <Image
+            src={sizeChart}
+            width={800}
+            height={600}
+            alt="Size Chart"
+            className="w-full"
+          />
+        </div>
+
+        <div
+          className={` ${shareTech.className} mt-4 space-y-4 text-amber-50/80`}
+        >
+          Please measure yourself carefully before selecting a size
+        </div>
+      </DialogContent>
                   </Dialog>
                 </div>
                 <select
