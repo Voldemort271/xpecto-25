@@ -79,7 +79,21 @@ export const registrationtRouter = createTRPCRouter({
       });
 
       if (reg.eventId === process.env.UNIVERSAL_EVENT_ID) {
-        //TODO: Add reg plan based perks here (basically registrations in some workshops based on tiers)
+
+        if (reg.planId === 'tier2' || reg.planId === 'tier3') {
+          await ctx.db.registration.create({
+            data: {
+              userId: reg.userId,
+              eventId: "cm7zogqkv000c11hs42wvo8ic",
+              planId: "cm7zogqkv000d11hsqxw1nwgl",
+              paymentId: `sub-${reg.paymentId}`,
+              paymentProof: reg.paymentProof,
+              verified: true,
+            },
+          })
+        }
+
+
         await ctx.db.user.update({
           where: {
             id: reg.userId,
