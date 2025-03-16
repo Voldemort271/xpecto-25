@@ -146,6 +146,19 @@ const Page = () => {
       );
       return;
     }
+    if (collegeName === "Indian Institute of Technology, Mandi") {
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+            IIT Mandi peeps, login through college ID to avail benefits
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
+      return;
+    }
 
     updateUser({
       userId: CurrentUser.id,
