@@ -72,14 +72,29 @@ export const sponData: Sponsor[] = [
     tier: "platinum",
   },
   {
-    name: "riot games",
+    name: "hp tourism",
+    title: "platinum sponsor",
+    website: "https://himachaltourism.gov.in/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742129758/spon_logos/wypqatsojsiocskiiuah.png",
+    desc: "",
+    tier: "platinum",
+  },
+  {
+    name: "valorant",
     title: "valorant event sponsor",
-    website: "https://www.riotgames.com/en",
-    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741429934/spon_logos/yzadszjl0tvailf4kwv2.png",
+    website: "https://playvalorant.com/en-us/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742129801/spon_logos/fzbsfhbotufc86bg4bjj.svg",
     desc: "Riot Games, established in 2006, is an American video game developer and publisher renowned for titles like League of Legends and Valorant.",
     tier: "platinum",
   },
-
+  {
+    name: "zebronics",
+    title: "",
+    website: "https://zebronics.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742129758/spon_logos/zgcb4ismxoawwyw7sgkb.webp",
+    desc: "",
+    tier: "platinum",
+  },
   {
     name: "vrkaa",
     title: "e-sports partner",
