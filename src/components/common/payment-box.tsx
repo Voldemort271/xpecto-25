@@ -324,7 +324,7 @@ const PaymentBox: React.FC<PaymentBoxProps> = ({
               className="mb-1 block text-lg font-bold uppercase text-amber-50"
               htmlFor="transactionID"
             >
-              Transaction ID*
+              Transaction ID (or UTR)*
             </label>
             <Input
               type="text"

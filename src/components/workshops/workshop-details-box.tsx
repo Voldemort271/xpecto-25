@@ -10,14 +10,12 @@ import MarqueeContainer from "@/components/common/marquee-container";
 import RegisterDialog from "@/components/common/registration-dialog";
 import { api } from "@/trpc/react";
 import WorkshopBrief from "@/components/workshops/workshop-briefing";
-import { useRouter } from "next/navigation";
 import StaticImg from "../../../public/images/img.png";
-
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
+
 const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
-  const router = useRouter();
 
   const { CurrentUser } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
@@ -37,21 +35,12 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
     );
 
   const regStatus = !!plan;
-  const offlineEvent = work?.workshopDetails.venue !== "online";
-  const { data: offlineReg } = api.registration.checkUserRegisteration.useQuery(
-    {
-      userId: CurrentUser?.id ?? "",
-      eventId: "universaleve",
-    },
-    {
-      enabled: !!CurrentUser,
-    },
-  );
+  const collegeWork = work?.college_special ?? false;
 
   useEffect(() => {
-    setRegPrice(work?.workshopDetails.regPlans[0]?.price ?? 0);
+    setRegPrice(((work.workshopDetails.regPlans[0]?.price ?? 0) / (CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? 2 : 1)));
     setRegPlanId(work?.workshopDetails.regPlans[0]?.id ?? "");
-  }, [work]);
+  }, [work, CurrentUser]);
 
   return (
     <>
@@ -89,7 +78,9 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
             </pre>
             <div className="relative h-12 w-full bg-neutral-900">
               {loadingPlan ||
-              work.workshopDetails.description.toLowerCase().includes("coming soon") ? (
+              work.workshopDetails.description
+                .toLowerCase()
+                .includes("coming soon") ? (
                 <div
                   className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                 >
@@ -108,39 +99,21 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
                     Your payment is being verified right now
                   </div>
                 )
-              ) : offlineEvent && !CurrentUser?.accomodation && offlineReg ? (
-                <div className="w-fit border-2 bg-amber-50/[0.7] px-5 py-2 text-xl font-normal uppercase text-neutral-900">
-                  Your payment is being verified right now
-                </div>
-              ) : offlineEvent && !CurrentUser?.accomodation ? (
-                <button
-                  className="w-full cursor-none overflow-clip"
-                  disabled={CurrentUser?.email === ""}
-                  onMouseEnter={() => {
-                    if (CurrentUser?.email !== "") setIsHovered(true);
-                  }}
-                  onMouseLeave={() => setIsHovered(false)}
-                  onClick={() => {
-                    router.push("/memberships");
-                  }}
+              ) : collegeWork &&
+                CurrentUser?.college_name !==
+                  "Indian Institute of Technology, Mandi" ? (
+                <div
+                  className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
                 >
-                  <div
-                    className={`absolute bottom-0 flex h-12 w-full cursor-none items-center overflow-clip border-2 border-amber-50 bg-amber-50/[0.7] text-2xl uppercase text-neutral-900 md:border-l-0`}
-                  >
-                    <MarqueeContainer
-                      text={[
-                        `register for XPECTO membership - pass to all offline events`,
-                        CurrentUser?.email === ""
-                          ? "login required to register"
-                          : `register for XPECTO membership - pass to all offline events`,
-                        `register for  XPECTO membership - pass to all offline events`,
-                        CurrentUser?.email === ""
-                          ? "login required to register"
-                          : `register for XPECTO membership - pass to all offline events`,
-                      ]}
-                    />
-                  </div>
-                </button>
+                  <MarqueeContainer
+                    text={[
+                      `IIT Mandi students only workshop`,
+                      `IIT Mandi students only workshop`,
+                      `IIT Mandi students only workshop`,
+                      `IIT Mandi students only workshop`,
+                    ]}
+                  />
+                </div>
               ) : (
                 <RegisterDialog
                   trigger={
@@ -157,14 +130,14 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
                       >
                         <MarqueeContainer
                           text={[
-                            `register for ${work.workshopDetails.name}`,
+                            `register for ${work.workshopDetails.name}${CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? " (50% off for you)" : ""}`,
                             CurrentUser?.email === ""
                               ? "login required to register"
                               : `register for ${work.workshopDetails.name}`,
-                            `register for ${work.workshopDetails.name}`,
+                            `register for ${work.workshopDetails.name}${CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? " (50% off for you)" : ""}`,
                             CurrentUser?.email === ""
                               ? "login required to register"
-                              : `register for ${work.workshopDetails.name}`,
+                              : `register for ${work.workshopDetails.name}${CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? " (50% off for you)" : ""}`,
                           ]}
                         />
                       </div>
@@ -177,7 +150,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
                         setRegPrice(parseInt(e.split(" ")[0]!));
                       }}
                       defaultValue={
-                        (work.workshopDetails.regPlans[0]?.price.toString() ??
+                        (((work.workshopDetails.regPlans[0]?.price ?? 0) / (CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? 2 : 1)).toString() ??
                           "") +
                         " " +
                         (work.workshopDetails.regPlans[0]?.id ?? "")
@@ -191,7 +164,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
                           >
                             <RadioGroupItem
                               className="h-8 w-8 rounded-none bg-amber-50/[0.5]"
-                              value={reg.price.toString() + " " + reg.id}
+                              value={(reg.price / (CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? 2 : 1)).toString() + " " + reg.id}
                               key={reg.id}
                             />
                             <Label
@@ -200,7 +173,7 @@ const WorkshopDetailsBox = ({ work }: { work: WorkshopWithDetails }) => {
                             >
                               <div className="flex items-center gap-2">
                                 <div className="text-xl font-normal uppercase">
-                                  {reg.name} - ₹{reg.price}
+                                  {reg.name} - ₹{(reg.price / (CurrentUser?.college_name === "Indian Institute of Technology, Mandi" ? 2 : 1))}
                                 </div>
                                 <div className="rounded-full bg-gray-500 px-2 py-0.5 text-sm font-light uppercase">
                                   {reg.labelling}

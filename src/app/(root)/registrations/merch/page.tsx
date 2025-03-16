@@ -118,6 +118,12 @@ const ApprovalPage = () => {
                     .map((m) => m.name)
                     .join(", ")}
                 </p>
+                <p className="text-xl">
+                  <strong>Email:</strong> {reg.user.email}
+                </p>
+                <p className="text-xl">
+                  <strong>Mobile:</strong> {reg.user.contact}
+                </p>
                 <div className="text-2xl">
                   <strong className="text-lg">Transaction ID:</strong>{" "}
                   {reg.paymentId}
@@ -133,6 +139,9 @@ const ApprovalPage = () => {
                 </p>
                 <p>
                   <strong>Size:</strong> {(reg.sizes as Array<string>).map((s) => s.toString()).join(', ')}
+                </p>
+                <p>
+                  <strong>College:</strong> {reg.user.college_name}
                 </p>
                 <div className="mt-4 flex flex-col items-center gap-4">
                   <button

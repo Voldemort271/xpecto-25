@@ -195,6 +195,7 @@ model Expos {
 model Workshops {
   id                String       @id @default(cuid())
   workshopDetailsId String       @unique
+  college_special   Boolean      @default(false)
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
   workshopDetails   EventDetails @relation(fields: [workshopDetailsId], references: [id])

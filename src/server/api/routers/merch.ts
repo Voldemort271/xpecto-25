@@ -40,6 +40,7 @@ export const merchRouter = createTRPCRouter({
         },
         include: {
           merch: true,
+          user: true,
         },
       });
 
