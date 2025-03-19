@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import type { User } from "@prisma/client";
+import { $Enums, type User } from "@prisma/client";
 import { api } from "@/trpc/react"; // Import the api object
 
 // This is the context that will be used to store the user data taken from Clerk and merge the extra data with clerk data in db
@@ -40,6 +40,7 @@ const SharedContextProvider = ({ children }: { children: ReactNode }) => {
     POCId: null,
     accomodation: false,
     contact: "",
+    size: $Enums.Size.M
   });
   const { user: clerkUser, isLoaded } = useUser();
 

@@ -32,6 +32,8 @@ model User {
   POCId        String?
   accomodation Boolean        @default(false)
   contact      String         @default("")
+  size         Size           @default(M)
+
   ambassador   Ambassador?
   invites      InviteToken[]
   merchOrders  MerchOrder[]

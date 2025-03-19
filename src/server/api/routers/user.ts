@@ -4,6 +4,7 @@ import { getCollFromEmail } from "@/lib/utils";
 import cloudinary from "@/lib/cloudinary";
 import { createClerkClient } from "@clerk/nextjs/server";
 import { env } from "@/env";
+import { $Enums } from "@prisma/client";
 
 const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
@@ -50,6 +51,7 @@ export const userRouter = createTRPCRouter({
         userId: z.string(),
         contact: z.string().optional(), // Allow optional updates
         college_name: z.string().optional(), // Allow optional updates
+        size: z.string().optional(), // Allow optional updates
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -60,6 +62,7 @@ export const userRouter = createTRPCRouter({
         data: {
           contact: contact, // Update contact if provided
           college_name: college_name, // Update college_name if provided
+          size: input.size as $Enums.Size,
         },
       });
 
