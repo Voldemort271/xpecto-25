@@ -13,7 +13,7 @@ const NewspaperNavbar = () => {
       className={`relative flex w-screen flex-col items-center px-8 py-5 lg:px-12 ${jacquard.className}`}
     >
       <div className="absolute left-12 top-5 hidden w-full max-w-64 text-base leading-4 xl:block">
-        Issue #25, 32 to 56 March 2025 <br /> Twenty-second reprint <br />
+        Issue #25, 29 to 31 march 2025 <br /> Twenty-second reprint <br />
         <br className="hidden lg:block" />{" "}
         {!useUser().isSignedIn && (
           <Link href={"/sign-up"} className="text-xl leading-4">

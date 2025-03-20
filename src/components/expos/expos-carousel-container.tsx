@@ -43,11 +43,11 @@ const ExposCarouselContainer = ({
             text={[
               "expos",
               "xpecto '25",
-              "32 to 56 march 2025",
+              "29 to 31 march 2025",
               "iit mandi",
               "expos",
               "xpecto '25",
-              "32 to 56 march 2025",
+              "29 to 31 march 2025",
               "iit mandi",
             ]}
           />

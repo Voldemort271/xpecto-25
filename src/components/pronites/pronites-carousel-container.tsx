@@ -42,11 +42,11 @@ const PronitesCarouselContainer = ({
             text={[
               "pronites",
               "xpecto '25",
-              "32 to 56 march 2025",
+              "29 to 31 march 2025",
               "iit mandi",
               "pronites",
               "xpecto '25",
-              "32 to 56 march 2025",
+              "29 to 31 march 2025",
               "iit mandi",
             ]}
           />
