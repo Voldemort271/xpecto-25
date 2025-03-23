@@ -13,7 +13,7 @@ const FetchChessTournament = () => {
       className={`relative flex w-full flex-col items-center justify-center bg-cover bg-center ${styles.backgroundContainer}`}
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/diqdg481x/image/upload/v1741511903/chesscom_kqlzon.png')",
+          "url('https://res.cloudinary.com/djzzlkekc/image/upload/v1742670473/chesscom_kqlzon_htpe5a.png')",
       }}
     >
       <div className="relative flex w-[95%] transform flex-col items-center overflow-hidden rounded-lg border-2 border-[#8bbd5181] bg-black/80 p-4 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#8ABD51] hover:shadow-[#8bbd5181] md:w-[90%] lg:w-5/6">
