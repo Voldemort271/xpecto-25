@@ -45,7 +45,7 @@ export const eventRouter = createTRPCRouter({
             },
           },
         });
-  
+
         if (POC) {
           await ctx.db.user.update({
             where: {
@@ -60,9 +60,9 @@ export const eventRouter = createTRPCRouter({
             },
           });
         }
-  
+
         if (!verified) await sendPaymentVerifyingEmail(input.email, input.paymentId ?? "free", price);
-  
+
         return true;
       }
       catch (e) {
@@ -70,48 +70,70 @@ export const eventRouter = createTRPCRouter({
       }
     }),
 
+  getOfflinePlans: publicProcedure.query(async ({ ctx }) => {
+    const event = await ctx.db.eventDetails.findUnique({
+      where: { id: "universaleve" },
+      include: { regPlans: true },
+    });
+    return event;
+  }),
+
   searchEvents: publicProcedure
-    .input(z.object({ query: z.string() }))
+    .input(z.object({ query: z.string().min(1) }))
     .query(async ({ ctx, input }) => {
       const { query } = input;
 
-      // Querying EventDetails with filters on name and description
+      // console.time(`searchEvents:${query}:query`);
       const events = await ctx.db.eventDetails.findMany({
         where: {
-          OR: [
-            {
-              name: { contains: query, mode: "insensitive" }, // Filter by event name
-            },
-            // {
-            //   description: { contains: query, mode: "insensitive" }, // Filter by event description
-            // },
-          ],
-          NOT: {
-            id: "universaleve",
+          name: {
+            contains: query, // Uses GIN trigram index with ILIKE under the hood
+            mode: "insensitive", // Case-insensitive search
           },
         },
-        include: {
-          competition: true,
-          expos: true,
-          pronite: true,
-          workshops: true,
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          competition: { select: { id: true } },
+          workshops: { select: { id: true } },
+          pronite: { select: { id: true } },
+          expos: { select: { id: true } },
         },
+        take: 20, // Limit results
+      });
+      // console.timeEnd(`searchEvents:${query}:query`);
+
+      // console.time(`searchEvents:${query}:mapping`);
+      const result = events.map((event) => ({
+        id: event.id,
+        name: event.name,
+        slug: event.slug,
+        type: event.competition?.id
+          ? "competition"
+          : event.workshops?.id
+          ? "workshop"
+          : event.pronite?.id
+          ? "pronite"
+          : event.expos?.id
+          ? "expos"
+          : "event",
+      }));
+      // console.timeEnd(`searchEvents:${query}:mapping`);
+
+      return result;
+    }),
+  // Procedure to fetch user's registered events
+  getUserRegisteredEvents: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { userId } = input;
+
+      const registrations = await ctx.db.registration.findMany({
+        where: { userId },
+        select: { eventId: true },
       });
 
-      return events;
+      return registrations;
     }),
-
-  getOfflinePlans: publicProcedure.query(async ({ ctx }) => {
-    // Querying EventDetails with filters on name and description
-    const event = await ctx.db.eventDetails.findUnique({
-      where: {
-        id: "universaleve",
-      },
-      include: {
-        regPlans: true,
-      },
-    });
-
-    return event;
-  }),
 });

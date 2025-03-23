@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import sizeChart from "public/images/size_chart.jpeg";
-import { Select } from "@/components/ui/select";
+
 
 const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
@@ -94,7 +94,6 @@ const Page = () => {
             position: "top-center",
           },
         );
-
         router.push("/sign-in");
       }
       if (!setCurrentUser) {
@@ -108,13 +107,10 @@ const Page = () => {
             position: "top-center",
           },
         );
-
         router.push("/");
         return;
       }
       await signOut();
-      // Reset the shared context to its default state
-
       setCurrentUser({
         name: "",
         email: "",
@@ -167,11 +163,31 @@ const Page = () => {
       );
       return;
     }
-    if (collegeName === "Indian Institute of Technology, Mandi") {
+
+    const isIITMandiEmail = CurrentUser.email.endsWith("iitmandi.ac.in");
+    const isIITMandiCollege = collegeName === "Indian Institute of Technology, Mandi";
+
+    // If user is not from IIT Mandi (email) but tries to set college to IIT Mandi
+    if (!isIITMandiEmail && isIITMandiCollege) {
       toast.custom(
         (t) => (
           <CustomToast variant={"error"} metadata={t}>
-            IIT Mandi peeps, login through college ID to avail benefits
+            IIT Mandi peeps, login through college ID to avail benefits.
+          </CustomToast>
+        ),
+        {
+          position: "top-center",
+        },
+      );
+      return;
+    }
+
+    // If user is from IIT Mandi but college_name is not IIT Mandi
+    if (isIITMandiEmail && !isIITMandiCollege && collegeName !== "") {
+      toast.custom(
+        (t) => (
+          <CustomToast variant={"error"} metadata={t}>
+            IIT Mandi students must set their institution to &quot;Indian Institute of Technology, Mandi&quot;.
           </CustomToast>
         ),
         {
@@ -196,6 +212,16 @@ const Page = () => {
     });
   };
 
+  // Helper function to determine if college_name is "editable" (empty or "Individual")
+  const isCollegeNameEditable = (collegeName: string | null | undefined) => {
+    return (
+      collegeName === null ||
+      collegeName === undefined ||
+      collegeName === "" ||
+      collegeName === "Individual"
+    );
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -215,7 +241,9 @@ const Page = () => {
           <div className="border-2 border-amber-50/[0.5] bg-neutral-950 p-12 md:min-w-[600px] lg:min-w-[1000px]">
             {CurrentUser && CurrentUser.id !== "" && (
               <div>
-                {(!CurrentUser.contact || !CurrentUser.college_name) &&
+                {/* Show "Update Profile Information" button if either contact or college_name is editable */}
+                {(!CurrentUser.contact ||
+                  isCollegeNameEditable(CurrentUser.college_name)) &&
                   !isEditingProfile && (
                     <button
                       className="mb-4 w-fit cursor-none bg-amber-500/10 px-5 py-2 text-xl font-normal uppercase text-amber-300"
@@ -229,34 +257,38 @@ const Page = () => {
 
                 {isEditingProfile && (
                   <form onSubmit={handleSubmit} className="mb-5 space-y-4">
-                    <div>
-                      <label
-                        htmlFor="phoneNumber"
-                        className="block text-sm font-medium text-amber-50"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        inputMode="numeric"
-                        id="phoneNumber"
-                        value={phoneNumber}
-                        onChange={(e) => {
-                          const numericValue = e.target.value.replace(
-                            /\D/g,
-                            "",
-                          );
-                          setPhoneNumber(numericValue.slice(0, 10));
-                        }}
-                        pattern="[0-9]*"
-                        maxLength={10}
-                        placeholder="Enter phone number"
-                        className="mt-1 w-full rounded-md border border-amber-50/50 bg-neutral-900 px-3 py-2 text-amber-50 placeholder:text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        required
-                        title="Please enter only numbers (0-9)"
-                      />
-                    </div>
-                    {!CurrentUser.college_name && (
+                    {/* Show phone number input only if contact is empty */}
+                    {!CurrentUser.contact && (
+                      <div>
+                        <label
+                          htmlFor="phoneNumber"
+                          className="block text-sm font-medium text-amber-50"
+                        >
+                          Phone Number
+                        </label>
+                        <input
+                          type="tel"
+                          inputMode="numeric"
+                          id="phoneNumber"
+                          value={phoneNumber}
+                          onChange={(e) => {
+                            const numericValue = e.target.value.replace(
+                              /\D/g,
+                              "",
+                            );
+                            setPhoneNumber(numericValue.slice(0, 10));
+                          }}
+                          pattern="[0-9]*"
+                          maxLength={10}
+                          placeholder="Enter phone number"
+                          className="mt-1 w-full rounded-md border border-amber-50/50 bg-neutral-900 px-3 py-2 text-amber-50 placeholder:text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                          required={!CurrentUser.contact} // Required only if empty
+                          title="Please enter only numbers (0-9)"
+                        />
+                      </div>
+                    )}
+                    {/* Show college name input if college_name is empty or "Individual" */}
+                    {isCollegeNameEditable(CurrentUser.college_name) && (
                       <div>
                         <label
                           htmlFor="collegeName"
@@ -269,9 +301,9 @@ const Page = () => {
                           id="collegeName"
                           value={collegeName}
                           onChange={(e) => setCollegeName(e.target.value)}
-                          placeholder="Enter college name"
+                          placeholder="Enter college name (or 'Individual' if none)"
                           className="mt-1 w-full rounded-md border border-amber-50/50 bg-neutral-900 px-3 py-2 text-amber-50 placeholder:text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                          required
+                          required={isCollegeNameEditable(CurrentUser.college_name)} // Required if editable
                         />
                       </div>
                     )}
@@ -314,7 +346,10 @@ const Page = () => {
                     {CurrentUser.createdAt.toLocaleDateString()}
                   </div>
                   <div className="mb-1 text-lg font-medium sm:text-xl">
-                    Institution: {CurrentUser.college_name || "Not provided"}
+                    Institution:{" "}
+                    {isCollegeNameEditable(CurrentUser.college_name)
+                      ? "Not provided"
+                      : CurrentUser.college_name}
                   </div>
                   <div className="mb-1 text-lg font-medium sm:text-xl">
                     Phone: {CurrentUser.contact || "Not provided"}
@@ -333,10 +368,11 @@ const Page = () => {
                   </div>
                   <div className="flex items-center gap-4 py-4">
                     <div className="flex">
-                      <div className="flex items-center mb-1 text-lg font-medium sm:text-xl w-full">Tee-Size:{" "}</div>
+                      <div className="flex items-center mb-1 text-lg font-medium sm:text-xl w-full">
+                        Tee-Size:{" "}
+                      </div>
                       <select
                         value={selectedSize}
-                        defaultValue={CurrentUser.size}
                         onChange={(e) => handleSizeChange(e)}
                         className={`${sharetech.className} block w-full rounded-md bg-amber-50/90 p-2 text-center text-neutral-800 transition-all duration-200 hover:bg-amber-100 focus:ring-2 focus:ring-amber-300`}
                       >
