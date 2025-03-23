@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styles from "@/styles/navbar.module.css";
 import NavMobile from "@/components/common/nav-mobile";
 import { useCurrentUser } from "@/lib/utils";
@@ -10,16 +10,59 @@ import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import SearchBar from "@/components/common/searchbar";
 import Link from "next/link";
+import { toast } from "sonner";
+import CustomToast from "@/components/root/custom-toast";
+import { Share_Tech } from "next/font/google";
+
+const sharetech = Share_Tech({ weight: "400", subsets: ["latin"] });
 
 const DystopianNav = () => {
   const [toggle, setToggle] = useState(false);
+  const [isPromptDismissed, setIsPromptDismissed] = useState(false);
   const { CurrentUser, isLoading } = useCurrentUser();
   const { setIsHovered } = useContext(CursorContext);
   const path = usePathname();
   const animationDelay = 0;
 
-  // Extract userId from CurrentUser
-  const loggedInUserId = CurrentUser?.id ?? ""; // Default to empty string if not logged in
+  const loggedInUserId = CurrentUser?.id ?? "";
+
+  useEffect(() => {
+    if (path === "/") {
+      setIsPromptDismissed(false);
+    }
+
+    if (
+      path === "/" &&
+      CurrentUser &&
+      CurrentUser.id !== "" &&
+      !CurrentUser.contact &&
+      !isPromptDismissed
+    ) {
+      toast.custom(
+        (t) => (
+          <CustomToast variant="info" metadata={t}>
+            <div className="flex items-center justify-between p-1.5">
+              <Link
+                href="/profile"
+                className="flex-1 text-center"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <span className={`${sharetech.className} text-amber-50 text-base uppercase`}>
+                  Complete the setup of your profile!
+                </span>
+              </Link>
+            </div>
+          </CustomToast>
+        ),
+        {
+          id: "phoneNumberPrompt",
+          duration: Infinity,
+          position: "top-center",
+        }
+      );
+    }
+  }, [path, CurrentUser, isPromptDismissed, setIsHovered]); // Added setIsHovered
 
   return (
     <motion.div

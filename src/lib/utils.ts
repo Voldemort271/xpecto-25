@@ -159,16 +159,23 @@ export const planSchema = [
   { name: "delete", type: "icon", displayName: "", width: "2rem" },
 ];
 
-export const debounce = <T extends (...args: unknown[]) => void>(
-  fn: T,
-  ms = 300,
-) => {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+export function debounce<Args extends unknown[], Return>(
+  func: (...args: Args) => Return,
+  delay: number,
+): ((...args: Args) => void) & { cancel: () => void } {
+  let timeoutId: NodeJS.Timeout | undefined;
 
-  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-    if (timeoutId !== null) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  const debounced = (...args: Args) => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
   };
-};
+
+  debounced.cancel = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = undefined;
+    }
+  };
+
+  return debounced;
+}
