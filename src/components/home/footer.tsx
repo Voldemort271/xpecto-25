@@ -38,7 +38,7 @@ const Footer = ({ onClick }: { onClick?: () => void }) => {
     <div className="relative z-0 grid w-full grid-cols-6 bg-gradient-to-r from-amber-50 to-amber-50/[0.3]">
       <Image
         src={
-          "https://res.cloudinary.com/diqdg481x/image/upload/v1739214344/images/byyegxxonyqiuiioikvr.jpg"
+          "https://res.cloudinary.com/djzzlkekc/image/upload/v1742670474/byyegxxonyqiuiioikvr_jcszfs.jpg"
         }
         width={1920}
         height={800}

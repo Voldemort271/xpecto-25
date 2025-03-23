@@ -12,7 +12,7 @@ const FetchValorantTournament = () => {
       className={`relative flex w-full flex-col items-center justify-center bg-cover bg-center ${styles.backgroundContainer}`}
       style={{
         backgroundImage:
-          "url('https://res.cloudinary.com/diqdg481x/image/upload/v1741510741/China_CG_phxcool_fullres_zp7tye.jpg')",
+          "url('https://res.cloudinary.com/djzzlkekc/image/upload/v1742710861/China_CG_phxcool_fullres_zp7tye_tkies5_1_f0zzgp.jpg')",
       }}
     >
       <div className="relative flex w-[95%] transform flex-col items-center overflow-hidden rounded-lg border-2 border-[#ff465685] bg-black/80 p-4 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#FF4655] hover:shadow-[#ff465685] md:w-[90%] lg:w-5/6">

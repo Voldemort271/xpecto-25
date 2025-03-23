@@ -10,7 +10,7 @@ const AboutXpecto = () => {
     <div className="relative z-0 flex w-full flex-row justify-center py-24">
       <Image
         src={
-          "https://res.cloudinary.com/diqdg481x/image/upload/v1739198961/images/iitmandi_negative.jpg"
+          "https://res.cloudinary.com/djzzlkekc/image/upload/v1742670478/soouaf9mattqymlmkivy_qz0hnd.jpg"
         }
         width={1920}
         height={600}
