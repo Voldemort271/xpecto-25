@@ -16,7 +16,7 @@ const AboutIITMandi = () => {
     <div className="relative z-0 flex w-full flex-row justify-center border-t-2 border-amber-50/[0.3] py-24">
       <Image
         src={
-          "https://res.cloudinary.com/diqdg481x/image/upload/v1739198119/images/iitmandi.jpg"
+          "https://res.cloudinary.com/djzzlkekc/image/upload/v1742670473/bhkuml4cjhlvlgglphn1_ukrg1u.jpg"
         }
         width={1920}
         height={600}

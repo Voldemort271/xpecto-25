@@ -136,4 +136,13 @@ export const eventRouter = createTRPCRouter({
 
       return registrations;
     }),
+
+  getAllEvents: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.eventDetails.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  }),
 });

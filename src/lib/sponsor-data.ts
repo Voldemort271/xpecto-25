@@ -16,6 +16,30 @@ export type Sponsor = {
 
 export const sponData: Sponsor[] = [
   {
+    name: "fetch.ai",
+    title: "title sponsor",
+    website: "https://innovationlab.fetch.ai/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742708800/1738749836815_xuhzez.png",
+    desc: "",
+    tier: "title",
+  },
+  {
+    name: "masai school",
+    title: "associate title sponsor",
+    website: "https://www.masaischool.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742708842/images_ntohme.png",
+    desc: "",
+    tier: "associate",
+  },
+  {
+    name: "boston scientific",
+    title: "associate title sponsor",
+    website: "https://www.bostonscientific.com/en-IN/home.html",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742708860/images_iejip9.png",
+    desc: "",
+    tier: "associate",
+  },
+  {
     name: "the education tree",
     title: "youth community partner",
     website: "https://www.theeducationtree.com/",
@@ -29,6 +53,14 @@ export const sponData: Sponsor[] = [
     website: "https://www.jiosaavn.com/",
     logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741430792/spon_logos/hyendbng6jzgbjg3pohr.png",
     desc: "JioSaavn is an Indian music streaming service offering 80+ million songs, podcasts, and playlists in multiple languages with free and premium options.",
+    tier: "platinum",
+  },
+  {
+    name: "quant insti",
+    title: "frosthack partner",
+    website: "https://www.quantinsti.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742709815/QuantInsti-OG_jiv42j.png",
+    desc: "",
     tier: "platinum",
   },
   {

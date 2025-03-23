@@ -180,4 +180,29 @@ export const registrationtRouter = createTRPCRouter({
 
       return reg;
     }),
+
+    getFilteredRegistrations: publicProcedure
+  .input(
+    z.object({
+      eventId: z.string(),
+      includeUnverified: z.boolean(),
+      iitMandiOnly: z.boolean(),
+    })
+  )
+  .query(async ({ ctx, input }) => {
+    return ctx.db.registration.findMany({
+      where: {
+        eventId: input.eventId,
+        verified: input.includeUnverified ? undefined : true,
+        user:{
+          college_name: input.iitMandiOnly ? "Indian Institute of Technology, Mandi" : undefined,
+        },
+      },
+      include: {
+        user: true, // Populate userId foreign key
+        event: true, // Include event details
+        plan: true, // Include plan details
+      },
+    });
+  }),
 });
