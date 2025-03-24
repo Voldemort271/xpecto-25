@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-import ClickToStart from "@/components/common/click-to-start";
 import { motion } from "motion/react";
 import Image from "next/image";
-import LandingText from "@/components/home/landing-text";
 import styles from "@/styles/home.module.css";
+import Logo from "public/xpecto.png";
 
 const HomeScreen = () => {
   return (
@@ -31,40 +30,39 @@ const HomeScreen = () => {
         transition={{ duration: 0.2, delay: 2 }}
       ></motion.div>
       <div className="h-32 sm:h-16"></div>
-      <div className="flex h-[calc(100vh-194px)] w-full flex-col items-center justify-center uppercase text-amber-50 sm:h-[calc(100vh-130px)] md:text-amber-50">
-        <motion.div
-          className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold"
-          initial={{ opacity: 0, translateY: 50 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 5 }}
-        >
-          welcome to
-        </motion.div>
-        <motion.div
-          className="text-8xl font-extrabold uppercase sm:hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 3 }}
-        >
-          Xpecto &apos;25
-        </motion.div>
-        <LandingText />
-        <motion.div
-          className="text-4xl font-medium uppercase sm:text-6xl md:-mt-5 md:font-semibold"
-          initial={{ opacity: 0, translateY: -50 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5, delay: 5 }}
-        >
-          by iit mandi
-        </motion.div>
-        <motion.div
-          className="relative text-amber-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 6 }}
-        >
-          <ClickToStart />
-        </motion.div>
+      <div className="flex h-[calc(100vh-194px)] w-full flex-col items-center justify-center px-5 uppercase text-amber-50 sm:h-[calc(100vh-130px)] sm:px-24 md:text-amber-50">
+        {/*<motion.div*/}
+        {/*  className="text-4xl font-medium uppercase sm:text-6xl md:-mb-5 md:font-semibold"*/}
+        {/*  initial={{ opacity: 0, translateY: 50 }}*/}
+        {/*  animate={{ opacity: 1, translateY: 0 }}*/}
+        {/*  transition={{ duration: 0.5, delay: 5 }}*/}
+        {/*>*/}
+        {/*  welcome to*/}
+        {/*</motion.div>*/}
+        {/*<motion.div*/}
+        {/*  className="text-8xl font-extrabold uppercase sm:hidden"*/}
+        {/*  initial={{ opacity: 0 }}*/}
+        {/*  animate={{ opacity: 1 }}*/}
+        {/*  transition={{ duration: 1, delay: 3 }}*/}
+        {/*>*/}
+        {/*  Xpecto &apos;25*/}
+        {/*</motion.div>*/}
+        {/*<LandingText />*/}
+        {/*<motion.div*/}
+        {/*  className="text-4xl font-medium uppercase sm:text-6xl md:-mt-5 md:font-semibold"*/}
+        {/*  initial={{ opacity: 0, translateY: -50 }}*/}
+        {/*  animate={{ opacity: 1, translateY: 0 }}*/}
+        {/*  transition={{ duration: 0.5, delay: 5 }}*/}
+        {/*>*/}
+        {/*  by iit mandi*/}
+        {/*</motion.div>*/}
+        <Image
+          src={Logo}
+          alt={"Xpecto Logo"}
+          width={500}
+          height={500}
+          className="w-full max-w-[1000px]"
+        />
         <motion.div
           className="absolute -bottom-24 left-1/2 hidden w-full -translate-x-1/2 -translate-y-1/2 text-center text-9xl font-extralight uppercase text-amber-50/[0.5] sm:block"
           initial={{ opacity: 0 }}
