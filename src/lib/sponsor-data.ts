@@ -16,7 +16,7 @@ export type Sponsor = {
 
 export const sponData: Sponsor[] = [
   {
-    name: "fetch.ai",
+    name: "innovation lab fetch.ai",
     title: "title sponsor",
     website: "https://innovationlab.fetch.ai/",
     logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742708800/1738749836815_xuhzez.png",
