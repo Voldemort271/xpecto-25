@@ -8,14 +8,14 @@ import Link from "next/link";
 import { CursorContext } from "@/context/cursor-context";
 import type { Sponsor } from "@/lib/sponsor-data";
 
-const TitleSponsor = ({ title, name, logo, website }: Sponsor) => {
+const TitleSponsor = ({ title, name, logo, website, tier }: Sponsor) => {
   const { setIsHovered } = useContext(CursorContext);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
 
   return (
     <motion.div
-      className="relative z-0 h-full w-full overflow-clip border-2 border-amber-50"
+      className={`relative z-0 h-full w-full overflow-clip border-2 border-amber-50 ${tier === "title" && "lg:col-span-2"}`}
       ref={ref}
     >
       <motion.div
@@ -41,16 +41,22 @@ const TitleSponsor = ({ title, name, logo, website }: Sponsor) => {
             />
           </div>
         </div>
-        <div className="relative z-0 flex flex-col items-center">
+        <div
+          className={`relative z-0 ${
+            tier === "title"
+              ? "flex min-h-96 flex-col items-center md:flex-row"
+              : "flex flex-col items-center"
+          }`}
+        >
           <Image
             src={logo}
             width={1000}
             height={500}
             alt={name}
-            className="max-h-[300px] object-cover object-center"
+            className="max-h-[300px] w-full object-cover object-center"
           />
           <div className="relative flex h-full w-full flex-col items-center justify-center bg-gradient-to-r from-neutral-900/[0.5] from-0% to-neutral-900 to-100% p-5 py-12 hover:from-neutral-900/[0.1] hover:to-neutral-900 md:p-12">
-            <div className="text-4xl font-semibold uppercase text-amber-50 sm:text-5xl md:text-6xl">
+            <div className="text-4xl font-semibold uppercase text-amber-50 sm:text-5xl">
               {name}
             </div>
             <div className="mb-2 text-2xl font-normal uppercase text-neutral-500">
