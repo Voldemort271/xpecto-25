@@ -163,7 +163,7 @@ export const sponData: Sponsor[] = [
   },
   {
     name: "rigbetel labs",
-    title: "",
+    title: "frosthack partner",
     website: "https://www.rigbetellabs.com/",
     logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741431216/spon_logos/vphwsgxav5holfbbxa4l.png",
     desc: "",
@@ -171,7 +171,7 @@ export const sponData: Sponsor[] = [
   },
   {
     name: "pathway",
-    title: "",
+    title: "frosthack partner",
     website: "https://pathway.com/",
     logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1741430028/spon_logos/tuq3jmnkdf4h1od2kzzp.svg",
     desc: "",
