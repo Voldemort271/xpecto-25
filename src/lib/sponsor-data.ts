@@ -64,6 +64,14 @@ export const sponData: Sponsor[] = [
     tier: "platinum",
   },
   {
+    name: "abhibus",
+    title: "travel partner",
+    website: "https://www.abhibus.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1743080584/spon_logos/ma561htildzyidnwi91r.png",
+    desc: "",
+    tier: "platinum",
+  },
+  {
     name: "the education tree",
     title: "youth community partner",
     website: "https://www.theeducationtree.com/",
@@ -112,6 +120,22 @@ export const sponData: Sponsor[] = [
     tier: "platinum",
   },
   {
+    name: "krafton",
+    title: "silver sponsor",
+    website: "https://esports.battlegroundsmobileindia.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1743080558/spon_logos/hplwocrbdl35hx7ymwwd.jpg",
+    desc: "Chess.com is a leading online platform for playing and learning chess, offering various game modes, training tools, and community features.",
+    tier: "platinum",
+  },
+  {
+    name: "om logistics",
+    title: "logistics partner",
+    website: "https://omlogistics.co.in/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1743080581/spon_logos/tkce5puaorsm5vyhhpe4.jpg",
+    desc: "",
+    tier: "platinum",
+  },
+  {
     name: "yord india",
     title: "",
     website: "https://yordindia.com/",
@@ -125,6 +149,14 @@ export const sponData: Sponsor[] = [
     website: "https://playvalorant.com/en-us/",
     logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1742129801/spon_logos/fzbsfhbotufc86bg4bjj.svg",
     desc: "Riot Games, established in 2006, is an American video game developer and publisher renowned for titles like League of Legends and Valorant.",
+    tier: "platinum",
+  },
+  {
+    name: "winzo",
+    title: "fantasy partner",
+    website: "https://www.winzogames.com/",
+    logo: "https://res.cloudinary.com/diqdg481x/image/upload/v1743080575/spon_logos/yedw8aur7622eljjaftm.webp",
+    desc: "",
     tier: "platinum",
   },
   {
