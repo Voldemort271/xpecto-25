@@ -199,7 +199,15 @@ export const registrationtRouter = createTRPCRouter({
         },
       },
       include: {
-        user: true, // Populate userId foreign key
+        user: {
+          include:{
+            regEvents: {
+              include: {
+                event: true,
+              }
+            },
+          }
+        }, // Populate userId foreign key
         event: true, // Include event details
         plan: true, // Include plan details
       },

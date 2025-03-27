@@ -39,6 +39,7 @@ const Page = () => {
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [includeUnverified, setIncludeUnverified] = useState(false);
   const [iitMandiOnly, setIitMandiOnly] = useState(false);
+  const [downloadEvents, setDownloadEvents] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -77,6 +78,7 @@ const Page = () => {
         "Event Name",
         "Plan",
         "Price",
+        downloadEvents ? "Events" : ""
       ],
       ...registrations.map((reg) => [
         `"${reg.user.name}"`,
@@ -88,6 +90,7 @@ const Page = () => {
         `"${reg.event.name}"`,
         `"${reg.plan.name}"`,
         `"${reg.plan.price}"`,
+        downloadEvents ? `"${reg.user.regEvents.filter(e => e.eventId !== "universaleve").map(e => e.event.name).join(", ")}"` : ``
       ]),
     ]
       .map((row) => row.join(","))
@@ -177,6 +180,17 @@ const Page = () => {
           />
           <label htmlFor="iitMandiOnly" className="text-amber-50">
             IIT Mandi Registrations Only
+          </label>
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="iitMandiOnly"
+            checked={downloadEvents}
+            onCheckedChange={() => setDownloadEvents((e) => !e)}
+            className={`${sharetech.className} bg-amber-50`}
+          />
+          <label htmlFor="downloadEvents" className="text-amber-50">
+            Download With Events
           </label>
         </div>
       </div>
