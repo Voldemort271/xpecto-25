@@ -142,6 +142,15 @@ export const eventRouter = createTRPCRouter({
       select: {
         id: true,
         name: true,
+        competition: { select: {
+          teams: {
+            include: {
+              leader: true,
+              team_members: true,
+              invitations: true,
+            }
+          },
+        }},
       },
     });
   }),
