@@ -97,11 +97,15 @@ const CompetitionBrief = ({ data }: Props) => {
           <div className={`text-xl font-light uppercase text-amber-400`}>
             problem statement
           </div>
-          <div
+          <Link
+            href={data.problem_statement ?? "/"}
             className={`cursor-none text-2xl font-normal uppercase text-amber-50/[0.8] hover:underline`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            target="_blank"
           >
-            TBU
-          </div>
+            click to access
+          </Link>
         </div>
       </div>
       {/* <Link
