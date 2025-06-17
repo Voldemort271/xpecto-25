@@ -10,7 +10,8 @@ const HomeScreen = () => {
   return (
     <div className="relative z-0 h-[95vh] w-full overflow-clip bg-neutral-900">
       <Image
-        src={`https://res.cloudinary.com/diqdg481x/image/upload/v1739200155/images/glitch.jpg`}
+        // src={`https://res.cloudinary.com/diqdg481x/image/upload/v1739200155/images/glitc.jpg`}
+        src={`https://res.cloudinary.com/djzzlkekc/image/upload/v1742670475/qzsmww5pd8khnvcesyly_pginia.jpg`}
         alt={"transparent bg"}
         width={1920} //Added  a sample width and height as it was showing an error without it
         height={1080}

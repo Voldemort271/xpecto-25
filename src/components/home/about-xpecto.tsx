@@ -34,7 +34,8 @@ const AboutXpecto = () => {
         </div>
         <Image
           src={
-            "https://res.cloudinary.com/diqdg481x/image/upload/v1739812760/Asset_12_lt5nmf.png"
+            "https://res.cloudinary.com/djzzlkekc/image/upload/v1743684638/Asset_12_lt5nmf_nrqt5h.png"
+            // "https://res.cloudinary.com/diqdg481x/image/upload/v1739812760/Asset_12_lt5nmf.png"
           }
           width={600}
           height={600}
